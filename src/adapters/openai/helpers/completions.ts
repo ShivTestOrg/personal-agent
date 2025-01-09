@@ -145,12 +145,14 @@ type ChatMessage = {
 export class Completions extends SuperOpenAi {
   protected maxTokens: number;
   protected tools: ToolSet;
-  protected attempts: number;
+  protected llmAttempts: number;
+  protected toolAttempts: number;
 
   constructor(client: OpenAI, context: Context) {
     super(client, context);
     this.maxTokens = 100000;
-    this.attempts = 0;
+    this.llmAttempts = 0;
+    this.toolAttempts = 0;
     this.tools = {
       readFile: new ReadFile(),
       writeFile: new WriteFile(),
@@ -261,16 +263,16 @@ export class Completions extends SuperOpenAi {
     workingDir: string,
     ...args: unknown[]
   ): Promise<ToolResult<ToolResultMap[T]>> {
-    this.attempts++;
+    this.toolAttempts++;
 
-    if (this.attempts > MAX_TRIES) {
+    if (this.toolAttempts > MAX_TRIES) {
       return {
         success: false,
         error: `Maximum attempts (${MAX_TRIES}) exceeded`,
         metadata: {
           timestamp: Date.now(),
           toolName: tool.name,
-          attempts: this.attempts,
+          toolAttempts: this.toolAttempts,
           workingDir,
         },
       };
@@ -279,15 +281,15 @@ export class Completions extends SuperOpenAi {
     try {
       const result = await tool.execute(...args);
 
-      if (!result.success && this.attempts < MAX_TRIES) {
-        console.log(`Attempt ${this.attempts} failed: ${result.error}`);
+      if (!result.success && this.toolAttempts < MAX_TRIES) {
+        console.log(`Tool attempt ${this.toolAttempts} failed: ${result.error}`);
         return this._executeWithRetry(tool, method, workingDir, ...args);
       }
 
       return result;
     } catch (error) {
-      if (this.attempts < MAX_TRIES) {
-        console.error(`Attempt ${this.attempts} error:`, error);
+      if (this.toolAttempts < MAX_TRIES) {
+        console.error(`Tool attempt ${this.toolAttempts} error:`, error);
         return this._executeWithRetry(tool, method, workingDir, ...args);
       }
 
@@ -297,7 +299,7 @@ export class Completions extends SuperOpenAi {
         metadata: {
           timestamp: Date.now(),
           toolName: tool.name,
-          attempts: this.attempts,
+          toolAttempts: this.toolAttempts,
           workingDir,
         },
       };
@@ -306,7 +308,8 @@ export class Completions extends SuperOpenAi {
 
   async createCompletion(prompt: string, model: string, workingDir: string, currentSolution: string = "") {
     // Reset attempts counter for new completion
-    this.attempts = 0;
+    this.llmAttempts = 0;
+    this.toolAttempts = 0;
 
     // Update tools with working directory
     this.tools.exploreDir = new ExploreDir(workingDir);
@@ -321,7 +324,7 @@ export class Completions extends SuperOpenAi {
       },
     ];
 
-    while (this.attempts < MAX_TRIES && !isSolved) {
+    while (this.llmAttempts < MAX_TRIES && !isSolved) {
       // Get the directory tree
       const treeResult = await this._getDirectoryTree(workingDir);
       const treeOutput =
@@ -332,7 +335,7 @@ export class Completions extends SuperOpenAi {
       // Add the current state to conversation
       conversationHistory.push({
         role: "user",
-        content: `Current attempt: ${this.attempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${prompt}`,
+        content: `Current LLM attempt: ${this.llmAttempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${prompt}`,
       });
 
       const res = await this.client.chat.completions.create({
@@ -367,8 +370,8 @@ export class Completions extends SuperOpenAi {
       isSolved = await this._checkSolution(currentSolution, model);
 
       if (!isSolved) {
-        this.attempts++;
-        console.log(`Solution incomplete, attempt ${this.attempts}/${MAX_TRIES}`);
+        this.llmAttempts++;
+        console.log(`Solution incomplete, LLM attempt ${this.llmAttempts}/${MAX_TRIES}`);
       }
     }
 
