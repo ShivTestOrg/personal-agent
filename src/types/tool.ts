@@ -24,6 +24,7 @@ export interface FileReadResult {
 export interface FileWriteResult {
   path: string;
   bytesWritten: number;
+  diffBlocksApplied?: number;
 }
 
 export interface DirectoryExploreResult {
@@ -50,10 +51,17 @@ export interface SearchResult {
 }
 
 // Tool result type mapping
+export interface PullRequestResult {
+  url: string;
+  number: number;
+  title: string;
+}
+
 export type ToolResultMap = {
   readFile: FileReadResult;
   writeFile: FileWriteResult;
   exploreDir: DirectoryExploreResult;
   terminal: TerminalCommandResult;
   searchFiles: SearchResult;
+  createPr: PullRequestResult;
 };

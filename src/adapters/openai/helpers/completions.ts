@@ -6,6 +6,7 @@ import { ReadFile } from "../../../tools/read-file";
 import { WriteFile } from "../../../tools/write-file";
 import { ExploreDir } from "../../../tools/explore-dir";
 import { SearchFiles } from "../../../tools/search-files";
+import { CreatePr } from "../../../tools/create-pr";
 
 const MAX_TRIES = 10;
 
@@ -26,12 +27,17 @@ To use tools, you can include one or more tool requests in your response. Each t
   "tool": "readFile|writeFile|exploreDir|searchFiles",
   "args": {
     // For readFile:
-    "filename": "/full/path/from/working/dir/to/file"
+    "filename": "/absolute/path/to/file"
     
     // For writeFile:
-    "filename": "/full/path/from/working/dir/to/file",
-    "content": "file content"
-    
+    "filename": "/absolute/path/to/file",
+    "content": "diff blocks in format:
+    <<<<<<< SEARCH
+    [existing content to find]
+    =======
+    [new content to replace with]
+    >>>>>>> REPLACE"
+        
     // For exploreDir:
     "command": "tree"
 
@@ -73,11 +79,20 @@ Available Tools:
   - metadata: execution details
 
 ### WriteFile Tool ###
-- Purpose: Write/update file contents
-- Method: execute(filename: string, content: string)
+- Purpose: Update file contents using diff blocks
+- Method: execute(path: string, diff: string)
+- Requires absolute file paths (must start with '/')
+- Diff format:
+
+  <<<<<<< SEARCH
+  [existing content to find]
+  =======
+  [new content to replace with]
+  >>>>>>> REPLACE
+
 - Returns: ToolResult<FileWriteResult> containing:
   - success: boolean
-  - data: { path: string, bytesWritten: number }
+  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }
   - error?: string
   - metadata: execution details
 
@@ -103,7 +118,7 @@ Available Tools:
   - error?: string
   - metadata: execution details
 
-Note: All file paths must be absolute paths from the working directory that is provided to you. For example, if the working directory is "/tmp/repo" and you want to write to "src/file.ts", you must specify "/tmp/repo/src/file.ts" as the filename.
+Note: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.
 
 Rules and Best Practices:
 1. Always check ToolResult.success before using the data
@@ -120,6 +135,7 @@ interface ToolSet {
   writeFile: WriteFile;
   exploreDir: ExploreDir;
   searchFiles: SearchFiles;
+  createPr: CreatePr;
 }
 
 type ToolName = keyof ToolResultMap;
@@ -158,35 +174,42 @@ export class Completions extends SuperOpenAi {
       writeFile: new WriteFile(),
       exploreDir: new ExploreDir(),
       searchFiles: new SearchFiles(),
+      createPr: new CreatePr(context),
     };
   }
 
   private async _executeToolRequest(request: ToolRequest, workingDir: string): Promise<ToolResult<ToolResultMap[ToolName]>> {
     this.context.logger.info(`Executing tool request: ${request.tool} with args:`, request.args);
-    switch (request.tool) {
-      case "readFile":
-        if (!request.args.filename) throw new Error("Filename is required for readFile");
-        return this._readFile(request.args.filename, workingDir);
+    try {
+      switch (request.tool) {
+        case "readFile":
+          if (!request.args.filename) throw new Error("Filename is required for readFile");
+          return this._readFile(request.args.filename, workingDir);
 
-      case "writeFile":
-        if (!request.args.filename || !request.args.content) {
-          throw new Error("Filename and content are required for writeFile");
-        }
-        return this._writeFile(request.args.filename, request.args.content, workingDir);
+        case "writeFile":
+          if (!request.args.filename || !request.args.content) {
+            throw new Error("Filename and content are required for writeFile");
+          }
+          return this._writeFile(request.args.filename, request.args.content, workingDir);
 
-      case "exploreDir":
-        return this._getDirectoryTree(workingDir);
+        case "exploreDir":
+          return this._getDirectoryTree(workingDir);
 
-      case "searchFiles":
-        if (!request.args.pattern) throw new Error("Search pattern is required");
-        return this._searchFiles(request.args.pattern, workingDir, {
-          filePattern: request.args.filePattern,
-          caseSensitive: request.args.caseSensitive,
-          contextLines: request.args.contextLines,
-        });
+        case "searchFiles":
+          if (!request.args.pattern) throw new Error("Search pattern is required");
+          return this._searchFiles(request.args.pattern, workingDir, {
+            filePattern: request.args.filePattern,
+            caseSensitive: request.args.caseSensitive,
+            contextLines: request.args.contextLines,
+          });
 
-      default:
-        throw new Error(`Unknown tool: ${request.tool}`);
+        default:
+          throw new Error(`Unknown tool: ${request.tool}`);
+      }
+    } catch (error) {
+      const errorObj = error instanceof Error ? error : new Error(String(error));
+      this.context.logger.error(`Tool execution failed:`, { error: errorObj });
+      throw error;
     }
   }
 
@@ -215,6 +238,9 @@ export class Completions extends SuperOpenAi {
         // Replace this specific tool block with its result
         processedResponse = processedResponse.replace(fullMatch, "```result\n" + JSON.stringify(result, null, 2) + "\n```");
       } catch (error) {
+        const errorObj = error instanceof Error ? error : new Error(String(error));
+        this.context.logger.error(`Failed to process tool request:`, { error: errorObj });
+
         // Replace this specific tool block with its error
         processedResponse = processedResponse.replace(
           fullMatch,
@@ -222,7 +248,7 @@ export class Completions extends SuperOpenAi {
             JSON.stringify(
               {
                 success: false,
-                error: error instanceof Error ? error.message : "Unknown error",
+                error: errorObj.message,
               },
               null,
               2
@@ -266,9 +292,11 @@ export class Completions extends SuperOpenAi {
     this.toolAttempts++;
 
     if (this.toolAttempts > MAX_TRIES) {
+      const error = new Error(`Maximum attempts (${MAX_TRIES}) exceeded`);
+      this.context.logger.error(`Tool retry limit exceeded:`, { error });
       return {
         success: false,
-        error: `Maximum attempts (${MAX_TRIES}) exceeded`,
+        error: error.message,
         metadata: {
           timestamp: Date.now(),
           toolName: tool.name,
@@ -282,20 +310,31 @@ export class Completions extends SuperOpenAi {
       const result = await tool.execute(...args);
 
       if (!result.success && this.toolAttempts < MAX_TRIES) {
-        console.log(`Tool attempt ${this.toolAttempts} failed: ${result.error}`);
+        const error = new Error(result.error || "Unknown error");
+        this.context.logger.error(`Tool attempt ${this.toolAttempts} failed:`, { error });
         return this._executeWithRetry(tool, method, workingDir, ...args);
+      }
+
+      if (result.success) {
+        this.context.logger.info(`Tool execution successful:`, {
+          toolName: tool.name,
+          data: result.data,
+          metadata: result.metadata,
+        });
       }
 
       return result;
     } catch (error) {
+      const errorObj = error instanceof Error ? error : new Error(String(error));
+      this.context.logger.error(`Tool attempt ${this.toolAttempts} error:`, { error: errorObj });
+
       if (this.toolAttempts < MAX_TRIES) {
-        console.error(`Tool attempt ${this.toolAttempts} error:`, error);
         return this._executeWithRetry(tool, method, workingDir, ...args);
       }
 
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error occurred",
+        error: errorObj.message,
         metadata: {
           timestamp: Date.now(),
           toolName: tool.name,
@@ -348,7 +387,7 @@ export class Completions extends SuperOpenAi {
         presence_penalty: 0,
       });
 
-      this.context.logger.info("LLM response:" + JSON.stringify(res, null, 2));
+      this.context.logger.info("LLM response:", { response: res });
       finalResponse = res;
 
       // Get the LLM's response
@@ -371,11 +410,39 @@ export class Completions extends SuperOpenAi {
 
       if (!isSolved) {
         this.llmAttempts++;
-        console.log(`Solution incomplete, LLM attempt ${this.llmAttempts}/${MAX_TRIES}`);
+        this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${MAX_TRIES}`);
+      }
+    }
+
+    if (isSolved) {
+      // Create a pull request with the changes
+      const prTitle = `Fix: ${prompt.split("\n")[0]}`; // Use first line of prompt as PR title
+      const prBody = `This PR addresses the following:
+
+${prompt}
+
+Changes made:
+${currentSolution}`;
+
+      const prResult = await this._createPullRequest(prTitle, prBody);
+      if (prResult.success) {
+        this.context.logger.info("Created pull request:", {
+          data: prResult.data,
+          metadata: prResult.metadata,
+        });
+      } else {
+        this.context.logger.error("Failed to create pull request:", {
+          error: new Error(prResult.error || "Unknown error"),
+          metadata: prResult.metadata,
+        });
       }
     }
 
     return finalResponse;
+  }
+
+  private async _createPullRequest(title: string, body: string) {
+    return this._executeWithRetry(this.tools.createPr, "execute", "", title, body);
   }
 
   // Helper methods to execute tools with retry logic
