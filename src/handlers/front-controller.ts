@@ -33,7 +33,7 @@ export async function delegate(context: Context) {
       const prompt = `Please help resolve this issue:\n${issueDescription}\n\nRepository: ${owner}/${repo}\nIssue #${issueNumber}\n\nFile tree:\n${fileTree}`;
 
       // Get the solution with retries and verification
-      const solution = await context.adapters.openai.completions.createCompletion(prompt, "gpt-4-1106-preview", workingDir);
+      const solution = await context.adapters.openai.completions.createCompletion(prompt, "anthropic/claude-3.5-sonnet", workingDir);
 
       if (!solution) {
         logger.error("No solution was generated");

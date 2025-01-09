@@ -25,10 +25,6 @@ export async function runPlugin(context: Context) {
 export async function plugin(inputs: PluginInputs, env: Env) {
   const octokit = new Octokit({ auth: env.PERSONAL_AGENT_PAT_CLASSIC });
   const config = inputs.settings;
-  const openAiObject = {
-    apiKey: (config.openAiBaseUrl && env.OPENROUTER_API_KEY) || env.OPENAI_API_KEY,
-    ...(config.openAiBaseUrl && { baseURL: config.openAiBaseUrl }),
-  };
 
   const context: Context = {
     eventName: inputs.eventName,
@@ -40,7 +36,10 @@ export async function plugin(inputs: PluginInputs, env: Env) {
     adapters: {} as ReturnType<typeof createAdapters>,
   };
 
-  const openaiClient = new OpenAI(openAiObject);
+  const openaiClient = new OpenAI({
+    baseURL: "https://openrouter.ai/api/v1",
+    apiKey: env.OPENROUTER_API_KEY,
+  });
   context.adapters = createAdapters(openaiClient, context);
 
   /**
