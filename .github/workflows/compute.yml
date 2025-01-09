@@ -1,4 +1,4 @@
-name: "Personal Agent"
+name: "@ubiquity-os-marketplace/command-ask"
 
 on:
   workflow_dispatch:
@@ -16,9 +16,10 @@ on:
 
 jobs:
   compute:
-    name: "Personal Agent"
+    name: "LLM Reply"
     runs-on: ubuntu-latest
     permissions: write-all
+    environment: ${{ github.ref == 'refs/heads/main' && 'main' || 'development' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -28,11 +29,11 @@ jobs:
         with:
           node-version: "20.10.0"
 
-      - name: install dependencies
-        run: yarn
-
       - name: execute directive
-        run: npx tsx ./src/main.ts
+        run: node ./dist/index.js
         id: plugin-personal-agent
         env:
           PERSONAL_AGENT_PAT_CLASSIC: ${{ secrets.PERSONAL_AGENT_PAT_CLASSIC }}
+          PLUGIN_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
