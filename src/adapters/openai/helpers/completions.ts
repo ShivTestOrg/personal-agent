@@ -15,9 +15,10 @@ Each tool implements a common interface that provides consistent error handling 
 
 Workflow:
 1. The repository has already been cloned and you are in the correct working directory
-2. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.
-3. If not complete, you will continue with additional attempts up to ${MAX_TRIES} tries
-4. Each attempt should build upon previous attempts, learning from any failures
+2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.
+3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.
+4. If not complete, you will continue with additional attempts up to ${MAX_TRIES} tries
+5. Each attempt should build upon previous attempts, learning from any failures
 
 To use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:
 \`\`\`tool
