@@ -31882,54 +31882,25 @@
         };
       Object.defineProperty(t, "__esModule", { value: true });
       t.delegate = delegate;
-      const o = r(1495);
+      const o = r(4049);
       function delegate(e) {
         return s(this, void 0, void 0, function* () {
-          var t;
-          const { logger: r, payload: s, octokit: n } = e;
-          const A = (t = s.comment.user) === null || t === void 0 ? void 0 : t.login;
-          const i = s.repository.name;
-          const a = s.issue.number;
-          const c = s.repository.owner.login;
-          const u = s.comment.body;
-          r.debug(`Executing decideHandler:`, { sender: A, repo: i, issueNumber: a, owner: c });
-          const l = u.match(/^\/\B@([a-z0-9](?:-(?=[a-z0-9])|[a-z0-9]){0,38}(?<=[a-z0-9]))/i);
-          if (!l) {
-            r.error(`Missing target username from comment: ${u}`);
-            return;
+          const { logger: t, payload: r } = e;
+          const s = r.comment.body;
+          const n = r.repository.name;
+          const A = r.repository.owner.login;
+          const i = r.issue.number;
+          if (s.toLowerCase().includes("solve this issue")) {
+            const e = new o.ExploreDir();
+            let r = yield e.current_dir_tree();
+            t.info(r);
+            yield e.clone_repo(n, A, i);
+            r = yield e.current_dir_tree();
+            t.info(r);
           }
-          const g = l[0].replace("/@", "");
-          r.info(`Comment received:`, { owner: c, personalAgentOwner: g, comment: u });
-          let d;
-          if (u.match(/^\/\B@([a-z0-9](?:-(?=[a-z0-9])|[a-z0-9]){0,38}(?<=[a-z0-9]))\s+say\s+hello/i)) {
-            d = (0, o.sayHello)();
-          } else {
-            d = "I could not understand your comment to give you a quick response. I will get back to you later.";
-            r.error(`Invalid command.`, { body: u });
-          }
-          const p = ["> ", `${u}`, "\n\n", d].join("");
-          try {
-            yield n.issues.createComment({ owner: s.repository.owner.login, repo: s.repository.name, issue_number: s.issue.number, body: p });
-          } catch (e) {
-            if (e instanceof Error) {
-              r.error(`Error creating comment:`, { error: e, stack: e.stack });
-              throw e;
-            } else {
-              r.error(`Error creating comment:`, { err: e, error: new Error() });
-              throw e;
-            }
-          }
-          r.ok(`Comment created: ${d}`);
-          r.verbose(`Exiting decideHandler`);
+          t.ok(`Comment processed: ${s}`);
+          t.verbose(`Exiting delegate`);
         });
-      }
-    },
-    1495: (e, t) => {
-      "use strict";
-      Object.defineProperty(t, "__esModule", { value: true });
-      t.sayHello = sayHello;
-      function sayHello() {
-        return "Hello";
       }
     },
     1730: function (e, t, r) {
@@ -32088,6 +32059,182 @@
         });
       }
     },
+    4049: (e, t, r) => {
+      "use strict";
+      Object.defineProperty(t, "__esModule", { value: true });
+      t.ExploreDir = void 0;
+      const s = r(9992);
+      class ExploreDir {
+        constructor() {
+          this._shellInterface = new s.Terminal((0, s.commonCallBack)("stdout"), (0, s.commonCallBack)("stderr"), (0, s.commonCallBack)("exit"));
+        }
+        current_dir_tree() {
+          return new Promise((e, t) => {
+            let r = "";
+            let s = false;
+            this._shellInterface.runCommand("ls -R");
+            const o = this._shellInterface.outputOnStdout();
+            if (!o) {
+              t(new Error("No bash instance running"));
+              return;
+            }
+            o.on("data", (t) => {
+              r += t.toString();
+              if (s) {
+                e(r);
+              }
+            });
+            this._shellInterface.hasCommandCompleted();
+            o.on("data", (o) => {
+              const n = parseInt(o.toString().trim());
+              if (n === 0) {
+                s = true;
+                if (r) {
+                  e(r);
+                }
+              } else {
+                t(new Error(`Command failed with exit code ${n}`));
+              }
+            });
+          });
+        }
+        clone_repo(e, t, r) {
+          return new Promise((s, o) => {
+            let n = "";
+            let A = false;
+            const i = `/tmp/repo-${t}-${e}-${r}`;
+            this._shellInterface.runCommand(`git clone git@github.com:${t}/${e}.git ${i}`);
+            const a = this._shellInterface.outputOnStdout();
+            if (!a) {
+              o(new Error("No bash instance running"));
+              return;
+            }
+            a.on("data", (e) => {
+              n += e.toString();
+              if (A) {
+                s(n);
+              }
+            });
+            this._shellInterface.hasCommandCompleted();
+            a.on("data", (e) => {
+              const t = parseInt(e.toString().trim());
+              if (t === 0) {
+                A = true;
+                if (n) {
+                  s(n);
+                }
+              } else {
+                o(new Error(`Git clone failed with exit code ${t}`));
+              }
+            });
+          });
+        }
+      }
+      t.ExploreDir = ExploreDir;
+    },
+    9992: (e, t, r) => {
+      "use strict";
+      Object.defineProperty(t, "__esModule", { value: true });
+      t.TerminalManager = t.Terminal = void 0;
+      t.commonCallBack = commonCallBack;
+      const s = r(5317);
+      const o = "No bash instance running.";
+      class Terminal {
+        constructor(e, t, r) {
+          this._process = null;
+          this.start();
+          this._onStdout = e;
+          this._onStderr = t;
+          this._onClose = r;
+        }
+        start() {
+          this._process = (0, s.spawn)("bash", [], { stdio: ["pipe", "pipe", "pipe"] });
+          this._process.stdout.on("data", (e) => {
+            this._onStdout(e);
+          });
+          this._process.stderr.on("data", (e) => {
+            this._onStderr(e);
+          });
+          this._process.on("close", (e) => {
+            this._onClose(e);
+          });
+        }
+        runCommand(e) {
+          if (this._process) {
+            this._process.stdin.write(`${e}\n`);
+          } else {
+            console.error(o);
+          }
+        }
+        hasCommandCompleted() {
+          if (this._process) {
+            this._process.stdin.write("echo $?");
+          } else {
+            console.error(o);
+          }
+        }
+        outputOnStdout() {
+          if (this._process) {
+            return this._process.stdout;
+          } else {
+            console.error(o);
+          }
+        }
+        kill() {
+          if (this._process) {
+            this._process.kill();
+            this._process = null;
+            console.log("Bash instance killed.");
+          } else {
+            console.error(o);
+          }
+        }
+      }
+      t.Terminal = Terminal;
+      function commonCallBack(e) {
+        return (t) => {
+          console.log(`Terminal ${e} stdout: ${t}`);
+        };
+      }
+      class TerminalManager {
+        constructor() {
+          this._terminals = new Map();
+          this.init();
+        }
+        init() {
+          console.log("TerminalManager initialized");
+        }
+        createTerminal(e) {
+          if (this._terminals.has(e)) {
+            console.error(`Terminal with id ${e} already exists.`);
+            return;
+          }
+          const t = new Terminal(commonCallBack(e), commonCallBack(e), commonCallBack(e));
+          this._terminals.set(e, t);
+          t.start();
+          console.log(`Terminal with id ${e} created.`);
+        }
+        runCommandInTerminal(e, t) {
+          const r = this._terminals.get(e);
+          if (r) {
+            r.runCommand(t);
+          } else {
+            console.error(`Terminal with id ${e} does not exist.`);
+          }
+        }
+        killTerminal(e) {
+          const t = this._terminals.get(e);
+          if (t) {
+            t.kill();
+            this._terminals.delete(e);
+            console.log(`Terminal with id ${e} killed.`);
+          } else {
+            console.error(`Terminal with id ${e} does not exist.`);
+          }
+        }
+      }
+      t.TerminalManager = TerminalManager;
+    },
     9390: (e, t) => {
       "use strict";
       Object.defineProperty(t, "__esModule", { value: true });
@@ -32162,6 +32309,10 @@
     181: (e) => {
       "use strict";
       e.exports = require("buffer");
+    },
+    5317: (e) => {
+      "use strict";
+      e.exports = require("child_process");
     },
     4236: (e) => {
       "use strict";
