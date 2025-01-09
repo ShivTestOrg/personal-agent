@@ -38449,6 +38449,9 @@
               const ie = C[1];
               try {
                 const C = JSON.parse(ie);
+                if (C.tool === "writeFile" && C.args.content && typeof C.args.content === "object") {
+                  C.args.content = JSON.stringify(C.args.content, null, 2);
+                }
                 const Ge = yield this._executeToolRequest(C, P);
                 oe = oe.replace(q, "```result\n" + JSON.stringify(Ge, null, 2) + "\n```");
               } catch (C) {
