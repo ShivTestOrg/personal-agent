@@ -202,6 +202,12 @@ export class Completions extends SuperOpenAi {
 
       try {
         const toolRequest: ToolRequest = JSON.parse(toolJson);
+
+        // For writeFile, ensure content is stringified if it's an object
+        if (toolRequest.tool === "writeFile" && toolRequest.args.content && typeof toolRequest.args.content === "object") {
+          toolRequest.args.content = JSON.stringify(toolRequest.args.content, null, 2);
+        }
+
         const result = await this._executeToolRequest(toolRequest, workingDir);
 
         // Replace this specific tool block with its result
