@@ -15,11 +15,11 @@ Each tool implements a common interface that provides consistent error handling 
 
 Workflow:
 1. The repository has already been cloned and you are in the correct working directory
-2. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not
+2. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.
 3. If not complete, you will continue with additional attempts up to ${MAX_TRIES} tries
 4. Each attempt should build upon previous attempts, learning from any failures
 
-To use a tool, format your response like this:
+To use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:
 \`\`\`tool
 {
   "tool": "readFile|writeFile|exploreDir|searchFiles",
@@ -42,6 +42,8 @@ To use a tool, format your response like this:
   }
 }
 \`\`\`
+
+Multiple tool requests will be processed sequentially in the order they appear in your response. Each tool request will be replaced with its corresponding result.
 
 The tool will execute and return a result in this format:
 \`\`\`result
@@ -186,31 +188,42 @@ export class Completions extends SuperOpenAi {
   }
 
   private async _processResponse(response: string, workingDir: string): Promise<string> {
-    const toolMatch = response.match(/```tool\n([\s\S]*?)```/);
-    if (!toolMatch) return response;
+    // Find all tool blocks in the response
+    const toolBlocks = [...response.matchAll(/```tool\n([\s\S]*?)```/g)];
+    if (toolBlocks.length === 0) return response;
 
-    try {
-      const toolRequest: ToolRequest = JSON.parse(toolMatch[1]);
-      const result = await this._executeToolRequest(toolRequest, workingDir);
+    let processedResponse = response;
 
-      // Replace the tool request with the result
-      return response.replace(/```tool\n[\s\S]*?```/, "```result\n" + JSON.stringify(result, null, 2) + "\n```");
-    } catch (error) {
-      // Replace the tool request with the error
-      return response.replace(
-        /```tool\n[\s\S]*?```/,
-        "```result\n" +
-          JSON.stringify(
-            {
-              success: false,
-              error: error instanceof Error ? error.message : "Unknown error",
-            },
-            null,
-            2
-          ) +
-          "\n```"
-      );
+    // Process each tool request sequentially
+    for (const toolBlock of toolBlocks) {
+      const fullMatch = toolBlock[0];
+      const toolJson = toolBlock[1];
+
+      try {
+        const toolRequest: ToolRequest = JSON.parse(toolJson);
+        const result = await this._executeToolRequest(toolRequest, workingDir);
+
+        // Replace this specific tool block with its result
+        processedResponse = processedResponse.replace(fullMatch, "```result\n" + JSON.stringify(result, null, 2) + "\n```");
+      } catch (error) {
+        // Replace this specific tool block with its error
+        processedResponse = processedResponse.replace(
+          fullMatch,
+          "```result\n" +
+            JSON.stringify(
+              {
+                success: false,
+                error: error instanceof Error ? error.message : "Unknown error",
+              },
+              null,
+              2
+            ) +
+            "\n```"
+        );
+      }
     }
+
+    return processedResponse;
   }
 
   private async _checkSolution(prompt: string, model: string): Promise<boolean> {
