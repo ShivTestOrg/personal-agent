@@ -38738,7 +38738,7 @@
         _makeTempDir() {
           return oe(this, void 0, void 0, function* () {
             const C = Math.random().toString(36).substring(7);
-            const P = yield this._shellInterface.runCommand(`mktemp -d -t personal-agent-${C}`);
+            const P = yield this._shellInterface.runCommand(`mktemp -d -t personal-agent-${C}-XXXXXX`);
             return P.trim();
           });
         }
