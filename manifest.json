@@ -4,14 +4,6 @@
   "ubiquity:listeners": ["issue_comment.created"],
   "configuration": {
     "type": "object",
-    "properties": {
-      "model": {
-        "default": "o1-mini",
-        "type": "string"
-      },
-      "openAiBaseUrl": {
-        "type": "string"
-      }
-    }
+    "properties": {}
   }
 }

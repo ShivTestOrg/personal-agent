@@ -38432,7 +38432,7 @@
               const Qr = Br.success && ((P = Br.data) === null || P === void 0 ? void 0 : P.tree) ? Br.data.tree : "";
               const Dr = st.issue.body;
               const Fr = `Please help resolve this issue:\n${Dr}\n\nRepository: ${Ar}/${Wt}\nIssue #${Er}\n\nFile tree:\n${Qr}`;
-              const kr = yield C.adapters.openai.completions.createCompletion(Fr, "gpt-4-1106-preview", Ir);
+              const kr = yield C.adapters.openai.completions.createCompletion(Fr, "anthropic/claude-3.5-sonnet", Ir);
               if (!kr) {
                 Ge.error("No solution was generated");
                 return;
@@ -38625,14 +38625,10 @@
         return oe(this, void 0, void 0, function* () {
           const q = new Ge.Octokit({ auth: P.PERSONAL_AGENT_PAT_CLASSIC });
           const oe = C.settings;
-          const ie = Object.assign(
-            { apiKey: (oe.openAiBaseUrl && P.OPENROUTER_API_KEY) || P.OPENAI_API_KEY },
-            oe.openAiBaseUrl && { baseURL: oe.openAiBaseUrl }
-          );
-          const Ot = { eventName: C.eventName, payload: C.eventPayload, config: oe, octokit: q, env: P, logger: new st.Logs("info"), adapters: {} };
-          const Wt = new Er.default(ie);
-          Ot.adapters = (0, Ar.createAdapters)(Wt, Ot);
-          yield runPlugin(Ot);
+          const ie = { eventName: C.eventName, payload: C.eventPayload, config: oe, octokit: q, env: P, logger: new st.Logs("info"), adapters: {} };
+          const Ot = new Er.default({ baseURL: "https://openrouter.ai/api/v1", apiKey: P.OPENROUTER_API_KEY });
+          ie.adapters = (0, Ar.createAdapters)(Ot, ie);
+          yield runPlugin(ie);
         });
       }
     },
@@ -39108,7 +39104,7 @@
       P.pluginSettingsValidator = P.pluginSettingsSchema = void 0;
       const oe = q(14019);
       const ie = q(80619);
-      P.pluginSettingsSchema = oe.Type.Object({ model: oe.Type.String({ default: "o1-mini" }), openAiBaseUrl: oe.Type.Optional(oe.Type.String()) });
+      P.pluginSettingsSchema = oe.Type.Object({});
       P.pluginSettingsValidator = new ie.StandardValidator(P.pluginSettingsSchema);
     },
     47423: (C, P) => {
