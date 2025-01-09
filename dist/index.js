@@ -10644,7 +10644,7 @@
       const Mr = q(69100);
       const Lr = q(12760);
       const Gr = q(67517);
-      const Vr = q(96994);
+      const xr = q(96994);
       function FromMappedResult(C, P) {
         return C in P ? FromSchemaType(C, P[C]) : (0, Gr.MappedResult)(P);
       }
@@ -10672,33 +10672,33 @@
         return q;
       }
       function FromSchemaType(C, P) {
-        return (0, Vr.IsOptional)(P)
+        return (0, xr.IsOptional)(P)
           ? (0, Fr.Optional)(FromSchemaType(C, (0, Ge.Discard)(P, [oe.OptionalKind])))
-          : (0, Vr.IsReadonly)(P)
+          : (0, xr.IsReadonly)(P)
             ? (0, Nr.Readonly)(FromSchemaType(C, (0, Ge.Discard)(P, [oe.ReadonlyKind])))
-            : (0, Vr.IsMappedResult)(P)
+            : (0, xr.IsMappedResult)(P)
               ? FromMappedResult(C, P.properties)
-              : (0, Vr.IsMappedKey)(P)
+              : (0, xr.IsMappedKey)(P)
                 ? FromMappedKey(C, P.keys)
-                : (0, Vr.IsConstructor)(P)
+                : (0, xr.IsConstructor)(P)
                   ? (0, Wt.Constructor)(FromRest(C, P.parameters), FromSchemaType(C, P.returns))
-                  : (0, Vr.IsFunction)(P)
+                  : (0, xr.IsFunction)(P)
                     ? (0, Ar.Function)(FromRest(C, P.parameters), FromSchemaType(C, P.returns))
-                    : (0, Vr.IsAsyncIterator)(P)
+                    : (0, xr.IsAsyncIterator)(P)
                       ? (0, Ot.AsyncIterator)(FromSchemaType(C, P.items))
-                      : (0, Vr.IsIterator)(P)
+                      : (0, xr.IsIterator)(P)
                         ? (0, Br.Iterator)(FromSchemaType(C, P.items))
-                        : (0, Vr.IsIntersect)(P)
+                        : (0, xr.IsIntersect)(P)
                           ? (0, Ir.Intersect)(FromRest(C, P.allOf))
-                          : (0, Vr.IsUnion)(P)
+                          : (0, xr.IsUnion)(P)
                             ? (0, Mr.Union)(FromRest(C, P.anyOf))
-                            : (0, Vr.IsTuple)(P)
+                            : (0, xr.IsTuple)(P)
                               ? (0, Ur.Tuple)(FromRest(C, P.items ?? []))
-                              : (0, Vr.IsObject)(P)
+                              : (0, xr.IsObject)(P)
                                 ? (0, Dr.Object)(FromProperties(C, P.properties))
-                                : (0, Vr.IsArray)(P)
+                                : (0, xr.IsArray)(P)
                                   ? (0, st.Array)(FromSchemaType(C, P.items))
-                                  : (0, Vr.IsPromise)(P)
+                                  : (0, xr.IsPromise)(P)
                                     ? (0, kr.Promise)(FromSchemaType(C, P.item))
                                     : P;
       }
@@ -10709,7 +10709,7 @@
       }
       P.MappedFunctionReturnType = MappedFunctionReturnType;
       function Mapped(C, P, q = {}) {
-        const Ge = (0, Vr.IsSchema)(C) ? (0, Er.IndexPropertyKeys)(C) : C;
+        const Ge = (0, xr.IsSchema)(C) ? (0, Er.IndexPropertyKeys)(C) : C;
         const st = P({ [oe.Kind]: "MappedKey", keys: Ge });
         const Ot = MappedFunctionReturnType(Ge, st);
         return (0, ie.CloneType)((0, Dr.Object)(Ot), q);
@@ -12947,34 +12947,34 @@
       const Mr = q(41094);
       const Lr = q(54025);
       const Gr = q(1078);
-      const Vr = q(50468);
-      const xr = q(85544);
+      const xr = q(50468);
+      const Vr = q(85544);
       const jr = q(62094);
       const Hr = q(88932);
       const Yr = q(38425);
       const Jr = q(75726);
       const Wr = q(40640);
       const Kr = q(40675);
-      const $r = q(78946);
-      const zr = q(30420);
+      const zr = q(78946);
+      const $r = q(30420);
       const Zr = q(33107);
       const Xr = q(80470);
-      const en = q(42744);
-      const tn = q(83003);
-      const rn = q(23556);
-      const nn = q(81688);
-      const sn = q(26609);
-      const on = q(67575);
-      const an = q(7521);
-      const An = q(69100);
-      const ln = q(51897);
-      const cn = q(23339);
+      const es = q(42744);
+      const ts = q(83003);
+      const rs = q(23556);
+      const ss = q(81688);
+      const ns = q(26609);
+      const os = q(67575);
+      const is = q(7521);
+      const as = q(69100);
+      const As = q(51897);
+      const ls = q(23339);
       class JsonTypeBuilder {
         Strict(C) {
-          return (0, rn.Strict)(C);
+          return (0, rs.Strict)(C);
         }
         ReadonlyOptional(C) {
-          return (0, $r.ReadonlyOptional)(C);
+          return (0, zr.ReadonlyOptional)(C);
         }
         Readonly(C, P) {
           return (0, Kr.Readonly)(C, P ?? true);
@@ -13043,10 +13043,10 @@
           return (0, Gr.Not)(C, P);
         }
         Null(C = {}) {
-          return (0, Vr.Null)(C);
+          return (0, xr.Null)(C);
         }
         Number(C = {}) {
-          return (0, xr.Number)(C);
+          return (0, Vr.Number)(C);
         }
         Object(C, P = {}) {
           return (0, jr.Object)(C, P);
@@ -13061,7 +13061,7 @@
           return (0, Wr.Pick)(C, P, q);
         }
         Record(C, P, q = {}) {
-          return (0, zr.Record)(C, P, q);
+          return (0, $r.Record)(C, P, q);
         }
         Recursive(C, P = {}) {
           return (0, Zr.Recursive)(C, P);
@@ -13070,34 +13070,34 @@
           return (0, Xr.Ref)(C, P);
         }
         Required(C, P = {}) {
-          return (0, en.Required)(C, P);
+          return (0, es.Required)(C, P);
         }
         Rest(C) {
-          return (0, tn.Rest)(C);
+          return (0, ts.Rest)(C);
         }
         String(C = {}) {
-          return (0, nn.String)(C);
+          return (0, ss.String)(C);
         }
         TemplateLiteral(C, P = {}) {
-          return (0, sn.TemplateLiteral)(C, P);
+          return (0, ns.TemplateLiteral)(C, P);
         }
         Transform(C) {
-          return (0, on.Transform)(C);
+          return (0, os.Transform)(C);
         }
         Tuple(C, P = {}) {
-          return (0, an.Tuple)(C, P);
+          return (0, is.Tuple)(C, P);
         }
         Uncapitalize(C, P = {}) {
           return (0, kr.Uncapitalize)(C, P);
         }
         Union(C, P = {}) {
-          return (0, An.Union)(C, P);
+          return (0, as.Union)(C, P);
         }
         Unknown(C = {}) {
-          return (0, ln.Unknown)(C);
+          return (0, As.Unknown)(C);
         }
         Unsafe(C = {}) {
-          return (0, cn.Unsafe)(C);
+          return (0, ls.Unsafe)(C);
         }
         Uppercase(C, P = {}) {
           return (0, kr.Uppercase)(C, P);
@@ -13293,18 +13293,18 @@
           return Gr.InstanceType;
         },
       });
-      var Vr = q(4949);
+      var xr = q(4949);
       Object.defineProperty(P, "Integer", {
         enumerable: true,
         get: function () {
-          return Vr.Integer;
+          return xr.Integer;
         },
       });
-      var xr = q(62746);
+      var Vr = q(62746);
       Object.defineProperty(P, "Intersect", {
         enumerable: true,
         get: function () {
-          return xr.Intersect;
+          return Vr.Intersect;
         },
       });
       var jr = q(30568);
@@ -13367,18 +13367,18 @@
           return Kr.Never;
         },
       });
-      var $r = q(1078);
+      var zr = q(1078);
       Object.defineProperty(P, "Not", {
         enumerable: true,
         get: function () {
-          return $r.Not;
+          return zr.Not;
         },
       });
-      var zr = q(50468);
+      var $r = q(50468);
       Object.defineProperty(P, "Null", {
         enumerable: true,
         get: function () {
-          return zr.Null;
+          return $r.Null;
         },
       });
       var Zr = q(85544);
@@ -13395,193 +13395,193 @@
           return Xr.Object;
         },
       });
-      var en = q(88932);
+      var es = q(88932);
       Object.defineProperty(P, "Omit", {
         enumerable: true,
         get: function () {
-          return en.Omit;
+          return es.Omit;
         },
       });
-      var tn = q(38425);
+      var ts = q(38425);
       Object.defineProperty(P, "Optional", {
         enumerable: true,
         get: function () {
-          return tn.Optional;
+          return ts.Optional;
         },
       });
-      var rn = q(30449);
+      var rs = q(30449);
       Object.defineProperty(P, "Parameters", {
         enumerable: true,
         get: function () {
-          return rn.Parameters;
+          return rs.Parameters;
         },
       });
-      var nn = q(75726);
+      var ss = q(75726);
       Object.defineProperty(P, "Partial", {
         enumerable: true,
         get: function () {
-          return nn.Partial;
+          return ss.Partial;
         },
       });
-      var sn = q(40640);
+      var ns = q(40640);
       Object.defineProperty(P, "Pick", {
         enumerable: true,
         get: function () {
-          return sn.Pick;
+          return ns.Pick;
         },
       });
-      var on = q(70062);
+      var os = q(70062);
       Object.defineProperty(P, "Promise", {
         enumerable: true,
         get: function () {
-          return on.Promise;
+          return os.Promise;
         },
       });
-      var an = q(40675);
+      var is = q(40675);
       Object.defineProperty(P, "Readonly", {
         enumerable: true,
         get: function () {
-          return an.Readonly;
+          return is.Readonly;
         },
       });
-      var An = q(78946);
+      var as = q(78946);
       Object.defineProperty(P, "ReadonlyOptional", {
         enumerable: true,
         get: function () {
-          return An.ReadonlyOptional;
+          return as.ReadonlyOptional;
         },
       });
-      var ln = q(30420);
+      var As = q(30420);
       Object.defineProperty(P, "Record", {
         enumerable: true,
         get: function () {
-          return ln.Record;
+          return As.Record;
         },
       });
-      var cn = q(33107);
+      var ls = q(33107);
       Object.defineProperty(P, "Recursive", {
         enumerable: true,
         get: function () {
-          return cn.Recursive;
+          return ls.Recursive;
         },
       });
-      var pn = q(80470);
+      var cs = q(80470);
       Object.defineProperty(P, "Ref", {
         enumerable: true,
         get: function () {
-          return pn.Ref;
+          return cs.Ref;
         },
       });
-      var dn = q(26936);
+      var ps = q(26936);
       Object.defineProperty(P, "RegExp", {
         enumerable: true,
         get: function () {
-          return dn.RegExp;
+          return ps.RegExp;
         },
       });
-      var un = q(42744);
+      var ds = q(42744);
       Object.defineProperty(P, "Required", {
         enumerable: true,
         get: function () {
-          return un.Required;
+          return ds.Required;
         },
       });
-      var mn = q(83003);
+      var us = q(83003);
       Object.defineProperty(P, "Rest", {
         enumerable: true,
         get: function () {
-          return mn.Rest;
+          return us.Rest;
         },
       });
-      var gn = q(32970);
+      var ms = q(32970);
       Object.defineProperty(P, "ReturnType", {
         enumerable: true,
         get: function () {
-          return gn.ReturnType;
+          return ms.ReturnType;
         },
       });
-      var fn = q(23556);
+      var hs = q(23556);
       Object.defineProperty(P, "Strict", {
         enumerable: true,
         get: function () {
-          return fn.Strict;
+          return hs.Strict;
         },
       });
-      var hn = q(81688);
+      var fs = q(81688);
       Object.defineProperty(P, "String", {
         enumerable: true,
         get: function () {
-          return hn.String;
+          return fs.String;
         },
       });
-      var En = q(2129);
+      var gs = q(2129);
       Object.defineProperty(P, "Symbol", {
         enumerable: true,
         get: function () {
-          return En.Symbol;
+          return gs.Symbol;
         },
       });
-      var In = q(26609);
+      var Es = q(26609);
       Object.defineProperty(P, "TemplateLiteral", {
         enumerable: true,
         get: function () {
-          return In.TemplateLiteral;
+          return Es.TemplateLiteral;
         },
       });
-      var Cn = q(67575);
+      var Is = q(67575);
       Object.defineProperty(P, "Transform", {
         enumerable: true,
         get: function () {
-          return Cn.Transform;
+          return Is.Transform;
         },
       });
-      var yn = q(7521);
+      var Cs = q(7521);
       Object.defineProperty(P, "Tuple", {
         enumerable: true,
         get: function () {
-          return yn.Tuple;
+          return Cs.Tuple;
         },
       });
-      var Bn = q(45760);
+      var ys = q(45760);
       Object.defineProperty(P, "Uint8Array", {
         enumerable: true,
         get: function () {
-          return Bn.Uint8Array;
+          return ys.Uint8Array;
         },
       });
-      var Qn = q(96231);
+      var Bs = q(96231);
       Object.defineProperty(P, "Undefined", {
         enumerable: true,
         get: function () {
-          return Qn.Undefined;
+          return Bs.Undefined;
         },
       });
-      var bn = q(69100);
+      var bs = q(69100);
       Object.defineProperty(P, "Union", {
         enumerable: true,
         get: function () {
-          return bn.Union;
+          return bs.Union;
         },
       });
-      var wn = q(51897);
+      var Qs = q(51897);
       Object.defineProperty(P, "Unknown", {
         enumerable: true,
         get: function () {
-          return wn.Unknown;
+          return Qs.Unknown;
         },
       });
-      var vn = q(23339);
+      var ws = q(23339);
       Object.defineProperty(P, "Unsafe", {
         enumerable: true,
         get: function () {
-          return vn.Unsafe;
+          return ws.Unsafe;
         },
       });
-      var Tn = q(81947);
+      var vs = q(81947);
       Object.defineProperty(P, "Void", {
         enumerable: true,
         get: function () {
-          return Tn.Void;
+          return vs.Void;
         },
       });
     },
@@ -17079,7 +17079,7 @@
     17413: (C, P, q) => {
       "use strict";
       Object.defineProperty(P, "__esModule", { value: true });
-      var oe = q(16577);
+      var oe = q(38958);
       class AbortSignal extends oe.EventTarget {
         constructor() {
           super();
@@ -17485,6 +17485,54 @@
         }
       });
       C.exports = HttpsAgent;
+    },
+    59380: (C) => {
+      "use strict";
+      C.exports = balanced;
+      function balanced(C, P, q) {
+        if (C instanceof RegExp) C = maybeMatch(C, q);
+        if (P instanceof RegExp) P = maybeMatch(P, q);
+        var oe = range(C, P, q);
+        return oe && { start: oe[0], end: oe[1], pre: q.slice(0, oe[0]), body: q.slice(oe[0] + C.length, oe[1]), post: q.slice(oe[1] + P.length) };
+      }
+      function maybeMatch(C, P) {
+        var q = P.match(C);
+        return q ? q[0] : null;
+      }
+      balanced.range = range;
+      function range(C, P, q) {
+        var oe, ie, Ge, st, Ot;
+        var Wt = q.indexOf(C);
+        var Ar = q.indexOf(P, Wt + 1);
+        var Er = Wt;
+        if (Wt >= 0 && Ar > 0) {
+          if (C === P) {
+            return [Wt, Ar];
+          }
+          oe = [];
+          Ge = q.length;
+          while (Er >= 0 && !Ot) {
+            if (Er == Wt) {
+              oe.push(Er);
+              Wt = q.indexOf(C, Er + 1);
+            } else if (oe.length == 1) {
+              Ot = [oe.pop(), Ar];
+            } else {
+              ie = oe.pop();
+              if (ie < Ge) {
+                Ge = ie;
+                st = Ar;
+              }
+              Ar = q.indexOf(P, Er + 1);
+            }
+            Er = Wt < Ar && Wt >= 0 ? Wt : Ar;
+          }
+          if (oe.length) {
+            Ot = [Ge, st];
+          }
+        }
+        return Ot;
+      }
     },
     52732: (C, P, q) => {
       var oe = q(11063);
@@ -17923,7 +17971,7 @@
       C.exports.populate = Er.populate;
       C.exports = Er;
     },
-    16577: (C, P) => {
+    38958: (C, P) => {
       "use strict";
       /**
        * @author Toru Nagashima <https://github.com/mysticatea>
@@ -18337,6 +18385,145 @@
       C.exports = EventTarget;
       C.exports.EventTarget = C.exports["default"] = EventTarget;
       C.exports.defineEventAttribute = defineEventAttribute;
+    },
+    61765: (C, P, q) => {
+      var oe = q(59380);
+      C.exports = expandTop;
+      var ie = "\0SLASH" + Math.random() + "\0";
+      var Ge = "\0OPEN" + Math.random() + "\0";
+      var st = "\0CLOSE" + Math.random() + "\0";
+      var Ot = "\0COMMA" + Math.random() + "\0";
+      var Wt = "\0PERIOD" + Math.random() + "\0";
+      function numeric(C) {
+        return parseInt(C, 10) == C ? parseInt(C, 10) : C.charCodeAt(0);
+      }
+      function escapeBraces(C) {
+        return C.split("\\\\").join(ie).split("\\{").join(Ge).split("\\}").join(st).split("\\,").join(Ot).split("\\.").join(Wt);
+      }
+      function unescapeBraces(C) {
+        return C.split(ie).join("\\").split(Ge).join("{").split(st).join("}").split(Ot).join(",").split(Wt).join(".");
+      }
+      function parseCommaParts(C) {
+        if (!C) return [""];
+        var P = [];
+        var q = oe("{", "}", C);
+        if (!q) return C.split(",");
+        var ie = q.pre;
+        var Ge = q.body;
+        var st = q.post;
+        var Ot = ie.split(",");
+        Ot[Ot.length - 1] += "{" + Ge + "}";
+        var Wt = parseCommaParts(st);
+        if (st.length) {
+          Ot[Ot.length - 1] += Wt.shift();
+          Ot.push.apply(Ot, Wt);
+        }
+        P.push.apply(P, Ot);
+        return P;
+      }
+      function expandTop(C) {
+        if (!C) return [];
+        if (C.substr(0, 2) === "{}") {
+          C = "\\{\\}" + C.substr(2);
+        }
+        return expand(escapeBraces(C), true).map(unescapeBraces);
+      }
+      function embrace(C) {
+        return "{" + C + "}";
+      }
+      function isPadded(C) {
+        return /^-?0\d/.test(C);
+      }
+      function lte(C, P) {
+        return C <= P;
+      }
+      function gte(C, P) {
+        return C >= P;
+      }
+      function expand(C, P) {
+        var q = [];
+        var ie = oe("{", "}", C);
+        if (!ie) return [C];
+        var Ge = ie.pre;
+        var Ot = ie.post.length ? expand(ie.post, false) : [""];
+        if (/\$$/.test(ie.pre)) {
+          for (var Wt = 0; Wt < Ot.length; Wt++) {
+            var Ar = Ge + "{" + ie.body + "}" + Ot[Wt];
+            q.push(Ar);
+          }
+        } else {
+          var Er = /^-?\d+\.\.-?\d+(?:\.\.-?\d+)?$/.test(ie.body);
+          var Ir = /^[a-zA-Z]\.\.[a-zA-Z](?:\.\.-?\d+)?$/.test(ie.body);
+          var Br = Er || Ir;
+          var Qr = ie.body.indexOf(",") >= 0;
+          if (!Br && !Qr) {
+            if (ie.post.match(/,.*\}/)) {
+              C = ie.pre + "{" + ie.body + st + ie.post;
+              return expand(C);
+            }
+            return [C];
+          }
+          var Dr;
+          if (Br) {
+            Dr = ie.body.split(/\.\./);
+          } else {
+            Dr = parseCommaParts(ie.body);
+            if (Dr.length === 1) {
+              Dr = expand(Dr[0], false).map(embrace);
+              if (Dr.length === 1) {
+                return Ot.map(function (C) {
+                  return ie.pre + Dr[0] + C;
+                });
+              }
+            }
+          }
+          var Fr;
+          if (Br) {
+            var kr = numeric(Dr[0]);
+            var Nr = numeric(Dr[1]);
+            var Ur = Math.max(Dr[0].length, Dr[1].length);
+            var Mr = Dr.length == 3 ? Math.abs(numeric(Dr[2])) : 1;
+            var Lr = lte;
+            var Gr = Nr < kr;
+            if (Gr) {
+              Mr *= -1;
+              Lr = gte;
+            }
+            var xr = Dr.some(isPadded);
+            Fr = [];
+            for (var Vr = kr; Lr(Vr, Nr); Vr += Mr) {
+              var jr;
+              if (Ir) {
+                jr = String.fromCharCode(Vr);
+                if (jr === "\\") jr = "";
+              } else {
+                jr = String(Vr);
+                if (xr) {
+                  var Hr = Ur - jr.length;
+                  if (Hr > 0) {
+                    var Yr = new Array(Hr + 1).join("0");
+                    if (Vr < 0) jr = "-" + Yr + jr.slice(1);
+                    else jr = Yr + jr;
+                  }
+                }
+              }
+              Fr.push(jr);
+            }
+          } else {
+            Fr = [];
+            for (var Jr = 0; Jr < Dr.length; Jr++) {
+              Fr.push.apply(Fr, expand(Dr[Jr], false));
+            }
+          }
+          for (var Jr = 0; Jr < Fr.length; Jr++) {
+            for (var Wt = 0; Wt < Ot.length; Wt++) {
+              var Ar = Ge + Fr[Jr] + Ot[Wt];
+              if (!P || Br || Ar) q.push(Ar);
+            }
+          }
+        }
+        return q;
+      }
     },
     33724: (C, P, q) => {
       "use strict";
@@ -19169,19 +19356,19 @@
         clone: { enumerable: true },
       });
       Object.defineProperty(Response.prototype, Symbol.toStringTag, { value: "Response", writable: false, enumerable: false, configurable: true });
-      const Vr = Symbol("Request internals");
-      const xr = Ge.URL || st.URL;
+      const xr = Symbol("Request internals");
+      const Vr = Ge.URL || st.URL;
       const jr = Ge.parse;
       const Hr = Ge.format;
       function parseURL(C) {
         if (/^[a-zA-Z][a-zA-Z\d+\-.]*:/.exec(C)) {
-          C = new xr(C).toString();
+          C = new Vr(C).toString();
         }
         return jr(C);
       }
       const Yr = "destroy" in oe.Readable.prototype;
       function isRequest(C) {
-        return typeof C === "object" && typeof C[Vr] === "object";
+        return typeof C === "object" && typeof C[xr] === "object";
       }
       function isAbortSignal(C) {
         const P = C && typeof C === "object" && Object.getPrototypeOf(C);
@@ -19220,26 +19407,26 @@
           if (st != null && !isAbortSignal(st)) {
             throw new TypeError("Expected signal to be an instanceof AbortSignal");
           }
-          this[Vr] = { method: oe, redirect: P.redirect || C.redirect || "follow", headers: Ge, parsedURL: q, signal: st };
+          this[xr] = { method: oe, redirect: P.redirect || C.redirect || "follow", headers: Ge, parsedURL: q, signal: st };
           this.follow = P.follow !== undefined ? P.follow : C.follow !== undefined ? C.follow : 20;
           this.compress = P.compress !== undefined ? P.compress : C.compress !== undefined ? C.compress : true;
           this.counter = P.counter || C.counter || 0;
           this.agent = P.agent || C.agent;
         }
         get method() {
-          return this[Vr].method;
+          return this[xr].method;
         }
         get url() {
-          return Hr(this[Vr].parsedURL);
+          return Hr(this[xr].parsedURL);
         }
         get headers() {
-          return this[Vr].headers;
+          return this[xr].headers;
         }
         get redirect() {
-          return this[Vr].redirect;
+          return this[xr].redirect;
         }
         get signal() {
-          return this[Vr].signal;
+          return this[xr].signal;
         }
         clone() {
           return new Request(this);
@@ -19256,8 +19443,8 @@
         signal: { enumerable: true },
       });
       function getNodeRequestOptions(C) {
-        const P = C[Vr].parsedURL;
-        const q = new Headers(C[Vr].headers);
+        const P = C[xr].parsedURL;
+        const q = new Headers(C[xr].headers);
         if (!q.has("Accept")) {
           q.set("Accept", "*/*");
         }
@@ -19311,7 +19498,7 @@
         const oe = new Jr(C).hostname;
         return q === oe || (q[q.length - oe.length - 1] === "." && q.endsWith(oe));
       };
-      const $r = function isSameProtocol(C, P) {
+      const zr = function isSameProtocol(C, P) {
         const q = new Jr(P).protocol;
         const oe = new Jr(C).protocol;
         return q === oe;
@@ -19439,7 +19626,7 @@
                     timeout: st.timeout,
                     size: st.size,
                   };
-                  if (!Kr(st.url, ie) || !$r(st.url, ie)) {
+                  if (!Kr(st.url, ie) || !zr(st.url, ie)) {
                     for (const C of ["authorization", "www-authenticate", "cookie", "cookie2"]) {
                       oe.headers.delete(C);
                     }
@@ -20834,8 +21021,8 @@
       const Ur = q(53573);
       const { getGlobalDispatcher: Mr, setGlobalDispatcher: Lr } = q(32581);
       const Gr = q(78840);
-      const Vr = q(48299);
-      const xr = q(64415);
+      const xr = q(48299);
+      const Vr = q(64415);
       let jr;
       try {
         q(76982);
@@ -20852,8 +21039,8 @@
       C.exports.ProxyAgent = Nr;
       C.exports.RetryHandler = Ur;
       C.exports.DecoratorHandler = Gr;
-      C.exports.RedirectHandler = Vr;
-      C.exports.createRedirectInterceptor = xr;
+      C.exports.RedirectHandler = xr;
+      C.exports.createRedirectInterceptor = Vr;
       C.exports.buildConnector = Br;
       C.exports.errors = Ge;
       function makeDispatcher(C) {
@@ -20963,8 +21150,8 @@
       const Mr = Symbol("onConnectionError");
       const Lr = Symbol("maxRedirections");
       const Gr = Symbol("onDrain");
-      const Vr = Symbol("factory");
-      const xr = Symbol("finalizer");
+      const xr = Symbol("factory");
+      const Vr = Symbol("finalizer");
       const jr = Symbol("options");
       function defaultFactory(C, P) {
         return P && P.connections === 1 ? new Br(C, P) : new Ir(C, P);
@@ -20988,9 +21175,9 @@
           this[jr] = { ...Qr.deepClone(Ge), connect: q };
           this[jr].interceptors = Ge.interceptors ? { ...Ge.interceptors } : undefined;
           this[Lr] = P;
-          this[Vr] = C;
+          this[xr] = C;
           this[ie] = new Map();
-          this[xr] = new kr((C) => {
+          this[Vr] = new kr((C) => {
             const P = this[ie].get(C);
             if (P !== undefined && P.deref() === undefined) {
               this[ie].delete(C);
@@ -21030,9 +21217,9 @@
           const Ge = this[ie].get(q);
           let st = Ge ? Ge.deref() : null;
           if (!st) {
-            st = this[Vr](C.origin, this[jr]).on("drain", this[Gr]).on("connect", this[Nr]).on("disconnect", this[Ur]).on("connectionError", this[Mr]);
+            st = this[xr](C.origin, this[jr]).on("drain", this[Gr]).on("connect", this[Nr]).on("disconnect", this[Ur]).on("connectionError", this[Mr]);
             this[ie].set(q, new Fr(st));
-            this[xr].register(st, q);
+            this[Vr].register(st, q);
           }
           return st.dispatch(C, P);
         }
@@ -22008,7 +22195,7 @@
       const Mr = Symbol("kIndex");
       const Lr = Symbol("kWeight");
       const Gr = Symbol("kMaxWeightPerServer");
-      const Vr = Symbol("kErrorPenalty");
+      const xr = Symbol("kErrorPenalty");
       function getGreatestCommonDivisor(C, P) {
         if (P === 0) return C;
         return getGreatestCommonDivisor(P, C % P);
@@ -22023,7 +22210,7 @@
           this[Mr] = -1;
           this[Ur] = 0;
           this[Gr] = this[kr].maxWeightPerServer || 100;
-          this[Vr] = this[kr].errorPenalty || 15;
+          this[xr] = this[kr].errorPenalty || 15;
           if (!Array.isArray(C)) {
             C = [C];
           }
@@ -22045,16 +22232,16 @@
           const q = this[Fr](P, Object.assign({}, this[kr]));
           this[Wt](q);
           q.on("connect", () => {
-            q[Lr] = Math.min(this[Gr], q[Lr] + this[Vr]);
+            q[Lr] = Math.min(this[Gr], q[Lr] + this[xr]);
           });
           q.on("connectionError", () => {
-            q[Lr] = Math.max(1, q[Lr] - this[Vr]);
+            q[Lr] = Math.max(1, q[Lr] - this[xr]);
             this._updateBalancedPoolStats();
           });
           q.on("disconnect", (...C) => {
             const P = C[2];
             if (P && P.code === "UND_ERR_SOCKET") {
-              q[Lr] = Math.max(1, q[Lr] - this[Vr]);
+              q[Lr] = Math.max(1, q[Lr] - this[xr]);
               this._updateBalancedPoolStats();
             }
           });
@@ -22128,7 +22315,7 @@
       const { fetching: Nr } = q(12315);
       const { urlIsHttpHttpsScheme: Ur, createDeferredPromise: Mr, readAllBytes: Lr } = q(15523);
       const Gr = q(42613);
-      const { getGlobalDispatcher: Vr } = q(32581);
+      const { getGlobalDispatcher: xr } = q(32581);
       class Cache {
         #e;
         constructor() {
@@ -22222,7 +22409,7 @@
             oe.push(
               Nr({
                 request: C,
-                dispatcher: Vr(),
+                dispatcher: xr(),
                 processResponse(C) {
                   if (C.type === "error" || C.status === 206 || C.status < 200 || C.status > 299) {
                     st.reject(Ar.errors.exception({ header: "Cache.addAll", message: "Received an invalid status code or the request failed." }));
@@ -22476,13 +22663,13 @@
           const ie = q ?? this.#e;
           for (const q of ie) {
             const [ie, Ge] = q;
-            if (this.#n(C, ie, Ge, P)) {
+            if (this.#s(C, ie, Ge, P)) {
               oe.push(q);
             }
           }
           return oe;
         }
-        #n(C, P, q = null, oe) {
+        #s(C, P, q = null, oe) {
           const st = new URL(C.url);
           const Ot = new URL(P.url);
           if (oe?.ignoreSearch) {
@@ -22519,13 +22706,13 @@
         delete: st,
         keys: st,
       });
-      const xr = [
+      const Vr = [
         { key: "ignoreSearch", converter: Ar.converters.boolean, defaultValue: false },
         { key: "ignoreMethod", converter: Ar.converters.boolean, defaultValue: false },
         { key: "ignoreVary", converter: Ar.converters.boolean, defaultValue: false },
       ];
-      Ar.converters.CacheQueryOptions = Ar.dictionaryConverter(xr);
-      Ar.converters.MultiCacheQueryOptions = Ar.dictionaryConverter([...xr, { key: "cacheName", converter: Ar.converters.DOMString }]);
+      Ar.converters.CacheQueryOptions = Ar.dictionaryConverter(Vr);
+      Ar.converters.MultiCacheQueryOptions = Ar.dictionaryConverter([...Vr, { key: "cacheName", converter: Ar.converters.DOMString }]);
       Ar.converters.Response = Ar.interfaceConverter(Er);
       Ar.converters["sequence<RequestInfo>"] = Ar.sequenceConverter(Ar.converters.RequestInfo);
       C.exports = { Cache: Cache };
@@ -22537,7 +22724,7 @@
       const { webidl: Ge } = q(74222);
       const { kEnumerableProperty: st } = q(3440);
       class CacheStorage {
-        #s = new Map();
+        #n = new Map();
         constructor() {
           if (arguments[0] !== oe) {
             Ge.illegalConstructor();
@@ -22549,13 +22736,13 @@
           C = Ge.converters.RequestInfo(C);
           P = Ge.converters.MultiCacheQueryOptions(P);
           if (P.cacheName != null) {
-            if (this.#s.has(P.cacheName)) {
-              const q = this.#s.get(P.cacheName);
+            if (this.#n.has(P.cacheName)) {
+              const q = this.#n.get(P.cacheName);
               const Ge = new ie(oe, q);
               return await Ge.match(C, P);
             }
           } else {
-            for (const q of this.#s.values()) {
+            for (const q of this.#n.values()) {
               const Ge = new ie(oe, q);
               const st = await Ge.match(C, P);
               if (st !== undefined) {
@@ -22568,29 +22755,29 @@
           Ge.brandCheck(this, CacheStorage);
           Ge.argumentLengthCheck(arguments, 1, { header: "CacheStorage.has" });
           C = Ge.converters.DOMString(C);
-          return this.#s.has(C);
+          return this.#n.has(C);
         }
         async open(C) {
           Ge.brandCheck(this, CacheStorage);
           Ge.argumentLengthCheck(arguments, 1, { header: "CacheStorage.open" });
           C = Ge.converters.DOMString(C);
-          if (this.#s.has(C)) {
-            const P = this.#s.get(C);
+          if (this.#n.has(C)) {
+            const P = this.#n.get(C);
             return new ie(oe, P);
           }
           const P = [];
-          this.#s.set(C, P);
+          this.#n.set(C, P);
           return new ie(oe, P);
         }
         async delete(C) {
           Ge.brandCheck(this, CacheStorage);
           Ge.argumentLengthCheck(arguments, 1, { header: "CacheStorage.delete" });
           C = Ge.converters.DOMString(C);
-          return this.#s.delete(C);
+          return this.#n.delete(C);
         }
         async keys() {
           Ge.brandCheck(this, CacheStorage);
-          const C = this.#s.keys();
+          const C = this.#n.keys();
           return [...C];
         }
       }
@@ -22656,9 +22843,9 @@
         BodyTimeoutError: Mr,
         HTTPParserError: Lr,
         ResponseExceededMaxSizeError: Gr,
-        ClientDestroyedError: Vr,
+        ClientDestroyedError: xr,
       } = q(68707);
-      const xr = q(59136);
+      const Vr = q(59136);
       const {
         kUrl: jr,
         kReset: Hr,
@@ -22666,82 +22853,82 @@
         kClient: Jr,
         kBusy: Wr,
         kParser: Kr,
-        kConnect: $r,
-        kBlocking: zr,
+        kConnect: zr,
+        kBlocking: $r,
         kResuming: Zr,
         kRunning: Xr,
-        kPending: en,
-        kSize: tn,
-        kWriting: rn,
-        kQueue: nn,
-        kConnected: sn,
-        kConnecting: on,
-        kNeedDrain: an,
-        kNoRef: An,
-        kKeepAliveDefaultTimeout: ln,
-        kHostHeader: cn,
-        kPendingIdx: pn,
-        kRunningIdx: dn,
-        kError: un,
-        kPipelining: mn,
-        kSocket: gn,
-        kKeepAliveTimeoutValue: fn,
-        kMaxHeadersSize: hn,
-        kKeepAliveMaxTimeout: En,
-        kKeepAliveTimeoutThreshold: In,
-        kHeadersTimeout: Cn,
-        kBodyTimeout: yn,
-        kStrictContentLength: Bn,
-        kConnector: Qn,
-        kMaxRedirections: bn,
-        kMaxRequests: wn,
-        kCounter: vn,
-        kClose: Tn,
-        kDestroy: _n,
-        kDispatch: Rn,
-        kInterceptors: Sn,
-        kLocalAddress: Dn,
-        kMaxResponseSize: Fn,
-        kHTTPConnVersion: kn,
-        kHost: On,
-        kHTTP2Session: Pn,
-        kHTTP2SessionState: Nn,
-        kHTTP2BuildRequest: Un,
-        kHTTP2CopyHeaders: Mn,
-        kHTTP1BuildRequest: Ln,
+        kPending: es,
+        kSize: ts,
+        kWriting: rs,
+        kQueue: ss,
+        kConnected: ns,
+        kConnecting: os,
+        kNeedDrain: is,
+        kNoRef: as,
+        kKeepAliveDefaultTimeout: As,
+        kHostHeader: ls,
+        kPendingIdx: cs,
+        kRunningIdx: ps,
+        kError: ds,
+        kPipelining: us,
+        kSocket: ms,
+        kKeepAliveTimeoutValue: hs,
+        kMaxHeadersSize: fs,
+        kKeepAliveMaxTimeout: gs,
+        kKeepAliveTimeoutThreshold: Es,
+        kHeadersTimeout: Is,
+        kBodyTimeout: Cs,
+        kStrictContentLength: ys,
+        kConnector: Bs,
+        kMaxRedirections: bs,
+        kMaxRequests: Qs,
+        kCounter: ws,
+        kClose: vs,
+        kDestroy: Ts,
+        kDispatch: Ss,
+        kInterceptors: _s,
+        kLocalAddress: Rs,
+        kMaxResponseSize: Ds,
+        kHTTPConnVersion: Fs,
+        kHost: ks,
+        kHTTP2Session: Os,
+        kHTTP2SessionState: Ps,
+        kHTTP2BuildRequest: Ns,
+        kHTTP2CopyHeaders: Us,
+        kHTTP1BuildRequest: Ms,
       } = q(36443);
-      let Gn;
+      let Ls;
       try {
-        Gn = q(85675);
+        Ls = q(85675);
       } catch {
-        Gn = { constants: {} };
+        Ls = { constants: {} };
       }
       const {
         constants: {
-          HTTP2_HEADER_AUTHORITY: Vn,
-          HTTP2_HEADER_METHOD: xn,
-          HTTP2_HEADER_PATH: jn,
-          HTTP2_HEADER_SCHEME: Hn,
-          HTTP2_HEADER_CONTENT_LENGTH: Yn,
-          HTTP2_HEADER_EXPECT: qn,
-          HTTP2_HEADER_STATUS: Jn,
+          HTTP2_HEADER_AUTHORITY: Gs,
+          HTTP2_HEADER_METHOD: xs,
+          HTTP2_HEADER_PATH: Vs,
+          HTTP2_HEADER_SCHEME: js,
+          HTTP2_HEADER_CONTENT_LENGTH: Hs,
+          HTTP2_HEADER_EXPECT: Ys,
+          HTTP2_HEADER_STATUS: qs,
         },
-      } = Gn;
-      let Wn = false;
-      const Kn = Buffer[Symbol.species];
-      const $n = Symbol("kClosedResolve");
-      const zn = {};
+      } = Ls;
+      let Js = false;
+      const Ws = Buffer[Symbol.species];
+      const Ks = Symbol("kClosedResolve");
+      const zs = {};
       try {
         const C = q(31637);
-        zn.sendHeaders = C.channel("undici:client:sendHeaders");
-        zn.beforeConnect = C.channel("undici:client:beforeConnect");
-        zn.connectError = C.channel("undici:client:connectError");
-        zn.connected = C.channel("undici:client:connected");
+        zs.sendHeaders = C.channel("undici:client:sendHeaders");
+        zs.beforeConnect = C.channel("undici:client:beforeConnect");
+        zs.connectError = C.channel("undici:client:connectError");
+        zs.connected = C.channel("undici:client:connected");
       } catch {
-        zn.sendHeaders = { hasSubscribers: false };
-        zn.beforeConnect = { hasSubscribers: false };
-        zn.connectError = { hasSubscribers: false };
-        zn.connected = { hasSubscribers: false };
+        zs.sendHeaders = { hasSubscribers: false };
+        zs.beforeConnect = { hasSubscribers: false };
+        zs.connectError = { hasSubscribers: false };
+        zs.connected = { hasSubscribers: false };
       }
       class Client extends Er {
         constructor(
@@ -22764,16 +22951,16 @@
             pipelining: Mr,
             tls: Lr,
             strictContentLength: Gr,
-            maxCachedSessions: Vr,
+            maxCachedSessions: xr,
             maxRedirections: Hr,
             connect: Jr,
             maxRequestsPerClient: Wr,
             localAddress: Kr,
-            maxResponseSize: $r,
-            autoSelectFamily: zr,
+            maxResponseSize: zr,
+            autoSelectFamily: $r,
             autoSelectFamilyAttemptTimeout: Xr,
-            allowH2: en,
-            maxConcurrentStreams: tn,
+            allowH2: es,
+            maxConcurrentStreams: ts,
           } = {}
         ) {
           super();
@@ -22828,90 +23015,90 @@
           if (Kr != null && (typeof Kr !== "string" || ie.isIP(Kr) === 0)) {
             throw new Qr("localAddress must be valid string IP address");
           }
-          if ($r != null && (!Number.isInteger($r) || $r < -1)) {
+          if (zr != null && (!Number.isInteger(zr) || zr < -1)) {
             throw new Qr("maxResponseSize must be a positive number");
           }
           if (Xr != null && (!Number.isInteger(Xr) || Xr < -1)) {
             throw new Qr("autoSelectFamilyAttemptTimeout must be a positive number");
           }
-          if (en != null && typeof en !== "boolean") {
+          if (es != null && typeof es !== "boolean") {
             throw new Qr("allowH2 must be a valid boolean value");
           }
-          if (tn != null && (typeof tn !== "number" || tn < 1)) {
+          if (ts != null && (typeof ts !== "number" || ts < 1)) {
             throw new Qr("maxConcurrentStreams must be a possitive integer, greater than 0");
           }
           if (typeof Jr !== "function") {
-            Jr = xr({
+            Jr = Vr({
               ...Lr,
-              maxCachedSessions: Vr,
-              allowH2: en,
+              maxCachedSessions: xr,
+              allowH2: es,
               socketPath: Ur,
               timeout: Ar,
-              ...(Ot.nodeHasAutoSelectFamily && zr ? { autoSelectFamily: zr, autoSelectFamilyAttemptTimeout: Xr } : undefined),
+              ...(Ot.nodeHasAutoSelectFamily && $r ? { autoSelectFamily: $r, autoSelectFamilyAttemptTimeout: Xr } : undefined),
               ...Jr,
             });
           }
-          this[Sn] = P && P.Client && Array.isArray(P.Client) ? P.Client : [Xn({ maxRedirections: Hr })];
+          this[_s] = P && P.Client && Array.isArray(P.Client) ? P.Client : [Zs({ maxRedirections: Hr })];
           this[jr] = Ot.parseOrigin(C);
-          this[Qn] = Jr;
-          this[gn] = null;
-          this[mn] = Mr != null ? Mr : 1;
-          this[hn] = q || Ge.maxHeaderSize;
-          this[ln] = Dr == null ? 4e3 : Dr;
-          this[En] = kr == null ? 6e5 : kr;
-          this[In] = Nr == null ? 1e3 : Nr;
-          this[fn] = this[ln];
+          this[Bs] = Jr;
+          this[ms] = null;
+          this[us] = Mr != null ? Mr : 1;
+          this[fs] = q || Ge.maxHeaderSize;
+          this[As] = Dr == null ? 4e3 : Dr;
+          this[gs] = kr == null ? 6e5 : kr;
+          this[Es] = Nr == null ? 1e3 : Nr;
+          this[hs] = this[As];
           this[Yr] = null;
-          this[Dn] = Kr != null ? Kr : null;
+          this[Rs] = Kr != null ? Kr : null;
           this[Zr] = 0;
-          this[an] = 0;
-          this[cn] = `host: ${this[jr].hostname}${this[jr].port ? `:${this[jr].port}` : ""}\r\n`;
-          this[yn] = Er != null ? Er : 3e5;
-          this[Cn] = oe != null ? oe : 3e5;
-          this[Bn] = Gr == null ? true : Gr;
-          this[bn] = Hr;
-          this[wn] = Wr;
-          this[$n] = null;
-          this[Fn] = $r > -1 ? $r : -1;
-          this[kn] = "h1";
-          this[Pn] = null;
-          this[Nn] = !en ? null : { openStreams: 0, maxConcurrentStreams: tn != null ? tn : 100 };
-          this[On] = `${this[jr].hostname}${this[jr].port ? `:${this[jr].port}` : ""}`;
-          this[nn] = [];
-          this[dn] = 0;
-          this[pn] = 0;
+          this[is] = 0;
+          this[ls] = `host: ${this[jr].hostname}${this[jr].port ? `:${this[jr].port}` : ""}\r\n`;
+          this[Cs] = Er != null ? Er : 3e5;
+          this[Is] = oe != null ? oe : 3e5;
+          this[ys] = Gr == null ? true : Gr;
+          this[bs] = Hr;
+          this[Qs] = Wr;
+          this[Ks] = null;
+          this[Ds] = zr > -1 ? zr : -1;
+          this[Fs] = "h1";
+          this[Os] = null;
+          this[Ps] = !es ? null : { openStreams: 0, maxConcurrentStreams: ts != null ? ts : 100 };
+          this[ks] = `${this[jr].hostname}${this[jr].port ? `:${this[jr].port}` : ""}`;
+          this[ss] = [];
+          this[ps] = 0;
+          this[cs] = 0;
         }
         get pipelining() {
-          return this[mn];
+          return this[us];
         }
         set pipelining(C) {
-          this[mn] = C;
+          this[us] = C;
           resume(this, true);
         }
-        get [en]() {
-          return this[nn].length - this[pn];
+        get [es]() {
+          return this[ss].length - this[cs];
         }
         get [Xr]() {
-          return this[pn] - this[dn];
+          return this[cs] - this[ps];
         }
-        get [tn]() {
-          return this[nn].length - this[dn];
+        get [ts]() {
+          return this[ss].length - this[ps];
         }
-        get [sn]() {
-          return !!this[gn] && !this[on] && !this[gn].destroyed;
+        get [ns]() {
+          return !!this[ms] && !this[os] && !this[ms].destroyed;
         }
         get [Wr]() {
-          const C = this[gn];
-          return (C && (C[Hr] || C[rn] || C[zr])) || this[tn] >= (this[mn] || 1) || this[en] > 0;
+          const C = this[ms];
+          return (C && (C[Hr] || C[rs] || C[$r])) || this[ts] >= (this[us] || 1) || this[es] > 0;
         }
-        [$r](C) {
+        [zr](C) {
           connect(this);
           this.once("connect", C);
         }
-        [Rn](C, P) {
+        [Ss](C, P) {
           const q = C.origin || this[jr].origin;
-          const oe = this[kn] === "h2" ? Ar[Un](q, C, P) : Ar[Ln](q, C, P);
-          this[nn].push(oe);
+          const oe = this[Fs] === "h2" ? Ar[Ns](q, C, P) : Ar[Ms](q, C, P);
+          this[ss].push(oe);
           if (this[Zr]) {
           } else if (Ot.bodyLength(oe.body) == null && Ot.isIterable(oe.body)) {
             this[Zr] = 1;
@@ -22919,43 +23106,43 @@
           } else {
             resume(this, true);
           }
-          if (this[Zr] && this[an] !== 2 && this[Wr]) {
-            this[an] = 2;
+          if (this[Zr] && this[is] !== 2 && this[Wr]) {
+            this[is] = 2;
           }
-          return this[an] < 2;
+          return this[is] < 2;
         }
-        async [Tn]() {
+        async [vs]() {
           return new Promise((C) => {
-            if (!this[tn]) {
+            if (!this[ts]) {
               C(null);
             } else {
-              this[$n] = C;
+              this[Ks] = C;
             }
           });
         }
-        async [_n](C) {
+        async [Ts](C) {
           return new Promise((P) => {
-            const q = this[nn].splice(this[pn]);
+            const q = this[ss].splice(this[cs]);
             for (let P = 0; P < q.length; P++) {
               const oe = q[P];
               errorRequest(this, oe, C);
             }
             const callback = () => {
-              if (this[$n]) {
-                this[$n]();
-                this[$n] = null;
+              if (this[Ks]) {
+                this[Ks]();
+                this[Ks] = null;
               }
               P();
             };
-            if (this[Pn] != null) {
-              Ot.destroy(this[Pn], C);
-              this[Pn] = null;
-              this[Nn] = null;
+            if (this[Os] != null) {
+              Ot.destroy(this[Os], C);
+              this[Os] = null;
+              this[Ps] = null;
             }
-            if (!this[gn]) {
+            if (!this[ms]) {
               queueMicrotask(callback);
             } else {
-              Ot.destroy(this[gn].on("close", callback), C);
+              Ot.destroy(this[ms].on("close", callback), C);
             }
             resume(this);
           });
@@ -22963,45 +23150,45 @@
       }
       function onHttp2SessionError(C) {
         oe(C.code !== "ERR_TLS_CERT_ALTNAME_INVALID");
-        this[gn][un] = C;
+        this[ms][ds] = C;
         onError(this[Jr], C);
       }
       function onHttp2FrameError(C, P, q) {
         const oe = new Ur(`HTTP/2: "frameError" received - type ${C}, code ${P}`);
         if (q === 0) {
-          this[gn][un] = oe;
+          this[ms][ds] = oe;
           onError(this[Jr], oe);
         }
       }
       function onHttp2SessionEnd() {
         Ot.destroy(this, new Nr("other side closed"));
-        Ot.destroy(this[gn], new Nr("other side closed"));
+        Ot.destroy(this[ms], new Nr("other side closed"));
       }
       function onHTTP2GoAway(C) {
         const P = this[Jr];
         const q = new Ur(`HTTP/2: "GOAWAY" frame received with code ${C}`);
-        P[gn] = null;
-        P[Pn] = null;
+        P[ms] = null;
+        P[Os] = null;
         if (P.destroyed) {
-          oe(this[en] === 0);
-          const C = P[nn].splice(P[dn]);
+          oe(this[es] === 0);
+          const C = P[ss].splice(P[ps]);
           for (let P = 0; P < C.length; P++) {
             const oe = C[P];
             errorRequest(this, oe, q);
           }
         } else if (P[Xr] > 0) {
-          const C = P[nn][P[dn]];
-          P[nn][P[dn]++] = null;
+          const C = P[ss][P[ps]];
+          P[ss][P[ps]++] = null;
           errorRequest(P, C, q);
         }
-        P[pn] = P[dn];
+        P[cs] = P[ps];
         oe(P[Xr] === 0);
         P.emit("disconnect", P[jr], [P], q);
         resume(P);
       }
-      const Zn = q(52824);
-      const Xn = q(64415);
-      const es = Buffer.alloc(0);
+      const $s = q(52824);
+      const Zs = q(64415);
+      const Xs = Buffer.alloc(0);
       async function lazyllhttp() {
         const C = process.env.JEST_WORKER_ID ? q(63870) : undefined;
         let P;
@@ -23014,55 +23201,55 @@
           env: {
             wasm_on_url: (C, P, q) => 0,
             wasm_on_status: (C, P, q) => {
-              oe.strictEqual(ns.ptr, C);
-              const ie = P - is + ss.byteOffset;
-              return ns.onStatus(new Kn(ss.buffer, ie, q)) || 0;
+              oe.strictEqual(rn.ptr, C);
+              const ie = P - on + sn.byteOffset;
+              return rn.onStatus(new Ws(sn.buffer, ie, q)) || 0;
             },
             wasm_on_message_begin: (C) => {
-              oe.strictEqual(ns.ptr, C);
-              return ns.onMessageBegin() || 0;
+              oe.strictEqual(rn.ptr, C);
+              return rn.onMessageBegin() || 0;
             },
             wasm_on_header_field: (C, P, q) => {
-              oe.strictEqual(ns.ptr, C);
-              const ie = P - is + ss.byteOffset;
-              return ns.onHeaderField(new Kn(ss.buffer, ie, q)) || 0;
+              oe.strictEqual(rn.ptr, C);
+              const ie = P - on + sn.byteOffset;
+              return rn.onHeaderField(new Ws(sn.buffer, ie, q)) || 0;
             },
             wasm_on_header_value: (C, P, q) => {
-              oe.strictEqual(ns.ptr, C);
-              const ie = P - is + ss.byteOffset;
-              return ns.onHeaderValue(new Kn(ss.buffer, ie, q)) || 0;
+              oe.strictEqual(rn.ptr, C);
+              const ie = P - on + sn.byteOffset;
+              return rn.onHeaderValue(new Ws(sn.buffer, ie, q)) || 0;
             },
             wasm_on_headers_complete: (C, P, q, ie) => {
-              oe.strictEqual(ns.ptr, C);
-              return ns.onHeadersComplete(P, Boolean(q), Boolean(ie)) || 0;
+              oe.strictEqual(rn.ptr, C);
+              return rn.onHeadersComplete(P, Boolean(q), Boolean(ie)) || 0;
             },
             wasm_on_body: (C, P, q) => {
-              oe.strictEqual(ns.ptr, C);
-              const ie = P - is + ss.byteOffset;
-              return ns.onBody(new Kn(ss.buffer, ie, q)) || 0;
+              oe.strictEqual(rn.ptr, C);
+              const ie = P - on + sn.byteOffset;
+              return rn.onBody(new Ws(sn.buffer, ie, q)) || 0;
             },
             wasm_on_message_complete: (C) => {
-              oe.strictEqual(ns.ptr, C);
-              return ns.onMessageComplete() || 0;
+              oe.strictEqual(rn.ptr, C);
+              return rn.onMessageComplete() || 0;
             },
           },
         });
       }
-      let ts = null;
-      let rs = lazyllhttp();
-      rs.catch();
-      let ns = null;
-      let ss = null;
-      let os = 0;
-      let is = null;
-      const as = 1;
-      const As = 2;
-      const ls = 3;
+      let en = null;
+      let tn = lazyllhttp();
+      tn.catch();
+      let rn = null;
+      let sn = null;
+      let nn = 0;
+      let on = null;
+      const an = 1;
+      const An = 2;
+      const ln = 3;
       class Parser {
         constructor(C, P, { exports: q }) {
-          oe(Number.isFinite(C[hn]) && C[hn] > 0);
+          oe(Number.isFinite(C[fs]) && C[fs] > 0);
           this.llhttp = q;
-          this.ptr = this.llhttp.llhttp_alloc(Zn.TYPE.RESPONSE);
+          this.ptr = this.llhttp.llhttp_alloc($s.TYPE.RESPONSE);
           this.client = C;
           this.socket = P;
           this.timeout = null;
@@ -23073,7 +23260,7 @@
           this.upgrade = false;
           this.headers = [];
           this.headersSize = 0;
-          this.headersMaxSize = C[hn];
+          this.headersMaxSize = C[fs];
           this.shouldKeepAlive = false;
           this.paused = false;
           this.resume = this.resume.bind(this);
@@ -23081,7 +23268,7 @@
           this.keepAlive = "";
           this.contentLength = "";
           this.connection = "";
-          this.maxResponseSize = C[Fn];
+          this.maxResponseSize = C[Ds];
         }
         setTimeout(C, P) {
           this.timeoutType = P;
@@ -23107,16 +23294,16 @@
             return;
           }
           oe(this.ptr != null);
-          oe(ns == null);
+          oe(rn == null);
           this.llhttp.llhttp_resume(this.ptr);
-          oe(this.timeoutType === As);
+          oe(this.timeoutType === An);
           if (this.timeout) {
             if (this.timeout.refresh) {
               this.timeout.refresh();
             }
           }
           this.paused = false;
-          this.execute(this.socket.read() || es);
+          this.execute(this.socket.read() || Xs);
           this.readMore();
         }
         readMore() {
@@ -23130,43 +23317,43 @@
         }
         execute(C) {
           oe(this.ptr != null);
-          oe(ns == null);
+          oe(rn == null);
           oe(!this.paused);
           const { socket: P, llhttp: q } = this;
-          if (C.length > os) {
-            if (is) {
-              q.free(is);
+          if (C.length > nn) {
+            if (on) {
+              q.free(on);
             }
-            os = Math.ceil(C.length / 4096) * 4096;
-            is = q.malloc(os);
+            nn = Math.ceil(C.length / 4096) * 4096;
+            on = q.malloc(nn);
           }
-          new Uint8Array(q.memory.buffer, is, os).set(C);
+          new Uint8Array(q.memory.buffer, on, nn).set(C);
           try {
             let oe;
             try {
-              ss = C;
-              ns = this;
-              oe = q.llhttp_execute(this.ptr, is, C.length);
+              sn = C;
+              rn = this;
+              oe = q.llhttp_execute(this.ptr, on, C.length);
             } catch (C) {
               throw C;
             } finally {
-              ns = null;
-              ss = null;
+              rn = null;
+              sn = null;
             }
-            const ie = q.llhttp_get_error_pos(this.ptr) - is;
-            if (oe === Zn.ERROR.PAUSED_UPGRADE) {
+            const ie = q.llhttp_get_error_pos(this.ptr) - on;
+            if (oe === $s.ERROR.PAUSED_UPGRADE) {
               this.onUpgrade(C.slice(ie));
-            } else if (oe === Zn.ERROR.PAUSED) {
+            } else if (oe === $s.ERROR.PAUSED) {
               this.paused = true;
               P.unshift(C.slice(ie));
-            } else if (oe !== Zn.ERROR.OK) {
+            } else if (oe !== $s.ERROR.OK) {
               const P = q.llhttp_get_error_reason(this.ptr);
               let Ge = "";
               if (P) {
                 const C = new Uint8Array(q.memory.buffer, P).indexOf(0);
                 Ge = "Response does not match the HTTP/1.1 protocol (" + Buffer.from(q.memory.buffer, P, C).toString() + ")";
               }
-              throw new Lr(Ge, Zn.ERROR[oe], C.slice(ie));
+              throw new Lr(Ge, $s.ERROR[oe], C.slice(ie));
             }
           } catch (C) {
             Ot.destroy(P, C);
@@ -23174,7 +23361,7 @@
         }
         destroy() {
           oe(this.ptr != null);
-          oe(ns == null);
+          oe(rn == null);
           this.llhttp.llhttp_free(this.ptr);
           this.ptr = null;
           Wt.clearTimeout(this.timeout);
@@ -23191,7 +23378,7 @@
           if (C.destroyed) {
             return -1;
           }
-          const q = P[nn][P[dn]];
+          const q = P[ss][P[ps]];
           if (!q) {
             return -1;
           }
@@ -23232,10 +23419,10 @@
         onUpgrade(C) {
           const { upgrade: P, client: q, socket: ie, headers: Ge, statusCode: st } = this;
           oe(P);
-          const Wt = q[nn][q[dn]];
+          const Wt = q[ss][q[ps]];
           oe(Wt);
           oe(!ie.destroyed);
-          oe(ie === q[gn]);
+          oe(ie === q[ms]);
           oe(!this.paused);
           oe(Wt.upgrade || Wt.method === "CONNECT");
           this.statusCode = null;
@@ -23248,13 +23435,13 @@
           ie[Kr].destroy();
           ie[Kr] = null;
           ie[Jr] = null;
-          ie[un] = null;
+          ie[ds] = null;
           ie.removeListener("error", onSocketError)
             .removeListener("readable", onSocketReadable)
             .removeListener("end", onSocketEnd)
             .removeListener("close", onSocketClose);
-          q[gn] = null;
-          q[nn][q[dn]++] = null;
+          q[ms] = null;
+          q[ss][q[ps]++] = null;
           q.emit("disconnect", q[jr], [q], new Ur("upgrade"));
           try {
             Wt.onUpgrade(st, Ge, ie);
@@ -23268,7 +23455,7 @@
           if (Ge.destroyed) {
             return -1;
           }
-          const Ar = ie[nn][ie[dn]];
+          const Ar = ie[ss][ie[ps]];
           if (!Ar) {
             return -1;
           }
@@ -23282,12 +23469,12 @@
             Ot.destroy(Ge, new Nr("bad upgrade", Ot.getSocketInfo(Ge)));
             return -1;
           }
-          oe.strictEqual(this.timeoutType, as);
+          oe.strictEqual(this.timeoutType, an);
           this.statusCode = C;
           this.shouldKeepAlive = q || (Ar.method === "HEAD" && !Ge[Hr] && this.connection.toLowerCase() === "keep-alive");
           if (this.statusCode >= 200) {
-            const C = Ar.bodyTimeout != null ? Ar.bodyTimeout : ie[yn];
-            this.setTimeout(C, As);
+            const C = Ar.bodyTimeout != null ? Ar.bodyTimeout : ie[Cs];
+            this.setTimeout(C, An);
           } else if (this.timeout) {
             if (this.timeout.refresh) {
               this.timeout.refresh();
@@ -23306,17 +23493,17 @@
           oe(this.headers.length % 2 === 0);
           this.headers = [];
           this.headersSize = 0;
-          if (this.shouldKeepAlive && ie[mn]) {
+          if (this.shouldKeepAlive && ie[us]) {
             const C = this.keepAlive ? Ot.parseKeepAliveTimeout(this.keepAlive) : null;
             if (C != null) {
-              const P = Math.min(C - ie[In], ie[En]);
+              const P = Math.min(C - ie[Es], ie[gs]);
               if (P <= 0) {
                 Ge[Hr] = true;
               } else {
-                ie[fn] = P;
+                ie[hs] = P;
               }
             } else {
-              ie[fn] = ie[ln];
+              ie[hs] = ie[As];
             }
           } else {
             Ge[Hr] = true;
@@ -23331,20 +23518,20 @@
           if (C < 200) {
             return 1;
           }
-          if (Ge[zr]) {
-            Ge[zr] = false;
+          if (Ge[$r]) {
+            Ge[$r] = false;
             resume(ie);
           }
-          return Er ? Zn.ERROR.PAUSED : 0;
+          return Er ? $s.ERROR.PAUSED : 0;
         }
         onBody(C) {
           const { client: P, socket: q, statusCode: ie, maxResponseSize: Ge } = this;
           if (q.destroyed) {
             return -1;
           }
-          const st = P[nn][P[dn]];
+          const st = P[ss][P[ps]];
           oe(st);
-          oe.strictEqual(this.timeoutType, As);
+          oe.strictEqual(this.timeoutType, An);
           if (this.timeout) {
             if (this.timeout.refresh) {
               this.timeout.refresh();
@@ -23357,7 +23544,7 @@
           }
           this.bytesRead += C.length;
           if (st.onData(C) === false) {
-            return Zn.ERROR.PAUSED;
+            return $s.ERROR.PAUSED;
           }
         }
         onMessageComplete() {
@@ -23368,7 +23555,7 @@
           if (ie) {
             return;
           }
-          const Er = C[nn][C[dn]];
+          const Er = C[ss][C[ps]];
           oe(Er);
           oe(q >= 100);
           this.statusCode = null;
@@ -23388,18 +23575,18 @@
             return -1;
           }
           Er.onComplete(Ge);
-          C[nn][C[dn]++] = null;
-          if (P[rn]) {
+          C[ss][C[ps]++] = null;
+          if (P[rs]) {
             oe.strictEqual(C[Xr], 0);
             Ot.destroy(P, new Ur("reset"));
-            return Zn.ERROR.PAUSED;
+            return $s.ERROR.PAUSED;
           } else if (!Ar) {
             Ot.destroy(P, new Ur("reset"));
-            return Zn.ERROR.PAUSED;
+            return $s.ERROR.PAUSED;
           } else if (P[Hr] && C[Xr] === 0) {
             Ot.destroy(P, new Ur("reset"));
-            return Zn.ERROR.PAUSED;
-          } else if (C[mn] === 1) {
+            return $s.ERROR.PAUSED;
+          } else if (C[us] === 1) {
             setImmediate(resume, C);
           } else {
             resume(C);
@@ -23408,17 +23595,17 @@
       }
       function onParserTimeout(C) {
         const { socket: P, timeoutType: q, client: ie } = C;
-        if (q === as) {
-          if (!P[rn] || P.writableNeedDrain || ie[Xr] > 1) {
+        if (q === an) {
+          if (!P[rs] || P.writableNeedDrain || ie[Xr] > 1) {
             oe(!C.paused, "cannot be paused while waiting for headers");
             Ot.destroy(P, new Fr());
           }
-        } else if (q === As) {
+        } else if (q === An) {
           if (!C.paused) {
             Ot.destroy(P, new Mr());
           }
-        } else if (q === ls) {
-          oe(ie[Xr] === 0 && ie[fn]);
+        } else if (q === ln) {
+          oe(ie[Xr] === 0 && ie[hs]);
           Ot.destroy(P, new Ur("socket idle timeout"));
         }
       }
@@ -23431,29 +23618,29 @@
       function onSocketError(C) {
         const { [Jr]: P, [Kr]: q } = this;
         oe(C.code !== "ERR_TLS_CERT_ALTNAME_INVALID");
-        if (P[kn] !== "h2") {
+        if (P[Fs] !== "h2") {
           if (C.code === "ECONNRESET" && q.statusCode && !q.shouldKeepAlive) {
             q.onMessageComplete();
             return;
           }
         }
-        this[un] = C;
+        this[ds] = C;
         onError(this[Jr], C);
       }
       function onError(C, P) {
         if (C[Xr] === 0 && P.code !== "UND_ERR_INFO" && P.code !== "UND_ERR_SOCKET") {
-          oe(C[pn] === C[dn]);
-          const q = C[nn].splice(C[dn]);
+          oe(C[cs] === C[ps]);
+          const q = C[ss].splice(C[ps]);
           for (let oe = 0; oe < q.length; oe++) {
             const ie = q[oe];
             errorRequest(C, ie, P);
           }
-          oe(C[tn] === 0);
+          oe(C[ts] === 0);
         }
       }
       function onSocketEnd() {
         const { [Kr]: C, [Jr]: P } = this;
-        if (P[kn] !== "h2") {
+        if (P[Fs] !== "h2") {
           if (C.statusCode && !C.shouldKeepAlive) {
             C.onMessageComplete();
             return;
@@ -23463,35 +23650,35 @@
       }
       function onSocketClose() {
         const { [Jr]: C, [Kr]: P } = this;
-        if (C[kn] === "h1" && P) {
-          if (!this[un] && P.statusCode && !P.shouldKeepAlive) {
+        if (C[Fs] === "h1" && P) {
+          if (!this[ds] && P.statusCode && !P.shouldKeepAlive) {
             P.onMessageComplete();
           }
           this[Kr].destroy();
           this[Kr] = null;
         }
-        const q = this[un] || new Nr("closed", Ot.getSocketInfo(this));
-        C[gn] = null;
+        const q = this[ds] || new Nr("closed", Ot.getSocketInfo(this));
+        C[ms] = null;
         if (C.destroyed) {
-          oe(C[en] === 0);
-          const P = C[nn].splice(C[dn]);
+          oe(C[es] === 0);
+          const P = C[ss].splice(C[ps]);
           for (let oe = 0; oe < P.length; oe++) {
             const ie = P[oe];
             errorRequest(C, ie, q);
           }
         } else if (C[Xr] > 0 && q.code !== "UND_ERR_INFO") {
-          const P = C[nn][C[dn]];
-          C[nn][C[dn]++] = null;
+          const P = C[ss][C[ps]];
+          C[ss][C[ps]++] = null;
           errorRequest(C, P, q);
         }
-        C[pn] = C[dn];
+        C[cs] = C[ps];
         oe(C[Xr] === 0);
         C.emit("disconnect", C[jr], [C], q);
         resume(C);
       }
       async function connect(C) {
-        oe(!C[on]);
-        oe(!C[gn]);
+        oe(!C[os]);
+        oe(!C[ms]);
         let { host: P, hostname: q, protocol: Ge, port: st } = C[jr];
         if (q[0] === "[") {
           const C = q.indexOf("]");
@@ -23500,16 +23687,16 @@
           oe(ie.isIP(P));
           q = P;
         }
-        C[on] = true;
-        if (zn.beforeConnect.hasSubscribers) {
-          zn.beforeConnect.publish({
-            connectParams: { host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Dn] },
-            connector: C[Qn],
+        C[os] = true;
+        if (zs.beforeConnect.hasSubscribers) {
+          zs.beforeConnect.publish({
+            connectParams: { host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Rs] },
+            connector: C[Bs],
           });
         }
         try {
           const ie = await new Promise((oe, ie) => {
-            C[Qn]({ host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Dn] }, (C, P) => {
+            C[Bs]({ host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Rs] }, (C, P) => {
               if (C) {
                 ie(C);
               } else {
@@ -23520,51 +23707,51 @@
           if (C.destroyed) {
             Ot.destroy(
               ie.on("error", () => {}),
-              new Vr()
+              new xr()
             );
             return;
           }
-          C[on] = false;
+          C[os] = false;
           oe(ie);
           const Wt = ie.alpnProtocol === "h2";
           if (Wt) {
-            if (!Wn) {
-              Wn = true;
+            if (!Js) {
+              Js = true;
               process.emitWarning("H2 support is experimental, expect them to change at any time.", { code: "UNDICI-H2" });
             }
-            const P = Gn.connect(C[jr], { createConnection: () => ie, peerMaxConcurrentStreams: C[Nn].maxConcurrentStreams });
-            C[kn] = "h2";
+            const P = Ls.connect(C[jr], { createConnection: () => ie, peerMaxConcurrentStreams: C[Ps].maxConcurrentStreams });
+            C[Fs] = "h2";
             P[Jr] = C;
-            P[gn] = ie;
+            P[ms] = ie;
             P.on("error", onHttp2SessionError);
             P.on("frameError", onHttp2FrameError);
             P.on("end", onHttp2SessionEnd);
             P.on("goaway", onHTTP2GoAway);
             P.on("close", onSocketClose);
             P.unref();
-            C[Pn] = P;
-            ie[Pn] = P;
+            C[Os] = P;
+            ie[Os] = P;
           } else {
-            if (!ts) {
-              ts = await rs;
-              rs = null;
+            if (!en) {
+              en = await tn;
+              tn = null;
             }
-            ie[An] = false;
-            ie[rn] = false;
+            ie[as] = false;
+            ie[rs] = false;
             ie[Hr] = false;
-            ie[zr] = false;
-            ie[Kr] = new Parser(C, ie, ts);
+            ie[$r] = false;
+            ie[Kr] = new Parser(C, ie, en);
           }
-          ie[vn] = 0;
-          ie[wn] = C[wn];
+          ie[ws] = 0;
+          ie[Qs] = C[Qs];
           ie[Jr] = C;
-          ie[un] = null;
+          ie[ds] = null;
           ie.on("error", onSocketError).on("readable", onSocketReadable).on("end", onSocketEnd).on("close", onSocketClose);
-          C[gn] = ie;
-          if (zn.connected.hasSubscribers) {
-            zn.connected.publish({
-              connectParams: { host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Dn] },
-              connector: C[Qn],
+          C[ms] = ie;
+          if (zs.connected.hasSubscribers) {
+            zs.connected.publish({
+              connectParams: { host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Rs] },
+              connector: C[Bs],
               socket: ie,
             });
           }
@@ -23573,18 +23760,18 @@
           if (C.destroyed) {
             return;
           }
-          C[on] = false;
-          if (zn.connectError.hasSubscribers) {
-            zn.connectError.publish({
-              connectParams: { host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Dn] },
-              connector: C[Qn],
+          C[os] = false;
+          if (zs.connectError.hasSubscribers) {
+            zs.connectError.publish({
+              connectParams: { host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Rs] },
+              connector: C[Bs],
               error: ie,
             });
           }
           if (ie.code === "ERR_TLS_CERT_ALTNAME_INVALID") {
             oe(C[Xr] === 0);
-            while (C[en] > 0 && C[nn][C[pn]].servername === C[Yr]) {
-              const P = C[nn][C[pn]++];
+            while (C[es] > 0 && C[ss][C[cs]].servername === C[Yr]) {
+              const P = C[ss][C[cs]++];
               errorRequest(C, P, ie);
             }
           } else {
@@ -23595,7 +23782,7 @@
         resume(C);
       }
       function emitDrain(C) {
-        C[an] = 0;
+        C[is] = 0;
         C.emit("drain", C[jr], [C]);
       }
       function resume(C, P) {
@@ -23605,64 +23792,64 @@
         C[Zr] = 2;
         _resume(C, P);
         C[Zr] = 0;
-        if (C[dn] > 256) {
-          C[nn].splice(0, C[dn]);
-          C[pn] -= C[dn];
-          C[dn] = 0;
+        if (C[ps] > 256) {
+          C[ss].splice(0, C[ps]);
+          C[cs] -= C[ps];
+          C[ps] = 0;
         }
       }
       function _resume(C, P) {
         while (true) {
           if (C.destroyed) {
-            oe(C[en] === 0);
+            oe(C[es] === 0);
             return;
           }
-          if (C[$n] && !C[tn]) {
-            C[$n]();
-            C[$n] = null;
+          if (C[Ks] && !C[ts]) {
+            C[Ks]();
+            C[Ks] = null;
             return;
           }
-          const q = C[gn];
+          const q = C[ms];
           if (q && !q.destroyed && q.alpnProtocol !== "h2") {
-            if (C[tn] === 0) {
-              if (!q[An] && q.unref) {
+            if (C[ts] === 0) {
+              if (!q[as] && q.unref) {
                 q.unref();
-                q[An] = true;
+                q[as] = true;
               }
-            } else if (q[An] && q.ref) {
+            } else if (q[as] && q.ref) {
               q.ref();
-              q[An] = false;
+              q[as] = false;
             }
-            if (C[tn] === 0) {
-              if (q[Kr].timeoutType !== ls) {
-                q[Kr].setTimeout(C[fn], ls);
+            if (C[ts] === 0) {
+              if (q[Kr].timeoutType !== ln) {
+                q[Kr].setTimeout(C[hs], ln);
               }
             } else if (C[Xr] > 0 && q[Kr].statusCode < 200) {
-              if (q[Kr].timeoutType !== as) {
-                const P = C[nn][C[dn]];
-                const oe = P.headersTimeout != null ? P.headersTimeout : C[Cn];
-                q[Kr].setTimeout(oe, as);
+              if (q[Kr].timeoutType !== an) {
+                const P = C[ss][C[ps]];
+                const oe = P.headersTimeout != null ? P.headersTimeout : C[Is];
+                q[Kr].setTimeout(oe, an);
               }
             }
           }
           if (C[Wr]) {
-            C[an] = 2;
-          } else if (C[an] === 2) {
+            C[is] = 2;
+          } else if (C[is] === 2) {
             if (P) {
-              C[an] = 1;
+              C[is] = 1;
               process.nextTick(emitDrain, C);
             } else {
               emitDrain(C);
             }
             continue;
           }
-          if (C[en] === 0) {
+          if (C[es] === 0) {
             return;
           }
-          if (C[Xr] >= (C[mn] || 1)) {
+          if (C[Xr] >= (C[us] || 1)) {
             return;
           }
-          const ie = C[nn][C[pn]];
+          const ie = C[ss][C[cs]];
           if (C[jr].protocol === "https:" && C[Yr] !== ie.servername) {
             if (C[Xr] > 0) {
               return;
@@ -23673,14 +23860,14 @@
               return;
             }
           }
-          if (C[on]) {
+          if (C[os]) {
             return;
           }
-          if (!q && !C[Pn]) {
+          if (!q && !C[Os]) {
             connect(C);
             return;
           }
-          if (q.destroyed || q[rn] || q[Hr] || q[zr]) {
+          if (q.destroyed || q[rs] || q[Hr] || q[$r]) {
             return;
           }
           if (C[Xr] > 0 && !ie.idempotent) {
@@ -23693,9 +23880,9 @@
             return;
           }
           if (!ie.aborted && write(C, ie)) {
-            C[pn]++;
+            C[cs]++;
           } else {
-            C[nn].splice(C[pn], 1);
+            C[ss].splice(C[cs], 1);
           }
         }
       }
@@ -23703,8 +23890,8 @@
         return C !== "GET" && C !== "HEAD" && C !== "OPTIONS" && C !== "TRACE" && C !== "CONNECT";
       }
       function write(C, P) {
-        if (C[kn] === "h2") {
-          writeH2(C, C[Pn], P);
+        if (C[Fs] === "h2") {
+          writeH2(C, C[Os], P);
           return;
         }
         const { body: q, method: ie, path: Ge, host: st, upgrade: Wt, headers: Ar, blocking: Er, reset: Br } = P;
@@ -23721,13 +23908,13 @@
           kr = null;
         }
         if (shouldSendContentLength(ie) && kr > 0 && P.contentLength !== null && P.contentLength !== kr) {
-          if (C[Bn]) {
+          if (C[ys]) {
             errorRequest(C, P, new Ir());
             return false;
           }
           process.emitWarning(new Ir());
         }
-        const Nr = C[gn];
+        const Nr = C[ms];
         try {
           P.onConnect((q) => {
             if (P.aborted || P.completed) {
@@ -23751,21 +23938,21 @@
         if (Br != null) {
           Nr[Hr] = Br;
         }
-        if (C[wn] && Nr[vn]++ >= C[wn]) {
+        if (C[Qs] && Nr[ws]++ >= C[Qs]) {
           Nr[Hr] = true;
         }
         if (Er) {
-          Nr[zr] = true;
+          Nr[$r] = true;
         }
         let Mr = `${ie} ${Ge} HTTP/1.1\r\n`;
         if (typeof st === "string") {
           Mr += `host: ${st}\r\n`;
         } else {
-          Mr += C[cn];
+          Mr += C[ls];
         }
         if (Wt) {
           Mr += `connection: upgrade\r\nupgrade: ${Wt}\r\n`;
-        } else if (C[mn] && !Nr[Hr]) {
+        } else if (C[us] && !Nr[Hr]) {
           Mr += "connection: keep-alive\r\n";
         } else {
           Mr += "connection: close\r\n";
@@ -23773,8 +23960,8 @@
         if (Ar) {
           Mr += Ar;
         }
-        if (zn.sendHeaders.hasSubscribers) {
-          zn.sendHeaders.publish({ request: P, headers: Mr, socket: Nr });
+        if (zs.sendHeaders.hasSubscribers) {
+          zs.sendHeaders.publish({ request: P, headers: Mr, socket: Nr });
         }
         if (!q || Fr === 0) {
           if (kr === 0) {
@@ -23813,7 +24000,7 @@
       function writeH2(C, P, q) {
         const { body: ie, method: Ge, path: st, host: Wt, upgrade: Er, expectContinue: Br, signal: Qr, headers: Fr } = q;
         let kr;
-        if (typeof Fr === "string") kr = Ar[Mn](Fr.trim());
+        if (typeof Fr === "string") kr = Ar[Us](Fr.trim());
         else kr = Fr;
         if (Er) {
           errorRequest(C, q, new Error("Upgrade not supported for H2"));
@@ -23833,9 +24020,9 @@
           return false;
         }
         let Nr;
-        const Mr = C[Nn];
-        kr[Vn] = Wt || C[On];
-        kr[xn] = Ge;
+        const Mr = C[Ps];
+        kr[Gs] = Wt || C[ks];
+        kr[xs] = Ge;
         if (Ge === "CONNECT") {
           P.ref();
           Nr = P.request(kr, { endStream: false, signal: Qr });
@@ -23854,8 +24041,8 @@
           });
           return true;
         }
-        kr[jn] = st;
-        kr[Hn] = "https";
+        kr[Vs] = st;
+        kr[js] = "https";
         const Lr = Ge === "PUT" || Ge === "POST" || Ge === "PATCH";
         if (ie && typeof ie.read === "function") {
           ie.read(0);
@@ -23868,7 +24055,7 @@
           Gr = null;
         }
         if (shouldSendContentLength(Ge) && Gr > 0 && q.contentLength != null && q.contentLength !== Gr) {
-          if (C[Bn]) {
+          if (C[ys]) {
             errorRequest(C, q, new Ir());
             return false;
           }
@@ -23876,21 +24063,21 @@
         }
         if (Gr != null) {
           oe(ie, "no body must not have content length");
-          kr[Yn] = `${Gr}`;
+          kr[Hs] = `${Gr}`;
         }
         P.ref();
-        const Vr = Ge === "GET" || Ge === "HEAD";
+        const xr = Ge === "GET" || Ge === "HEAD";
         if (Br) {
-          kr[qn] = "100-continue";
-          Nr = P.request(kr, { endStream: Vr, signal: Qr });
+          kr[Ys] = "100-continue";
+          Nr = P.request(kr, { endStream: xr, signal: Qr });
           Nr.once("continue", writeBodyH2);
         } else {
-          Nr = P.request(kr, { endStream: Vr, signal: Qr });
+          Nr = P.request(kr, { endStream: xr, signal: Qr });
           writeBodyH2();
         }
         ++Mr.openStreams;
         Nr.once("response", (C) => {
-          const { [Jn]: P, ...oe } = C;
+          const { [qs]: P, ...oe } = C;
           if (q.onHeaders(Number(P), oe, Nr.resume.bind(Nr), "") === false) {
             Nr.pause();
           }
@@ -23910,7 +24097,7 @@
           }
         });
         Nr.once("error", function (P) {
-          if (C[Pn] && !C[Pn].destroyed && !this.closed && !this.destroyed) {
+          if (C[Os] && !C[Os].destroyed && !this.closed && !this.destroyed) {
             Mr.streams -= 1;
             Ot.destroy(Nr, P);
           }
@@ -23918,7 +24105,7 @@
         Nr.once("frameError", (P, oe) => {
           const ie = new Ur(`HTTP/2: "frameError" received - type ${P}, code ${oe}`);
           errorRequest(C, q, ie);
-          if (C[Pn] && !C[Pn].destroyed && !this.closed && !this.destroyed) {
+          if (C[Os] && !C[Os].destroyed && !this.closed && !this.destroyed) {
             Mr.streams -= 1;
             Ot.destroy(Nr, ie);
           }
@@ -23937,14 +24124,14 @@
             q.onRequestSent();
           } else if (Ot.isBlobLike(ie)) {
             if (typeof ie.stream === "function") {
-              writeIterable({ client: C, request: q, contentLength: Gr, h2stream: Nr, expectsPayload: Lr, body: ie.stream(), socket: C[gn], header: "" });
+              writeIterable({ client: C, request: q, contentLength: Gr, h2stream: Nr, expectsPayload: Lr, body: ie.stream(), socket: C[ms], header: "" });
             } else {
-              writeBlob({ body: ie, client: C, request: q, contentLength: Gr, expectsPayload: Lr, h2stream: Nr, header: "", socket: C[gn] });
+              writeBlob({ body: ie, client: C, request: q, contentLength: Gr, expectsPayload: Lr, h2stream: Nr, header: "", socket: C[ms] });
             }
           } else if (Ot.isStream(ie)) {
-            writeStream({ body: ie, client: C, request: q, contentLength: Gr, expectsPayload: Lr, socket: C[gn], h2stream: Nr, header: "" });
+            writeStream({ body: ie, client: C, request: q, contentLength: Gr, expectsPayload: Lr, socket: C[ms], h2stream: Nr, header: "" });
           } else if (Ot.isIterable(ie)) {
-            writeIterable({ body: ie, client: C, request: q, contentLength: Gr, expectsPayload: Lr, header: "", h2stream: Nr, socket: C[gn] });
+            writeIterable({ body: ie, client: C, request: q, contentLength: Gr, expectsPayload: Lr, header: "", h2stream: Nr, socket: C[ms] });
           } else {
             oe(false);
           }
@@ -23952,7 +24139,7 @@
       }
       function writeStream({ h2stream: C, body: P, client: q, request: ie, socket: Ge, contentLength: Wt, header: Ar, expectsPayload: Er }) {
         oe(Wt !== 0 || q[Xr] === 0, "stream body cannot be pipelined");
-        if (q[kn] === "h2") {
+        if (q[Fs] === "h2") {
           const Qr = st(P, C, (q) => {
             if (q) {
               Ot.destroy(P, q);
@@ -24005,7 +24192,7 @@
             return;
           }
           Ir = true;
-          oe(Ge.destroyed || (Ge[rn] && q[Xr] <= 1));
+          oe(Ge.destroyed || (Ge[rs] && q[Xr] <= 1));
           Ge.off("drain", onDrain).off("error", onFinished);
           P.removeListener("data", onData).removeListener("end", onFinished).removeListener("error", onFinished).removeListener("close", onAbort);
           if (!C) {
@@ -24030,7 +24217,7 @@
       }
       async function writeBlob({ h2stream: C, body: P, client: q, request: ie, socket: Ge, contentLength: st, header: Wt, expectsPayload: Ar }) {
         oe(st === P.size, "blob body must have content length");
-        const Er = q[kn] === "h2";
+        const Er = q[Fs] === "h2";
         try {
           if (st != null && st !== P.size) {
             throw new Ir();
@@ -24069,18 +24256,18 @@
         const waitForDrain = () =>
           new Promise((C, P) => {
             oe(Ar === null);
-            if (Ge[un]) {
-              P(Ge[un]);
+            if (Ge[ds]) {
+              P(Ge[ds]);
             } else {
               Ar = C;
             }
           });
-        if (q[kn] === "h2") {
+        if (q[Fs] === "h2") {
           C.on("close", onDrain).on("drain", onDrain);
           try {
             for await (const q of P) {
-              if (Ge[un]) {
-                throw Ge[un];
+              if (Ge[ds]) {
+                throw Ge[ds];
               }
               const P = C.write(q);
               ie.onBodySent(q);
@@ -24101,8 +24288,8 @@
         const Er = new AsyncWriter({ socket: Ge, request: ie, contentLength: st, client: q, expectsPayload: Wt, header: Ot });
         try {
           for await (const C of P) {
-            if (Ge[un]) {
-              throw Ge[un];
+            if (Ge[ds]) {
+              throw Ge[ds];
             }
             if (!Er.write(C)) {
               await waitForDrain();
@@ -24124,12 +24311,12 @@
           this.bytesWritten = 0;
           this.expectsPayload = ie;
           this.header = Ge;
-          C[rn] = true;
+          C[rs] = true;
         }
         write(C) {
           const { socket: P, request: q, contentLength: oe, client: ie, bytesWritten: Ge, expectsPayload: st, header: Ot } = this;
-          if (P[un]) {
-            throw P[un];
+          if (P[ds]) {
+            throw P[ds];
           }
           if (P.destroyed) {
             return false;
@@ -24139,7 +24326,7 @@
             return true;
           }
           if (oe !== null && Ge + Wt > oe) {
-            if (ie[Bn]) {
+            if (ie[ys]) {
               throw new Ir();
             }
             process.emitWarning(new Ir());
@@ -24163,7 +24350,7 @@
           P.uncork();
           q.onBodySent(C);
           if (!Ar) {
-            if (P[Kr].timeout && P[Kr].timeoutType === as) {
+            if (P[Kr].timeout && P[Kr].timeoutType === an) {
               if (P[Kr].timeout.refresh) {
                 P[Kr].timeout.refresh();
               }
@@ -24174,9 +24361,9 @@
         end() {
           const { socket: C, contentLength: P, client: q, bytesWritten: oe, expectsPayload: ie, header: Ge, request: st } = this;
           st.onRequestSent();
-          C[rn] = false;
-          if (C[un]) {
-            throw C[un];
+          C[rs] = false;
+          if (C[ds]) {
+            throw C[ds];
           }
           if (C.destroyed) {
             return;
@@ -24191,13 +24378,13 @@
             C.write("\r\n0\r\n\r\n", "latin1");
           }
           if (P !== null && oe !== P) {
-            if (q[Bn]) {
+            if (q[ys]) {
               throw new Ir();
             } else {
               process.emitWarning(new Ir());
             }
           }
-          if (C[Kr].timeout && C[Kr].timeoutType === as) {
+          if (C[Kr].timeout && C[Kr].timeoutType === an) {
             if (C[Kr].timeout.refresh) {
               C[Kr].timeout.refresh();
             }
@@ -24206,7 +24393,7 @@
         }
         destroy(C) {
           const { socket: P, client: q } = this;
-          P[rn] = false;
+          P[rs] = false;
           if (C) {
             oe(q[Xr] <= 1, "pipeline should only contain this request");
             Ot.destroy(P, C);
@@ -25103,7 +25290,7 @@
             throwOnError: Lr,
             expectContinue: Gr,
           },
-          Vr
+          xr
         ) {
           if (typeof P !== "string") {
             throw new oe("path must be a string");
@@ -25216,9 +25403,9 @@
             this.contentType = Ge.type;
             this.headers += `content-type: ${Ge.type}\r\n`;
           }
-          Ar.validateHandler(Vr, ie, kr);
+          Ar.validateHandler(xr, ie, kr);
           this.servername = Ar.getServerName(this.host);
-          this[Qr] = Vr;
+          this[Qr] = xr;
           if (Dr.create.hasSubscribers) {
             Dr.create.publish({ request: this });
           }
@@ -26066,11 +26253,11 @@
       const { kBodyUsed: Ur } = q(36443);
       const Mr = q(42613);
       const { isErrored: Lr } = q(3440);
-      const { isUint8Array: Gr, isArrayBuffer: Vr } = q(98253);
-      const { File: xr } = q(63041);
+      const { isUint8Array: Gr, isArrayBuffer: xr } = q(98253);
+      const { File: Vr } = q(63041);
       const { parseMIMEType: jr, serializeAMimeType: Hr } = q(94322);
       let Yr = globalThis.ReadableStream;
-      const Jr = Nr ?? xr;
+      const Jr = Nr ?? Vr;
       const Wr = new TextEncoder();
       const Kr = new TextDecoder();
       function extractBody(C, P = false) {
@@ -26103,7 +26290,7 @@
         } else if (C instanceof URLSearchParams) {
           Er = C.toString();
           Br = "application/x-www-form-urlencoded;charset=UTF-8";
-        } else if (Vr(C)) {
+        } else if (xr(C)) {
           Er = new Uint8Array(C.slice());
         } else if (ArrayBuffer.isView(C)) {
           Er = new Uint8Array(C.buffer.slice(C.byteOffset, C.byteOffset + C.byteLength));
@@ -26505,8 +26692,8 @@
       const Mr = ["default", "no-store", "reload", "no-cache", "force-cache", "only-if-cached"];
       const Lr = ["content-encoding", "content-language", "content-location", "content-type", "content-length"];
       const Gr = ["half"];
-      const Vr = ["CONNECT", "TRACE", "TRACK"];
-      const xr = new Set(Vr);
+      const xr = ["CONNECT", "TRACE", "TRACK"];
+      const Vr = new Set(xr);
       const jr = ["audio", "audioworklet", "font", "image", "manifest", "paintworklet", "script", "style", "track", "video", "xslt", ""];
       const Hr = new Set(jr);
       const Yr =
@@ -26537,7 +26724,7 @@
         DOMException: Yr,
         structuredClone: Wr,
         subresource: jr,
-        forbiddenMethods: Vr,
+        forbiddenMethods: xr,
         requestBodyHeader: Lr,
         referrerPolicy: Br,
         requestRedirect: Dr,
@@ -26555,7 +26742,7 @@
         redirectStatusSet: Ar,
         corsSafeListedMethodsSet: st,
         safeMethodsSet: kr,
-        forbiddenMethodsSet: xr,
+        forbiddenMethodsSet: Vr,
         referrerPolicySet: Qr,
       };
     },
@@ -27406,42 +27593,42 @@
         requestCurrentURL: Mr,
         setRequestReferrerPolicyOnRedirect: Lr,
         tryUpgradeRequestToAPotentiallyTrustworthyURL: Gr,
-        createOpaqueTimingInfo: Vr,
-        appendFetchMetadata: xr,
+        createOpaqueTimingInfo: xr,
+        appendFetchMetadata: Vr,
         corsCheck: jr,
         crossOriginResourcePolicyCheck: Hr,
         determineRequestsReferrer: Yr,
         coarsenedSharedCurrentTime: Jr,
         createDeferredPromise: Wr,
         isBlobLike: Kr,
-        sameOrigin: $r,
-        isCancelled: zr,
+        sameOrigin: zr,
+        isCancelled: $r,
         isAborted: Zr,
         isErrorLike: Xr,
-        fullyReadBody: en,
-        readableStreamClose: tn,
-        isomorphicEncode: rn,
-        urlIsLocal: nn,
-        urlIsHttpHttpsScheme: sn,
-        urlHasHttpsScheme: on,
+        fullyReadBody: es,
+        readableStreamClose: ts,
+        isomorphicEncode: rs,
+        urlIsLocal: ss,
+        urlIsHttpHttpsScheme: ns,
+        urlHasHttpsScheme: os,
       } = q(15523);
-      const { kState: an, kHeaders: An, kGuard: ln, kRealm: cn } = q(89710);
-      const pn = q(42613);
-      const { safelyExtractBody: dn } = q(8923);
-      const { redirectStatusSet: un, nullBodyStatus: mn, safeMethodsSet: gn, requestBodyHeader: fn, subresourceSet: hn, DOMException: En } = q(87326);
-      const { kHeadersList: In } = q(36443);
-      const Cn = q(24434);
-      const { Readable: yn, pipeline: Bn } = q(2203);
-      const { addAbortListener: Qn, isErrored: bn, isReadable: wn, nodeMajor: vn, nodeMinor: Tn } = q(3440);
-      const { dataURLProcessor: _n, serializeAMimeType: Rn } = q(94322);
-      const { TransformStream: Sn } = q(63774);
-      const { getGlobalDispatcher: Dn } = q(32581);
-      const { webidl: Fn } = q(74222);
-      const { STATUS_CODES: kn } = q(58611);
-      const On = ["GET", "HEAD"];
-      let Pn;
-      let Nn = globalThis.ReadableStream;
-      class Fetch extends Cn {
+      const { kState: is, kHeaders: as, kGuard: As, kRealm: ls } = q(89710);
+      const cs = q(42613);
+      const { safelyExtractBody: ps } = q(8923);
+      const { redirectStatusSet: ds, nullBodyStatus: us, safeMethodsSet: ms, requestBodyHeader: hs, subresourceSet: fs, DOMException: gs } = q(87326);
+      const { kHeadersList: Es } = q(36443);
+      const Is = q(24434);
+      const { Readable: Cs, pipeline: ys } = q(2203);
+      const { addAbortListener: Bs, isErrored: bs, isReadable: Qs, nodeMajor: ws, nodeMinor: vs } = q(3440);
+      const { dataURLProcessor: Ts, serializeAMimeType: Ss } = q(94322);
+      const { TransformStream: _s } = q(63774);
+      const { getGlobalDispatcher: Rs } = q(32581);
+      const { webidl: Ds } = q(74222);
+      const { STATUS_CODES: Fs } = q(58611);
+      const ks = ["GET", "HEAD"];
+      let Os;
+      let Ps = globalThis.ReadableStream;
+      class Fetch extends Is {
         constructor(C) {
           super();
           this.dispatcher = C;
@@ -27464,7 +27651,7 @@
           }
           this.state = "aborted";
           if (!C) {
-            C = new En("The operation was aborted.", "AbortError");
+            C = new gs("The operation was aborted.", "AbortError");
           }
           this.serializedAbortReason = C;
           this.connection?.destroy(C);
@@ -27472,7 +27659,7 @@
         }
       }
       function fetch(C, P = {}) {
-        Fn.argumentLengthCheck(arguments, 1, { header: "globalThis.fetch" });
+        Ds.argumentLengthCheck(arguments, 1, { header: "globalThis.fetch" });
         const q = Wr();
         let ie;
         try {
@@ -27481,7 +27668,7 @@
           q.reject(C);
           return q.promise;
         }
-        const Ge = ie[an];
+        const Ge = ie[is];
         if (ie.signal.aborted) {
           abortFetch(q, Ge, null, ie.signal.reason);
           return q.promise;
@@ -27494,9 +27681,9 @@
         const Wt = null;
         let Er = false;
         let Ir = null;
-        Qn(ie.signal, () => {
+        Bs(ie.signal, () => {
           Er = true;
-          pn(Ir != null);
+          cs(Ir != null);
           Ir.abort(ie.signal.reason);
           abortFetch(q, Ge, Ot, ie.signal.reason);
         });
@@ -27514,14 +27701,14 @@
             return Promise.resolve();
           }
           Ot = new oe();
-          Ot[an] = C;
-          Ot[cn] = Wt;
-          Ot[An][In] = C.headersList;
-          Ot[An][ln] = "immutable";
-          Ot[An][cn] = Wt;
+          Ot[is] = C;
+          Ot[ls] = Wt;
+          Ot[as][Es] = C.headersList;
+          Ot[as][As] = "immutable";
+          Ot[as][ls] = Wt;
           q.resolve(Ot);
         };
-        Ir = fetching({ request: Ge, processResponseEndOfBody: handleFetchDone, processResponse: processResponse, dispatcher: P.dispatcher ?? Dn() });
+        Ir = fetching({ request: Ge, processResponseEndOfBody: handleFetchDone, processResponse: processResponse, dispatcher: P.dispatcher ?? Rs() });
         return q.promise;
       }
       function finalizeAndReportTiming(C, P = "other") {
@@ -27534,14 +27721,14 @@
         const q = C.urlList[0];
         let oe = C.timingInfo;
         let ie = C.cacheState;
-        if (!sn(q)) {
+        if (!ns(q)) {
           return;
         }
         if (oe === null) {
           return;
         }
         if (!C.timingAllowPassed) {
-          oe = Vr({ startTime: oe.startTime });
+          oe = xr({ startTime: oe.startTime });
           ie = "";
         }
         oe.endTime = Jr();
@@ -27549,16 +27736,16 @@
         markResourceTiming(oe, q, P, globalThis, ie);
       }
       function markResourceTiming(C, P, q, oe, ie) {
-        if (vn > 18 || (vn === 18 && Tn >= 2)) {
+        if (ws > 18 || (ws === 18 && vs >= 2)) {
           performance.markResourceTiming(C, P.href, q, oe, ie);
         }
       }
       function abortFetch(C, P, q, oe) {
         if (!oe) {
-          oe = new En("The operation was aborted.", "AbortError");
+          oe = new gs("The operation was aborted.", "AbortError");
         }
         C.reject(oe);
-        if (P.body != null && wn(P.body?.stream)) {
+        if (P.body != null && Qs(P.body?.stream)) {
           P.body.stream.cancel(oe).catch((C) => {
             if (C.code === "ERR_INVALID_STATE") {
               return;
@@ -27569,8 +27756,8 @@
         if (q == null) {
           return;
         }
-        const ie = q[an];
-        if (ie.body != null && wn(ie.body?.stream)) {
+        const ie = q[is];
+        if (ie.body != null && Qs(ie.body?.stream)) {
           ie.body.stream.cancel(oe).catch((C) => {
             if (C.code === "ERR_INVALID_STATE") {
               return;
@@ -27596,7 +27783,7 @@
           Ar = C.client.crossOriginIsolatedCapability;
         }
         const Er = Jr(Ar);
-        const Ir = Vr({ startTime: Er });
+        const Ir = xr({ startTime: Er });
         const Br = {
           controller: new Fetch(Ot),
           request: C,
@@ -27609,7 +27796,7 @@
           taskDestination: Wt,
           crossOriginIsolatedCapability: Ar,
         };
-        pn(!C.body || C.body.stream);
+        cs(!C.body || C.body.stream);
         if (C.window === "client") {
           C.window = C.client?.globalObject?.constructor?.name === "Window" ? C.client : "no-window";
         }
@@ -27632,7 +27819,7 @@
         }
         if (C.priority === null) {
         }
-        if (hn.has(C.destination)) {
+        if (fs.has(C.destination)) {
         }
         mainFetch(Br).catch((C) => {
           Br.controller.terminate(C);
@@ -27642,7 +27829,7 @@
       async function mainFetch(C, P = false) {
         const q = C.request;
         let oe = null;
-        if (q.localURLsOnly && !nn(Mr(q))) {
+        if (q.localURLsOnly && !ss(Mr(q))) {
           oe = ie("local URLs only");
         }
         Gr(q);
@@ -27658,7 +27845,7 @@
         if (oe === null) {
           oe = await (async () => {
             const P = Mr(q);
-            if (($r(P, q.url) && q.responseTainting === "basic") || P.protocol === "data:" || q.mode === "navigate" || q.mode === "websocket") {
+            if ((zr(P, q.url) && q.responseTainting === "basic") || P.protocol === "data:" || q.mode === "navigate" || q.mode === "websocket") {
               q.responseTainting = "basic";
               return await schemeFetch(C);
             }
@@ -27672,7 +27859,7 @@
               q.responseTainting = "opaque";
               return await schemeFetch(C);
             }
-            if (!sn(Mr(q))) {
+            if (!ns(Mr(q))) {
               return ie("URL scheme must be a HTTP(S) scheme");
             }
             q.responseTainting = "cors";
@@ -27692,7 +27879,7 @@
           } else if (q.responseTainting === "opaque") {
             oe = st(oe, "opaque");
           } else {
-            pn(false);
+            cs(false);
           }
         }
         let Ge = oe.status === 0 ? oe : oe.internalResponse;
@@ -27705,7 +27892,7 @@
         if (oe.type === "opaque" && Ge.status === 206 && Ge.rangeRequested && !q.headers.contains("range")) {
           oe = Ge = ie();
         }
-        if (oe.status !== 0 && (q.method === "HEAD" || q.method === "CONNECT" || mn.includes(Ge.status))) {
+        if (oe.status !== 0 && (q.method === "HEAD" || q.method === "CONNECT" || us.includes(Ge.status))) {
           Ge.body = null;
           C.controller.dump = true;
         }
@@ -27720,16 +27907,16 @@
               processBodyError("integrity mismatch");
               return;
             }
-            oe.body = dn(P)[0];
+            oe.body = ps(P)[0];
             fetchFinale(C, oe);
           };
-          await en(oe.body, processBody, processBodyError);
+          await es(oe.body, processBody, processBodyError);
         } else {
           fetchFinale(C, oe);
         }
       }
       function schemeFetch(C) {
-        if (zr(C) && C.request.redirectCount === 0) {
+        if ($r(C) && C.request.redirectCount === 0) {
           return Promise.resolve(Ge(C));
         }
         const { request: P } = C;
@@ -27739,20 +27926,20 @@
             return Promise.resolve(ie("about scheme is not supported"));
           }
           case "blob:": {
-            if (!Pn) {
-              Pn = q(20181).resolveObjectURL;
+            if (!Os) {
+              Os = q(20181).resolveObjectURL;
             }
             const C = Mr(P);
             if (C.search.length !== 0) {
               return Promise.resolve(ie("NetworkError when attempting to fetch resource."));
             }
-            const oe = Pn(C.toString());
+            const oe = Os(C.toString());
             if (P.method !== "GET" || !Kr(oe)) {
               return Promise.resolve(ie("invalid method"));
             }
-            const Ge = dn(oe);
+            const Ge = ps(oe);
             const st = Ge[0];
-            const Wt = rn(`${st.length}`);
+            const Wt = rs(`${st.length}`);
             const Ar = Ge[1] ?? "";
             const Er = Ot({
               statusText: "OK",
@@ -27766,12 +27953,12 @@
           }
           case "data:": {
             const C = Mr(P);
-            const q = _n(C);
+            const q = Ts(C);
             if (q === "failure") {
               return Promise.resolve(ie("failed to fetch the data URL"));
             }
-            const oe = Rn(q.mimeType);
-            return Promise.resolve(Ot({ statusText: "OK", headersList: [["content-type", { name: "Content-Type", value: oe }]], body: dn(q.body)[0] }));
+            const oe = Ss(q.mimeType);
+            return Promise.resolve(Ot({ statusText: "OK", headersList: [["content-type", { name: "Content-Type", value: oe }]], body: ps(q.body)[0] }));
           }
           case "file:": {
             return Promise.resolve(ie("not implemented... yet..."));
@@ -27794,7 +27981,7 @@
       function fetchFinale(C, P) {
         if (P.type === "error") {
           P.urlList = [C.request.urlList[0]];
-          P.timingInfo = Vr({ startTime: C.timingInfo.startTime });
+          P.timingInfo = xr({ startTime: C.timingInfo.startTime });
         }
         const processResponseEndOfBody = () => {
           C.request.done = true;
@@ -27811,7 +27998,7 @@
           const identityTransformAlgorithm = (C, P) => {
             P.enqueue(C);
           };
-          const C = new Sn(
+          const C = new _s(
             { start() {}, transform: identityTransformAlgorithm, flush: processResponseEndOfBody },
             {
               size() {
@@ -27832,7 +28019,7 @@
           if (P.body == null) {
             queueMicrotask(() => processBody(null));
           } else {
-            return en(P.body, processBody, processBodyError);
+            return es(P.body, processBody, processBodyError);
           }
           return Promise.resolve();
         }
@@ -27859,7 +28046,7 @@
         if ((P.responseTainting === "opaque" || q.type === "opaque") && Hr(P.origin, P.client, P.destination, oe) === "blocked") {
           return ie("blocked");
         }
-        if (un.has(oe.status)) {
+        if (ds.has(oe.status)) {
           if (P.redirect !== "manual") {
             C.controller.connection.destroy();
           }
@@ -27870,7 +28057,7 @@
           } else if (P.redirect === "follow") {
             q = await httpRedirectFetch(C, q);
           } else {
-            pn(false);
+            cs(false);
           }
         }
         q.timingInfo = Ge;
@@ -27888,14 +28075,14 @@
         } catch (C) {
           return Promise.resolve(ie(C));
         }
-        if (!sn(Ge)) {
+        if (!ns(Ge)) {
           return Promise.resolve(ie("URL scheme must be a HTTP(S) scheme"));
         }
         if (q.redirectCount === 20) {
           return Promise.resolve(ie("redirect count exceeded"));
         }
         q.redirectCount += 1;
-        if (q.mode === "cors" && (Ge.username || Ge.password) && !$r(q, Ge)) {
+        if (q.mode === "cors" && (Ge.username || Ge.password) && !zr(q, Ge)) {
           return Promise.resolve(ie('cross origin not allowed for request mode "cors"'));
         }
         if (q.responseTainting === "cors" && (Ge.username || Ge.password)) {
@@ -27904,22 +28091,22 @@
         if (oe.status !== 303 && q.body != null && q.body.source == null) {
           return Promise.resolve(ie());
         }
-        if (([301, 302].includes(oe.status) && q.method === "POST") || (oe.status === 303 && !On.includes(q.method))) {
+        if (([301, 302].includes(oe.status) && q.method === "POST") || (oe.status === 303 && !ks.includes(q.method))) {
           q.method = "GET";
           q.body = null;
-          for (const C of fn) {
+          for (const C of hs) {
             q.headersList.delete(C);
           }
         }
-        if (!$r(Mr(q), Ge)) {
+        if (!zr(Mr(q), Ge)) {
           q.headersList.delete("authorization");
           q.headersList.delete("proxy-authorization", true);
           q.headersList.delete("cookie");
           q.headersList.delete("host");
         }
         if (q.body != null) {
-          pn(q.body.source != null);
-          q.body = dn(q.body.source)[0];
+          cs(q.body.source != null);
+          q.body = ps(q.body.source)[0];
         }
         const st = C.timingInfo;
         st.redirectEndTime = st.postRedirectStartTime = Jr(C.crossOriginIsolatedCapability);
@@ -27952,7 +28139,7 @@
           Dr = "0";
         }
         if (Qr != null) {
-          Dr = rn(`${Qr}`);
+          Dr = rs(`${Qr}`);
         }
         if (Dr != null) {
           Ot.headersList.append("content-length", Dr);
@@ -27960,10 +28147,10 @@
         if (Qr != null && Ot.keepalive) {
         }
         if (Ot.referrer instanceof URL) {
-          Ot.headersList.append("referer", rn(Ot.referrer.href));
+          Ot.headersList.append("referer", rs(Ot.referrer.href));
         }
         Nr(Ot);
-        xr(Ot);
+        Vr(Ot);
         if (!Ot.headersList.contains("user-agent")) {
           Ot.headersList.append("user-agent", typeof esbuildDetection === "undefined" ? "undici" : "node");
         }
@@ -27992,7 +28179,7 @@
           Ot.headersList.append("accept-encoding", "identity");
         }
         if (!Ot.headersList.contains("accept-encoding")) {
-          if (on(Mr(Ot))) {
+          if (os(Mr(Ot))) {
             Ot.headersList.append("accept-encoding", "br, gzip, deflate");
           } else {
             Ot.headersList.append("accept-encoding", "gzip, deflate");
@@ -28011,7 +28198,7 @@
             return ie("only if cached");
           }
           const C = await httpNetworkFetch(st, Br, q);
-          if (!gn.has(Ot.method) && C.status >= 200 && C.status <= 399) {
+          if (!ms.has(Ot.method) && C.status >= 200 && C.status <= 399) {
           }
           if (Ir && C.status === 304) {
           }
@@ -28028,13 +28215,13 @@
           if (oe.window === "no-window") {
             return ie();
           }
-          if (zr(C)) {
+          if ($r(C)) {
             return Ge(C);
           }
           return ie("proxy authentication required");
         }
         if (Wt.status === 421 && !q && (oe.body == null || oe.body.source != null)) {
-          if (zr(C)) {
+          if ($r(C)) {
             return Ge(C);
           }
           C.controller.connection.destroy();
@@ -28045,14 +28232,14 @@
         return Wt;
       }
       async function httpNetworkFetch(C, P = false, oe = false) {
-        pn(!C.controller.connection || C.controller.connection.destroyed);
+        cs(!C.controller.connection || C.controller.connection.destroyed);
         C.controller.connection = {
           abort: null,
           destroyed: false,
           destroy(C) {
             if (!this.destroyed) {
               this.destroyed = true;
-              this.abort?.(C ?? new En("The operation was aborted.", "AbortError"));
+              this.abort?.(C ?? new gs("The operation was aborted.", "AbortError"));
             }
           },
         };
@@ -28072,14 +28259,14 @@
           queueMicrotask(() => C.processRequestEndOfBody());
         } else if (st.body != null) {
           const processBodyChunk = async function* (P) {
-            if (zr(C)) {
+            if ($r(C)) {
               return;
             }
             yield P;
             C.processRequestBodyChunkLength?.(P.byteLength);
           };
           const processEndOfBody = () => {
-            if (zr(C)) {
+            if ($r(C)) {
               return;
             }
             if (C.processRequestEndOfBody) {
@@ -28087,7 +28274,7 @@
             }
           };
           const processBodyError = (P) => {
-            if (zr(C)) {
+            if ($r(C)) {
               return;
             }
             if (P.name === "AbortError") {
@@ -28129,10 +28316,10 @@
         const cancelAlgorithm = (P) => {
           C.controller.abort(P);
         };
-        if (!Nn) {
-          Nn = q(63774).ReadableStream;
+        if (!Ps) {
+          Ps = q(63774).ReadableStream;
         }
-        const Fr = new Nn(
+        const Fr = new Ps(
           {
             async start(P) {
               C.controller.controller = P;
@@ -28172,7 +28359,7 @@
               }
             }
             if (P === undefined) {
-              tn(C.controller.controller);
+              ts(C.controller.controller);
               finalizeResponse(C, Ar);
               return;
             }
@@ -28182,7 +28369,7 @@
               return;
             }
             C.controller.controller.enqueue(new Uint8Array(P));
-            if (bn(Fr)) {
+            if (bs(Fr)) {
               C.controller.terminate();
               return;
             }
@@ -28194,11 +28381,11 @@
         function onAborted(P) {
           if (Zr(C)) {
             Ar.aborted = true;
-            if (wn(Fr)) {
+            if (Qs(Fr)) {
               C.controller.controller.error(C.controller.serializedAbortReason);
             }
           } else {
-            if (wn(Fr)) {
+            if (Qs(Fr)) {
               C.controller.controller.error(new TypeError("terminated", { cause: Xr(P) ? P : undefined }));
             }
           }
@@ -28225,7 +28412,7 @@
                 onConnect(P) {
                   const { connection: q } = C.controller;
                   if (q.destroyed) {
-                    P(new En("The operation was aborted.", "AbortError"));
+                    P(new gs("The operation was aborted.", "AbortError"));
                   } else {
                     C.controller.on("terminated", P);
                     this.abort = q.abort = P;
@@ -28250,7 +28437,7 @@
                       } else if (q.toLowerCase() === "location") {
                         Ot = oe;
                       }
-                      Ar[In].append(q, oe);
+                      Ar[Es].append(q, oe);
                     }
                   } else {
                     const C = Object.keys(P);
@@ -28264,13 +28451,13 @@
                       } else if (q.toLowerCase() === "location") {
                         Ot = C;
                       }
-                      Ar[In].append(q, C);
+                      Ar[Es].append(q, C);
                     }
                   }
-                  this.body = new yn({ read: q });
+                  this.body = new Cs({ read: q });
                   const Er = [];
-                  const Br = st.redirect === "follow" && Ot && un.has(C);
-                  if (st.method !== "HEAD" && st.method !== "CONNECT" && !mn.includes(C) && !Br) {
+                  const Br = st.redirect === "follow" && Ot && ds.has(C);
+                  if (st.method !== "HEAD" && st.method !== "CONNECT" && !us.includes(C) && !Br) {
                     for (const C of Ge) {
                       if (C === "x-gzip" || C === "gzip") {
                         Er.push(Ir.createGunzip({ flush: Ir.constants.Z_SYNC_FLUSH, finishFlush: Ir.constants.Z_SYNC_FLUSH }));
@@ -28284,7 +28471,7 @@
                       }
                     }
                   }
-                  ie({ status: C, statusText: oe, headersList: Ar[In], body: Er.length ? Bn(this.body, ...Er, () => {}) : this.body.on("error", () => {}) });
+                  ie({ status: C, statusText: oe, headersList: Ar[Es], body: Er.length ? ys(this.body, ...Er, () => {}) : this.body.on("error", () => {}) });
                   return true;
                 },
                 onData(P) {
@@ -28318,9 +28505,9 @@
                   for (let C = 0; C < P.length; C += 2) {
                     const q = P[C + 0].toString("latin1");
                     const ie = P[C + 1].toString("latin1");
-                    oe[In].append(q, ie);
+                    oe[Es].append(q, ie);
                   }
-                  ie({ status: C, statusText: kn[C], headersList: oe[In], socket: q });
+                  ie({ status: C, statusText: Fs[C], headersList: oe[Es], socket: q });
                   return true;
                 },
               }
@@ -28344,33 +28531,33 @@
         requestRedirect: Mr,
         requestMode: Lr,
         requestCredentials: Gr,
-        requestCache: Vr,
-        requestDuplex: xr,
+        requestCache: xr,
+        requestDuplex: Vr,
       } = q(87326);
       const { kEnumerableProperty: jr } = Er;
       const { kHeaders: Hr, kSignal: Yr, kState: Jr, kGuard: Wr, kRealm: Kr } = q(89710);
-      const { webidl: $r } = q(74222);
-      const { getGlobalOrigin: zr } = q(75628);
+      const { webidl: zr } = q(74222);
+      const { getGlobalOrigin: $r } = q(75628);
       const { URLSerializer: Zr } = q(94322);
-      const { kHeadersList: Xr, kConstruct: en } = q(36443);
-      const tn = q(42613);
-      const { getMaxListeners: rn, setMaxListeners: nn, getEventListeners: sn, defaultMaxListeners: on } = q(24434);
-      let an = globalThis.TransformStream;
-      const An = Symbol("abortController");
-      const ln = new Ar(({ signal: C, abort: P }) => {
+      const { kHeadersList: Xr, kConstruct: es } = q(36443);
+      const ts = q(42613);
+      const { getMaxListeners: rs, setMaxListeners: ss, getEventListeners: ns, defaultMaxListeners: os } = q(24434);
+      let is = globalThis.TransformStream;
+      const as = Symbol("abortController");
+      const As = new Ar(({ signal: C, abort: P }) => {
         C.removeEventListener("abort", P);
       });
       class Request {
         constructor(C, P = {}) {
-          if (C === en) {
+          if (C === es) {
             return;
           }
-          $r.argumentLengthCheck(arguments, 1, { header: "Request constructor" });
-          C = $r.converters.RequestInfo(C);
-          P = $r.converters.RequestInit(P);
+          zr.argumentLengthCheck(arguments, 1, { header: "Request constructor" });
+          C = zr.converters.RequestInfo(C);
+          P = zr.converters.RequestInit(P);
           this[Kr] = {
             settingsObject: {
-              baseUrl: zr(),
+              baseUrl: $r(),
               get origin() {
                 return this.baseUrl?.origin;
               },
@@ -28394,7 +28581,7 @@
             ie = makeRequest({ urlList: [P] });
             Ge = "cors";
           } else {
-            tn(C instanceof Request);
+            ts(C instanceof Request);
             ie = C[Jr];
             Ur = C[Yr];
           }
@@ -28463,17 +28650,17 @@
           if (P.referrerPolicy !== undefined) {
             ie.referrerPolicy = P.referrerPolicy;
           }
-          let Vr;
+          let xr;
           if (P.mode !== undefined) {
-            Vr = P.mode;
+            xr = P.mode;
           } else {
-            Vr = Ge;
+            xr = Ge;
           }
-          if (Vr === "navigate") {
-            throw $r.errors.exception({ header: "Request constructor", message: "invalid request mode navigate." });
+          if (xr === "navigate") {
+            throw zr.errors.exception({ header: "Request constructor", message: "invalid request mode navigate." });
           }
-          if (Vr != null) {
-            ie.mode = Vr;
+          if (xr != null) {
+            ie.mode = xr;
           }
           if (P.credentials !== undefined) {
             ie.credentials = P.credentials;
@@ -28508,18 +28695,18 @@
             Ur = P.signal;
           }
           this[Jr] = ie;
-          const xr = new AbortController();
-          this[Yr] = xr.signal;
+          const Vr = new AbortController();
+          this[Yr] = Vr.signal;
           this[Yr][Kr] = this[Kr];
           if (Ur != null) {
             if (!Ur || typeof Ur.aborted !== "boolean" || typeof Ur.addEventListener !== "function") {
               throw new TypeError("Failed to construct 'Request': member signal is not of type AbortSignal.");
             }
             if (Ur.aborted) {
-              xr.abort(Ur.reason);
+              Vr.abort(Ur.reason);
             } else {
-              this[An] = xr;
-              const C = new WeakRef(xr);
+              this[as] = Vr;
+              const C = new WeakRef(Vr);
               const abort = function () {
                 const P = C.deref();
                 if (P !== undefined) {
@@ -28527,21 +28714,21 @@
                 }
               };
               try {
-                if (typeof rn === "function" && rn(Ur) === on) {
-                  nn(100, Ur);
-                } else if (sn(Ur, "abort").length >= on) {
-                  nn(100, Ur);
+                if (typeof rs === "function" && rs(Ur) === os) {
+                  ss(100, Ur);
+                } else if (ns(Ur, "abort").length >= os) {
+                  ss(100, Ur);
                 }
               } catch {}
               Er.addAbortListener(Ur, abort);
-              ln.register(xr, { signal: Ur, abort: abort });
+              As.register(Vr, { signal: Ur, abort: abort });
             }
           }
-          this[Hr] = new st(en);
+          this[Hr] = new st(es);
           this[Hr][Xr] = ie.headersList;
           this[Hr][Wr] = "request";
           this[Hr][Kr] = this[Kr];
-          if (Vr === "no-cors") {
+          if (xr === "no-cors") {
             if (!Nr.has(ie.method)) {
               throw new TypeError(`'${ie.method} is unsupported in no-cors mode.`);
             }
@@ -28572,8 +28759,8 @@
               this[Hr].append("content-type", q);
             }
           }
-          const cn = Zr ?? jr;
-          if (cn != null && cn.source == null) {
+          const ls = Zr ?? jr;
+          if (ls != null && ls.source == null) {
             if (Zr != null && P.duplex == null) {
               throw new TypeError("RequestInit: duplex option is required when sending a body.");
             }
@@ -28582,38 +28769,38 @@
             }
             ie.useCORSPreflightFlag = true;
           }
-          let pn = cn;
+          let cs = ls;
           if (Zr == null && jr != null) {
             if (Er.isDisturbed(jr.stream) || jr.stream.locked) {
               throw new TypeError("Cannot construct a Request with a Request object that has already been used.");
             }
-            if (!an) {
-              an = q(63774).TransformStream;
+            if (!is) {
+              is = q(63774).TransformStream;
             }
-            const C = new an();
+            const C = new is();
             jr.stream.pipeThrough(C);
-            pn = { source: jr.source, length: jr.length, stream: C.readable };
+            cs = { source: jr.source, length: jr.length, stream: C.readable };
           }
-          this[Jr].body = pn;
+          this[Jr].body = cs;
         }
         get method() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].method;
         }
         get url() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return Zr(this[Jr].url);
         }
         get headers() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Hr];
         }
         get destination() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].destination;
         }
         get referrer() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           if (this[Jr].referrer === "no-referrer") {
             return "";
           }
@@ -28623,66 +28810,66 @@
           return this[Jr].referrer.toString();
         }
         get referrerPolicy() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].referrerPolicy;
         }
         get mode() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].mode;
         }
         get credentials() {
           return this[Jr].credentials;
         }
         get cache() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].cache;
         }
         get redirect() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].redirect;
         }
         get integrity() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].integrity;
         }
         get keepalive() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].keepalive;
         }
         get isReloadNavigation() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].reloadNavigation;
         }
         get isHistoryNavigation() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].historyNavigation;
         }
         get signal() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Yr];
         }
         get body() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return this[Jr].body ? this[Jr].body.stream : null;
         }
         get bodyUsed() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return !!this[Jr].body && Er.isDisturbed(this[Jr].body.stream);
         }
         get duplex() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           return "half";
         }
         clone() {
-          $r.brandCheck(this, Request);
+          zr.brandCheck(this, Request);
           if (this.bodyUsed || this.body?.locked) {
             throw new TypeError("unusable");
           }
           const C = cloneRequest(this[Jr]);
-          const P = new Request(en);
+          const P = new Request(es);
           P[Jr] = C;
           P[Kr] = this[Kr];
-          P[Hr] = new st(en);
+          P[Hr] = new st(es);
           P[Hr][Xr] = C.headersList;
           P[Hr][Wr] = this[Hr][Wr];
           P[Hr][Kr] = this[Hr][Kr];
@@ -28772,32 +28959,32 @@
         mode: jr,
         [Symbol.toStringTag]: { value: "Request", configurable: true },
       });
-      $r.converters.Request = $r.interfaceConverter(Request);
-      $r.converters.RequestInfo = function (C) {
+      zr.converters.Request = zr.interfaceConverter(Request);
+      zr.converters.RequestInfo = function (C) {
         if (typeof C === "string") {
-          return $r.converters.USVString(C);
+          return zr.converters.USVString(C);
         }
         if (C instanceof Request) {
-          return $r.converters.Request(C);
+          return zr.converters.Request(C);
         }
-        return $r.converters.USVString(C);
+        return zr.converters.USVString(C);
       };
-      $r.converters.AbortSignal = $r.interfaceConverter(AbortSignal);
-      $r.converters.RequestInit = $r.dictionaryConverter([
-        { key: "method", converter: $r.converters.ByteString },
-        { key: "headers", converter: $r.converters.HeadersInit },
-        { key: "body", converter: $r.nullableConverter($r.converters.BodyInit) },
-        { key: "referrer", converter: $r.converters.USVString },
-        { key: "referrerPolicy", converter: $r.converters.DOMString, allowedValues: Ur },
-        { key: "mode", converter: $r.converters.DOMString, allowedValues: Lr },
-        { key: "credentials", converter: $r.converters.DOMString, allowedValues: Gr },
-        { key: "cache", converter: $r.converters.DOMString, allowedValues: Vr },
-        { key: "redirect", converter: $r.converters.DOMString, allowedValues: Mr },
-        { key: "integrity", converter: $r.converters.DOMString },
-        { key: "keepalive", converter: $r.converters.boolean },
-        { key: "signal", converter: $r.nullableConverter((C) => $r.converters.AbortSignal(C, { strict: false })) },
-        { key: "window", converter: $r.converters.any },
-        { key: "duplex", converter: $r.converters.DOMString, allowedValues: xr },
+      zr.converters.AbortSignal = zr.interfaceConverter(AbortSignal);
+      zr.converters.RequestInit = zr.dictionaryConverter([
+        { key: "method", converter: zr.converters.ByteString },
+        { key: "headers", converter: zr.converters.HeadersInit },
+        { key: "body", converter: zr.nullableConverter(zr.converters.BodyInit) },
+        { key: "referrer", converter: zr.converters.USVString },
+        { key: "referrerPolicy", converter: zr.converters.DOMString, allowedValues: Ur },
+        { key: "mode", converter: zr.converters.DOMString, allowedValues: Lr },
+        { key: "credentials", converter: zr.converters.DOMString, allowedValues: Gr },
+        { key: "cache", converter: zr.converters.DOMString, allowedValues: xr },
+        { key: "redirect", converter: zr.converters.DOMString, allowedValues: Mr },
+        { key: "integrity", converter: zr.converters.DOMString },
+        { key: "keepalive", converter: zr.converters.boolean },
+        { key: "signal", converter: zr.nullableConverter((C) => zr.converters.AbortSignal(C, { strict: false })) },
+        { key: "window", converter: zr.converters.any },
+        { key: "duplex", converter: zr.converters.DOMString, allowedValues: Vr },
       ]);
       C.exports = { Request: Request, makeRequest: makeRequest };
     },
@@ -28817,25 +29004,25 @@
         isomorphicEncode: Nr,
       } = q(15523);
       const { redirectStatusSet: Ur, nullBodyStatus: Mr, DOMException: Lr } = q(87326);
-      const { kState: Gr, kHeaders: Vr, kGuard: xr, kRealm: jr } = q(89710);
+      const { kState: Gr, kHeaders: xr, kGuard: Vr, kRealm: jr } = q(89710);
       const { webidl: Hr } = q(74222);
       const { FormData: Yr } = q(43073);
       const { getGlobalOrigin: Jr } = q(75628);
       const { URLSerializer: Wr } = q(94322);
-      const { kHeadersList: Kr, kConstruct: $r } = q(36443);
-      const zr = q(42613);
+      const { kHeadersList: Kr, kConstruct: zr } = q(36443);
+      const $r = q(42613);
       const { types: Zr } = q(39023);
       const Xr = globalThis.ReadableStream || q(63774).ReadableStream;
-      const en = new TextEncoder("utf-8");
+      const es = new TextEncoder("utf-8");
       class Response {
         static error() {
           const C = { settingsObject: {} };
           const P = new Response();
           P[Gr] = makeNetworkError();
           P[jr] = C;
-          P[Vr][Kr] = P[Gr].headersList;
-          P[Vr][xr] = "immutable";
-          P[Vr][jr] = C;
+          P[xr][Kr] = P[Gr].headersList;
+          P[xr][Vr] = "immutable";
+          P[xr][jr] = C;
           return P;
         }
         static json(C, P = {}) {
@@ -28843,13 +29030,13 @@
           if (P !== null) {
             P = Hr.converters.ResponseInit(P);
           }
-          const q = en.encode(Fr(C));
+          const q = es.encode(Fr(C));
           const oe = st(q);
           const ie = { settingsObject: {} };
           const Ge = new Response();
           Ge[jr] = ie;
-          Ge[Vr][xr] = "response";
-          Ge[Vr][jr] = ie;
+          Ge[xr][Vr] = "response";
+          Ge[xr][jr] = ie;
           initializeResponse(Ge, P, { body: oe[0], type: "application/json" });
           return Ge;
         }
@@ -28869,8 +29056,8 @@
           }
           const ie = new Response();
           ie[jr] = q;
-          ie[Vr][xr] = "immutable";
-          ie[Vr][jr] = q;
+          ie[xr][Vr] = "immutable";
+          ie[xr][jr] = q;
           ie[Gr].status = P;
           const Ge = Nr(Wr(oe));
           ie[Gr].headersList.append("location", Ge);
@@ -28883,10 +29070,10 @@
           P = Hr.converters.ResponseInit(P);
           this[jr] = { settingsObject: {} };
           this[Gr] = makeResponse({});
-          this[Vr] = new oe($r);
-          this[Vr][xr] = "response";
-          this[Vr][Kr] = this[Gr].headersList;
-          this[Vr][jr] = this[jr];
+          this[xr] = new oe(zr);
+          this[xr][Vr] = "response";
+          this[xr][Kr] = this[Gr].headersList;
+          this[xr][jr] = this[jr];
           let q = null;
           if (C != null) {
             const [P, oe] = st(C);
@@ -28925,7 +29112,7 @@
         }
         get headers() {
           Hr.brandCheck(this, Response);
-          return this[Vr];
+          return this[xr];
         }
         get body() {
           Hr.brandCheck(this, Response);
@@ -28944,9 +29131,9 @@
           const P = new Response();
           P[Gr] = C;
           P[jr] = this[jr];
-          P[Vr][Kr] = C.headersList;
-          P[Vr][xr] = this[Vr][xr];
-          P[Vr][jr] = this[Vr][jr];
+          P[xr][Kr] = C.headersList;
+          P[xr][Vr] = this[xr][Vr];
+          P[xr][jr] = this[xr][jr];
           return P;
         }
       }
@@ -29002,7 +29189,7 @@
             return q in P ? P[q] : C[q];
           },
           set(C, q, oe) {
-            zr(!(q in P));
+            $r(!(q in P));
             C[q] = oe;
             return true;
           },
@@ -29018,11 +29205,11 @@
         } else if (P === "opaqueredirect") {
           return makeFilteredResponse(C, { type: "opaqueredirect", status: 0, statusText: "", headersList: [], body: null });
         } else {
-          zr(false);
+          $r(false);
         }
       }
       function makeAppropriateNetworkError(C, P = null) {
-        zr(Br(C));
+        $r(Br(C));
         return Qr(C)
           ? makeNetworkError(Object.assign(new Lr("The operation was aborted.", "AbortError"), { cause: P }))
           : makeNetworkError(Object.assign(new Lr("Request was cancelled."), { cause: P }));
@@ -29043,7 +29230,7 @@
           C[Gr].statusText = P.statusText;
         }
         if ("headers" in P && P.headers != null) {
-          Ge(C[Vr], P.headers);
+          Ge(C[xr], P.headers);
         }
         if (q) {
           if (Mr.includes(C.status)) {
@@ -31432,7 +31619,7 @@
       const { InvalidArgumentError: Ur, UndiciError: Mr } = q(68707);
       const Lr = q(28611);
       const Gr = q(91529);
-      const Vr = q(56142);
+      const xr = q(56142);
       class FakeWeakRef {
         constructor(C) {
           this.value = C;
@@ -31531,7 +31718,7 @@
             .flatMap(([C, P]) => P.deref()[Wt].map((P) => ({ ...P, origin: C })))
             .filter(({ pending: C }) => C);
         }
-        assertNoPendingInterceptors({ pendingInterceptorsFormatter: C = new Vr() } = {}) {
+        assertNoPendingInterceptors({ pendingInterceptorsFormatter: C = new xr() } = {}) {
           const P = this.pendingInterceptors();
           if (P.length === 0) {
             return;
@@ -32160,8 +32347,8 @@
       const Mr = Symbol("queue");
       const Lr = Symbol("closed resolve");
       const Gr = Symbol("onDrain");
-      const Vr = Symbol("onConnect");
-      const xr = Symbol("onDisconnect");
+      const xr = Symbol("onConnect");
+      const Vr = Symbol("onDisconnect");
       const jr = Symbol("onConnectionError");
       const Hr = Symbol("get dispatcher");
       const Yr = Symbol("add client");
@@ -32194,10 +32381,10 @@
               Promise.all(C[Nr].map((C) => C.close())).then(C[Lr]);
             }
           };
-          this[Vr] = (P, q) => {
+          this[xr] = (P, q) => {
             C.emit("connect", P, [C, ...q]);
           };
-          this[xr] = (P, q, oe) => {
+          this[Vr] = (P, q, oe) => {
             C.emit("disconnect", P, [C, ...q], oe);
           };
           this[jr] = (P, q, oe) => {
@@ -32270,7 +32457,7 @@
           return !this[Ur];
         }
         [Yr](C) {
-          C.on("drain", this[Gr]).on("connect", this[Vr]).on("disconnect", this[xr]).on("connectionError", this[jr]);
+          C.on("drain", this[Gr]).on("connect", this[xr]).on("disconnect", this[Vr]).on("connectionError", this[jr]);
           this[Nr].push(C);
           if (this[Ur]) {
             process.nextTick(() => {
@@ -33268,14 +33455,14 @@
       const { getGlobalOrigin: st } = q(75628);
       const { staticPropertyDescriptors: Ot, states: Wt, opcodes: Ar, emptyBuffer: Er } = q(45913);
       const { kWebSocketURL: Ir, kReadyState: Br, kController: Qr, kBinaryType: Dr, kResponse: Fr, kSentClose: kr, kByteParser: Nr } = q(62933);
-      const { isEstablished: Ur, isClosing: Mr, isValidSubprotocol: Lr, failWebsocketConnection: Gr, fireEvent: Vr } = q(3574);
-      const { establishWebSocketConnection: xr } = q(68550);
+      const { isEstablished: Ur, isClosing: Mr, isValidSubprotocol: Lr, failWebsocketConnection: Gr, fireEvent: xr } = q(3574);
+      const { establishWebSocketConnection: Vr } = q(68550);
       const { WebsocketFrameSend: jr } = q(31237);
       const { ByteParser: Hr } = q(43171);
       const { kEnumerableProperty: Yr, isBlobLike: Jr } = q(3440);
       const { getGlobalDispatcher: Wr } = q(32581);
       const { types: Kr } = q(39023);
-      let $r = false;
+      let zr = false;
       class WebSocket extends EventTarget {
         #p = { open: null, error: null, close: null, message: null };
         #d = 0;
@@ -33284,8 +33471,8 @@
         constructor(C, P = []) {
           super();
           oe.argumentLengthCheck(arguments, 1, { header: "WebSocket constructor" });
-          if (!$r) {
-            $r = true;
+          if (!zr) {
+            zr = true;
             process.emitWarning("WebSockets are experimental, expect them to change at any time.", { code: "UNDICI-WS" });
           }
           const q = oe.converters["DOMString or sequence<DOMString> or WebSocketInit"](P);
@@ -33319,7 +33506,7 @@
             throw new ie("Invalid Sec-WebSocket-Protocol value", "SyntaxError");
           }
           this[Ir] = new URL(Ot.href);
-          this[Qr] = xr(Ot, P, this, (C) => this.#g(C), q);
+          this[Qr] = Vr(Ot, P, this, (C) => this.#h(C), q);
           this[Br] = WebSocket.CONNECTING;
           this[Dr] = "blob";
         }
@@ -33514,7 +33701,7 @@
             this[Dr] = C;
           }
         }
-        #g(C) {
+        #h(C) {
           this[Fr] = C;
           const P = new Hr(this);
           P.on("drain", function onParserDrain() {
@@ -33531,7 +33718,7 @@
           if (oe !== null) {
             this.#u = oe;
           }
-          Vr("open", this);
+          xr("open", this);
         }
       }
       WebSocket.CONNECTING = WebSocket.prototype.CONNECTING = Wt.CONNECTING;
@@ -35496,7 +35683,7 @@
           });
           let Ur = Promise.resolve(void 0);
           return c((Lr, Gr) => {
-            let Vr;
+            let xr;
             function k() {
               if (Ir) return;
               const C = c((C, P) => {
@@ -35539,14 +35726,14 @@
             }
             if (
               (void 0 !== Ge &&
-                ((Vr = () => {
+                ((xr = () => {
                   const C = void 0 !== Ge.reason ? Ge.reason : new Mr("Aborted", "AbortError"),
                     P = [];
                   oe || P.push(() => ("writable" === Dr ? Ot.abort(C) : d(void 0))),
                     ie || P.push(() => ("readable" === Qr ? st.cancel(C) : d(void 0))),
                     z(() => Promise.all(P.map((C) => C())), !0, C);
                 }),
-                Ge.aborted ? Vr() : Ge.addEventListener("abort", Vr)),
+                Ge.aborted ? xr() : Ge.addEventListener("abort", xr)),
               Ut(C) && ((Qr = C._state), (Wt = C._storedError)),
               Xe(P) && ((Dr = P._state), (Ar = P._storedError), (Fr = ot(P))),
               Ut(C) && Xe(P) && ((kr = !0), Er()),
@@ -35596,7 +35783,7 @@
               z(void 0, C, P);
             }
             function F(C, P) {
-              return (Br = !0), Ot.releaseLock(), st.releaseLock(), void 0 !== Ge && Ge.removeEventListener("abort", Vr), C ? Gr(P) : Lr(void 0), null;
+              return (Br = !0), Ot.releaseLock(), st.releaseLock(), void 0 !== Ge && Ge.removeEventListener("abort", xr), C ? Gr(P) : Lr(void 0), null;
             }
             Ir ||
               (h(st.closed, B, A),
@@ -38216,17 +38403,19 @@
       const Ge = q(71917);
       const st = q(14164);
       const Ot = q(94049);
-      const Wt = 5;
-      const Ar = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. After each attempt to solve the issue, you will be asked if the solution is complete\n3. If not complete, you will continue with additional attempts up to ${Wt} tries\n4. Each attempt should build upon previous attempts, learning from any failures\n\nTo use a tool, format your response like this:\n\`\`\`tool\n{\n  "tool": "readFile|writeFile|exploreDir",\n  "args": {\n    // For readFile:\n    "filename": "path/to/file"\n    \n    // For writeFile:\n    "filename": "path/to/file",\n    "content": "file content"\n    \n    // For exploreDir:\n    "command": "tree"\n  }\n}\n\`\`\`\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(filename: string)\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Write/update file contents\n- Method: execute(filename: string, content: string)\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(command: 'tree', args?: any)\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths are relative to the current working directory. You only need to provide filenames.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Wt} attempts to complete each task`;
+      const Wt = q(56310);
+      const Ar = 20;
+      const Er = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. After each attempt to solve the issue, you will be asked if the solution is complete\n3. If not complete, you will continue with additional attempts up to ${Ar} tries\n4. Each attempt should build upon previous attempts, learning from any failures\n\nTo use a tool, format your response like this:\n\`\`\`tool\n{\n  "tool": "readFile|writeFile|exploreDir|searchFiles",\n  "args": {\n    // For readFile:\n    "filename": "path/to/file"\n    \n    // For writeFile:\n    "filename": "path/to/file",\n    "content": "file content"\n    \n    // For exploreDir:\n    "command": "tree"\n\n    // For searchFiles:\n    "pattern": "regex pattern",\n    "filePattern": "glob pattern (optional)",\n    "caseSensitive": boolean (optional),\n    "contextLines": number (optional)\n  }\n}\n\`\`\`\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(filename: string)\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Write/update file contents\n- Method: execute(filename: string, content: string)\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(command: 'tree', args?: any)\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(pattern: string, options?: { filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths are relative to the current working directory. You only need to provide filenames.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Ar} attempts to complete each task`;
       class Completions extends ie.SuperOpenAi {
         constructor(C, P) {
           super(C, P);
-          this.maxTokens = 1e5;
+          this.maxTokens = 100;
           this.attempts = 0;
-          this.tools = { readFile: new Ge.ReadFile(), writeFile: new st.WriteFile(), exploreDir: new Ot.ExploreDir() };
+          this.tools = { readFile: new Ge.ReadFile(), writeFile: new st.WriteFile(), exploreDir: new Ot.ExploreDir(), searchFiles: new Wt.SearchFiles() };
         }
         _executeToolRequest(C, P) {
           return oe(this, void 0, void 0, function* () {
+            this.context.logger.info(`Executing tool request: ${C.tool} with args:`, C.args);
             switch (C.tool) {
               case "readFile":
                 if (!C.args.filename) throw new Error("Filename is required for readFile");
@@ -38238,6 +38427,13 @@
                 return this._writeFile(C.args.filename, C.args.content, P);
               case "exploreDir":
                 return this._getDirectoryTree(P);
+              case "searchFiles":
+                if (!C.args.pattern) throw new Error("Search pattern is required");
+                return this._searchFiles(C.args.pattern, P, {
+                  filePattern: C.args.filePattern,
+                  caseSensitive: C.args.caseSensitive,
+                  contextLines: C.args.contextLines,
+                });
               default:
                 throw new Error(`Unknown tool: ${C.tool}`);
             }
@@ -38282,22 +38478,22 @@
         _executeWithRetry(C, P, q, ...ie) {
           return oe(this, void 0, void 0, function* () {
             this.attempts++;
-            if (this.attempts > Wt) {
+            if (this.attempts > Ar) {
               return {
                 success: false,
-                error: `Maximum attempts (${Wt}) exceeded`,
+                error: `Maximum attempts (${Ar}) exceeded`,
                 metadata: { timestamp: Date.now(), toolName: C.name, attempts: this.attempts, workingDir: q },
               };
             }
             try {
               const oe = yield C.execute(...ie);
-              if (!oe.success && this.attempts < Wt) {
+              if (!oe.success && this.attempts < Ar) {
                 console.log(`Attempt ${this.attempts} failed: ${oe.error}`);
                 return this._executeWithRetry(C, P, q, ...ie);
               }
               return oe;
             } catch (oe) {
-              if (this.attempts < Wt) {
+              if (this.attempts < Ar) {
                 console.error(`Attempt ${this.attempts} error:`, oe);
                 return this._executeWithRetry(C, P, q, ...ie);
               }
@@ -38314,35 +38510,36 @@
             var ie, Ge;
             this.attempts = 0;
             this.tools.exploreDir = new Ot.ExploreDir(q);
+            this.tools.searchFiles = new Wt.SearchFiles(q);
             let st = false;
-            let Er = null;
-            const Ir = [{ role: "system", content: Ar }];
-            while (this.attempts < Wt && !st) {
-              Ir.push({
+            let Ir = null;
+            const Br = [{ role: "system", content: Er }];
+            while (this.attempts < Ar && !st) {
+              Br.push({
                 role: "user",
-                content: `Current attempt: ${this.attempts + 1}/${Wt}\nWorking directory: ${q}\nPrevious solution state: ${oe}\n\nOriginal request: ${C}`,
+                content: `Current attempt: ${this.attempts + 1}/${Ar}\nWorking directory: ${q}\nPrevious solution state: ${oe}\n\nOriginal request: ${C}`,
               });
               const Ot = yield this.client.chat.completions.create({
                 model: P,
-                messages: Ir,
+                messages: Br,
                 temperature: 0.2,
                 max_tokens: this.maxTokens,
                 top_p: 0.5,
                 frequency_penalty: 0,
                 presence_penalty: 0,
               });
-              Er = Ot;
-              const Ar = ((Ge = (ie = Ot.choices[0]) === null || ie === void 0 ? void 0 : ie.message) === null || Ge === void 0 ? void 0 : Ge.content) || "";
-              const Br = yield this._processResponse(Ar, q);
-              Ir.push({ role: "assistant", content: Br });
-              oe = Br;
+              Ir = Ot;
+              const Wt = ((Ge = (ie = Ot.choices[0]) === null || ie === void 0 ? void 0 : ie.message) === null || Ge === void 0 ? void 0 : Ge.content) || "";
+              const Er = yield this._processResponse(Wt, q);
+              Br.push({ role: "assistant", content: Er });
+              oe = Er;
               st = yield this._checkSolution(oe, P);
               if (!st) {
                 this.attempts++;
-                console.log(`Solution incomplete, attempt ${this.attempts}/${Wt}`);
+                console.log(`Solution incomplete, attempt ${this.attempts}/${Ar}`);
               }
             }
-            return Er;
+            return Ir;
           });
         }
         _readFile(C, P) {
@@ -38358,6 +38555,11 @@
         _getDirectoryTree(C) {
           return oe(this, void 0, void 0, function* () {
             return this._executeWithRetry(this.tools.exploreDir, "execute", C, "tree");
+          });
+        }
+        _searchFiles(C, P, q) {
+          return oe(this, void 0, void 0, function* () {
+            return this._executeWithRetry(this.tools.searchFiles, "execute", P, C, q);
           });
         }
       }
@@ -38839,6 +39041,95 @@
       }
       P.ReadFile = ReadFile;
     },
+    56310: function (C, P, q) {
+      "use strict";
+      var oe =
+        (this && this.__awaiter) ||
+        function (C, P, q, oe) {
+          function adopt(C) {
+            return C instanceof q
+              ? C
+              : new q(function (P) {
+                  P(C);
+                });
+          }
+          return new (q || (q = Promise))(function (q, ie) {
+            function fulfilled(C) {
+              try {
+                step(oe.next(C));
+              } catch (C) {
+                ie(C);
+              }
+            }
+            function rejected(C) {
+              try {
+                step(oe["throw"](C));
+              } catch (C) {
+                ie(C);
+              }
+            }
+            function step(C) {
+              C.done ? q(C.value) : adopt(C.value).then(fulfilled, rejected);
+            }
+            step((oe = oe.apply(C, P || [])).next());
+          });
+        };
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.SearchFiles = void 0;
+      const ie = q(21363);
+      const Ge = q(79896);
+      class SearchFiles {
+        constructor(C = process.cwd()) {
+          this.name = "search-files";
+          this.description = "Searches for files and content using glob patterns and regex";
+          this._contextLines = 2;
+          this._workingDir = C;
+        }
+        execute(C, P) {
+          return oe(this, void 0, void 0, function* () {
+            var q, oe;
+            try {
+              const st = (P === null || P === void 0 ? void 0 : P.filePattern) || "**/*";
+              const Ot = (q = P === null || P === void 0 ? void 0 : P.isCaseSensitive) !== null && q !== void 0 ? q : false;
+              const Wt = (oe = P === null || P === void 0 ? void 0 : P.contextLines) !== null && oe !== void 0 ? oe : this._contextLines;
+              const Ar = yield (0, ie.glob)(st, { cwd: this._workingDir, ignore: ["**/node_modules/**", "**/.git/**"], nodir: true, absolute: true });
+              const Er = new RegExp(C, Ot ? "g" : "gi");
+              const Ir = [];
+              for (const C of Ar) {
+                try {
+                  const P = (0, Ge.readFileSync)(C, "utf8");
+                  const q = P.split("\n");
+                  for (let P = 0; P < q.length; P++) {
+                    const oe = q[P];
+                    if (Er.test(oe)) {
+                      const ie = Math.max(0, P - Wt);
+                      const Ge = Math.min(q.length, P + Wt + 1);
+                      const st = q.slice(ie, Ge);
+                      Ir.push({ file: C.replace(this._workingDir + "/", ""), line: P + 1, content: oe, context: st });
+                    }
+                    Er.lastIndex = 0;
+                  }
+                } catch (P) {
+                  console.error(`Error reading file ${C}:`, P);
+                }
+              }
+              return {
+                success: true,
+                data: { matches: Ir, totalFiles: Ar.length, searchPattern: C },
+                metadata: { timestamp: Date.now(), toolName: this.name, filePattern: st, contextLines: Wt },
+              };
+            } catch (C) {
+              return {
+                success: false,
+                error: C instanceof Error ? C.message : "Unknown error occurred",
+                metadata: { timestamp: Date.now(), toolName: this.name },
+              };
+            }
+          });
+        }
+      }
+      P.SearchFiles = SearchFiles;
+    },
     9992: function (C, P, q) {
       "use strict";
       var oe =
@@ -39178,6 +39469,10 @@
       "use strict";
       C.exports = require("node:fs");
     },
+    51455: (C) => {
+      "use strict";
+      C.exports = require("node:fs/promises");
+    },
     76760: (C) => {
       "use strict";
       C.exports = require("node:path");
@@ -39189,6 +39484,14 @@
     37830: (C) => {
       "use strict";
       C.exports = require("node:stream/web");
+    },
+    46193: (C) => {
+      "use strict";
+      C.exports = require("node:string_decoder");
+    },
+    73136: (C) => {
+      "use strict";
+      C.exports = require("node:url");
     },
     57975: (C) => {
       "use strict";
@@ -39819,34 +40122,34 @@
           }
         }
         function checkFinished() {
-          if (zr === 0 && en && !C._done) {
-            en = false;
+          if ($r === 0 && es && !C._done) {
+            es = false;
             ie.end();
           }
         }
         if (typeof Fr !== "string") {
           throw new Error("Multipart: Boundary not found");
         }
-        const Vr = Ar(kr, "fieldSize", 1 * 1024 * 1024);
-        const xr = Ar(kr, "fileSize", Infinity);
+        const xr = Ar(kr, "fieldSize", 1 * 1024 * 1024);
+        const Vr = Ar(kr, "fileSize", Infinity);
         const jr = Ar(kr, "files", Infinity);
         const Hr = Ar(kr, "fields", Infinity);
         const Yr = Ar(kr, "parts", Infinity);
         const Jr = Ar(kr, "headerPairs", 2e3);
         const Wr = Ar(kr, "headerSize", 80 * 1024);
         let Kr = 0;
-        let $r = 0;
         let zr = 0;
+        let $r = 0;
         let Zr;
         let Xr;
-        let en = false;
+        let es = false;
         this._needDrain = false;
         this._pause = false;
         this._cb = undefined;
         this._nparts = 0;
         this._boy = C;
-        const tn = { boundary: Fr, maxHeaderPairs: Jr, maxHeaderSize: Wr, partHwm: Gr.highWaterMark, highWaterMark: P.highWaterMark };
-        this.parser = new Ge(tn);
+        const ts = { boundary: Fr, maxHeaderPairs: Jr, maxHeaderSize: Wr, partHwm: Gr.highWaterMark, highWaterMark: P.highWaterMark };
+        this.parser = new Ge(ts);
         this.parser
           .on("drain", function () {
             ie._needDrain = false;
@@ -39918,7 +40221,7 @@
               } else {
                 Ur = "7bit";
               }
-              let Wr, en;
+              let Wr, es;
               if (Nr(Er, Ar, Yr)) {
                 if (Kr === jr) {
                   if (!C.hitFilesLimit) {
@@ -39932,11 +40235,11 @@
                   ie.parser._ignore();
                   return;
                 }
-                ++zr;
+                ++$r;
                 const q = new FileStream(Gr);
                 Zr = q;
                 q.on("end", function () {
-                  --zr;
+                  --$r;
                   ie._pause = false;
                   checkFinished();
                   if (ie._cb && !ie._needDrain) {
@@ -39958,13 +40261,13 @@
                 };
                 C.emit("file", Er, q, Yr, Ur, Ar);
                 Wr = function (C) {
-                  if ((Jr += C.length) > xr) {
-                    const oe = xr - Jr + C.length;
+                  if ((Jr += C.length) > Vr) {
+                    const oe = Vr - Jr + C.length;
                     if (oe > 0) {
                       q.push(C.slice(0, oe));
                     }
                     q.truncated = true;
-                    q.bytesRead = xr;
+                    q.bytesRead = Vr;
                     P.removeAllListeners("data");
                     q.emit("limit");
                     return;
@@ -39973,26 +40276,26 @@
                   }
                   q.bytesRead = Jr;
                 };
-                en = function () {
+                es = function () {
                   Zr = undefined;
                   q.push(null);
                 };
               } else {
-                if ($r === Hr) {
+                if (zr === Hr) {
                   if (!C.hitFieldsLimit) {
                     C.hitFieldsLimit = true;
                     C.emit("fieldsLimit");
                   }
                   return skipPart(P);
                 }
-                ++$r;
                 ++zr;
+                ++$r;
                 let q = "";
                 let oe = false;
                 Xr = P;
                 Wr = function (C) {
-                  if ((Jr += C.length) > Vr) {
-                    const ie = Vr - (Jr - C.length);
+                  if ((Jr += C.length) > xr) {
+                    const ie = xr - (Jr - C.length);
                     q += C.toString("binary", 0, ie);
                     oe = true;
                     P.removeAllListeners("data");
@@ -40000,19 +40303,19 @@
                     q += C.toString("binary");
                   }
                 };
-                en = function () {
+                es = function () {
                   Xr = undefined;
                   if (q.length) {
                     q = Ot(q, "binary", kr);
                   }
                   C.emit("field", Er, q, false, oe, Ur, Ar);
-                  --zr;
+                  --$r;
                   checkFinished();
                 };
               }
               P._readableState.sync = false;
               P.on("data", Wr);
-              P.on("end", en);
+              P.on("end", es);
             }).on("error", function (C) {
               if (Zr) {
                 Zr.emit("error", C);
@@ -40023,7 +40326,7 @@
             C.emit("error", P);
           })
           .on("finish", function () {
-            en = true;
+            es = true;
             checkFinished();
           });
       }
@@ -41051,7 +41354,7 @@
       const Mr = Ge(q(93715));
       const Lr = q(89266);
       const Gr = q(53749);
-      const Vr = { enableAdditionalHeaders: false };
+      const xr = { enableAdditionalHeaders: false };
       class FormDataEncoder {
         constructor(C, P, q) {
           st.add(this);
@@ -41082,7 +41385,7 @@
             throw new TypeError("Expected options argument to be an object.");
           }
           oe(this, Qr, C, "f");
-          oe(this, Dr, { ...Vr, ...q }, "f");
+          oe(this, Dr, { ...xr, ...q }, "f");
           oe(this, Wt, ie(this, Ir, "f").encode(ie(this, Ot, "f")), "f");
           oe(this, Ar, ie(this, Wt, "f").byteLength, "f");
           this.boundary = `form-data-boundary-${Ge}`;
@@ -41859,6 +42162,3955 @@
         return q === Object.toString();
       }
       P["default"] = isPlainObject;
+    },
+    72981: (C, P, q) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.Glob = void 0;
+      const oe = q(91409);
+      const ie = q(73136);
+      const Ge = q(16577);
+      const st = q(47813);
+      const Ot = q(11157);
+      const Wt = typeof process === "object" && process && typeof process.platform === "string" ? process.platform : "linux";
+      class Glob {
+        absolute;
+        cwd;
+        root;
+        dot;
+        dotRelative;
+        follow;
+        ignore;
+        magicalBraces;
+        mark;
+        matchBase;
+        maxDepth;
+        nobrace;
+        nocase;
+        nodir;
+        noext;
+        noglobstar;
+        pattern;
+        platform;
+        realpath;
+        scurry;
+        stat;
+        signal;
+        windowsPathsNoEscape;
+        withFileTypes;
+        includeChildMatches;
+        opts;
+        patterns;
+        constructor(C, P) {
+          if (!P) throw new TypeError("glob options required");
+          this.withFileTypes = !!P.withFileTypes;
+          this.signal = P.signal;
+          this.follow = !!P.follow;
+          this.dot = !!P.dot;
+          this.dotRelative = !!P.dotRelative;
+          this.nodir = !!P.nodir;
+          this.mark = !!P.mark;
+          if (!P.cwd) {
+            this.cwd = "";
+          } else if (P.cwd instanceof URL || P.cwd.startsWith("file://")) {
+            P.cwd = (0, ie.fileURLToPath)(P.cwd);
+          }
+          this.cwd = P.cwd || "";
+          this.root = P.root;
+          this.magicalBraces = !!P.magicalBraces;
+          this.nobrace = !!P.nobrace;
+          this.noext = !!P.noext;
+          this.realpath = !!P.realpath;
+          this.absolute = P.absolute;
+          this.includeChildMatches = P.includeChildMatches !== false;
+          this.noglobstar = !!P.noglobstar;
+          this.matchBase = !!P.matchBase;
+          this.maxDepth = typeof P.maxDepth === "number" ? P.maxDepth : Infinity;
+          this.stat = !!P.stat;
+          this.ignore = P.ignore;
+          if (this.withFileTypes && this.absolute !== undefined) {
+            throw new Error("cannot set absolute and withFileTypes:true");
+          }
+          if (typeof C === "string") {
+            C = [C];
+          }
+          this.windowsPathsNoEscape = !!P.windowsPathsNoEscape || P.allowWindowsEscape === false;
+          if (this.windowsPathsNoEscape) {
+            C = C.map((C) => C.replace(/\\/g, "/"));
+          }
+          if (this.matchBase) {
+            if (P.noglobstar) {
+              throw new TypeError("base matching requires globstar");
+            }
+            C = C.map((C) => (C.includes("/") ? C : `./**/${C}`));
+          }
+          this.pattern = C;
+          this.platform = P.platform || Wt;
+          this.opts = { ...P, platform: this.platform };
+          if (P.scurry) {
+            this.scurry = P.scurry;
+            if (P.nocase !== undefined && P.nocase !== P.scurry.nocase) {
+              throw new Error("nocase option contradicts provided scurry option");
+            }
+          } else {
+            const C =
+              P.platform === "win32" ? Ge.PathScurryWin32 : P.platform === "darwin" ? Ge.PathScurryDarwin : P.platform ? Ge.PathScurryPosix : Ge.PathScurry;
+            this.scurry = new C(this.cwd, { nocase: P.nocase, fs: P.fs });
+          }
+          this.nocase = this.scurry.nocase;
+          const q = this.platform === "darwin" || this.platform === "win32";
+          const Ot = {
+            ...P,
+            dot: this.dot,
+            matchBase: this.matchBase,
+            nobrace: this.nobrace,
+            nocase: this.nocase,
+            nocaseMagicOnly: q,
+            nocomment: true,
+            noext: this.noext,
+            nonegate: true,
+            optimizationLevel: 2,
+            platform: this.platform,
+            windowsPathsNoEscape: this.windowsPathsNoEscape,
+            debug: !!this.opts.debug,
+          };
+          const Ar = this.pattern.map((C) => new oe.Minimatch(C, Ot));
+          const [Er, Ir] = Ar.reduce(
+            (C, P) => {
+              C[0].push(...P.set);
+              C[1].push(...P.globParts);
+              return C;
+            },
+            [[], []]
+          );
+          this.patterns = Er.map((C, P) => {
+            const q = Ir[P];
+            if (!q) throw new Error("invalid pattern object");
+            return new st.Pattern(C, q, 0, this.platform);
+          });
+        }
+        async walk() {
+          return [
+            ...(await new Ot.GlobWalker(this.patterns, this.scurry.cwd, {
+              ...this.opts,
+              maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
+              platform: this.platform,
+              nocase: this.nocase,
+              includeChildMatches: this.includeChildMatches,
+            }).walk()),
+          ];
+        }
+        walkSync() {
+          return [
+            ...new Ot.GlobWalker(this.patterns, this.scurry.cwd, {
+              ...this.opts,
+              maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
+              platform: this.platform,
+              nocase: this.nocase,
+              includeChildMatches: this.includeChildMatches,
+            }).walkSync(),
+          ];
+        }
+        stream() {
+          return new Ot.GlobStream(this.patterns, this.scurry.cwd, {
+            ...this.opts,
+            maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
+            platform: this.platform,
+            nocase: this.nocase,
+            includeChildMatches: this.includeChildMatches,
+          }).stream();
+        }
+        streamSync() {
+          return new Ot.GlobStream(this.patterns, this.scurry.cwd, {
+            ...this.opts,
+            maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
+            platform: this.platform,
+            nocase: this.nocase,
+            includeChildMatches: this.includeChildMatches,
+          }).streamSync();
+        }
+        iterateSync() {
+          return this.streamSync()[Symbol.iterator]();
+        }
+        [Symbol.iterator]() {
+          return this.iterateSync();
+        }
+        iterate() {
+          return this.stream()[Symbol.asyncIterator]();
+        }
+        [Symbol.asyncIterator]() {
+          return this.iterate();
+        }
+      }
+      P.Glob = Glob;
+    },
+    45197: (C, P, q) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.hasMagic = void 0;
+      const oe = q(91409);
+      const hasMagic = (C, P = {}) => {
+        if (!Array.isArray(C)) {
+          C = [C];
+        }
+        for (const q of C) {
+          if (new oe.Minimatch(q, P).hasMagic()) return true;
+        }
+        return false;
+      };
+      P.hasMagic = hasMagic;
+    },
+    5637: (C, P, q) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.Ignore = void 0;
+      const oe = q(91409);
+      const ie = q(47813);
+      const Ge = typeof process === "object" && process && typeof process.platform === "string" ? process.platform : "linux";
+      class Ignore {
+        relative;
+        relativeChildren;
+        absolute;
+        absoluteChildren;
+        platform;
+        mmopts;
+        constructor(C, { nobrace: P, nocase: q, noext: oe, noglobstar: ie, platform: st = Ge }) {
+          this.relative = [];
+          this.absolute = [];
+          this.relativeChildren = [];
+          this.absoluteChildren = [];
+          this.platform = st;
+          this.mmopts = { dot: true, nobrace: P, nocase: q, noext: oe, noglobstar: ie, optimizationLevel: 2, platform: st, nocomment: true, nonegate: true };
+          for (const P of C) this.add(P);
+        }
+        add(C) {
+          const P = new oe.Minimatch(C, this.mmopts);
+          for (let C = 0; C < P.set.length; C++) {
+            const q = P.set[C];
+            const Ge = P.globParts[C];
+            if (!q || !Ge) {
+              throw new Error("invalid pattern object");
+            }
+            while (q[0] === "." && Ge[0] === ".") {
+              q.shift();
+              Ge.shift();
+            }
+            const st = new ie.Pattern(q, Ge, 0, this.platform);
+            const Ot = new oe.Minimatch(st.globString(), this.mmopts);
+            const Wt = Ge[Ge.length - 1] === "**";
+            const Ar = st.isAbsolute();
+            if (Ar) this.absolute.push(Ot);
+            else this.relative.push(Ot);
+            if (Wt) {
+              if (Ar) this.absoluteChildren.push(Ot);
+              else this.relativeChildren.push(Ot);
+            }
+          }
+        }
+        ignored(C) {
+          const P = C.fullpath();
+          const q = `${P}/`;
+          const oe = C.relative() || ".";
+          const ie = `${oe}/`;
+          for (const C of this.relative) {
+            if (C.match(oe) || C.match(ie)) return true;
+          }
+          for (const C of this.absolute) {
+            if (C.match(P) || C.match(q)) return true;
+          }
+          return false;
+        }
+        childrenIgnored(C) {
+          const P = C.fullpath() + "/";
+          const q = (C.relative() || ".") + "/";
+          for (const C of this.relativeChildren) {
+            if (C.match(q)) return true;
+          }
+          for (const C of this.absoluteChildren) {
+            if (C.match(P)) return true;
+          }
+          return false;
+        }
+      }
+      P.Ignore = Ignore;
+    },
+    21363: (C, P, q) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.glob = P.sync = P.iterate = P.iterateSync = P.stream = P.streamSync = P.Ignore = P.hasMagic = P.Glob = P.unescape = P.escape = void 0;
+      P.globStreamSync = globStreamSync;
+      P.globStream = globStream;
+      P.globSync = globSync;
+      P.globIterateSync = globIterateSync;
+      P.globIterate = globIterate;
+      const oe = q(91409);
+      const ie = q(72981);
+      const Ge = q(45197);
+      var st = q(91409);
+      Object.defineProperty(P, "escape", {
+        enumerable: true,
+        get: function () {
+          return st.escape;
+        },
+      });
+      Object.defineProperty(P, "unescape", {
+        enumerable: true,
+        get: function () {
+          return st.unescape;
+        },
+      });
+      var Ot = q(72981);
+      Object.defineProperty(P, "Glob", {
+        enumerable: true,
+        get: function () {
+          return Ot.Glob;
+        },
+      });
+      var Wt = q(45197);
+      Object.defineProperty(P, "hasMagic", {
+        enumerable: true,
+        get: function () {
+          return Wt.hasMagic;
+        },
+      });
+      var Ar = q(5637);
+      Object.defineProperty(P, "Ignore", {
+        enumerable: true,
+        get: function () {
+          return Ar.Ignore;
+        },
+      });
+      function globStreamSync(C, P = {}) {
+        return new ie.Glob(C, P).streamSync();
+      }
+      function globStream(C, P = {}) {
+        return new ie.Glob(C, P).stream();
+      }
+      function globSync(C, P = {}) {
+        return new ie.Glob(C, P).walkSync();
+      }
+      async function glob_(C, P = {}) {
+        return new ie.Glob(C, P).walk();
+      }
+      function globIterateSync(C, P = {}) {
+        return new ie.Glob(C, P).iterateSync();
+      }
+      function globIterate(C, P = {}) {
+        return new ie.Glob(C, P).iterate();
+      }
+      P.streamSync = globStreamSync;
+      P.stream = Object.assign(globStream, { sync: globStreamSync });
+      P.iterateSync = globIterateSync;
+      P.iterate = Object.assign(globIterate, { sync: globIterateSync });
+      P.sync = Object.assign(globSync, { stream: globStreamSync, iterate: globIterateSync });
+      P.glob = Object.assign(glob_, {
+        glob: glob_,
+        globSync: globSync,
+        sync: P.sync,
+        globStream: globStream,
+        stream: P.stream,
+        globStreamSync: globStreamSync,
+        streamSync: P.streamSync,
+        globIterate: globIterate,
+        iterate: P.iterate,
+        globIterateSync: globIterateSync,
+        iterateSync: P.iterateSync,
+        Glob: ie.Glob,
+        hasMagic: Ge.hasMagic,
+        escape: oe.escape,
+        unescape: oe.unescape,
+      });
+      P.glob.glob = P.glob;
+    },
+    47813: (C, P, q) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.Pattern = void 0;
+      const oe = q(91409);
+      const isPatternList = (C) => C.length >= 1;
+      const isGlobList = (C) => C.length >= 1;
+      class Pattern {
+        #f;
+        #g;
+        #E;
+        length;
+        #I;
+        #C;
+        #y;
+        #B;
+        #b;
+        #Q;
+        #w = true;
+        constructor(C, P, q, oe) {
+          if (!isPatternList(C)) {
+            throw new TypeError("empty pattern list");
+          }
+          if (!isGlobList(P)) {
+            throw new TypeError("empty glob list");
+          }
+          if (P.length !== C.length) {
+            throw new TypeError("mismatched pattern list and glob list lengths");
+          }
+          this.length = C.length;
+          if (q < 0 || q >= this.length) {
+            throw new TypeError("index out of range");
+          }
+          this.#f = C;
+          this.#g = P;
+          this.#E = q;
+          this.#I = oe;
+          if (this.#E === 0) {
+            if (this.isUNC()) {
+              const [C, P, q, oe, ...ie] = this.#f;
+              const [Ge, st, Ot, Wt, ...Ar] = this.#g;
+              if (ie[0] === "") {
+                ie.shift();
+                Ar.shift();
+              }
+              const Er = [C, P, q, oe, ""].join("/");
+              const Ir = [Ge, st, Ot, Wt, ""].join("/");
+              this.#f = [Er, ...ie];
+              this.#g = [Ir, ...Ar];
+              this.length = this.#f.length;
+            } else if (this.isDrive() || this.isAbsolute()) {
+              const [C, ...P] = this.#f;
+              const [q, ...oe] = this.#g;
+              if (P[0] === "") {
+                P.shift();
+                oe.shift();
+              }
+              const ie = C + "/";
+              const Ge = q + "/";
+              this.#f = [ie, ...P];
+              this.#g = [Ge, ...oe];
+              this.length = this.#f.length;
+            }
+          }
+        }
+        pattern() {
+          return this.#f[this.#E];
+        }
+        isString() {
+          return typeof this.#f[this.#E] === "string";
+        }
+        isGlobstar() {
+          return this.#f[this.#E] === oe.GLOBSTAR;
+        }
+        isRegExp() {
+          return this.#f[this.#E] instanceof RegExp;
+        }
+        globString() {
+          return (this.#y =
+            this.#y || (this.#E === 0 ? (this.isAbsolute() ? this.#g[0] + this.#g.slice(1).join("/") : this.#g.join("/")) : this.#g.slice(this.#E).join("/")));
+        }
+        hasMore() {
+          return this.length > this.#E + 1;
+        }
+        rest() {
+          if (this.#C !== undefined) return this.#C;
+          if (!this.hasMore()) return (this.#C = null);
+          this.#C = new Pattern(this.#f, this.#g, this.#E + 1, this.#I);
+          this.#C.#Q = this.#Q;
+          this.#C.#b = this.#b;
+          this.#C.#B = this.#B;
+          return this.#C;
+        }
+        isUNC() {
+          const C = this.#f;
+          return this.#b !== undefined
+            ? this.#b
+            : (this.#b =
+                this.#I === "win32" && this.#E === 0 && C[0] === "" && C[1] === "" && typeof C[2] === "string" && !!C[2] && typeof C[3] === "string" && !!C[3]);
+        }
+        isDrive() {
+          const C = this.#f;
+          return this.#B !== undefined
+            ? this.#B
+            : (this.#B = this.#I === "win32" && this.#E === 0 && this.length > 1 && typeof C[0] === "string" && /^[a-z]:$/i.test(C[0]));
+        }
+        isAbsolute() {
+          const C = this.#f;
+          return this.#Q !== undefined ? this.#Q : (this.#Q = (C[0] === "" && C.length > 1) || this.isDrive() || this.isUNC());
+        }
+        root() {
+          const C = this.#f[0];
+          return typeof C === "string" && this.isAbsolute() && this.#E === 0 ? C : "";
+        }
+        checkFollowGlobstar() {
+          return !(this.#E === 0 || !this.isGlobstar() || !this.#w);
+        }
+        markFollowGlobstar() {
+          if (this.#E === 0 || !this.isGlobstar() || !this.#w) return false;
+          this.#w = false;
+          return true;
+        }
+      }
+      P.Pattern = Pattern;
+    },
+    37843: (C, P, q) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.Processor = P.SubWalks = P.MatchRecord = P.HasWalkedCache = void 0;
+      const oe = q(91409);
+      class HasWalkedCache {
+        store;
+        constructor(C = new Map()) {
+          this.store = C;
+        }
+        copy() {
+          return new HasWalkedCache(new Map(this.store));
+        }
+        hasWalked(C, P) {
+          return this.store.get(C.fullpath())?.has(P.globString());
+        }
+        storeWalked(C, P) {
+          const q = C.fullpath();
+          const oe = this.store.get(q);
+          if (oe) oe.add(P.globString());
+          else this.store.set(q, new Set([P.globString()]));
+        }
+      }
+      P.HasWalkedCache = HasWalkedCache;
+      class MatchRecord {
+        store = new Map();
+        add(C, P, q) {
+          const oe = (P ? 2 : 0) | (q ? 1 : 0);
+          const ie = this.store.get(C);
+          this.store.set(C, ie === undefined ? oe : oe & ie);
+        }
+        entries() {
+          return [...this.store.entries()].map(([C, P]) => [C, !!(P & 2), !!(P & 1)]);
+        }
+      }
+      P.MatchRecord = MatchRecord;
+      class SubWalks {
+        store = new Map();
+        add(C, P) {
+          if (!C.canReaddir()) {
+            return;
+          }
+          const q = this.store.get(C);
+          if (q) {
+            if (!q.find((C) => C.globString() === P.globString())) {
+              q.push(P);
+            }
+          } else this.store.set(C, [P]);
+        }
+        get(C) {
+          const P = this.store.get(C);
+          if (!P) {
+            throw new Error("attempting to walk unknown path");
+          }
+          return P;
+        }
+        entries() {
+          return this.keys().map((C) => [C, this.store.get(C)]);
+        }
+        keys() {
+          return [...this.store.keys()].filter((C) => C.canReaddir());
+        }
+      }
+      P.SubWalks = SubWalks;
+      class Processor {
+        hasWalkedCache;
+        matches = new MatchRecord();
+        subwalks = new SubWalks();
+        patterns;
+        follow;
+        dot;
+        opts;
+        constructor(C, P) {
+          this.opts = C;
+          this.follow = !!C.follow;
+          this.dot = !!C.dot;
+          this.hasWalkedCache = P ? P.copy() : new HasWalkedCache();
+        }
+        processPatterns(C, P) {
+          this.patterns = P;
+          const q = P.map((P) => [C, P]);
+          for (let [C, P] of q) {
+            this.hasWalkedCache.storeWalked(C, P);
+            const q = P.root();
+            const ie = P.isAbsolute() && this.opts.absolute !== false;
+            if (q) {
+              C = C.resolve(q === "/" && this.opts.root !== undefined ? this.opts.root : q);
+              const oe = P.rest();
+              if (!oe) {
+                this.matches.add(C, true, false);
+                continue;
+              } else {
+                P = oe;
+              }
+            }
+            if (C.isENOENT()) continue;
+            let Ge;
+            let st;
+            let Ot = false;
+            while (typeof (Ge = P.pattern()) === "string" && (st = P.rest())) {
+              const q = C.resolve(Ge);
+              C = q;
+              P = st;
+              Ot = true;
+            }
+            Ge = P.pattern();
+            st = P.rest();
+            if (Ot) {
+              if (this.hasWalkedCache.hasWalked(C, P)) continue;
+              this.hasWalkedCache.storeWalked(C, P);
+            }
+            if (typeof Ge === "string") {
+              const P = Ge === ".." || Ge === "" || Ge === ".";
+              this.matches.add(C.resolve(Ge), ie, P);
+              continue;
+            } else if (Ge === oe.GLOBSTAR) {
+              if (!C.isSymbolicLink() || this.follow || P.checkFollowGlobstar()) {
+                this.subwalks.add(C, P);
+              }
+              const q = st?.pattern();
+              const oe = st?.rest();
+              if (!st || ((q === "" || q === ".") && !oe)) {
+                this.matches.add(C, ie, q === "" || q === ".");
+              } else {
+                if (q === "..") {
+                  const P = C.parent || C;
+                  if (!oe) this.matches.add(P, ie, true);
+                  else if (!this.hasWalkedCache.hasWalked(P, oe)) {
+                    this.subwalks.add(P, oe);
+                  }
+                }
+              }
+            } else if (Ge instanceof RegExp) {
+              this.subwalks.add(C, P);
+            }
+          }
+          return this;
+        }
+        subwalkTargets() {
+          return this.subwalks.keys();
+        }
+        child() {
+          return new Processor(this.opts, this.hasWalkedCache);
+        }
+        filterEntries(C, P) {
+          const q = this.subwalks.get(C);
+          const ie = this.child();
+          for (const C of P) {
+            for (const P of q) {
+              const q = P.isAbsolute();
+              const Ge = P.pattern();
+              const st = P.rest();
+              if (Ge === oe.GLOBSTAR) {
+                ie.testGlobstar(C, P, st, q);
+              } else if (Ge instanceof RegExp) {
+                ie.testRegExp(C, Ge, st, q);
+              } else {
+                ie.testString(C, Ge, st, q);
+              }
+            }
+          }
+          return ie;
+        }
+        testGlobstar(C, P, q, oe) {
+          if (this.dot || !C.name.startsWith(".")) {
+            if (!P.hasMore()) {
+              this.matches.add(C, oe, false);
+            }
+            if (C.canReaddir()) {
+              if (this.follow || !C.isSymbolicLink()) {
+                this.subwalks.add(C, P);
+              } else if (C.isSymbolicLink()) {
+                if (q && P.checkFollowGlobstar()) {
+                  this.subwalks.add(C, q);
+                } else if (P.markFollowGlobstar()) {
+                  this.subwalks.add(C, P);
+                }
+              }
+            }
+          }
+          if (q) {
+            const P = q.pattern();
+            if (typeof P === "string" && P !== ".." && P !== "" && P !== ".") {
+              this.testString(C, P, q.rest(), oe);
+            } else if (P === "..") {
+              const P = C.parent || C;
+              this.subwalks.add(P, q);
+            } else if (P instanceof RegExp) {
+              this.testRegExp(C, P, q.rest(), oe);
+            }
+          }
+        }
+        testRegExp(C, P, q, oe) {
+          if (!P.test(C.name)) return;
+          if (!q) {
+            this.matches.add(C, oe, false);
+          } else {
+            this.subwalks.add(C, q);
+          }
+        }
+        testString(C, P, q, oe) {
+          if (!C.isNamed(P)) return;
+          if (!q) {
+            this.matches.add(C, oe, false);
+          } else {
+            this.subwalks.add(C, q);
+          }
+        }
+      }
+      P.Processor = Processor;
+    },
+    11157: (C, P, q) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.GlobStream = P.GlobWalker = P.GlobUtil = void 0;
+      const oe = q(78275);
+      const ie = q(5637);
+      const Ge = q(37843);
+      const makeIgnore = (C, P) => (typeof C === "string" ? new ie.Ignore([C], P) : Array.isArray(C) ? new ie.Ignore(C, P) : C);
+      class GlobUtil {
+        path;
+        patterns;
+        opts;
+        seen = new Set();
+        paused = false;
+        aborted = false;
+        #v = [];
+        #T;
+        #S;
+        signal;
+        maxDepth;
+        includeChildMatches;
+        constructor(C, P, q) {
+          this.patterns = C;
+          this.path = P;
+          this.opts = q;
+          this.#S = !q.posix && q.platform === "win32" ? "\\" : "/";
+          this.includeChildMatches = q.includeChildMatches !== false;
+          if (q.ignore || !this.includeChildMatches) {
+            this.#T = makeIgnore(q.ignore ?? [], q);
+            if (!this.includeChildMatches && typeof this.#T.add !== "function") {
+              const C = "cannot ignore child matches, ignore lacks add() method.";
+              throw new Error(C);
+            }
+          }
+          this.maxDepth = q.maxDepth || Infinity;
+          if (q.signal) {
+            this.signal = q.signal;
+            this.signal.addEventListener("abort", () => {
+              this.#v.length = 0;
+            });
+          }
+        }
+        #_(C) {
+          return this.seen.has(C) || !!this.#T?.ignored?.(C);
+        }
+        #R(C) {
+          return !!this.#T?.childrenIgnored?.(C);
+        }
+        pause() {
+          this.paused = true;
+        }
+        resume() {
+          if (this.signal?.aborted) return;
+          this.paused = false;
+          let C = undefined;
+          while (!this.paused && (C = this.#v.shift())) {
+            C();
+          }
+        }
+        onResume(C) {
+          if (this.signal?.aborted) return;
+          if (!this.paused) {
+            C();
+          } else {
+            this.#v.push(C);
+          }
+        }
+        async matchCheck(C, P) {
+          if (P && this.opts.nodir) return undefined;
+          let q;
+          if (this.opts.realpath) {
+            q = C.realpathCached() || (await C.realpath());
+            if (!q) return undefined;
+            C = q;
+          }
+          const oe = C.isUnknown() || this.opts.stat;
+          const ie = oe ? await C.lstat() : C;
+          if (this.opts.follow && this.opts.nodir && ie?.isSymbolicLink()) {
+            const C = await ie.realpath();
+            if (C && (C.isUnknown() || this.opts.stat)) {
+              await C.lstat();
+            }
+          }
+          return this.matchCheckTest(ie, P);
+        }
+        matchCheckTest(C, P) {
+          return C &&
+            (this.maxDepth === Infinity || C.depth() <= this.maxDepth) &&
+            (!P || C.canReaddir()) &&
+            (!this.opts.nodir || !C.isDirectory()) &&
+            (!this.opts.nodir || !this.opts.follow || !C.isSymbolicLink() || !C.realpathCached()?.isDirectory()) &&
+            !this.#_(C)
+            ? C
+            : undefined;
+        }
+        matchCheckSync(C, P) {
+          if (P && this.opts.nodir) return undefined;
+          let q;
+          if (this.opts.realpath) {
+            q = C.realpathCached() || C.realpathSync();
+            if (!q) return undefined;
+            C = q;
+          }
+          const oe = C.isUnknown() || this.opts.stat;
+          const ie = oe ? C.lstatSync() : C;
+          if (this.opts.follow && this.opts.nodir && ie?.isSymbolicLink()) {
+            const C = ie.realpathSync();
+            if (C && (C?.isUnknown() || this.opts.stat)) {
+              C.lstatSync();
+            }
+          }
+          return this.matchCheckTest(ie, P);
+        }
+        matchFinish(C, P) {
+          if (this.#_(C)) return;
+          if (!this.includeChildMatches && this.#T?.add) {
+            const P = `${C.relativePosix()}/**`;
+            this.#T.add(P);
+          }
+          const q = this.opts.absolute === undefined ? P : this.opts.absolute;
+          this.seen.add(C);
+          const oe = this.opts.mark && C.isDirectory() ? this.#S : "";
+          if (this.opts.withFileTypes) {
+            this.matchEmit(C);
+          } else if (q) {
+            const P = this.opts.posix ? C.fullpathPosix() : C.fullpath();
+            this.matchEmit(P + oe);
+          } else {
+            const P = this.opts.posix ? C.relativePosix() : C.relative();
+            const q = this.opts.dotRelative && !P.startsWith(".." + this.#S) ? "." + this.#S : "";
+            this.matchEmit(!P ? "." + oe : q + P + oe);
+          }
+        }
+        async match(C, P, q) {
+          const oe = await this.matchCheck(C, q);
+          if (oe) this.matchFinish(oe, P);
+        }
+        matchSync(C, P, q) {
+          const oe = this.matchCheckSync(C, q);
+          if (oe) this.matchFinish(oe, P);
+        }
+        walkCB(C, P, q) {
+          if (this.signal?.aborted) q();
+          this.walkCB2(C, P, new Ge.Processor(this.opts), q);
+        }
+        walkCB2(C, P, q, oe) {
+          if (this.#R(C)) return oe();
+          if (this.signal?.aborted) oe();
+          if (this.paused) {
+            this.onResume(() => this.walkCB2(C, P, q, oe));
+            return;
+          }
+          q.processPatterns(C, P);
+          let ie = 1;
+          const next = () => {
+            if (--ie === 0) oe();
+          };
+          for (const [C, P, oe] of q.matches.entries()) {
+            if (this.#_(C)) continue;
+            ie++;
+            this.match(C, P, oe).then(() => next());
+          }
+          for (const C of q.subwalkTargets()) {
+            if (this.maxDepth !== Infinity && C.depth() >= this.maxDepth) {
+              continue;
+            }
+            ie++;
+            const P = C.readdirCached();
+            if (C.calledReaddir()) this.walkCB3(C, P, q, next);
+            else {
+              C.readdirCB((P, oe) => this.walkCB3(C, oe, q, next), true);
+            }
+          }
+          next();
+        }
+        walkCB3(C, P, q, oe) {
+          q = q.filterEntries(C, P);
+          let ie = 1;
+          const next = () => {
+            if (--ie === 0) oe();
+          };
+          for (const [C, P, oe] of q.matches.entries()) {
+            if (this.#_(C)) continue;
+            ie++;
+            this.match(C, P, oe).then(() => next());
+          }
+          for (const [C, P] of q.subwalks.entries()) {
+            ie++;
+            this.walkCB2(C, P, q.child(), next);
+          }
+          next();
+        }
+        walkCBSync(C, P, q) {
+          if (this.signal?.aborted) q();
+          this.walkCB2Sync(C, P, new Ge.Processor(this.opts), q);
+        }
+        walkCB2Sync(C, P, q, oe) {
+          if (this.#R(C)) return oe();
+          if (this.signal?.aborted) oe();
+          if (this.paused) {
+            this.onResume(() => this.walkCB2Sync(C, P, q, oe));
+            return;
+          }
+          q.processPatterns(C, P);
+          let ie = 1;
+          const next = () => {
+            if (--ie === 0) oe();
+          };
+          for (const [C, P, oe] of q.matches.entries()) {
+            if (this.#_(C)) continue;
+            this.matchSync(C, P, oe);
+          }
+          for (const C of q.subwalkTargets()) {
+            if (this.maxDepth !== Infinity && C.depth() >= this.maxDepth) {
+              continue;
+            }
+            ie++;
+            const P = C.readdirSync();
+            this.walkCB3Sync(C, P, q, next);
+          }
+          next();
+        }
+        walkCB3Sync(C, P, q, oe) {
+          q = q.filterEntries(C, P);
+          let ie = 1;
+          const next = () => {
+            if (--ie === 0) oe();
+          };
+          for (const [C, P, oe] of q.matches.entries()) {
+            if (this.#_(C)) continue;
+            this.matchSync(C, P, oe);
+          }
+          for (const [C, P] of q.subwalks.entries()) {
+            ie++;
+            this.walkCB2Sync(C, P, q.child(), next);
+          }
+          next();
+        }
+      }
+      P.GlobUtil = GlobUtil;
+      class GlobWalker extends GlobUtil {
+        matches = new Set();
+        constructor(C, P, q) {
+          super(C, P, q);
+        }
+        matchEmit(C) {
+          this.matches.add(C);
+        }
+        async walk() {
+          if (this.signal?.aborted) throw this.signal.reason;
+          if (this.path.isUnknown()) {
+            await this.path.lstat();
+          }
+          await new Promise((C, P) => {
+            this.walkCB(this.path, this.patterns, () => {
+              if (this.signal?.aborted) {
+                P(this.signal.reason);
+              } else {
+                C(this.matches);
+              }
+            });
+          });
+          return this.matches;
+        }
+        walkSync() {
+          if (this.signal?.aborted) throw this.signal.reason;
+          if (this.path.isUnknown()) {
+            this.path.lstatSync();
+          }
+          this.walkCBSync(this.path, this.patterns, () => {
+            if (this.signal?.aborted) throw this.signal.reason;
+          });
+          return this.matches;
+        }
+      }
+      P.GlobWalker = GlobWalker;
+      class GlobStream extends GlobUtil {
+        results;
+        constructor(C, P, q) {
+          super(C, P, q);
+          this.results = new oe.Minipass({ signal: this.signal, objectMode: true });
+          this.results.on("drain", () => this.resume());
+          this.results.on("resume", () => this.resume());
+        }
+        matchEmit(C) {
+          this.results.write(C);
+          if (!this.results.flowing) this.pause();
+        }
+        stream() {
+          const C = this.path;
+          if (C.isUnknown()) {
+            C.lstat().then(() => {
+              this.walkCB(C, this.patterns, () => this.results.end());
+            });
+          } else {
+            this.walkCB(C, this.patterns, () => this.results.end());
+          }
+          return this.results;
+        }
+        streamSync() {
+          if (this.path.isUnknown()) {
+            this.path.lstatSync();
+          }
+          this.walkCBSync(this.path, this.patterns, () => this.results.end());
+          return this.results;
+        }
+      }
+      P.GlobStream = GlobStream;
+    },
+    8895: (C, P) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.assertValidPattern = void 0;
+      const q = 1024 * 64;
+      const assertValidPattern = (C) => {
+        if (typeof C !== "string") {
+          throw new TypeError("invalid pattern");
+        }
+        if (C.length > q) {
+          throw new TypeError("pattern is too long");
+        }
+      };
+      P.assertValidPattern = assertValidPattern;
+    },
+    20857: (C, P, q) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.AST = void 0;
+      const oe = q(65192);
+      const ie = q(9829);
+      const Ge = new Set(["!", "?", "+", "*", "@"]);
+      const isExtglobType = (C) => Ge.has(C);
+      const st = "(?!(?:^|/)\\.\\.?(?:$|/))";
+      const Ot = "(?!\\.)";
+      const Wt = new Set(["[", "."]);
+      const Ar = new Set(["..", "."]);
+      const Er = new Set("().*{}+?[]^$\\!");
+      const regExpEscape = (C) => C.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+      const Ir = "[^/]";
+      const Br = Ir + "*?";
+      const Qr = Ir + "+?";
+      class AST {
+        type;
+        #D;
+        #F;
+        #k = false;
+        #O = [];
+        #P;
+        #N;
+        #U;
+        #M = false;
+        #L;
+        #G;
+        #x = false;
+        constructor(C, P, q = {}) {
+          this.type = C;
+          if (C) this.#F = true;
+          this.#P = P;
+          this.#D = this.#P ? this.#P.#D : this;
+          this.#L = this.#D === this ? q : this.#D.#L;
+          this.#U = this.#D === this ? [] : this.#D.#U;
+          if (C === "!" && !this.#D.#M) this.#U.push(this);
+          this.#N = this.#P ? this.#P.#O.length : 0;
+        }
+        get hasMagic() {
+          if (this.#F !== undefined) return this.#F;
+          for (const C of this.#O) {
+            if (typeof C === "string") continue;
+            if (C.type || C.hasMagic) return (this.#F = true);
+          }
+          return this.#F;
+        }
+        toString() {
+          if (this.#G !== undefined) return this.#G;
+          if (!this.type) {
+            return (this.#G = this.#O.map((C) => String(C)).join(""));
+          } else {
+            return (this.#G = this.type + "(" + this.#O.map((C) => String(C)).join("|") + ")");
+          }
+        }
+        #V() {
+          if (this !== this.#D) throw new Error("should only call on root");
+          if (this.#M) return this;
+          this.toString();
+          this.#M = true;
+          let C;
+          while ((C = this.#U.pop())) {
+            if (C.type !== "!") continue;
+            let P = C;
+            let q = P.#P;
+            while (q) {
+              for (let oe = P.#N + 1; !q.type && oe < q.#O.length; oe++) {
+                for (const P of C.#O) {
+                  if (typeof P === "string") {
+                    throw new Error("string part in extglob AST??");
+                  }
+                  P.copyIn(q.#O[oe]);
+                }
+              }
+              P = q;
+              q = P.#P;
+            }
+          }
+          return this;
+        }
+        push(...C) {
+          for (const P of C) {
+            if (P === "") continue;
+            if (typeof P !== "string" && !(P instanceof AST && P.#P === this)) {
+              throw new Error("invalid part: " + P);
+            }
+            this.#O.push(P);
+          }
+        }
+        toJSON() {
+          const C = this.type === null ? this.#O.slice().map((C) => (typeof C === "string" ? C : C.toJSON())) : [this.type, ...this.#O.map((C) => C.toJSON())];
+          if (this.isStart() && !this.type) C.unshift([]);
+          if (this.isEnd() && (this === this.#D || (this.#D.#M && this.#P?.type === "!"))) {
+            C.push({});
+          }
+          return C;
+        }
+        isStart() {
+          if (this.#D === this) return true;
+          if (!this.#P?.isStart()) return false;
+          if (this.#N === 0) return true;
+          const C = this.#P;
+          for (let P = 0; P < this.#N; P++) {
+            const q = C.#O[P];
+            if (!(q instanceof AST && q.type === "!")) {
+              return false;
+            }
+          }
+          return true;
+        }
+        isEnd() {
+          if (this.#D === this) return true;
+          if (this.#P?.type === "!") return true;
+          if (!this.#P?.isEnd()) return false;
+          if (!this.type) return this.#P?.isEnd();
+          const C = this.#P ? this.#P.#O.length : 0;
+          return this.#N === C - 1;
+        }
+        copyIn(C) {
+          if (typeof C === "string") this.push(C);
+          else this.push(C.clone(this));
+        }
+        clone(C) {
+          const P = new AST(this.type, C);
+          for (const C of this.#O) {
+            P.copyIn(C);
+          }
+          return P;
+        }
+        static #j(C, P, q, oe) {
+          let ie = false;
+          let Ge = false;
+          let st = -1;
+          let Ot = false;
+          if (P.type === null) {
+            let Wt = q;
+            let Ar = "";
+            while (Wt < C.length) {
+              const q = C.charAt(Wt++);
+              if (ie || q === "\\") {
+                ie = !ie;
+                Ar += q;
+                continue;
+              }
+              if (Ge) {
+                if (Wt === st + 1) {
+                  if (q === "^" || q === "!") {
+                    Ot = true;
+                  }
+                } else if (q === "]" && !(Wt === st + 2 && Ot)) {
+                  Ge = false;
+                }
+                Ar += q;
+                continue;
+              } else if (q === "[") {
+                Ge = true;
+                st = Wt;
+                Ot = false;
+                Ar += q;
+                continue;
+              }
+              if (!oe.noext && isExtglobType(q) && C.charAt(Wt) === "(") {
+                P.push(Ar);
+                Ar = "";
+                const ie = new AST(q, P);
+                Wt = AST.#j(C, ie, Wt, oe);
+                P.push(ie);
+                continue;
+              }
+              Ar += q;
+            }
+            P.push(Ar);
+            return Wt;
+          }
+          let Wt = q + 1;
+          let Ar = new AST(null, P);
+          const Er = [];
+          let Ir = "";
+          while (Wt < C.length) {
+            const q = C.charAt(Wt++);
+            if (ie || q === "\\") {
+              ie = !ie;
+              Ir += q;
+              continue;
+            }
+            if (Ge) {
+              if (Wt === st + 1) {
+                if (q === "^" || q === "!") {
+                  Ot = true;
+                }
+              } else if (q === "]" && !(Wt === st + 2 && Ot)) {
+                Ge = false;
+              }
+              Ir += q;
+              continue;
+            } else if (q === "[") {
+              Ge = true;
+              st = Wt;
+              Ot = false;
+              Ir += q;
+              continue;
+            }
+            if (isExtglobType(q) && C.charAt(Wt) === "(") {
+              Ar.push(Ir);
+              Ir = "";
+              const P = new AST(q, Ar);
+              Ar.push(P);
+              Wt = AST.#j(C, P, Wt, oe);
+              continue;
+            }
+            if (q === "|") {
+              Ar.push(Ir);
+              Ir = "";
+              Er.push(Ar);
+              Ar = new AST(null, P);
+              continue;
+            }
+            if (q === ")") {
+              if (Ir === "" && P.#O.length === 0) {
+                P.#x = true;
+              }
+              Ar.push(Ir);
+              Ir = "";
+              P.push(...Er, Ar);
+              return Wt;
+            }
+            Ir += q;
+          }
+          P.type = null;
+          P.#F = undefined;
+          P.#O = [C.substring(q - 1)];
+          return Wt;
+        }
+        static fromGlob(C, P = {}) {
+          const q = new AST(null, undefined, P);
+          AST.#j(C, q, 0, P);
+          return q;
+        }
+        toMMPattern() {
+          if (this !== this.#D) return this.#D.toMMPattern();
+          const C = this.toString();
+          const [P, q, oe, ie] = this.toRegExpSource();
+          const Ge = oe || this.#F || (this.#L.nocase && !this.#L.nocaseMagicOnly && C.toUpperCase() !== C.toLowerCase());
+          if (!Ge) {
+            return q;
+          }
+          const st = (this.#L.nocase ? "i" : "") + (ie ? "u" : "");
+          return Object.assign(new RegExp(`^${P}$`, st), { _src: P, _glob: C });
+        }
+        get options() {
+          return this.#L;
+        }
+        toRegExpSource(C) {
+          const P = C ?? !!this.#L.dot;
+          if (this.#D === this) this.#V();
+          if (!this.type) {
+            const q = this.isStart() && this.isEnd();
+            const oe = this.#O
+              .map((P) => {
+                const [oe, ie, Ge, st] = typeof P === "string" ? AST.#H(P, this.#F, q) : P.toRegExpSource(C);
+                this.#F = this.#F || Ge;
+                this.#k = this.#k || st;
+                return oe;
+              })
+              .join("");
+            let Ge = "";
+            if (this.isStart()) {
+              if (typeof this.#O[0] === "string") {
+                const q = this.#O.length === 1 && Ar.has(this.#O[0]);
+                if (!q) {
+                  const q = Wt;
+                  const ie = (P && q.has(oe.charAt(0))) || (oe.startsWith("\\.") && q.has(oe.charAt(2))) || (oe.startsWith("\\.\\.") && q.has(oe.charAt(4)));
+                  const Ar = !P && !C && q.has(oe.charAt(0));
+                  Ge = ie ? st : Ar ? Ot : "";
+                }
+              }
+            }
+            let Er = "";
+            if (this.isEnd() && this.#D.#M && this.#P?.type === "!") {
+              Er = "(?:$|\\/)";
+            }
+            const Ir = Ge + oe + Er;
+            return [Ir, (0, ie.unescape)(oe), (this.#F = !!this.#F), this.#k];
+          }
+          const q = this.type === "*" || this.type === "+";
+          const oe = this.type === "!" ? "(?:(?!(?:" : "(?:";
+          let Ge = this.#Y(P);
+          if (this.isStart() && this.isEnd() && !Ge && this.type !== "!") {
+            const C = this.toString();
+            this.#O = [C];
+            this.type = null;
+            this.#F = undefined;
+            return [C, (0, ie.unescape)(this.toString()), false, false];
+          }
+          let Er = !q || C || P || !Ot ? "" : this.#Y(true);
+          if (Er === Ge) {
+            Er = "";
+          }
+          if (Er) {
+            Ge = `(?:${Ge})(?:${Er})*?`;
+          }
+          let Ir = "";
+          if (this.type === "!" && this.#x) {
+            Ir = (this.isStart() && !P ? Ot : "") + Qr;
+          } else {
+            const q =
+              this.type === "!"
+                ? "))" + (this.isStart() && !P && !C ? Ot : "") + Br + ")"
+                : this.type === "@"
+                  ? ")"
+                  : this.type === "?"
+                    ? ")?"
+                    : this.type === "+" && Er
+                      ? ")"
+                      : this.type === "*" && Er
+                        ? `)?`
+                        : `)${this.type}`;
+            Ir = oe + Ge + q;
+          }
+          return [Ir, (0, ie.unescape)(Ge), (this.#F = !!this.#F), this.#k];
+        }
+        #Y(C) {
+          return this.#O
+            .map((P) => {
+              if (typeof P === "string") {
+                throw new Error("string type in extglob ast??");
+              }
+              const [q, oe, ie, Ge] = P.toRegExpSource(C);
+              this.#k = this.#k || Ge;
+              return q;
+            })
+            .filter((C) => !(this.isStart() && this.isEnd()) || !!C)
+            .join("|");
+        }
+        static #H(C, P, q = false) {
+          let Ge = false;
+          let st = "";
+          let Ot = false;
+          for (let ie = 0; ie < C.length; ie++) {
+            const Wt = C.charAt(ie);
+            if (Ge) {
+              Ge = false;
+              st += (Er.has(Wt) ? "\\" : "") + Wt;
+              continue;
+            }
+            if (Wt === "\\") {
+              if (ie === C.length - 1) {
+                st += "\\\\";
+              } else {
+                Ge = true;
+              }
+              continue;
+            }
+            if (Wt === "[") {
+              const [q, Ge, Wt, Ar] = (0, oe.parseClass)(C, ie);
+              if (Wt) {
+                st += q;
+                Ot = Ot || Ge;
+                ie += Wt - 1;
+                P = P || Ar;
+                continue;
+              }
+            }
+            if (Wt === "*") {
+              if (q && C === "*") st += Qr;
+              else st += Br;
+              P = true;
+              continue;
+            }
+            if (Wt === "?") {
+              st += Ir;
+              P = true;
+              continue;
+            }
+            st += regExpEscape(Wt);
+          }
+          return [st, (0, ie.unescape)(C), !!P, Ot];
+        }
+      }
+      P.AST = AST;
+    },
+    65192: (C, P) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.parseClass = void 0;
+      const q = {
+        "[:alnum:]": ["\\p{L}\\p{Nl}\\p{Nd}", true],
+        "[:alpha:]": ["\\p{L}\\p{Nl}", true],
+        "[:ascii:]": ["\\x" + "00-\\x" + "7f", false],
+        "[:blank:]": ["\\p{Zs}\\t", true],
+        "[:cntrl:]": ["\\p{Cc}", true],
+        "[:digit:]": ["\\p{Nd}", true],
+        "[:graph:]": ["\\p{Z}\\p{C}", true, true],
+        "[:lower:]": ["\\p{Ll}", true],
+        "[:print:]": ["\\p{C}", true],
+        "[:punct:]": ["\\p{P}", true],
+        "[:space:]": ["\\p{Z}\\t\\r\\n\\v\\f", true],
+        "[:upper:]": ["\\p{Lu}", true],
+        "[:word:]": ["\\p{L}\\p{Nl}\\p{Nd}\\p{Pc}", true],
+        "[:xdigit:]": ["A-Fa-f0-9", false],
+      };
+      const braceEscape = (C) => C.replace(/[[\]\\-]/g, "\\$&");
+      const regexpEscape = (C) => C.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+      const rangesToString = (C) => C.join("");
+      const parseClass = (C, P) => {
+        const oe = P;
+        if (C.charAt(oe) !== "[") {
+          throw new Error("not in a brace expression");
+        }
+        const ie = [];
+        const Ge = [];
+        let st = oe + 1;
+        let Ot = false;
+        let Wt = false;
+        let Ar = false;
+        let Er = false;
+        let Ir = oe;
+        let Br = "";
+        e: while (st < C.length) {
+          const P = C.charAt(st);
+          if ((P === "!" || P === "^") && st === oe + 1) {
+            Er = true;
+            st++;
+            continue;
+          }
+          if (P === "]" && Ot && !Ar) {
+            Ir = st + 1;
+            break;
+          }
+          Ot = true;
+          if (P === "\\") {
+            if (!Ar) {
+              Ar = true;
+              st++;
+              continue;
+            }
+          }
+          if (P === "[" && !Ar) {
+            for (const [P, [Ot, Ar, Er]] of Object.entries(q)) {
+              if (C.startsWith(P, st)) {
+                if (Br) {
+                  return ["$.", false, C.length - oe, true];
+                }
+                st += P.length;
+                if (Er) Ge.push(Ot);
+                else ie.push(Ot);
+                Wt = Wt || Ar;
+                continue e;
+              }
+            }
+          }
+          Ar = false;
+          if (Br) {
+            if (P > Br) {
+              ie.push(braceEscape(Br) + "-" + braceEscape(P));
+            } else if (P === Br) {
+              ie.push(braceEscape(P));
+            }
+            Br = "";
+            st++;
+            continue;
+          }
+          if (C.startsWith("-]", st + 1)) {
+            ie.push(braceEscape(P + "-"));
+            st += 2;
+            continue;
+          }
+          if (C.startsWith("-", st + 1)) {
+            Br = P;
+            st += 2;
+            continue;
+          }
+          ie.push(braceEscape(P));
+          st++;
+        }
+        if (Ir < st) {
+          return ["", false, 0, false];
+        }
+        if (!ie.length && !Ge.length) {
+          return ["$.", false, C.length - oe, true];
+        }
+        if (Ge.length === 0 && ie.length === 1 && /^\\?.$/.test(ie[0]) && !Er) {
+          const C = ie[0].length === 2 ? ie[0].slice(-1) : ie[0];
+          return [regexpEscape(C), false, Ir - oe, false];
+        }
+        const Qr = "[" + (Er ? "^" : "") + rangesToString(ie) + "]";
+        const Dr = "[" + (Er ? "" : "^") + rangesToString(Ge) + "]";
+        const Fr = ie.length && Ge.length ? "(" + Qr + "|" + Dr + ")" : ie.length ? Qr : Dr;
+        return [Fr, Wt, Ir - oe, true];
+      };
+      P.parseClass = parseClass;
+    },
+    76726: (C, P) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.escape = void 0;
+      const escape = (C, { windowsPathsNoEscape: P = false } = {}) => (P ? C.replace(/[?*()[\]]/g, "[$&]") : C.replace(/[?*()[\]\\]/g, "\\$&"));
+      P.escape = escape;
+    },
+    91409: function (C, P, q) {
+      "use strict";
+      var oe =
+        (this && this.__importDefault) ||
+        function (C) {
+          return C && C.__esModule ? C : { default: C };
+        };
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.unescape = P.escape = P.AST = P.Minimatch = P.match = P.makeRe = P.braceExpand = P.defaults = P.filter = P.GLOBSTAR = P.sep = P.minimatch = void 0;
+      const ie = oe(q(61765));
+      const Ge = q(8895);
+      const st = q(20857);
+      const Ot = q(76726);
+      const Wt = q(9829);
+      const minimatch = (C, P, q = {}) => {
+        (0, Ge.assertValidPattern)(P);
+        if (!q.nocomment && P.charAt(0) === "#") {
+          return false;
+        }
+        return new Minimatch(P, q).match(C);
+      };
+      P.minimatch = minimatch;
+      const Ar = /^\*+([^+@!?\*\[\(]*)$/;
+      const starDotExtTest = (C) => (P) => !P.startsWith(".") && P.endsWith(C);
+      const starDotExtTestDot = (C) => (P) => P.endsWith(C);
+      const starDotExtTestNocase = (C) => {
+        C = C.toLowerCase();
+        return (P) => !P.startsWith(".") && P.toLowerCase().endsWith(C);
+      };
+      const starDotExtTestNocaseDot = (C) => {
+        C = C.toLowerCase();
+        return (P) => P.toLowerCase().endsWith(C);
+      };
+      const Er = /^\*+\.\*+$/;
+      const starDotStarTest = (C) => !C.startsWith(".") && C.includes(".");
+      const starDotStarTestDot = (C) => C !== "." && C !== ".." && C.includes(".");
+      const Ir = /^\.\*+$/;
+      const dotStarTest = (C) => C !== "." && C !== ".." && C.startsWith(".");
+      const Br = /^\*+$/;
+      const starTest = (C) => C.length !== 0 && !C.startsWith(".");
+      const starTestDot = (C) => C.length !== 0 && C !== "." && C !== "..";
+      const Qr = /^\?+([^+@!?\*\[\(]*)?$/;
+      const qmarksTestNocase = ([C, P = ""]) => {
+        const q = qmarksTestNoExt([C]);
+        if (!P) return q;
+        P = P.toLowerCase();
+        return (C) => q(C) && C.toLowerCase().endsWith(P);
+      };
+      const qmarksTestNocaseDot = ([C, P = ""]) => {
+        const q = qmarksTestNoExtDot([C]);
+        if (!P) return q;
+        P = P.toLowerCase();
+        return (C) => q(C) && C.toLowerCase().endsWith(P);
+      };
+      const qmarksTestDot = ([C, P = ""]) => {
+        const q = qmarksTestNoExtDot([C]);
+        return !P ? q : (C) => q(C) && C.endsWith(P);
+      };
+      const qmarksTest = ([C, P = ""]) => {
+        const q = qmarksTestNoExt([C]);
+        return !P ? q : (C) => q(C) && C.endsWith(P);
+      };
+      const qmarksTestNoExt = ([C]) => {
+        const P = C.length;
+        return (C) => C.length === P && !C.startsWith(".");
+      };
+      const qmarksTestNoExtDot = ([C]) => {
+        const P = C.length;
+        return (C) => C.length === P && C !== "." && C !== "..";
+      };
+      const Dr =
+        typeof process === "object" && process
+          ? (typeof process.env === "object" && process.env && process.env.__MINIMATCH_TESTING_PLATFORM__) || process.platform
+          : "posix";
+      const Fr = { win32: { sep: "\\" }, posix: { sep: "/" } };
+      P.sep = Dr === "win32" ? Fr.win32.sep : Fr.posix.sep;
+      P.minimatch.sep = P.sep;
+      P.GLOBSTAR = Symbol("globstar **");
+      P.minimatch.GLOBSTAR = P.GLOBSTAR;
+      const kr = "[^/]";
+      const Nr = kr + "*?";
+      const Ur = "(?:(?!(?:\\/|^)(?:\\.{1,2})($|\\/)).)*?";
+      const Mr = "(?:(?!(?:\\/|^)\\.).)*?";
+      const filter =
+        (C, q = {}) =>
+        (oe) =>
+          (0, P.minimatch)(oe, C, q);
+      P.filter = filter;
+      P.minimatch.filter = P.filter;
+      const ext = (C, P = {}) => Object.assign({}, C, P);
+      const defaults = (C) => {
+        if (!C || typeof C !== "object" || !Object.keys(C).length) {
+          return P.minimatch;
+        }
+        const q = P.minimatch;
+        const m = (P, oe, ie = {}) => q(P, oe, ext(C, ie));
+        return Object.assign(m, {
+          Minimatch: class Minimatch extends q.Minimatch {
+            constructor(P, q = {}) {
+              super(P, ext(C, q));
+            }
+            static defaults(P) {
+              return q.defaults(ext(C, P)).Minimatch;
+            }
+          },
+          AST: class AST extends q.AST {
+            constructor(P, q, oe = {}) {
+              super(P, q, ext(C, oe));
+            }
+            static fromGlob(P, oe = {}) {
+              return q.AST.fromGlob(P, ext(C, oe));
+            }
+          },
+          unescape: (P, oe = {}) => q.unescape(P, ext(C, oe)),
+          escape: (P, oe = {}) => q.escape(P, ext(C, oe)),
+          filter: (P, oe = {}) => q.filter(P, ext(C, oe)),
+          defaults: (P) => q.defaults(ext(C, P)),
+          makeRe: (P, oe = {}) => q.makeRe(P, ext(C, oe)),
+          braceExpand: (P, oe = {}) => q.braceExpand(P, ext(C, oe)),
+          match: (P, oe, ie = {}) => q.match(P, oe, ext(C, ie)),
+          sep: q.sep,
+          GLOBSTAR: P.GLOBSTAR,
+        });
+      };
+      P.defaults = defaults;
+      P.minimatch.defaults = P.defaults;
+      const braceExpand = (C, P = {}) => {
+        (0, Ge.assertValidPattern)(C);
+        if (P.nobrace || !/\{(?:(?!\{).)*\}/.test(C)) {
+          return [C];
+        }
+        return (0, ie.default)(C);
+      };
+      P.braceExpand = braceExpand;
+      P.minimatch.braceExpand = P.braceExpand;
+      const makeRe = (C, P = {}) => new Minimatch(C, P).makeRe();
+      P.makeRe = makeRe;
+      P.minimatch.makeRe = P.makeRe;
+      const match = (C, P, q = {}) => {
+        const oe = new Minimatch(P, q);
+        C = C.filter((C) => oe.match(C));
+        if (oe.options.nonull && !C.length) {
+          C.push(P);
+        }
+        return C;
+      };
+      P.match = match;
+      P.minimatch.match = P.match;
+      const Lr = /[?*]|[+@!]\(.*?\)|\[|\]/;
+      const regExpEscape = (C) => C.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+      class Minimatch {
+        options;
+        set;
+        pattern;
+        windowsPathsNoEscape;
+        nonegate;
+        negate;
+        comment;
+        empty;
+        preserveMultipleSlashes;
+        partial;
+        globSet;
+        globParts;
+        nocase;
+        isWindows;
+        platform;
+        windowsNoMagicRoot;
+        regexp;
+        constructor(C, P = {}) {
+          (0, Ge.assertValidPattern)(C);
+          P = P || {};
+          this.options = P;
+          this.pattern = C;
+          this.platform = P.platform || Dr;
+          this.isWindows = this.platform === "win32";
+          this.windowsPathsNoEscape = !!P.windowsPathsNoEscape || P.allowWindowsEscape === false;
+          if (this.windowsPathsNoEscape) {
+            this.pattern = this.pattern.replace(/\\/g, "/");
+          }
+          this.preserveMultipleSlashes = !!P.preserveMultipleSlashes;
+          this.regexp = null;
+          this.negate = false;
+          this.nonegate = !!P.nonegate;
+          this.comment = false;
+          this.empty = false;
+          this.partial = !!P.partial;
+          this.nocase = !!this.options.nocase;
+          this.windowsNoMagicRoot = P.windowsNoMagicRoot !== undefined ? P.windowsNoMagicRoot : !!(this.isWindows && this.nocase);
+          this.globSet = [];
+          this.globParts = [];
+          this.set = [];
+          this.make();
+        }
+        hasMagic() {
+          if (this.options.magicalBraces && this.set.length > 1) {
+            return true;
+          }
+          for (const C of this.set) {
+            for (const P of C) {
+              if (typeof P !== "string") return true;
+            }
+          }
+          return false;
+        }
+        debug(...C) {}
+        make() {
+          const C = this.pattern;
+          const P = this.options;
+          if (!P.nocomment && C.charAt(0) === "#") {
+            this.comment = true;
+            return;
+          }
+          if (!C) {
+            this.empty = true;
+            return;
+          }
+          this.parseNegate();
+          this.globSet = [...new Set(this.braceExpand())];
+          if (P.debug) {
+            this.debug = (...C) => console.error(...C);
+          }
+          this.debug(this.pattern, this.globSet);
+          const q = this.globSet.map((C) => this.slashSplit(C));
+          this.globParts = this.preprocess(q);
+          this.debug(this.pattern, this.globParts);
+          let oe = this.globParts.map((C, P, q) => {
+            if (this.isWindows && this.windowsNoMagicRoot) {
+              const P = C[0] === "" && C[1] === "" && (C[2] === "?" || !Lr.test(C[2])) && !Lr.test(C[3]);
+              const q = /^[a-z]:/i.test(C[0]);
+              if (P) {
+                return [...C.slice(0, 4), ...C.slice(4).map((C) => this.parse(C))];
+              } else if (q) {
+                return [C[0], ...C.slice(1).map((C) => this.parse(C))];
+              }
+            }
+            return C.map((C) => this.parse(C));
+          });
+          this.debug(this.pattern, oe);
+          this.set = oe.filter((C) => C.indexOf(false) === -1);
+          if (this.isWindows) {
+            for (let C = 0; C < this.set.length; C++) {
+              const P = this.set[C];
+              if (P[0] === "" && P[1] === "" && this.globParts[C][2] === "?" && typeof P[3] === "string" && /^[a-z]:$/i.test(P[3])) {
+                P[2] = "?";
+              }
+            }
+          }
+          this.debug(this.pattern, this.set);
+        }
+        preprocess(C) {
+          if (this.options.noglobstar) {
+            for (let P = 0; P < C.length; P++) {
+              for (let q = 0; q < C[P].length; q++) {
+                if (C[P][q] === "**") {
+                  C[P][q] = "*";
+                }
+              }
+            }
+          }
+          const { optimizationLevel: P = 1 } = this.options;
+          if (P >= 2) {
+            C = this.firstPhasePreProcess(C);
+            C = this.secondPhasePreProcess(C);
+          } else if (P >= 1) {
+            C = this.levelOneOptimize(C);
+          } else {
+            C = this.adjascentGlobstarOptimize(C);
+          }
+          return C;
+        }
+        adjascentGlobstarOptimize(C) {
+          return C.map((C) => {
+            let P = -1;
+            while (-1 !== (P = C.indexOf("**", P + 1))) {
+              let q = P;
+              while (C[q + 1] === "**") {
+                q++;
+              }
+              if (q !== P) {
+                C.splice(P, q - P);
+              }
+            }
+            return C;
+          });
+        }
+        levelOneOptimize(C) {
+          return C.map((C) => {
+            C = C.reduce((C, P) => {
+              const q = C[C.length - 1];
+              if (P === "**" && q === "**") {
+                return C;
+              }
+              if (P === "..") {
+                if (q && q !== ".." && q !== "." && q !== "**") {
+                  C.pop();
+                  return C;
+                }
+              }
+              C.push(P);
+              return C;
+            }, []);
+            return C.length === 0 ? [""] : C;
+          });
+        }
+        levelTwoFileOptimize(C) {
+          if (!Array.isArray(C)) {
+            C = this.slashSplit(C);
+          }
+          let P = false;
+          do {
+            P = false;
+            if (!this.preserveMultipleSlashes) {
+              for (let q = 1; q < C.length - 1; q++) {
+                const oe = C[q];
+                if (q === 1 && oe === "" && C[0] === "") continue;
+                if (oe === "." || oe === "") {
+                  P = true;
+                  C.splice(q, 1);
+                  q--;
+                }
+              }
+              if (C[0] === "." && C.length === 2 && (C[1] === "." || C[1] === "")) {
+                P = true;
+                C.pop();
+              }
+            }
+            let q = 0;
+            while (-1 !== (q = C.indexOf("..", q + 1))) {
+              const oe = C[q - 1];
+              if (oe && oe !== "." && oe !== ".." && oe !== "**") {
+                P = true;
+                C.splice(q - 1, 2);
+                q -= 2;
+              }
+            }
+          } while (P);
+          return C.length === 0 ? [""] : C;
+        }
+        firstPhasePreProcess(C) {
+          let P = false;
+          do {
+            P = false;
+            for (let q of C) {
+              let oe = -1;
+              while (-1 !== (oe = q.indexOf("**", oe + 1))) {
+                let ie = oe;
+                while (q[ie + 1] === "**") {
+                  ie++;
+                }
+                if (ie > oe) {
+                  q.splice(oe + 1, ie - oe);
+                }
+                let Ge = q[oe + 1];
+                const st = q[oe + 2];
+                const Ot = q[oe + 3];
+                if (Ge !== "..") continue;
+                if (!st || st === "." || st === ".." || !Ot || Ot === "." || Ot === "..") {
+                  continue;
+                }
+                P = true;
+                q.splice(oe, 1);
+                const Wt = q.slice(0);
+                Wt[oe] = "**";
+                C.push(Wt);
+                oe--;
+              }
+              if (!this.preserveMultipleSlashes) {
+                for (let C = 1; C < q.length - 1; C++) {
+                  const oe = q[C];
+                  if (C === 1 && oe === "" && q[0] === "") continue;
+                  if (oe === "." || oe === "") {
+                    P = true;
+                    q.splice(C, 1);
+                    C--;
+                  }
+                }
+                if (q[0] === "." && q.length === 2 && (q[1] === "." || q[1] === "")) {
+                  P = true;
+                  q.pop();
+                }
+              }
+              let ie = 0;
+              while (-1 !== (ie = q.indexOf("..", ie + 1))) {
+                const C = q[ie - 1];
+                if (C && C !== "." && C !== ".." && C !== "**") {
+                  P = true;
+                  const C = ie === 1 && q[ie + 1] === "**";
+                  const oe = C ? ["."] : [];
+                  q.splice(ie - 1, 2, ...oe);
+                  if (q.length === 0) q.push("");
+                  ie -= 2;
+                }
+              }
+            }
+          } while (P);
+          return C;
+        }
+        secondPhasePreProcess(C) {
+          for (let P = 0; P < C.length - 1; P++) {
+            for (let q = P + 1; q < C.length; q++) {
+              const oe = this.partsMatch(C[P], C[q], !this.preserveMultipleSlashes);
+              if (oe) {
+                C[P] = [];
+                C[q] = oe;
+                break;
+              }
+            }
+          }
+          return C.filter((C) => C.length);
+        }
+        partsMatch(C, P, q = false) {
+          let oe = 0;
+          let ie = 0;
+          let Ge = [];
+          let st = "";
+          while (oe < C.length && ie < P.length) {
+            if (C[oe] === P[ie]) {
+              Ge.push(st === "b" ? P[ie] : C[oe]);
+              oe++;
+              ie++;
+            } else if (q && C[oe] === "**" && P[ie] === C[oe + 1]) {
+              Ge.push(C[oe]);
+              oe++;
+            } else if (q && P[ie] === "**" && C[oe] === P[ie + 1]) {
+              Ge.push(P[ie]);
+              ie++;
+            } else if (C[oe] === "*" && P[ie] && (this.options.dot || !P[ie].startsWith(".")) && P[ie] !== "**") {
+              if (st === "b") return false;
+              st = "a";
+              Ge.push(C[oe]);
+              oe++;
+              ie++;
+            } else if (P[ie] === "*" && C[oe] && (this.options.dot || !C[oe].startsWith(".")) && C[oe] !== "**") {
+              if (st === "a") return false;
+              st = "b";
+              Ge.push(P[ie]);
+              oe++;
+              ie++;
+            } else {
+              return false;
+            }
+          }
+          return C.length === P.length && Ge;
+        }
+        parseNegate() {
+          if (this.nonegate) return;
+          const C = this.pattern;
+          let P = false;
+          let q = 0;
+          for (let oe = 0; oe < C.length && C.charAt(oe) === "!"; oe++) {
+            P = !P;
+            q++;
+          }
+          if (q) this.pattern = C.slice(q);
+          this.negate = P;
+        }
+        matchOne(C, q, oe = false) {
+          const ie = this.options;
+          if (this.isWindows) {
+            const P = typeof C[0] === "string" && /^[a-z]:$/i.test(C[0]);
+            const oe = !P && C[0] === "" && C[1] === "" && C[2] === "?" && /^[a-z]:$/i.test(C[3]);
+            const ie = typeof q[0] === "string" && /^[a-z]:$/i.test(q[0]);
+            const Ge = !ie && q[0] === "" && q[1] === "" && q[2] === "?" && typeof q[3] === "string" && /^[a-z]:$/i.test(q[3]);
+            const st = oe ? 3 : P ? 0 : undefined;
+            const Ot = Ge ? 3 : ie ? 0 : undefined;
+            if (typeof st === "number" && typeof Ot === "number") {
+              const [P, oe] = [C[st], q[Ot]];
+              if (P.toLowerCase() === oe.toLowerCase()) {
+                q[Ot] = P;
+                if (Ot > st) {
+                  q = q.slice(Ot);
+                } else if (st > Ot) {
+                  C = C.slice(st);
+                }
+              }
+            }
+          }
+          const { optimizationLevel: Ge = 1 } = this.options;
+          if (Ge >= 2) {
+            C = this.levelTwoFileOptimize(C);
+          }
+          this.debug("matchOne", this, { file: C, pattern: q });
+          this.debug("matchOne", C.length, q.length);
+          for (var st = 0, Ot = 0, Wt = C.length, Ar = q.length; st < Wt && Ot < Ar; st++, Ot++) {
+            this.debug("matchOne loop");
+            var Er = q[Ot];
+            var Ir = C[st];
+            this.debug(q, Er, Ir);
+            if (Er === false) {
+              return false;
+            }
+            if (Er === P.GLOBSTAR) {
+              this.debug("GLOBSTAR", [q, Er, Ir]);
+              var Br = st;
+              var Qr = Ot + 1;
+              if (Qr === Ar) {
+                this.debug("** at the end");
+                for (; st < Wt; st++) {
+                  if (C[st] === "." || C[st] === ".." || (!ie.dot && C[st].charAt(0) === ".")) return false;
+                }
+                return true;
+              }
+              while (Br < Wt) {
+                var Dr = C[Br];
+                this.debug("\nglobstar while", C, Br, q, Qr, Dr);
+                if (this.matchOne(C.slice(Br), q.slice(Qr), oe)) {
+                  this.debug("globstar found match!", Br, Wt, Dr);
+                  return true;
+                } else {
+                  if (Dr === "." || Dr === ".." || (!ie.dot && Dr.charAt(0) === ".")) {
+                    this.debug("dot detected!", C, Br, q, Qr);
+                    break;
+                  }
+                  this.debug("globstar swallow a segment, and continue");
+                  Br++;
+                }
+              }
+              if (oe) {
+                this.debug("\n>>> no match, partial?", C, Br, q, Qr);
+                if (Br === Wt) {
+                  return true;
+                }
+              }
+              return false;
+            }
+            let Ge;
+            if (typeof Er === "string") {
+              Ge = Ir === Er;
+              this.debug("string match", Er, Ir, Ge);
+            } else {
+              Ge = Er.test(Ir);
+              this.debug("pattern match", Er, Ir, Ge);
+            }
+            if (!Ge) return false;
+          }
+          if (st === Wt && Ot === Ar) {
+            return true;
+          } else if (st === Wt) {
+            return oe;
+          } else if (Ot === Ar) {
+            return st === Wt - 1 && C[st] === "";
+          } else {
+            throw new Error("wtf?");
+          }
+        }
+        braceExpand() {
+          return (0, P.braceExpand)(this.pattern, this.options);
+        }
+        parse(C) {
+          (0, Ge.assertValidPattern)(C);
+          const q = this.options;
+          if (C === "**") return P.GLOBSTAR;
+          if (C === "") return "";
+          let oe;
+          let ie = null;
+          if ((oe = C.match(Br))) {
+            ie = q.dot ? starTestDot : starTest;
+          } else if ((oe = C.match(Ar))) {
+            ie = (q.nocase ? (q.dot ? starDotExtTestNocaseDot : starDotExtTestNocase) : q.dot ? starDotExtTestDot : starDotExtTest)(oe[1]);
+          } else if ((oe = C.match(Qr))) {
+            ie = (q.nocase ? (q.dot ? qmarksTestNocaseDot : qmarksTestNocase) : q.dot ? qmarksTestDot : qmarksTest)(oe);
+          } else if ((oe = C.match(Er))) {
+            ie = q.dot ? starDotStarTestDot : starDotStarTest;
+          } else if ((oe = C.match(Ir))) {
+            ie = dotStarTest;
+          }
+          const Ot = st.AST.fromGlob(C, this.options).toMMPattern();
+          if (ie && typeof Ot === "object") {
+            Reflect.defineProperty(Ot, "test", { value: ie });
+          }
+          return Ot;
+        }
+        makeRe() {
+          if (this.regexp || this.regexp === false) return this.regexp;
+          const C = this.set;
+          if (!C.length) {
+            this.regexp = false;
+            return this.regexp;
+          }
+          const q = this.options;
+          const oe = q.noglobstar ? Nr : q.dot ? Ur : Mr;
+          const ie = new Set(q.nocase ? ["i"] : []);
+          let Ge = C.map((C) => {
+            const q = C.map((C) => {
+              if (C instanceof RegExp) {
+                for (const P of C.flags.split("")) ie.add(P);
+              }
+              return typeof C === "string" ? regExpEscape(C) : C === P.GLOBSTAR ? P.GLOBSTAR : C._src;
+            });
+            q.forEach((C, ie) => {
+              const Ge = q[ie + 1];
+              const st = q[ie - 1];
+              if (C !== P.GLOBSTAR || st === P.GLOBSTAR) {
+                return;
+              }
+              if (st === undefined) {
+                if (Ge !== undefined && Ge !== P.GLOBSTAR) {
+                  q[ie + 1] = "(?:\\/|" + oe + "\\/)?" + Ge;
+                } else {
+                  q[ie] = oe;
+                }
+              } else if (Ge === undefined) {
+                q[ie - 1] = st + "(?:\\/|" + oe + ")?";
+              } else if (Ge !== P.GLOBSTAR) {
+                q[ie - 1] = st + "(?:\\/|\\/" + oe + "\\/)" + Ge;
+                q[ie + 1] = P.GLOBSTAR;
+              }
+            });
+            return q.filter((C) => C !== P.GLOBSTAR).join("/");
+          }).join("|");
+          const [st, Ot] = C.length > 1 ? ["(?:", ")"] : ["", ""];
+          Ge = "^" + st + Ge + Ot + "$";
+          if (this.negate) Ge = "^(?!" + Ge + ").+$";
+          try {
+            this.regexp = new RegExp(Ge, [...ie].join(""));
+          } catch (C) {
+            this.regexp = false;
+          }
+          return this.regexp;
+        }
+        slashSplit(C) {
+          if (this.preserveMultipleSlashes) {
+            return C.split("/");
+          } else if (this.isWindows && /^\/\/[^\/]+/.test(C)) {
+            return ["", ...C.split(/\/+/)];
+          } else {
+            return C.split(/\/+/);
+          }
+        }
+        match(C, P = this.partial) {
+          this.debug("match", C, this.pattern);
+          if (this.comment) {
+            return false;
+          }
+          if (this.empty) {
+            return C === "";
+          }
+          if (C === "/" && P) {
+            return true;
+          }
+          const q = this.options;
+          if (this.isWindows) {
+            C = C.split("\\").join("/");
+          }
+          const oe = this.slashSplit(C);
+          this.debug(this.pattern, "split", oe);
+          const ie = this.set;
+          this.debug(this.pattern, "set", ie);
+          let Ge = oe[oe.length - 1];
+          if (!Ge) {
+            for (let C = oe.length - 2; !Ge && C >= 0; C--) {
+              Ge = oe[C];
+            }
+          }
+          for (let C = 0; C < ie.length; C++) {
+            const st = ie[C];
+            let Ot = oe;
+            if (q.matchBase && st.length === 1) {
+              Ot = [Ge];
+            }
+            const Wt = this.matchOne(Ot, st, P);
+            if (Wt) {
+              if (q.flipNegate) {
+                return true;
+              }
+              return !this.negate;
+            }
+          }
+          if (q.flipNegate) {
+            return false;
+          }
+          return this.negate;
+        }
+        static defaults(C) {
+          return P.minimatch.defaults(C).Minimatch;
+        }
+      }
+      P.Minimatch = Minimatch;
+      var Gr = q(20857);
+      Object.defineProperty(P, "AST", {
+        enumerable: true,
+        get: function () {
+          return Gr.AST;
+        },
+      });
+      var xr = q(76726);
+      Object.defineProperty(P, "escape", {
+        enumerable: true,
+        get: function () {
+          return xr.escape;
+        },
+      });
+      var Vr = q(9829);
+      Object.defineProperty(P, "unescape", {
+        enumerable: true,
+        get: function () {
+          return Vr.unescape;
+        },
+      });
+      P.minimatch.AST = st.AST;
+      P.minimatch.Minimatch = Minimatch;
+      P.minimatch.escape = Ot.escape;
+      P.minimatch.unescape = Wt.unescape;
+    },
+    9829: (C, P) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.unescape = void 0;
+      const unescape = (C, { windowsPathsNoEscape: P = false } = {}) =>
+        P ? C.replace(/\[([^\/\\])\]/g, "$1") : C.replace(/((?!\\).|^)\[([^\/\\])\]/g, "$1$2").replace(/\\([^\/])/g, "$1");
+      P.unescape = unescape;
+    },
+    32477: (C, P) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.LRUCache = void 0;
+      const q = typeof performance === "object" && performance && typeof performance.now === "function" ? performance : Date;
+      const oe = new Set();
+      const ie = typeof process === "object" && !!process ? process : {};
+      const emitWarning = (C, P, q, oe) => {
+        typeof ie.emitWarning === "function" ? ie.emitWarning(C, P, q, oe) : console.error(`[${q}] ${P}: ${C}`);
+      };
+      let Ge = globalThis.AbortController;
+      let st = globalThis.AbortSignal;
+      if (typeof Ge === "undefined") {
+        st = class AbortSignal {
+          onabort;
+          _onabort = [];
+          reason;
+          aborted = false;
+          addEventListener(C, P) {
+            this._onabort.push(P);
+          }
+        };
+        Ge = class AbortController {
+          constructor() {
+            warnACPolyfill();
+          }
+          signal = new st();
+          abort(C) {
+            if (this.signal.aborted) return;
+            this.signal.reason = C;
+            this.signal.aborted = true;
+            for (const P of this.signal._onabort) {
+              P(C);
+            }
+            this.signal.onabort?.(C);
+          }
+        };
+        let C = ie.env?.LRU_CACHE_IGNORE_AC_WARNING !== "1";
+        const warnACPolyfill = () => {
+          if (!C) return;
+          C = false;
+          emitWarning(
+            "AbortController is not defined. If using lru-cache in " +
+              "node 14, load an AbortController polyfill from the " +
+              "`node-abort-controller` package. A minimal polyfill is " +
+              "provided for use by LRUCache.fetch(), but it should not be " +
+              "relied upon in other contexts (eg, passing it to other APIs that " +
+              "use AbortController/AbortSignal might have undesirable effects). " +
+              "You may disable this with LRU_CACHE_IGNORE_AC_WARNING=1 in the env.",
+            "NO_ABORT_CONTROLLER",
+            "ENOTSUP",
+            warnACPolyfill
+          );
+        };
+      }
+      const shouldWarn = (C) => !oe.has(C);
+      const Ot = Symbol("type");
+      const isPosInt = (C) => C && C === Math.floor(C) && C > 0 && isFinite(C);
+      const getUintArray = (C) =>
+        !isPosInt(C)
+          ? null
+          : C <= Math.pow(2, 8)
+            ? Uint8Array
+            : C <= Math.pow(2, 16)
+              ? Uint16Array
+              : C <= Math.pow(2, 32)
+                ? Uint32Array
+                : C <= Number.MAX_SAFE_INTEGER
+                  ? ZeroArray
+                  : null;
+      class ZeroArray extends Array {
+        constructor(C) {
+          super(C);
+          this.fill(0);
+        }
+      }
+      class Stack {
+        heap;
+        length;
+        static #q = false;
+        static create(C) {
+          const P = getUintArray(C);
+          if (!P) return [];
+          Stack.#q = true;
+          const q = new Stack(C, P);
+          Stack.#q = false;
+          return q;
+        }
+        constructor(C, P) {
+          if (!Stack.#q) {
+            throw new TypeError("instantiate Stack using Stack.create(n)");
+          }
+          this.heap = new P(C);
+          this.length = 0;
+        }
+        push(C) {
+          this.heap[this.length++] = C;
+        }
+        pop() {
+          return this.heap[--this.length];
+        }
+      }
+      class LRUCache {
+        #J;
+        #W;
+        #K;
+        #z;
+        #$;
+        #Z;
+        ttl;
+        ttlResolution;
+        ttlAutopurge;
+        updateAgeOnGet;
+        updateAgeOnHas;
+        allowStale;
+        noDisposeOnSet;
+        noUpdateTTL;
+        maxEntrySize;
+        sizeCalculation;
+        noDeleteOnFetchRejection;
+        noDeleteOnStaleGet;
+        allowStaleOnFetchAbort;
+        allowStaleOnFetchRejection;
+        ignoreFetchAbort;
+        #X;
+        #ee;
+        #te;
+        #re;
+        #se;
+        #ne;
+        #oe;
+        #ie;
+        #ae;
+        #Ae;
+        #le;
+        #ce;
+        #pe;
+        #de;
+        #ue;
+        #me;
+        #he;
+        static unsafeExposeInternals(C) {
+          return {
+            starts: C.#pe,
+            ttls: C.#de,
+            sizes: C.#ce,
+            keyMap: C.#te,
+            keyList: C.#re,
+            valList: C.#se,
+            next: C.#ne,
+            prev: C.#oe,
+            get head() {
+              return C.#ie;
+            },
+            get tail() {
+              return C.#ae;
+            },
+            free: C.#Ae,
+            isBackgroundFetch: (P) => C.#fe(P),
+            backgroundFetch: (P, q, oe, ie) => C.#ge(P, q, oe, ie),
+            moveToTail: (P) => C.#Ee(P),
+            indexes: (P) => C.#Ie(P),
+            rindexes: (P) => C.#Ce(P),
+            isStale: (P) => C.#ye(P),
+          };
+        }
+        get max() {
+          return this.#J;
+        }
+        get maxSize() {
+          return this.#W;
+        }
+        get calculatedSize() {
+          return this.#ee;
+        }
+        get size() {
+          return this.#X;
+        }
+        get fetchMethod() {
+          return this.#$;
+        }
+        get memoMethod() {
+          return this.#Z;
+        }
+        get dispose() {
+          return this.#K;
+        }
+        get disposeAfter() {
+          return this.#z;
+        }
+        constructor(C) {
+          const {
+            max: P = 0,
+            ttl: q,
+            ttlResolution: ie = 1,
+            ttlAutopurge: Ge,
+            updateAgeOnGet: st,
+            updateAgeOnHas: Ot,
+            allowStale: Wt,
+            dispose: Ar,
+            disposeAfter: Er,
+            noDisposeOnSet: Ir,
+            noUpdateTTL: Br,
+            maxSize: Qr = 0,
+            maxEntrySize: Dr = 0,
+            sizeCalculation: Fr,
+            fetchMethod: kr,
+            memoMethod: Nr,
+            noDeleteOnFetchRejection: Ur,
+            noDeleteOnStaleGet: Mr,
+            allowStaleOnFetchRejection: Lr,
+            allowStaleOnFetchAbort: Gr,
+            ignoreFetchAbort: xr,
+          } = C;
+          if (P !== 0 && !isPosInt(P)) {
+            throw new TypeError("max option must be a nonnegative integer");
+          }
+          const Vr = P ? getUintArray(P) : Array;
+          if (!Vr) {
+            throw new Error("invalid max value: " + P);
+          }
+          this.#J = P;
+          this.#W = Qr;
+          this.maxEntrySize = Dr || this.#W;
+          this.sizeCalculation = Fr;
+          if (this.sizeCalculation) {
+            if (!this.#W && !this.maxEntrySize) {
+              throw new TypeError("cannot set sizeCalculation without setting maxSize or maxEntrySize");
+            }
+            if (typeof this.sizeCalculation !== "function") {
+              throw new TypeError("sizeCalculation set to non-function");
+            }
+          }
+          if (Nr !== undefined && typeof Nr !== "function") {
+            throw new TypeError("memoMethod must be a function if defined");
+          }
+          this.#Z = Nr;
+          if (kr !== undefined && typeof kr !== "function") {
+            throw new TypeError("fetchMethod must be a function if specified");
+          }
+          this.#$ = kr;
+          this.#me = !!kr;
+          this.#te = new Map();
+          this.#re = new Array(P).fill(undefined);
+          this.#se = new Array(P).fill(undefined);
+          this.#ne = new Vr(P);
+          this.#oe = new Vr(P);
+          this.#ie = 0;
+          this.#ae = 0;
+          this.#Ae = Stack.create(P);
+          this.#X = 0;
+          this.#ee = 0;
+          if (typeof Ar === "function") {
+            this.#K = Ar;
+          }
+          if (typeof Er === "function") {
+            this.#z = Er;
+            this.#le = [];
+          } else {
+            this.#z = undefined;
+            this.#le = undefined;
+          }
+          this.#ue = !!this.#K;
+          this.#he = !!this.#z;
+          this.noDisposeOnSet = !!Ir;
+          this.noUpdateTTL = !!Br;
+          this.noDeleteOnFetchRejection = !!Ur;
+          this.allowStaleOnFetchRejection = !!Lr;
+          this.allowStaleOnFetchAbort = !!Gr;
+          this.ignoreFetchAbort = !!xr;
+          if (this.maxEntrySize !== 0) {
+            if (this.#W !== 0) {
+              if (!isPosInt(this.#W)) {
+                throw new TypeError("maxSize must be a positive integer if specified");
+              }
+            }
+            if (!isPosInt(this.maxEntrySize)) {
+              throw new TypeError("maxEntrySize must be a positive integer if specified");
+            }
+            this.#Be();
+          }
+          this.allowStale = !!Wt;
+          this.noDeleteOnStaleGet = !!Mr;
+          this.updateAgeOnGet = !!st;
+          this.updateAgeOnHas = !!Ot;
+          this.ttlResolution = isPosInt(ie) || ie === 0 ? ie : 1;
+          this.ttlAutopurge = !!Ge;
+          this.ttl = q || 0;
+          if (this.ttl) {
+            if (!isPosInt(this.ttl)) {
+              throw new TypeError("ttl must be a positive integer if specified");
+            }
+            this.#be();
+          }
+          if (this.#J === 0 && this.ttl === 0 && this.#W === 0) {
+            throw new TypeError("At least one of max, maxSize, or ttl is required");
+          }
+          if (!this.ttlAutopurge && !this.#J && !this.#W) {
+            const C = "LRU_CACHE_UNBOUNDED";
+            if (shouldWarn(C)) {
+              oe.add(C);
+              const P = "TTL caching without ttlAutopurge, max, or maxSize can " + "result in unbounded memory consumption.";
+              emitWarning(P, "UnboundedCacheWarning", C, LRUCache);
+            }
+          }
+        }
+        getRemainingTTL(C) {
+          return this.#te.has(C) ? Infinity : 0;
+        }
+        #be() {
+          const C = new ZeroArray(this.#J);
+          const P = new ZeroArray(this.#J);
+          this.#de = C;
+          this.#pe = P;
+          this.#Qe = (oe, ie, Ge = q.now()) => {
+            P[oe] = ie !== 0 ? Ge : 0;
+            C[oe] = ie;
+            if (ie !== 0 && this.ttlAutopurge) {
+              const C = setTimeout(() => {
+                if (this.#ye(oe)) {
+                  this.#we(this.#re[oe], "expire");
+                }
+              }, ie + 1);
+              if (C.unref) {
+                C.unref();
+              }
+            }
+          };
+          this.#ve = (oe) => {
+            P[oe] = C[oe] !== 0 ? q.now() : 0;
+          };
+          this.#Te = (q, ie) => {
+            if (C[ie]) {
+              const Ge = C[ie];
+              const st = P[ie];
+              if (!Ge || !st) return;
+              q.ttl = Ge;
+              q.start = st;
+              q.now = oe || getNow();
+              const Ot = q.now - st;
+              q.remainingTTL = Ge - Ot;
+            }
+          };
+          let oe = 0;
+          const getNow = () => {
+            const C = q.now();
+            if (this.ttlResolution > 0) {
+              oe = C;
+              const P = setTimeout(() => (oe = 0), this.ttlResolution);
+              if (P.unref) {
+                P.unref();
+              }
+            }
+            return C;
+          };
+          this.getRemainingTTL = (q) => {
+            const ie = this.#te.get(q);
+            if (ie === undefined) {
+              return 0;
+            }
+            const Ge = C[ie];
+            const st = P[ie];
+            if (!Ge || !st) {
+              return Infinity;
+            }
+            const Ot = (oe || getNow()) - st;
+            return Ge - Ot;
+          };
+          this.#ye = (q) => {
+            const ie = P[q];
+            const Ge = C[q];
+            return !!Ge && !!ie && (oe || getNow()) - ie > Ge;
+          };
+        }
+        #ve = () => {};
+        #Te = () => {};
+        #Qe = () => {};
+        #ye = () => false;
+        #Be() {
+          const C = new ZeroArray(this.#J);
+          this.#ee = 0;
+          this.#ce = C;
+          this.#Se = (P) => {
+            this.#ee -= C[P];
+            C[P] = 0;
+          };
+          this.#_e = (C, P, q, oe) => {
+            if (this.#fe(P)) {
+              return 0;
+            }
+            if (!isPosInt(q)) {
+              if (oe) {
+                if (typeof oe !== "function") {
+                  throw new TypeError("sizeCalculation must be a function");
+                }
+                q = oe(P, C);
+                if (!isPosInt(q)) {
+                  throw new TypeError("sizeCalculation return invalid (expect positive integer)");
+                }
+              } else {
+                throw new TypeError(
+                  "invalid size value (must be positive integer). " + "When maxSize or maxEntrySize is used, sizeCalculation " + "or size must be set."
+                );
+              }
+            }
+            return q;
+          };
+          this.#Re = (P, q, oe) => {
+            C[P] = q;
+            if (this.#W) {
+              const q = this.#W - C[P];
+              while (this.#ee > q) {
+                this.#De(true);
+              }
+            }
+            this.#ee += C[P];
+            if (oe) {
+              oe.entrySize = q;
+              oe.totalCalculatedSize = this.#ee;
+            }
+          };
+        }
+        #Se = (C) => {};
+        #Re = (C, P, q) => {};
+        #_e = (C, P, q, oe) => {
+          if (q || oe) {
+            throw new TypeError("cannot set size without setting maxSize or maxEntrySize on cache");
+          }
+          return 0;
+        };
+        *#Ie({ allowStale: C = this.allowStale } = {}) {
+          if (this.#X) {
+            for (let P = this.#ae; true; ) {
+              if (!this.#Fe(P)) {
+                break;
+              }
+              if (C || !this.#ye(P)) {
+                yield P;
+              }
+              if (P === this.#ie) {
+                break;
+              } else {
+                P = this.#oe[P];
+              }
+            }
+          }
+        }
+        *#Ce({ allowStale: C = this.allowStale } = {}) {
+          if (this.#X) {
+            for (let P = this.#ie; true; ) {
+              if (!this.#Fe(P)) {
+                break;
+              }
+              if (C || !this.#ye(P)) {
+                yield P;
+              }
+              if (P === this.#ae) {
+                break;
+              } else {
+                P = this.#ne[P];
+              }
+            }
+          }
+        }
+        #Fe(C) {
+          return C !== undefined && this.#te.get(this.#re[C]) === C;
+        }
+        *entries() {
+          for (const C of this.#Ie()) {
+            if (this.#se[C] !== undefined && this.#re[C] !== undefined && !this.#fe(this.#se[C])) {
+              yield [this.#re[C], this.#se[C]];
+            }
+          }
+        }
+        *rentries() {
+          for (const C of this.#Ce()) {
+            if (this.#se[C] !== undefined && this.#re[C] !== undefined && !this.#fe(this.#se[C])) {
+              yield [this.#re[C], this.#se[C]];
+            }
+          }
+        }
+        *keys() {
+          for (const C of this.#Ie()) {
+            const P = this.#re[C];
+            if (P !== undefined && !this.#fe(this.#se[C])) {
+              yield P;
+            }
+          }
+        }
+        *rkeys() {
+          for (const C of this.#Ce()) {
+            const P = this.#re[C];
+            if (P !== undefined && !this.#fe(this.#se[C])) {
+              yield P;
+            }
+          }
+        }
+        *values() {
+          for (const C of this.#Ie()) {
+            const P = this.#se[C];
+            if (P !== undefined && !this.#fe(this.#se[C])) {
+              yield this.#se[C];
+            }
+          }
+        }
+        *rvalues() {
+          for (const C of this.#Ce()) {
+            const P = this.#se[C];
+            if (P !== undefined && !this.#fe(this.#se[C])) {
+              yield this.#se[C];
+            }
+          }
+        }
+        [Symbol.iterator]() {
+          return this.entries();
+        }
+        [Symbol.toStringTag] = "LRUCache";
+        find(C, P = {}) {
+          for (const q of this.#Ie()) {
+            const oe = this.#se[q];
+            const ie = this.#fe(oe) ? oe.__staleWhileFetching : oe;
+            if (ie === undefined) continue;
+            if (C(ie, this.#re[q], this)) {
+              return this.get(this.#re[q], P);
+            }
+          }
+        }
+        forEach(C, P = this) {
+          for (const q of this.#Ie()) {
+            const oe = this.#se[q];
+            const ie = this.#fe(oe) ? oe.__staleWhileFetching : oe;
+            if (ie === undefined) continue;
+            C.call(P, ie, this.#re[q], this);
+          }
+        }
+        rforEach(C, P = this) {
+          for (const q of this.#Ce()) {
+            const oe = this.#se[q];
+            const ie = this.#fe(oe) ? oe.__staleWhileFetching : oe;
+            if (ie === undefined) continue;
+            C.call(P, ie, this.#re[q], this);
+          }
+        }
+        purgeStale() {
+          let C = false;
+          for (const P of this.#Ce({ allowStale: true })) {
+            if (this.#ye(P)) {
+              this.#we(this.#re[P], "expire");
+              C = true;
+            }
+          }
+          return C;
+        }
+        info(C) {
+          const P = this.#te.get(C);
+          if (P === undefined) return undefined;
+          const oe = this.#se[P];
+          const ie = this.#fe(oe) ? oe.__staleWhileFetching : oe;
+          if (ie === undefined) return undefined;
+          const Ge = { value: ie };
+          if (this.#de && this.#pe) {
+            const C = this.#de[P];
+            const oe = this.#pe[P];
+            if (C && oe) {
+              const P = C - (q.now() - oe);
+              Ge.ttl = P;
+              Ge.start = Date.now();
+            }
+          }
+          if (this.#ce) {
+            Ge.size = this.#ce[P];
+          }
+          return Ge;
+        }
+        dump() {
+          const C = [];
+          for (const P of this.#Ie({ allowStale: true })) {
+            const oe = this.#re[P];
+            const ie = this.#se[P];
+            const Ge = this.#fe(ie) ? ie.__staleWhileFetching : ie;
+            if (Ge === undefined || oe === undefined) continue;
+            const st = { value: Ge };
+            if (this.#de && this.#pe) {
+              st.ttl = this.#de[P];
+              const C = q.now() - this.#pe[P];
+              st.start = Math.floor(Date.now() - C);
+            }
+            if (this.#ce) {
+              st.size = this.#ce[P];
+            }
+            C.unshift([oe, st]);
+          }
+          return C;
+        }
+        load(C) {
+          this.clear();
+          for (const [P, oe] of C) {
+            if (oe.start) {
+              const C = Date.now() - oe.start;
+              oe.start = q.now() - C;
+            }
+            this.set(P, oe.value, oe);
+          }
+        }
+        set(C, P, q = {}) {
+          if (P === undefined) {
+            this.delete(C);
+            return this;
+          }
+          const { ttl: oe = this.ttl, start: ie, noDisposeOnSet: Ge = this.noDisposeOnSet, sizeCalculation: st = this.sizeCalculation, status: Ot } = q;
+          let { noUpdateTTL: Wt = this.noUpdateTTL } = q;
+          const Ar = this.#_e(C, P, q.size || 0, st);
+          if (this.maxEntrySize && Ar > this.maxEntrySize) {
+            if (Ot) {
+              Ot.set = "miss";
+              Ot.maxEntrySizeExceeded = true;
+            }
+            this.#we(C, "set");
+            return this;
+          }
+          let Er = this.#X === 0 ? undefined : this.#te.get(C);
+          if (Er === undefined) {
+            Er = this.#X === 0 ? this.#ae : this.#Ae.length !== 0 ? this.#Ae.pop() : this.#X === this.#J ? this.#De(false) : this.#X;
+            this.#re[Er] = C;
+            this.#se[Er] = P;
+            this.#te.set(C, Er);
+            this.#ne[this.#ae] = Er;
+            this.#oe[Er] = this.#ae;
+            this.#ae = Er;
+            this.#X++;
+            this.#Re(Er, Ar, Ot);
+            if (Ot) Ot.set = "add";
+            Wt = false;
+          } else {
+            this.#Ee(Er);
+            const q = this.#se[Er];
+            if (P !== q) {
+              if (this.#me && this.#fe(q)) {
+                q.__abortController.abort(new Error("replaced"));
+                const { __staleWhileFetching: P } = q;
+                if (P !== undefined && !Ge) {
+                  if (this.#ue) {
+                    this.#K?.(P, C, "set");
+                  }
+                  if (this.#he) {
+                    this.#le?.push([P, C, "set"]);
+                  }
+                }
+              } else if (!Ge) {
+                if (this.#ue) {
+                  this.#K?.(q, C, "set");
+                }
+                if (this.#he) {
+                  this.#le?.push([q, C, "set"]);
+                }
+              }
+              this.#Se(Er);
+              this.#Re(Er, Ar, Ot);
+              this.#se[Er] = P;
+              if (Ot) {
+                Ot.set = "replace";
+                const C = q && this.#fe(q) ? q.__staleWhileFetching : q;
+                if (C !== undefined) Ot.oldValue = C;
+              }
+            } else if (Ot) {
+              Ot.set = "update";
+            }
+          }
+          if (oe !== 0 && !this.#de) {
+            this.#be();
+          }
+          if (this.#de) {
+            if (!Wt) {
+              this.#Qe(Er, oe, ie);
+            }
+            if (Ot) this.#Te(Ot, Er);
+          }
+          if (!Ge && this.#he && this.#le) {
+            const C = this.#le;
+            let P;
+            while ((P = C?.shift())) {
+              this.#z?.(...P);
+            }
+          }
+          return this;
+        }
+        pop() {
+          try {
+            while (this.#X) {
+              const C = this.#se[this.#ie];
+              this.#De(true);
+              if (this.#fe(C)) {
+                if (C.__staleWhileFetching) {
+                  return C.__staleWhileFetching;
+                }
+              } else if (C !== undefined) {
+                return C;
+              }
+            }
+          } finally {
+            if (this.#he && this.#le) {
+              const C = this.#le;
+              let P;
+              while ((P = C?.shift())) {
+                this.#z?.(...P);
+              }
+            }
+          }
+        }
+        #De(C) {
+          const P = this.#ie;
+          const q = this.#re[P];
+          const oe = this.#se[P];
+          if (this.#me && this.#fe(oe)) {
+            oe.__abortController.abort(new Error("evicted"));
+          } else if (this.#ue || this.#he) {
+            if (this.#ue) {
+              this.#K?.(oe, q, "evict");
+            }
+            if (this.#he) {
+              this.#le?.push([oe, q, "evict"]);
+            }
+          }
+          this.#Se(P);
+          if (C) {
+            this.#re[P] = undefined;
+            this.#se[P] = undefined;
+            this.#Ae.push(P);
+          }
+          if (this.#X === 1) {
+            this.#ie = this.#ae = 0;
+            this.#Ae.length = 0;
+          } else {
+            this.#ie = this.#ne[P];
+          }
+          this.#te.delete(q);
+          this.#X--;
+          return P;
+        }
+        has(C, P = {}) {
+          const { updateAgeOnHas: q = this.updateAgeOnHas, status: oe } = P;
+          const ie = this.#te.get(C);
+          if (ie !== undefined) {
+            const C = this.#se[ie];
+            if (this.#fe(C) && C.__staleWhileFetching === undefined) {
+              return false;
+            }
+            if (!this.#ye(ie)) {
+              if (q) {
+                this.#ve(ie);
+              }
+              if (oe) {
+                oe.has = "hit";
+                this.#Te(oe, ie);
+              }
+              return true;
+            } else if (oe) {
+              oe.has = "stale";
+              this.#Te(oe, ie);
+            }
+          } else if (oe) {
+            oe.has = "miss";
+          }
+          return false;
+        }
+        peek(C, P = {}) {
+          const { allowStale: q = this.allowStale } = P;
+          const oe = this.#te.get(C);
+          if (oe === undefined || (!q && this.#ye(oe))) {
+            return;
+          }
+          const ie = this.#se[oe];
+          return this.#fe(ie) ? ie.__staleWhileFetching : ie;
+        }
+        #ge(C, P, q, oe) {
+          const ie = P === undefined ? undefined : this.#se[P];
+          if (this.#fe(ie)) {
+            return ie;
+          }
+          const st = new Ge();
+          const { signal: Ot } = q;
+          Ot?.addEventListener("abort", () => st.abort(Ot.reason), { signal: st.signal });
+          const Wt = { signal: st.signal, options: q, context: oe };
+          const cb = (oe, ie = false) => {
+            const { aborted: Ge } = st.signal;
+            const Ot = q.ignoreFetchAbort && oe !== undefined;
+            if (q.status) {
+              if (Ge && !ie) {
+                q.status.fetchAborted = true;
+                q.status.fetchError = st.signal.reason;
+                if (Ot) q.status.fetchAbortIgnored = true;
+              } else {
+                q.status.fetchResolved = true;
+              }
+            }
+            if (Ge && !Ot && !ie) {
+              return fetchFail(st.signal.reason);
+            }
+            const Er = Ar;
+            if (this.#se[P] === Ar) {
+              if (oe === undefined) {
+                if (Er.__staleWhileFetching) {
+                  this.#se[P] = Er.__staleWhileFetching;
+                } else {
+                  this.#we(C, "fetch");
+                }
+              } else {
+                if (q.status) q.status.fetchUpdated = true;
+                this.set(C, oe, Wt.options);
+              }
+            }
+            return oe;
+          };
+          const eb = (C) => {
+            if (q.status) {
+              q.status.fetchRejected = true;
+              q.status.fetchError = C;
+            }
+            return fetchFail(C);
+          };
+          const fetchFail = (oe) => {
+            const { aborted: ie } = st.signal;
+            const Ge = ie && q.allowStaleOnFetchAbort;
+            const Ot = Ge || q.allowStaleOnFetchRejection;
+            const Wt = Ot || q.noDeleteOnFetchRejection;
+            const Er = Ar;
+            if (this.#se[P] === Ar) {
+              const q = !Wt || Er.__staleWhileFetching === undefined;
+              if (q) {
+                this.#we(C, "fetch");
+              } else if (!Ge) {
+                this.#se[P] = Er.__staleWhileFetching;
+              }
+            }
+            if (Ot) {
+              if (q.status && Er.__staleWhileFetching !== undefined) {
+                q.status.returnedStale = true;
+              }
+              return Er.__staleWhileFetching;
+            } else if (Er.__returned === Er) {
+              throw oe;
+            }
+          };
+          const pcall = (P, oe) => {
+            const Ge = this.#$?.(C, ie, Wt);
+            if (Ge && Ge instanceof Promise) {
+              Ge.then((C) => P(C === undefined ? undefined : C), oe);
+            }
+            st.signal.addEventListener("abort", () => {
+              if (!q.ignoreFetchAbort || q.allowStaleOnFetchAbort) {
+                P(undefined);
+                if (q.allowStaleOnFetchAbort) {
+                  P = (C) => cb(C, true);
+                }
+              }
+            });
+          };
+          if (q.status) q.status.fetchDispatched = true;
+          const Ar = new Promise(pcall).then(cb, eb);
+          const Er = Object.assign(Ar, { __abortController: st, __staleWhileFetching: ie, __returned: undefined });
+          if (P === undefined) {
+            this.set(C, Er, { ...Wt.options, status: undefined });
+            P = this.#te.get(C);
+          } else {
+            this.#se[P] = Er;
+          }
+          return Er;
+        }
+        #fe(C) {
+          if (!this.#me) return false;
+          const P = C;
+          return !!P && P instanceof Promise && P.hasOwnProperty("__staleWhileFetching") && P.__abortController instanceof Ge;
+        }
+        async fetch(C, P = {}) {
+          const {
+            allowStale: q = this.allowStale,
+            updateAgeOnGet: oe = this.updateAgeOnGet,
+            noDeleteOnStaleGet: ie = this.noDeleteOnStaleGet,
+            ttl: Ge = this.ttl,
+            noDisposeOnSet: st = this.noDisposeOnSet,
+            size: Ot = 0,
+            sizeCalculation: Wt = this.sizeCalculation,
+            noUpdateTTL: Ar = this.noUpdateTTL,
+            noDeleteOnFetchRejection: Er = this.noDeleteOnFetchRejection,
+            allowStaleOnFetchRejection: Ir = this.allowStaleOnFetchRejection,
+            ignoreFetchAbort: Br = this.ignoreFetchAbort,
+            allowStaleOnFetchAbort: Qr = this.allowStaleOnFetchAbort,
+            context: Dr,
+            forceRefresh: Fr = false,
+            status: kr,
+            signal: Nr,
+          } = P;
+          if (!this.#me) {
+            if (kr) kr.fetch = "get";
+            return this.get(C, { allowStale: q, updateAgeOnGet: oe, noDeleteOnStaleGet: ie, status: kr });
+          }
+          const Ur = {
+            allowStale: q,
+            updateAgeOnGet: oe,
+            noDeleteOnStaleGet: ie,
+            ttl: Ge,
+            noDisposeOnSet: st,
+            size: Ot,
+            sizeCalculation: Wt,
+            noUpdateTTL: Ar,
+            noDeleteOnFetchRejection: Er,
+            allowStaleOnFetchRejection: Ir,
+            allowStaleOnFetchAbort: Qr,
+            ignoreFetchAbort: Br,
+            status: kr,
+            signal: Nr,
+          };
+          let Mr = this.#te.get(C);
+          if (Mr === undefined) {
+            if (kr) kr.fetch = "miss";
+            const P = this.#ge(C, Mr, Ur, Dr);
+            return (P.__returned = P);
+          } else {
+            const P = this.#se[Mr];
+            if (this.#fe(P)) {
+              const C = q && P.__staleWhileFetching !== undefined;
+              if (kr) {
+                kr.fetch = "inflight";
+                if (C) kr.returnedStale = true;
+              }
+              return C ? P.__staleWhileFetching : (P.__returned = P);
+            }
+            const ie = this.#ye(Mr);
+            if (!Fr && !ie) {
+              if (kr) kr.fetch = "hit";
+              this.#Ee(Mr);
+              if (oe) {
+                this.#ve(Mr);
+              }
+              if (kr) this.#Te(kr, Mr);
+              return P;
+            }
+            const Ge = this.#ge(C, Mr, Ur, Dr);
+            const st = Ge.__staleWhileFetching !== undefined;
+            const Ot = st && q;
+            if (kr) {
+              kr.fetch = ie ? "stale" : "refresh";
+              if (Ot && ie) kr.returnedStale = true;
+            }
+            return Ot ? Ge.__staleWhileFetching : (Ge.__returned = Ge);
+          }
+        }
+        async forceFetch(C, P = {}) {
+          const q = await this.fetch(C, P);
+          if (q === undefined) throw new Error("fetch() returned undefined");
+          return q;
+        }
+        memo(C, P = {}) {
+          const q = this.#Z;
+          if (!q) {
+            throw new Error("no memoMethod provided to constructor");
+          }
+          const { context: oe, forceRefresh: ie, ...Ge } = P;
+          const st = this.get(C, Ge);
+          if (!ie && st !== undefined) return st;
+          const Ot = q(C, st, { options: Ge, context: oe });
+          this.set(C, Ot, Ge);
+          return Ot;
+        }
+        get(C, P = {}) {
+          const { allowStale: q = this.allowStale, updateAgeOnGet: oe = this.updateAgeOnGet, noDeleteOnStaleGet: ie = this.noDeleteOnStaleGet, status: Ge } = P;
+          const st = this.#te.get(C);
+          if (st !== undefined) {
+            const P = this.#se[st];
+            const Ot = this.#fe(P);
+            if (Ge) this.#Te(Ge, st);
+            if (this.#ye(st)) {
+              if (Ge) Ge.get = "stale";
+              if (!Ot) {
+                if (!ie) {
+                  this.#we(C, "expire");
+                }
+                if (Ge && q) Ge.returnedStale = true;
+                return q ? P : undefined;
+              } else {
+                if (Ge && q && P.__staleWhileFetching !== undefined) {
+                  Ge.returnedStale = true;
+                }
+                return q ? P.__staleWhileFetching : undefined;
+              }
+            } else {
+              if (Ge) Ge.get = "hit";
+              if (Ot) {
+                return P.__staleWhileFetching;
+              }
+              this.#Ee(st);
+              if (oe) {
+                this.#ve(st);
+              }
+              return P;
+            }
+          } else if (Ge) {
+            Ge.get = "miss";
+          }
+        }
+        #ke(C, P) {
+          this.#oe[P] = C;
+          this.#ne[C] = P;
+        }
+        #Ee(C) {
+          if (C !== this.#ae) {
+            if (C === this.#ie) {
+              this.#ie = this.#ne[C];
+            } else {
+              this.#ke(this.#oe[C], this.#ne[C]);
+            }
+            this.#ke(this.#ae, C);
+            this.#ae = C;
+          }
+        }
+        delete(C) {
+          return this.#we(C, "delete");
+        }
+        #we(C, P) {
+          let q = false;
+          if (this.#X !== 0) {
+            const oe = this.#te.get(C);
+            if (oe !== undefined) {
+              q = true;
+              if (this.#X === 1) {
+                this.#Oe(P);
+              } else {
+                this.#Se(oe);
+                const q = this.#se[oe];
+                if (this.#fe(q)) {
+                  q.__abortController.abort(new Error("deleted"));
+                } else if (this.#ue || this.#he) {
+                  if (this.#ue) {
+                    this.#K?.(q, C, P);
+                  }
+                  if (this.#he) {
+                    this.#le?.push([q, C, P]);
+                  }
+                }
+                this.#te.delete(C);
+                this.#re[oe] = undefined;
+                this.#se[oe] = undefined;
+                if (oe === this.#ae) {
+                  this.#ae = this.#oe[oe];
+                } else if (oe === this.#ie) {
+                  this.#ie = this.#ne[oe];
+                } else {
+                  const C = this.#oe[oe];
+                  this.#ne[C] = this.#ne[oe];
+                  const P = this.#ne[oe];
+                  this.#oe[P] = this.#oe[oe];
+                }
+                this.#X--;
+                this.#Ae.push(oe);
+              }
+            }
+          }
+          if (this.#he && this.#le?.length) {
+            const C = this.#le;
+            let P;
+            while ((P = C?.shift())) {
+              this.#z?.(...P);
+            }
+          }
+          return q;
+        }
+        clear() {
+          return this.#Oe("delete");
+        }
+        #Oe(C) {
+          for (const P of this.#Ce({ allowStale: true })) {
+            const q = this.#se[P];
+            if (this.#fe(q)) {
+              q.__abortController.abort(new Error("deleted"));
+            } else {
+              const oe = this.#re[P];
+              if (this.#ue) {
+                this.#K?.(q, oe, C);
+              }
+              if (this.#he) {
+                this.#le?.push([q, oe, C]);
+              }
+            }
+          }
+          this.#te.clear();
+          this.#se.fill(undefined);
+          this.#re.fill(undefined);
+          if (this.#de && this.#pe) {
+            this.#de.fill(0);
+            this.#pe.fill(0);
+          }
+          if (this.#ce) {
+            this.#ce.fill(0);
+          }
+          this.#ie = 0;
+          this.#ae = 0;
+          this.#Ae.length = 0;
+          this.#ee = 0;
+          this.#X = 0;
+          if (this.#he && this.#le) {
+            const C = this.#le;
+            let P;
+            while ((P = C?.shift())) {
+              this.#z?.(...P);
+            }
+          }
+        }
+      }
+      P.LRUCache = LRUCache;
+    },
+    78275: function (C, P, q) {
+      "use strict";
+      var oe =
+        (this && this.__importDefault) ||
+        function (C) {
+          return C && C.__esModule ? C : { default: C };
+        };
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.Minipass = P.isWritable = P.isReadable = P.isStream = void 0;
+      const ie = typeof process === "object" && process ? process : { stdout: null, stderr: null };
+      const Ge = q(78474);
+      const st = oe(q(57075));
+      const Ot = q(46193);
+      const isStream = (C) =>
+        !!C && typeof C === "object" && (C instanceof Minipass || C instanceof st.default || (0, P.isReadable)(C) || (0, P.isWritable)(C));
+      P.isStream = isStream;
+      const isReadable = (C) =>
+        !!C && typeof C === "object" && C instanceof Ge.EventEmitter && typeof C.pipe === "function" && C.pipe !== st.default.Writable.prototype.pipe;
+      P.isReadable = isReadable;
+      const isWritable = (C) => !!C && typeof C === "object" && C instanceof Ge.EventEmitter && typeof C.write === "function" && typeof C.end === "function";
+      P.isWritable = isWritable;
+      const Wt = Symbol("EOF");
+      const Ar = Symbol("maybeEmitEnd");
+      const Er = Symbol("emittedEnd");
+      const Ir = Symbol("emittingEnd");
+      const Br = Symbol("emittedError");
+      const Qr = Symbol("closed");
+      const Dr = Symbol("read");
+      const Fr = Symbol("flush");
+      const kr = Symbol("flushChunk");
+      const Nr = Symbol("encoding");
+      const Ur = Symbol("decoder");
+      const Mr = Symbol("flowing");
+      const Lr = Symbol("paused");
+      const Gr = Symbol("resume");
+      const xr = Symbol("buffer");
+      const Vr = Symbol("pipes");
+      const jr = Symbol("bufferLength");
+      const Hr = Symbol("bufferPush");
+      const Yr = Symbol("bufferShift");
+      const Jr = Symbol("objectMode");
+      const Wr = Symbol("destroyed");
+      const Kr = Symbol("error");
+      const zr = Symbol("emitData");
+      const $r = Symbol("emitEnd");
+      const Zr = Symbol("emitEnd2");
+      const Xr = Symbol("async");
+      const es = Symbol("abort");
+      const ts = Symbol("aborted");
+      const rs = Symbol("signal");
+      const ss = Symbol("dataListeners");
+      const ns = Symbol("discarded");
+      const defer = (C) => Promise.resolve().then(C);
+      const nodefer = (C) => C();
+      const isEndish = (C) => C === "end" || C === "finish" || C === "prefinish";
+      const isArrayBufferLike = (C) =>
+        C instanceof ArrayBuffer || (!!C && typeof C === "object" && C.constructor && C.constructor.name === "ArrayBuffer" && C.byteLength >= 0);
+      const isArrayBufferView = (C) => !Buffer.isBuffer(C) && ArrayBuffer.isView(C);
+      class Pipe {
+        src;
+        dest;
+        opts;
+        ondrain;
+        constructor(C, P, q) {
+          this.src = C;
+          this.dest = P;
+          this.opts = q;
+          this.ondrain = () => C[Gr]();
+          this.dest.on("drain", this.ondrain);
+        }
+        unpipe() {
+          this.dest.removeListener("drain", this.ondrain);
+        }
+        proxyErrors(C) {}
+        end() {
+          this.unpipe();
+          if (this.opts.end) this.dest.end();
+        }
+      }
+      class PipeProxyErrors extends Pipe {
+        unpipe() {
+          this.src.removeListener("error", this.proxyErrors);
+          super.unpipe();
+        }
+        constructor(C, P, q) {
+          super(C, P, q);
+          this.proxyErrors = (C) => P.emit("error", C);
+          C.on("error", this.proxyErrors);
+        }
+      }
+      const isObjectModeOptions = (C) => !!C.objectMode;
+      const isEncodingOptions = (C) => !C.objectMode && !!C.encoding && C.encoding !== "buffer";
+      class Minipass extends Ge.EventEmitter {
+        [Mr] = false;
+        [Lr] = false;
+        [Vr] = [];
+        [xr] = [];
+        [Jr];
+        [Nr];
+        [Xr];
+        [Ur];
+        [Wt] = false;
+        [Er] = false;
+        [Ir] = false;
+        [Qr] = false;
+        [Br] = null;
+        [jr] = 0;
+        [Wr] = false;
+        [rs];
+        [ts] = false;
+        [ss] = 0;
+        [ns] = false;
+        writable = true;
+        readable = true;
+        constructor(...C) {
+          const P = C[0] || {};
+          super();
+          if (P.objectMode && typeof P.encoding === "string") {
+            throw new TypeError("Encoding and objectMode may not be used together");
+          }
+          if (isObjectModeOptions(P)) {
+            this[Jr] = true;
+            this[Nr] = null;
+          } else if (isEncodingOptions(P)) {
+            this[Nr] = P.encoding;
+            this[Jr] = false;
+          } else {
+            this[Jr] = false;
+            this[Nr] = null;
+          }
+          this[Xr] = !!P.async;
+          this[Ur] = this[Nr] ? new Ot.StringDecoder(this[Nr]) : null;
+          if (P && P.debugExposeBuffer === true) {
+            Object.defineProperty(this, "buffer", { get: () => this[xr] });
+          }
+          if (P && P.debugExposePipes === true) {
+            Object.defineProperty(this, "pipes", { get: () => this[Vr] });
+          }
+          const { signal: q } = P;
+          if (q) {
+            this[rs] = q;
+            if (q.aborted) {
+              this[es]();
+            } else {
+              q.addEventListener("abort", () => this[es]());
+            }
+          }
+        }
+        get bufferLength() {
+          return this[jr];
+        }
+        get encoding() {
+          return this[Nr];
+        }
+        set encoding(C) {
+          throw new Error("Encoding must be set at instantiation time");
+        }
+        setEncoding(C) {
+          throw new Error("Encoding must be set at instantiation time");
+        }
+        get objectMode() {
+          return this[Jr];
+        }
+        set objectMode(C) {
+          throw new Error("objectMode must be set at instantiation time");
+        }
+        get ["async"]() {
+          return this[Xr];
+        }
+        set ["async"](C) {
+          this[Xr] = this[Xr] || !!C;
+        }
+        [es]() {
+          this[ts] = true;
+          this.emit("abort", this[rs]?.reason);
+          this.destroy(this[rs]?.reason);
+        }
+        get aborted() {
+          return this[ts];
+        }
+        set aborted(C) {}
+        write(C, P, q) {
+          if (this[ts]) return false;
+          if (this[Wt]) throw new Error("write after end");
+          if (this[Wr]) {
+            this.emit("error", Object.assign(new Error("Cannot call write after a stream was destroyed"), { code: "ERR_STREAM_DESTROYED" }));
+            return true;
+          }
+          if (typeof P === "function") {
+            q = P;
+            P = "utf8";
+          }
+          if (!P) P = "utf8";
+          const oe = this[Xr] ? defer : nodefer;
+          if (!this[Jr] && !Buffer.isBuffer(C)) {
+            if (isArrayBufferView(C)) {
+              C = Buffer.from(C.buffer, C.byteOffset, C.byteLength);
+            } else if (isArrayBufferLike(C)) {
+              C = Buffer.from(C);
+            } else if (typeof C !== "string") {
+              throw new Error("Non-contiguous data written to non-objectMode stream");
+            }
+          }
+          if (this[Jr]) {
+            if (this[Mr] && this[jr] !== 0) this[Fr](true);
+            if (this[Mr]) this.emit("data", C);
+            else this[Hr](C);
+            if (this[jr] !== 0) this.emit("readable");
+            if (q) oe(q);
+            return this[Mr];
+          }
+          if (!C.length) {
+            if (this[jr] !== 0) this.emit("readable");
+            if (q) oe(q);
+            return this[Mr];
+          }
+          if (typeof C === "string" && !(P === this[Nr] && !this[Ur]?.lastNeed)) {
+            C = Buffer.from(C, P);
+          }
+          if (Buffer.isBuffer(C) && this[Nr]) {
+            C = this[Ur].write(C);
+          }
+          if (this[Mr] && this[jr] !== 0) this[Fr](true);
+          if (this[Mr]) this.emit("data", C);
+          else this[Hr](C);
+          if (this[jr] !== 0) this.emit("readable");
+          if (q) oe(q);
+          return this[Mr];
+        }
+        read(C) {
+          if (this[Wr]) return null;
+          this[ns] = false;
+          if (this[jr] === 0 || C === 0 || (C && C > this[jr])) {
+            this[Ar]();
+            return null;
+          }
+          if (this[Jr]) C = null;
+          if (this[xr].length > 1 && !this[Jr]) {
+            this[xr] = [this[Nr] ? this[xr].join("") : Buffer.concat(this[xr], this[jr])];
+          }
+          const P = this[Dr](C || null, this[xr][0]);
+          this[Ar]();
+          return P;
+        }
+        [Dr](C, P) {
+          if (this[Jr]) this[Yr]();
+          else {
+            const q = P;
+            if (C === q.length || C === null) this[Yr]();
+            else if (typeof q === "string") {
+              this[xr][0] = q.slice(C);
+              P = q.slice(0, C);
+              this[jr] -= C;
+            } else {
+              this[xr][0] = q.subarray(C);
+              P = q.subarray(0, C);
+              this[jr] -= C;
+            }
+          }
+          this.emit("data", P);
+          if (!this[xr].length && !this[Wt]) this.emit("drain");
+          return P;
+        }
+        end(C, P, q) {
+          if (typeof C === "function") {
+            q = C;
+            C = undefined;
+          }
+          if (typeof P === "function") {
+            q = P;
+            P = "utf8";
+          }
+          if (C !== undefined) this.write(C, P);
+          if (q) this.once("end", q);
+          this[Wt] = true;
+          this.writable = false;
+          if (this[Mr] || !this[Lr]) this[Ar]();
+          return this;
+        }
+        [Gr]() {
+          if (this[Wr]) return;
+          if (!this[ss] && !this[Vr].length) {
+            this[ns] = true;
+          }
+          this[Lr] = false;
+          this[Mr] = true;
+          this.emit("resume");
+          if (this[xr].length) this[Fr]();
+          else if (this[Wt]) this[Ar]();
+          else this.emit("drain");
+        }
+        resume() {
+          return this[Gr]();
+        }
+        pause() {
+          this[Mr] = false;
+          this[Lr] = true;
+          this[ns] = false;
+        }
+        get destroyed() {
+          return this[Wr];
+        }
+        get flowing() {
+          return this[Mr];
+        }
+        get paused() {
+          return this[Lr];
+        }
+        [Hr](C) {
+          if (this[Jr]) this[jr] += 1;
+          else this[jr] += C.length;
+          this[xr].push(C);
+        }
+        [Yr]() {
+          if (this[Jr]) this[jr] -= 1;
+          else this[jr] -= this[xr][0].length;
+          return this[xr].shift();
+        }
+        [Fr](C = false) {
+          do {} while (this[kr](this[Yr]()) && this[xr].length);
+          if (!C && !this[xr].length && !this[Wt]) this.emit("drain");
+        }
+        [kr](C) {
+          this.emit("data", C);
+          return this[Mr];
+        }
+        pipe(C, P) {
+          if (this[Wr]) return C;
+          this[ns] = false;
+          const q = this[Er];
+          P = P || {};
+          if (C === ie.stdout || C === ie.stderr) P.end = false;
+          else P.end = P.end !== false;
+          P.proxyErrors = !!P.proxyErrors;
+          if (q) {
+            if (P.end) C.end();
+          } else {
+            this[Vr].push(!P.proxyErrors ? new Pipe(this, C, P) : new PipeProxyErrors(this, C, P));
+            if (this[Xr]) defer(() => this[Gr]());
+            else this[Gr]();
+          }
+          return C;
+        }
+        unpipe(C) {
+          const P = this[Vr].find((P) => P.dest === C);
+          if (P) {
+            if (this[Vr].length === 1) {
+              if (this[Mr] && this[ss] === 0) {
+                this[Mr] = false;
+              }
+              this[Vr] = [];
+            } else this[Vr].splice(this[Vr].indexOf(P), 1);
+            P.unpipe();
+          }
+        }
+        addListener(C, P) {
+          return this.on(C, P);
+        }
+        on(C, P) {
+          const q = super.on(C, P);
+          if (C === "data") {
+            this[ns] = false;
+            this[ss]++;
+            if (!this[Vr].length && !this[Mr]) {
+              this[Gr]();
+            }
+          } else if (C === "readable" && this[jr] !== 0) {
+            super.emit("readable");
+          } else if (isEndish(C) && this[Er]) {
+            super.emit(C);
+            this.removeAllListeners(C);
+          } else if (C === "error" && this[Br]) {
+            const C = P;
+            if (this[Xr]) defer(() => C.call(this, this[Br]));
+            else C.call(this, this[Br]);
+          }
+          return q;
+        }
+        removeListener(C, P) {
+          return this.off(C, P);
+        }
+        off(C, P) {
+          const q = super.off(C, P);
+          if (C === "data") {
+            this[ss] = this.listeners("data").length;
+            if (this[ss] === 0 && !this[ns] && !this[Vr].length) {
+              this[Mr] = false;
+            }
+          }
+          return q;
+        }
+        removeAllListeners(C) {
+          const P = super.removeAllListeners(C);
+          if (C === "data" || C === undefined) {
+            this[ss] = 0;
+            if (!this[ns] && !this[Vr].length) {
+              this[Mr] = false;
+            }
+          }
+          return P;
+        }
+        get emittedEnd() {
+          return this[Er];
+        }
+        [Ar]() {
+          if (!this[Ir] && !this[Er] && !this[Wr] && this[xr].length === 0 && this[Wt]) {
+            this[Ir] = true;
+            this.emit("end");
+            this.emit("prefinish");
+            this.emit("finish");
+            if (this[Qr]) this.emit("close");
+            this[Ir] = false;
+          }
+        }
+        emit(C, ...P) {
+          const q = P[0];
+          if (C !== "error" && C !== "close" && C !== Wr && this[Wr]) {
+            return false;
+          } else if (C === "data") {
+            return !this[Jr] && !q ? false : this[Xr] ? (defer(() => this[zr](q)), true) : this[zr](q);
+          } else if (C === "end") {
+            return this[$r]();
+          } else if (C === "close") {
+            this[Qr] = true;
+            if (!this[Er] && !this[Wr]) return false;
+            const C = super.emit("close");
+            this.removeAllListeners("close");
+            return C;
+          } else if (C === "error") {
+            this[Br] = q;
+            super.emit(Kr, q);
+            const C = !this[rs] || this.listeners("error").length ? super.emit("error", q) : false;
+            this[Ar]();
+            return C;
+          } else if (C === "resume") {
+            const C = super.emit("resume");
+            this[Ar]();
+            return C;
+          } else if (C === "finish" || C === "prefinish") {
+            const P = super.emit(C);
+            this.removeAllListeners(C);
+            return P;
+          }
+          const oe = super.emit(C, ...P);
+          this[Ar]();
+          return oe;
+        }
+        [zr](C) {
+          for (const P of this[Vr]) {
+            if (P.dest.write(C) === false) this.pause();
+          }
+          const P = this[ns] ? false : super.emit("data", C);
+          this[Ar]();
+          return P;
+        }
+        [$r]() {
+          if (this[Er]) return false;
+          this[Er] = true;
+          this.readable = false;
+          return this[Xr] ? (defer(() => this[Zr]()), true) : this[Zr]();
+        }
+        [Zr]() {
+          if (this[Ur]) {
+            const C = this[Ur].end();
+            if (C) {
+              for (const P of this[Vr]) {
+                P.dest.write(C);
+              }
+              if (!this[ns]) super.emit("data", C);
+            }
+          }
+          for (const C of this[Vr]) {
+            C.end();
+          }
+          const C = super.emit("end");
+          this.removeAllListeners("end");
+          return C;
+        }
+        async collect() {
+          const C = Object.assign([], { dataLength: 0 });
+          if (!this[Jr]) C.dataLength = 0;
+          const P = this.promise();
+          this.on("data", (P) => {
+            C.push(P);
+            if (!this[Jr]) C.dataLength += P.length;
+          });
+          await P;
+          return C;
+        }
+        async concat() {
+          if (this[Jr]) {
+            throw new Error("cannot concat in objectMode");
+          }
+          const C = await this.collect();
+          return this[Nr] ? C.join("") : Buffer.concat(C, C.dataLength);
+        }
+        async promise() {
+          return new Promise((C, P) => {
+            this.on(Wr, () => P(new Error("stream destroyed")));
+            this.on("error", (C) => P(C));
+            this.on("end", () => C());
+          });
+        }
+        [Symbol.asyncIterator]() {
+          this[ns] = false;
+          let C = false;
+          const stop = async () => {
+            this.pause();
+            C = true;
+            return { value: undefined, done: true };
+          };
+          const next = () => {
+            if (C) return stop();
+            const P = this.read();
+            if (P !== null) return Promise.resolve({ done: false, value: P });
+            if (this[Wt]) return stop();
+            let q;
+            let oe;
+            const onerr = (C) => {
+              this.off("data", ondata);
+              this.off("end", onend);
+              this.off(Wr, ondestroy);
+              stop();
+              oe(C);
+            };
+            const ondata = (C) => {
+              this.off("error", onerr);
+              this.off("end", onend);
+              this.off(Wr, ondestroy);
+              this.pause();
+              q({ value: C, done: !!this[Wt] });
+            };
+            const onend = () => {
+              this.off("error", onerr);
+              this.off("data", ondata);
+              this.off(Wr, ondestroy);
+              stop();
+              q({ done: true, value: undefined });
+            };
+            const ondestroy = () => onerr(new Error("stream destroyed"));
+            return new Promise((C, P) => {
+              oe = P;
+              q = C;
+              this.once(Wr, ondestroy);
+              this.once("error", onerr);
+              this.once("end", onend);
+              this.once("data", ondata);
+            });
+          };
+          return {
+            next: next,
+            throw: stop,
+            return: stop,
+            [Symbol.asyncIterator]() {
+              return this;
+            },
+          };
+        }
+        [Symbol.iterator]() {
+          this[ns] = false;
+          let C = false;
+          const stop = () => {
+            this.pause();
+            this.off(Kr, stop);
+            this.off(Wr, stop);
+            this.off("end", stop);
+            C = true;
+            return { done: true, value: undefined };
+          };
+          const next = () => {
+            if (C) return stop();
+            const P = this.read();
+            return P === null ? stop() : { done: false, value: P };
+          };
+          this.once("end", stop);
+          this.once(Kr, stop);
+          this.once(Wr, stop);
+          return {
+            next: next,
+            throw: stop,
+            return: stop,
+            [Symbol.iterator]() {
+              return this;
+            },
+          };
+        }
+        destroy(C) {
+          if (this[Wr]) {
+            if (C) this.emit("error", C);
+            else this.emit(Wr);
+            return this;
+          }
+          this[Wr] = true;
+          this[ns] = true;
+          this[xr].length = 0;
+          this[jr] = 0;
+          const P = this;
+          if (typeof P.close === "function" && !this[Qr]) P.close();
+          if (C) this.emit("error", C);
+          else this.emit(Wr);
+          return this;
+        }
+        static get isStream() {
+          return P.isStream;
+        }
+      }
+      P.Minipass = Minipass;
     },
     74793: (C, P) => {
       "use strict";
@@ -43231,8 +47483,8 @@
       const Mr = q(18328);
       const Lr = q(23638);
       const Gr = q(28852);
-      const Vr = q(93164);
-      const xr = q(40198);
+      const xr = q(93164);
+      const Vr = q(40198);
       const jr = q(29962);
       class OpenAI extends Wt.APIClient {
         constructor({
@@ -43304,7 +47556,7 @@
       OpenAI.toFile = Ir.toFile;
       OpenAI.fileFromPath = Ir.fileFromPath;
       OpenAI.Completions = Dr.Completions;
-      OpenAI.Chat = Vr.Chat;
+      OpenAI.Chat = xr.Chat;
       OpenAI.Embeddings = Fr.Embeddings;
       OpenAI.Files = kr.Files;
       OpenAI.FileObjectsPage = kr.FileObjectsPage;
@@ -43313,7 +47565,7 @@
       OpenAI.Moderations = Mr.Moderations;
       OpenAI.Models = Ur.Models;
       OpenAI.ModelsPage = Ur.ModelsPage;
-      OpenAI.FineTuning = xr.FineTuning;
+      OpenAI.FineTuning = Vr.FineTuning;
       OpenAI.Beta = Gr.Beta;
       OpenAI.Batches = Qr.Batches;
       OpenAI.BatchesPage = Qr.BatchesPage;
@@ -43667,12 +47919,12 @@
       }
       const Ir = {};
       function inner_stringify(C, P, q, ie, Ge, st, Wt, Ar, Br, Qr, Dr, Fr, kr, Nr, Ur, Mr, Lr, Gr) {
-        let Vr = C;
-        let xr = Gr;
+        let xr = C;
+        let Vr = Gr;
         let jr = 0;
         let Hr = false;
-        while ((xr = xr.get(Ir)) !== void undefined && !Hr) {
-          const P = xr.get(C);
+        while ((Vr = Vr.get(Ir)) !== void undefined && !Hr) {
+          const P = Vr.get(C);
           jr += 1;
           if (typeof P !== "undefined") {
             if (P === jr) {
@@ -43681,68 +47933,68 @@
               Hr = true;
             }
           }
-          if (typeof xr.get(Ir) === "undefined") {
+          if (typeof Vr.get(Ir) === "undefined") {
             jr = 0;
           }
         }
         if (typeof Qr === "function") {
-          Vr = Qr(P, Vr);
-        } else if (Vr instanceof Date) {
-          Vr = kr?.(Vr);
-        } else if (q === "comma" && Ot(Vr)) {
-          Vr = (0, oe.maybe_map)(Vr, function (C) {
+          xr = Qr(P, xr);
+        } else if (xr instanceof Date) {
+          xr = kr?.(xr);
+        } else if (q === "comma" && Ot(xr)) {
+          xr = (0, oe.maybe_map)(xr, function (C) {
             if (C instanceof Date) {
               return kr?.(C);
             }
             return C;
           });
         }
-        if (Vr === null) {
+        if (xr === null) {
           if (st) {
             return Br && !Mr ? Br(P, Er.encoder, Lr, "key", Nr) : P;
           }
-          Vr = "";
+          xr = "";
         }
-        if (is_non_nullish_primitive(Vr) || (0, oe.is_buffer)(Vr)) {
+        if (is_non_nullish_primitive(xr) || (0, oe.is_buffer)(xr)) {
           if (Br) {
             const C = Mr ? P : Br(P, Er.encoder, Lr, "key", Nr);
-            return [Ur?.(C) + "=" + Ur?.(Br(Vr, Er.encoder, Lr, "value", Nr))];
+            return [Ur?.(C) + "=" + Ur?.(Br(xr, Er.encoder, Lr, "value", Nr))];
           }
-          return [Ur?.(P) + "=" + Ur?.(String(Vr))];
+          return [Ur?.(P) + "=" + Ur?.(String(xr))];
         }
         const Yr = [];
-        if (typeof Vr === "undefined") {
+        if (typeof xr === "undefined") {
           return Yr;
         }
         let Jr;
-        if (q === "comma" && Ot(Vr)) {
+        if (q === "comma" && Ot(xr)) {
           if (Mr && Br) {
-            Vr = (0, oe.maybe_map)(Vr, Br);
+            xr = (0, oe.maybe_map)(xr, Br);
           }
-          Jr = [{ value: Vr.length > 0 ? Vr.join(",") || null : void undefined }];
+          Jr = [{ value: xr.length > 0 ? xr.join(",") || null : void undefined }];
         } else if (Ot(Qr)) {
           Jr = Qr;
         } else {
-          const C = Object.keys(Vr);
+          const C = Object.keys(xr);
           Jr = Dr ? C.sort(Dr) : C;
         }
         const Wr = Ar ? String(P).replace(/\./g, "%2E") : String(P);
-        const Kr = ie && Ot(Vr) && Vr.length === 1 ? Wr + "[]" : Wr;
-        if (Ge && Ot(Vr) && Vr.length === 0) {
+        const Kr = ie && Ot(xr) && xr.length === 1 ? Wr + "[]" : Wr;
+        if (Ge && Ot(xr) && xr.length === 0) {
           return Kr + "[]";
         }
         for (let P = 0; P < Jr.length; ++P) {
           const oe = Jr[P];
-          const Er = typeof oe === "object" && typeof oe.value !== "undefined" ? oe.value : Vr[oe];
+          const Er = typeof oe === "object" && typeof oe.value !== "undefined" ? oe.value : xr[oe];
           if (Wt && Er === null) {
             continue;
           }
-          const xr = Fr && Ar ? oe.replace(/\./g, "%2E") : oe;
-          const Hr = Ot(Vr) ? (typeof q === "function" ? q(Kr, xr) : Kr) : Kr + (Fr ? "." + xr : "[" + xr + "]");
+          const Vr = Fr && Ar ? oe.replace(/\./g, "%2E") : oe;
+          const Hr = Ot(xr) ? (typeof q === "function" ? q(Kr, Vr) : Kr) : Kr + (Fr ? "." + Vr : "[" + Vr + "]");
           Gr.set(C, jr);
           const Wr = new WeakMap();
           Wr.set(Ir, Gr);
-          push_to_array(Yr, inner_stringify(Er, Hr, q, ie, Ge, st, Wt, Ar, q === "comma" && Mr && Ot(Vr) ? null : Br, Qr, Dr, Fr, kr, Nr, Ur, Mr, Lr, Wr));
+          push_to_array(Yr, inner_stringify(Er, Hr, q, ie, Ge, st, Wt, Ar, q === "comma" && Mr && Ot(xr) ? null : Br, Qr, Dr, Fr, kr, Nr, Ur, Mr, Lr, Wr));
         }
         return Yr;
       }
@@ -44460,11 +48712,11 @@
             throw new TypeError("Cannot write private member to an object whose class did not declare it");
           return oe === "a" ? ie.call(C, q) : ie ? (ie.value = q) : P.set(C, q), q;
         };
-      var Wt, Ar, Er, Ir, Br, Qr, Dr, Fr, kr, Nr, Ur, Mr, Lr, Gr, Vr, xr, jr, Hr, Yr, Jr, Wr, Kr;
+      var Wt, Ar, Er, Ir, Br, Qr, Dr, Fr, kr, Nr, Ur, Mr, Lr, Gr, xr, Vr, jr, Hr, Yr, Jr, Wr, Kr;
       Object.defineProperty(P, "__esModule", { value: true });
       P.AssistantStream = void 0;
-      const $r = Ge(q(57376));
-      const zr = q(71835);
+      const zr = Ge(q(57376));
+      const $r = q(71835);
       const Zr = q(73269);
       const Xr = q(14283);
       class AssistantStream extends Xr.EventStream {
@@ -44559,17 +48811,17 @@
             q.addEventListener("abort", () => this.controller.abort());
           }
           this._connected();
-          const oe = zr.Stream.fromReadableStream(C, this.controller);
+          const oe = $r.Stream.fromReadableStream(C, this.controller);
           for await (const C of oe) {
             st(this, Wt, "m", Gr).call(this, C);
           }
           if (oe.controller.signal?.aborted) {
             throw new Zr.APIUserAbortError();
           }
-          return this._addRun(st(this, Wt, "m", Vr).call(this));
+          return this._addRun(st(this, Wt, "m", xr).call(this));
         }
         toReadableStream() {
-          const C = new zr.Stream(this[Symbol.asyncIterator].bind(this), this.controller);
+          const C = new $r.Stream(this[Symbol.asyncIterator].bind(this), this.controller);
           return C.toReadableStream();
         }
         static createToolAssistantStream(C, P, q, oe, ie) {
@@ -44592,7 +48844,7 @@
           if (Ar.controller.signal?.aborted) {
             throw new Zr.APIUserAbortError();
           }
-          return this._addRun(st(this, Wt, "m", Vr).call(this));
+          return this._addRun(st(this, Wt, "m", xr).call(this));
         }
         static createThreadAssistantStream(C, P, q) {
           const oe = new AssistantStream();
@@ -44644,7 +48896,7 @@
           if (Ge.controller.signal?.aborted) {
             throw new Zr.APIUserAbortError();
           }
-          return this._addRun(st(this, Wt, "m", Vr).call(this));
+          return this._addRun(st(this, Wt, "m", xr).call(this));
         }
         async _createAssistantStream(C, P, q, oe) {
           const ie = oe?.signal;
@@ -44661,7 +48913,7 @@
           if (Ot.controller.signal?.aborted) {
             throw new Zr.APIUserAbortError();
           }
-          return this._addRun(st(this, Wt, "m", Vr).call(this));
+          return this._addRun(st(this, Wt, "m", xr).call(this));
         }
         static accumulateDelta(C, P) {
           for (const [q, oe] of Object.entries(P)) {
@@ -44682,7 +48934,7 @@
               P += oe;
             } else if (typeof P === "number" && typeof oe === "number") {
               P += oe;
-            } else if ($r.isObj(P) && $r.isObj(oe)) {
+            } else if (zr.isObj(P) && zr.isObj(oe)) {
               P = this.accumulateDelta(P, oe);
             } else if (Array.isArray(P) && Array.isArray(oe)) {
               if (P.every((C) => typeof C === "string" || typeof C === "number")) {
@@ -44690,7 +48942,7 @@
                 continue;
               }
               for (const C of oe) {
-                if (!$r.isObj(C)) {
+                if (!zr.isObj(C)) {
                   throw new Error(`Expected array delta entry to be an object but got: ${C}`);
                 }
                 const q = C["index"];
@@ -44762,20 +49014,20 @@
           case "thread.message.delta":
           case "thread.message.completed":
           case "thread.message.incomplete":
-            st(this, Wt, "m", xr).call(this, C);
+            st(this, Wt, "m", Vr).call(this, C);
             break;
           case "error":
             throw new Error("Encountered an error event in event processing - errors should be processed earlier");
         }
       }),
-        (Vr = function _AssistantStream_endRequest() {
+        (xr = function _AssistantStream_endRequest() {
           if (this.ended) {
             throw new Zr.OpenAIError(`stream has ended, this shouldn't happen`);
           }
           if (!st(this, Qr, "f")) throw Error("Final run has not been received");
           return st(this, Qr, "f");
         }),
-        (xr = function _AssistantStream_handleMessage(C) {
+        (Vr = function _AssistantStream_handleMessage(C) {
           const [P, q] = st(this, Wt, "m", Jr).call(this, C, st(this, Br, "f"));
           Ot(this, Br, P, "f");
           st(this, Ir, "f")[P.id] = P;
@@ -45284,9 +49536,9 @@
             }
             Object.assign(C, Qr);
             if (!oe) continue;
-            const { content: Dr, refusal: kr, function_call: Ur, role: Mr, tool_calls: Vr, ...xr } = oe;
-            assertIsEmpty(xr);
-            Object.assign(C.message, xr);
+            const { content: Dr, refusal: kr, function_call: Ur, role: Mr, tool_calls: xr, ...Vr } = oe;
+            assertIsEmpty(Vr);
+            Object.assign(C.message, Vr);
             if (kr) {
               C.message.refusal = (C.message.refusal || "") + kr;
             }
@@ -45308,9 +49560,9 @@
                 C.message.parsed = (0, Gr.partialParse)(C.message.content);
               }
             }
-            if (Vr) {
+            if (xr) {
               if (!C.message.tool_calls) C.message.tool_calls = [];
-              for (const { index: P, id: q, type: oe, function: Ge, ...Ot } of Vr) {
+              for (const { index: P, id: q, type: oe, function: Ge, ...Ot } of xr) {
                 const Wt = (Ar = C.message.tool_calls)[P] ?? (Ar[P] = {});
                 Object.assign(Wt, Ot);
                 if (q) Wt.id = q;
@@ -48015,6 +52267,1336 @@
       Object.defineProperty(P, "__esModule", { value: true });
       P.VERSION = void 0;
       P.VERSION = "4.77.4";
+    },
+    16577: function (C, P, q) {
+      "use strict";
+      var oe =
+        (this && this.__createBinding) ||
+        (Object.create
+          ? function (C, P, q, oe) {
+              if (oe === undefined) oe = q;
+              var ie = Object.getOwnPropertyDescriptor(P, q);
+              if (!ie || ("get" in ie ? !P.__esModule : ie.writable || ie.configurable)) {
+                ie = {
+                  enumerable: true,
+                  get: function () {
+                    return P[q];
+                  },
+                };
+              }
+              Object.defineProperty(C, oe, ie);
+            }
+          : function (C, P, q, oe) {
+              if (oe === undefined) oe = q;
+              C[oe] = P[q];
+            });
+      var ie =
+        (this && this.__setModuleDefault) ||
+        (Object.create
+          ? function (C, P) {
+              Object.defineProperty(C, "default", { enumerable: true, value: P });
+            }
+          : function (C, P) {
+              C["default"] = P;
+            });
+      var Ge =
+        (this && this.__importStar) ||
+        function (C) {
+          if (C && C.__esModule) return C;
+          var P = {};
+          if (C != null) for (var q in C) if (q !== "default" && Object.prototype.hasOwnProperty.call(C, q)) oe(P, C, q);
+          ie(P, C);
+          return P;
+        };
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.PathScurry =
+        P.Path =
+        P.PathScurryDarwin =
+        P.PathScurryPosix =
+        P.PathScurryWin32 =
+        P.PathScurryBase =
+        P.PathPosix =
+        P.PathWin32 =
+        P.PathBase =
+        P.ChildrenCache =
+        P.ResolveCache =
+          void 0;
+      const st = q(32477);
+      const Ot = q(76760);
+      const Wt = q(73136);
+      const Ar = q(79896);
+      const Er = Ge(q(73024));
+      const Ir = Ar.realpathSync.native;
+      const Br = q(51455);
+      const Qr = q(78275);
+      const Dr = {
+        lstatSync: Ar.lstatSync,
+        readdir: Ar.readdir,
+        readdirSync: Ar.readdirSync,
+        readlinkSync: Ar.readlinkSync,
+        realpathSync: Ir,
+        promises: { lstat: Br.lstat, readdir: Br.readdir, readlink: Br.readlink, realpath: Br.realpath },
+      };
+      const fsFromOption = (C) => (!C || C === Dr || C === Er ? Dr : { ...Dr, ...C, promises: { ...Dr.promises, ...(C.promises || {}) } });
+      const Fr = /^\\\\\?\\([a-z]:)\\?$/i;
+      const uncToDrive = (C) => C.replace(/\//g, "\\").replace(Fr, "$1\\");
+      const kr = /[\\\/]/;
+      const Nr = 0;
+      const Ur = 1;
+      const Mr = 2;
+      const Lr = 4;
+      const Gr = 6;
+      const xr = 8;
+      const Vr = 10;
+      const jr = 12;
+      const Hr = 15;
+      const Yr = ~Hr;
+      const Jr = 16;
+      const Wr = 32;
+      const Kr = 64;
+      const zr = 128;
+      const $r = 256;
+      const Zr = 512;
+      const Xr = Kr | zr | Zr;
+      const es = 1023;
+      const entToType = (C) =>
+        C.isFile()
+          ? xr
+          : C.isDirectory()
+            ? Lr
+            : C.isSymbolicLink()
+              ? Vr
+              : C.isCharacterDevice()
+                ? Mr
+                : C.isBlockDevice()
+                  ? Gr
+                  : C.isSocket()
+                    ? jr
+                    : C.isFIFO()
+                      ? Ur
+                      : Nr;
+      const ts = new Map();
+      const normalize = (C) => {
+        const P = ts.get(C);
+        if (P) return P;
+        const q = C.normalize("NFKD");
+        ts.set(C, q);
+        return q;
+      };
+      const rs = new Map();
+      const normalizeNocase = (C) => {
+        const P = rs.get(C);
+        if (P) return P;
+        const q = normalize(C.toLowerCase());
+        rs.set(C, q);
+        return q;
+      };
+      class ResolveCache extends st.LRUCache {
+        constructor() {
+          super({ max: 256 });
+        }
+      }
+      P.ResolveCache = ResolveCache;
+      class ChildrenCache extends st.LRUCache {
+        constructor(C = 16 * 1024) {
+          super({ maxSize: C, sizeCalculation: (C) => C.length + 1 });
+        }
+      }
+      P.ChildrenCache = ChildrenCache;
+      const ss = Symbol("PathScurry setAsCwd");
+      class PathBase {
+        name;
+        root;
+        roots;
+        parent;
+        nocase;
+        isCWD = false;
+        #Pe;
+        #Ne;
+        get dev() {
+          return this.#Ne;
+        }
+        #Ue;
+        get mode() {
+          return this.#Ue;
+        }
+        #Me;
+        get nlink() {
+          return this.#Me;
+        }
+        #Le;
+        get uid() {
+          return this.#Le;
+        }
+        #Ge;
+        get gid() {
+          return this.#Ge;
+        }
+        #xe;
+        get rdev() {
+          return this.#xe;
+        }
+        #Ve;
+        get blksize() {
+          return this.#Ve;
+        }
+        #je;
+        get ino() {
+          return this.#je;
+        }
+        #X;
+        get size() {
+          return this.#X;
+        }
+        #He;
+        get blocks() {
+          return this.#He;
+        }
+        #Ye;
+        get atimeMs() {
+          return this.#Ye;
+        }
+        #qe;
+        get mtimeMs() {
+          return this.#qe;
+        }
+        #Je;
+        get ctimeMs() {
+          return this.#Je;
+        }
+        #We;
+        get birthtimeMs() {
+          return this.#We;
+        }
+        #Ke;
+        get atime() {
+          return this.#Ke;
+        }
+        #ze;
+        get mtime() {
+          return this.#ze;
+        }
+        #$e;
+        get ctime() {
+          return this.#$e;
+        }
+        #Ze;
+        get birthtime() {
+          return this.#Ze;
+        }
+        #Xe;
+        #et;
+        #tt;
+        #rt;
+        #st;
+        #nt;
+        #ot;
+        #it;
+        #at;
+        #At;
+        get parentPath() {
+          return (this.parent || this).fullpath();
+        }
+        get path() {
+          return this.parentPath;
+        }
+        constructor(C, P = Nr, q, oe, ie, Ge, st) {
+          this.name = C;
+          this.#Xe = ie ? normalizeNocase(C) : normalize(C);
+          this.#ot = P & es;
+          this.nocase = ie;
+          this.roots = oe;
+          this.root = q || this;
+          this.#it = Ge;
+          this.#tt = st.fullpath;
+          this.#st = st.relative;
+          this.#nt = st.relativePosix;
+          this.parent = st.parent;
+          if (this.parent) {
+            this.#Pe = this.parent.#Pe;
+          } else {
+            this.#Pe = fsFromOption(st.fs);
+          }
+        }
+        depth() {
+          if (this.#et !== undefined) return this.#et;
+          if (!this.parent) return (this.#et = 0);
+          return (this.#et = this.parent.depth() + 1);
+        }
+        childrenCache() {
+          return this.#it;
+        }
+        resolve(C) {
+          if (!C) {
+            return this;
+          }
+          const P = this.getRootString(C);
+          const q = C.substring(P.length);
+          const oe = q.split(this.splitSep);
+          const ie = P ? this.getRoot(P).#lt(oe) : this.#lt(oe);
+          return ie;
+        }
+        #lt(C) {
+          let P = this;
+          for (const q of C) {
+            P = P.child(q);
+          }
+          return P;
+        }
+        children() {
+          const C = this.#it.get(this);
+          if (C) {
+            return C;
+          }
+          const P = Object.assign([], { provisional: 0 });
+          this.#it.set(this, P);
+          this.#ot &= ~Jr;
+          return P;
+        }
+        child(C, P) {
+          if (C === "" || C === ".") {
+            return this;
+          }
+          if (C === "..") {
+            return this.parent || this;
+          }
+          const q = this.children();
+          const oe = this.nocase ? normalizeNocase(C) : normalize(C);
+          for (const C of q) {
+            if (C.#Xe === oe) {
+              return C;
+            }
+          }
+          const ie = this.parent ? this.sep : "";
+          const Ge = this.#tt ? this.#tt + ie + C : undefined;
+          const st = this.newChild(C, Nr, { ...P, parent: this, fullpath: Ge });
+          if (!this.canReaddir()) {
+            st.#ot |= zr;
+          }
+          q.push(st);
+          return st;
+        }
+        relative() {
+          if (this.isCWD) return "";
+          if (this.#st !== undefined) {
+            return this.#st;
+          }
+          const C = this.name;
+          const P = this.parent;
+          if (!P) {
+            return (this.#st = this.name);
+          }
+          const q = P.relative();
+          return q + (!q || !P.parent ? "" : this.sep) + C;
+        }
+        relativePosix() {
+          if (this.sep === "/") return this.relative();
+          if (this.isCWD) return "";
+          if (this.#nt !== undefined) return this.#nt;
+          const C = this.name;
+          const P = this.parent;
+          if (!P) {
+            return (this.#nt = this.fullpathPosix());
+          }
+          const q = P.relativePosix();
+          return q + (!q || !P.parent ? "" : "/") + C;
+        }
+        fullpath() {
+          if (this.#tt !== undefined) {
+            return this.#tt;
+          }
+          const C = this.name;
+          const P = this.parent;
+          if (!P) {
+            return (this.#tt = this.name);
+          }
+          const q = P.fullpath();
+          const oe = q + (!P.parent ? "" : this.sep) + C;
+          return (this.#tt = oe);
+        }
+        fullpathPosix() {
+          if (this.#rt !== undefined) return this.#rt;
+          if (this.sep === "/") return (this.#rt = this.fullpath());
+          if (!this.parent) {
+            const C = this.fullpath().replace(/\\/g, "/");
+            if (/^[a-z]:\//i.test(C)) {
+              return (this.#rt = `//?/${C}`);
+            } else {
+              return (this.#rt = C);
+            }
+          }
+          const C = this.parent;
+          const P = C.fullpathPosix();
+          const q = P + (!P || !C.parent ? "" : "/") + this.name;
+          return (this.#rt = q);
+        }
+        isUnknown() {
+          return (this.#ot & Hr) === Nr;
+        }
+        isType(C) {
+          return this[`is${C}`]();
+        }
+        getType() {
+          return this.isUnknown()
+            ? "Unknown"
+            : this.isDirectory()
+              ? "Directory"
+              : this.isFile()
+                ? "File"
+                : this.isSymbolicLink()
+                  ? "SymbolicLink"
+                  : this.isFIFO()
+                    ? "FIFO"
+                    : this.isCharacterDevice()
+                      ? "CharacterDevice"
+                      : this.isBlockDevice()
+                        ? "BlockDevice"
+                        : this.isSocket()
+                          ? "Socket"
+                          : "Unknown";
+        }
+        isFile() {
+          return (this.#ot & Hr) === xr;
+        }
+        isDirectory() {
+          return (this.#ot & Hr) === Lr;
+        }
+        isCharacterDevice() {
+          return (this.#ot & Hr) === Mr;
+        }
+        isBlockDevice() {
+          return (this.#ot & Hr) === Gr;
+        }
+        isFIFO() {
+          return (this.#ot & Hr) === Ur;
+        }
+        isSocket() {
+          return (this.#ot & Hr) === jr;
+        }
+        isSymbolicLink() {
+          return (this.#ot & Vr) === Vr;
+        }
+        lstatCached() {
+          return this.#ot & Wr ? this : undefined;
+        }
+        readlinkCached() {
+          return this.#at;
+        }
+        realpathCached() {
+          return this.#At;
+        }
+        readdirCached() {
+          const C = this.children();
+          return C.slice(0, C.provisional);
+        }
+        canReadlink() {
+          if (this.#at) return true;
+          if (!this.parent) return false;
+          const C = this.#ot & Hr;
+          return !((C !== Nr && C !== Vr) || this.#ot & $r || this.#ot & zr);
+        }
+        calledReaddir() {
+          return !!(this.#ot & Jr);
+        }
+        isENOENT() {
+          return !!(this.#ot & zr);
+        }
+        isNamed(C) {
+          return !this.nocase ? this.#Xe === normalize(C) : this.#Xe === normalizeNocase(C);
+        }
+        async readlink() {
+          const C = this.#at;
+          if (C) {
+            return C;
+          }
+          if (!this.canReadlink()) {
+            return undefined;
+          }
+          if (!this.parent) {
+            return undefined;
+          }
+          try {
+            const C = await this.#Pe.promises.readlink(this.fullpath());
+            const P = (await this.parent.realpath())?.resolve(C);
+            if (P) {
+              return (this.#at = P);
+            }
+          } catch (C) {
+            this.#ct(C.code);
+            return undefined;
+          }
+        }
+        readlinkSync() {
+          const C = this.#at;
+          if (C) {
+            return C;
+          }
+          if (!this.canReadlink()) {
+            return undefined;
+          }
+          if (!this.parent) {
+            return undefined;
+          }
+          try {
+            const C = this.#Pe.readlinkSync(this.fullpath());
+            const P = this.parent.realpathSync()?.resolve(C);
+            if (P) {
+              return (this.#at = P);
+            }
+          } catch (C) {
+            this.#ct(C.code);
+            return undefined;
+          }
+        }
+        #pt(C) {
+          this.#ot |= Jr;
+          for (let P = C.provisional; P < C.length; P++) {
+            const q = C[P];
+            if (q) q.#dt();
+          }
+        }
+        #dt() {
+          if (this.#ot & zr) return;
+          this.#ot = (this.#ot | zr) & Yr;
+          this.#ut();
+        }
+        #ut() {
+          const C = this.children();
+          C.provisional = 0;
+          for (const P of C) {
+            P.#dt();
+          }
+        }
+        #mt() {
+          this.#ot |= Zr;
+          this.#ht();
+        }
+        #ht() {
+          if (this.#ot & Kr) return;
+          let C = this.#ot;
+          if ((C & Hr) === Lr) C &= Yr;
+          this.#ot = C | Kr;
+          this.#ut();
+        }
+        #ft(C = "") {
+          if (C === "ENOTDIR" || C === "EPERM") {
+            this.#ht();
+          } else if (C === "ENOENT") {
+            this.#dt();
+          } else {
+            this.children().provisional = 0;
+          }
+        }
+        #gt(C = "") {
+          if (C === "ENOTDIR") {
+            const C = this.parent;
+            C.#ht();
+          } else if (C === "ENOENT") {
+            this.#dt();
+          }
+        }
+        #ct(C = "") {
+          let P = this.#ot;
+          P |= $r;
+          if (C === "ENOENT") P |= zr;
+          if (C === "EINVAL" || C === "UNKNOWN") {
+            P &= Yr;
+          }
+          this.#ot = P;
+          if (C === "ENOTDIR" && this.parent) {
+            this.parent.#ht();
+          }
+        }
+        #Et(C, P) {
+          return this.#It(C, P) || this.#Ct(C, P);
+        }
+        #Ct(C, P) {
+          const q = entToType(C);
+          const oe = this.newChild(C.name, q, { parent: this });
+          const ie = oe.#ot & Hr;
+          if (ie !== Lr && ie !== Vr && ie !== Nr) {
+            oe.#ot |= Kr;
+          }
+          P.unshift(oe);
+          P.provisional++;
+          return oe;
+        }
+        #It(C, P) {
+          for (let q = P.provisional; q < P.length; q++) {
+            const oe = P[q];
+            const ie = this.nocase ? normalizeNocase(C.name) : normalize(C.name);
+            if (ie !== oe.#Xe) {
+              continue;
+            }
+            return this.#yt(C, oe, q, P);
+          }
+        }
+        #yt(C, P, q, oe) {
+          const ie = P.name;
+          P.#ot = (P.#ot & Yr) | entToType(C);
+          if (ie !== C.name) P.name = C.name;
+          if (q !== oe.provisional) {
+            if (q === oe.length - 1) oe.pop();
+            else oe.splice(q, 1);
+            oe.unshift(P);
+          }
+          oe.provisional++;
+          return P;
+        }
+        async lstat() {
+          if ((this.#ot & zr) === 0) {
+            try {
+              this.#Bt(await this.#Pe.promises.lstat(this.fullpath()));
+              return this;
+            } catch (C) {
+              this.#gt(C.code);
+            }
+          }
+        }
+        lstatSync() {
+          if ((this.#ot & zr) === 0) {
+            try {
+              this.#Bt(this.#Pe.lstatSync(this.fullpath()));
+              return this;
+            } catch (C) {
+              this.#gt(C.code);
+            }
+          }
+        }
+        #Bt(C) {
+          const {
+            atime: P,
+            atimeMs: q,
+            birthtime: oe,
+            birthtimeMs: ie,
+            blksize: Ge,
+            blocks: st,
+            ctime: Ot,
+            ctimeMs: Wt,
+            dev: Ar,
+            gid: Er,
+            ino: Ir,
+            mode: Br,
+            mtime: Qr,
+            mtimeMs: Dr,
+            nlink: Fr,
+            rdev: kr,
+            size: Ur,
+            uid: Mr,
+          } = C;
+          this.#Ke = P;
+          this.#Ye = q;
+          this.#Ze = oe;
+          this.#We = ie;
+          this.#Ve = Ge;
+          this.#He = st;
+          this.#$e = Ot;
+          this.#Je = Wt;
+          this.#Ne = Ar;
+          this.#Ge = Er;
+          this.#je = Ir;
+          this.#Ue = Br;
+          this.#ze = Qr;
+          this.#qe = Dr;
+          this.#Me = Fr;
+          this.#xe = kr;
+          this.#X = Ur;
+          this.#Le = Mr;
+          const Gr = entToType(C);
+          this.#ot = (this.#ot & Yr) | Gr | Wr;
+          if (Gr !== Nr && Gr !== Lr && Gr !== Vr) {
+            this.#ot |= Kr;
+          }
+        }
+        #bt = [];
+        #Qt = false;
+        #wt(C) {
+          this.#Qt = false;
+          const P = this.#bt.slice();
+          this.#bt.length = 0;
+          P.forEach((P) => P(null, C));
+        }
+        readdirCB(C, P = false) {
+          if (!this.canReaddir()) {
+            if (P) C(null, []);
+            else queueMicrotask(() => C(null, []));
+            return;
+          }
+          const q = this.children();
+          if (this.calledReaddir()) {
+            const oe = q.slice(0, q.provisional);
+            if (P) C(null, oe);
+            else queueMicrotask(() => C(null, oe));
+            return;
+          }
+          this.#bt.push(C);
+          if (this.#Qt) {
+            return;
+          }
+          this.#Qt = true;
+          const oe = this.fullpath();
+          this.#Pe.readdir(oe, { withFileTypes: true }, (C, P) => {
+            if (C) {
+              this.#ft(C.code);
+              q.provisional = 0;
+            } else {
+              for (const C of P) {
+                this.#Et(C, q);
+              }
+              this.#pt(q);
+            }
+            this.#wt(q.slice(0, q.provisional));
+            return;
+          });
+        }
+        #vt;
+        async readdir() {
+          if (!this.canReaddir()) {
+            return [];
+          }
+          const C = this.children();
+          if (this.calledReaddir()) {
+            return C.slice(0, C.provisional);
+          }
+          const P = this.fullpath();
+          if (this.#vt) {
+            await this.#vt;
+          } else {
+            let resolve = () => {};
+            this.#vt = new Promise((C) => (resolve = C));
+            try {
+              for (const q of await this.#Pe.promises.readdir(P, { withFileTypes: true })) {
+                this.#Et(q, C);
+              }
+              this.#pt(C);
+            } catch (P) {
+              this.#ft(P.code);
+              C.provisional = 0;
+            }
+            this.#vt = undefined;
+            resolve();
+          }
+          return C.slice(0, C.provisional);
+        }
+        readdirSync() {
+          if (!this.canReaddir()) {
+            return [];
+          }
+          const C = this.children();
+          if (this.calledReaddir()) {
+            return C.slice(0, C.provisional);
+          }
+          const P = this.fullpath();
+          try {
+            for (const q of this.#Pe.readdirSync(P, { withFileTypes: true })) {
+              this.#Et(q, C);
+            }
+            this.#pt(C);
+          } catch (P) {
+            this.#ft(P.code);
+            C.provisional = 0;
+          }
+          return C.slice(0, C.provisional);
+        }
+        canReaddir() {
+          if (this.#ot & Xr) return false;
+          const C = Hr & this.#ot;
+          if (!(C === Nr || C === Lr || C === Vr)) {
+            return false;
+          }
+          return true;
+        }
+        shouldWalk(C, P) {
+          return (this.#ot & Lr) === Lr && !(this.#ot & Xr) && !C.has(this) && (!P || P(this));
+        }
+        async realpath() {
+          if (this.#At) return this.#At;
+          if ((Zr | $r | zr) & this.#ot) return undefined;
+          try {
+            const C = await this.#Pe.promises.realpath(this.fullpath());
+            return (this.#At = this.resolve(C));
+          } catch (C) {
+            this.#mt();
+          }
+        }
+        realpathSync() {
+          if (this.#At) return this.#At;
+          if ((Zr | $r | zr) & this.#ot) return undefined;
+          try {
+            const C = this.#Pe.realpathSync(this.fullpath());
+            return (this.#At = this.resolve(C));
+          } catch (C) {
+            this.#mt();
+          }
+        }
+        [ss](C) {
+          if (C === this) return;
+          C.isCWD = false;
+          this.isCWD = true;
+          const P = new Set([]);
+          let q = [];
+          let oe = this;
+          while (oe && oe.parent) {
+            P.add(oe);
+            oe.#st = q.join(this.sep);
+            oe.#nt = q.join("/");
+            oe = oe.parent;
+            q.push("..");
+          }
+          oe = C;
+          while (oe && oe.parent && !P.has(oe)) {
+            oe.#st = undefined;
+            oe.#nt = undefined;
+            oe = oe.parent;
+          }
+        }
+      }
+      P.PathBase = PathBase;
+      class PathWin32 extends PathBase {
+        sep = "\\";
+        splitSep = kr;
+        constructor(C, P = Nr, q, oe, ie, Ge, st) {
+          super(C, P, q, oe, ie, Ge, st);
+        }
+        newChild(C, P = Nr, q = {}) {
+          return new PathWin32(C, P, this.root, this.roots, this.nocase, this.childrenCache(), q);
+        }
+        getRootString(C) {
+          return Ot.win32.parse(C).root;
+        }
+        getRoot(C) {
+          C = uncToDrive(C.toUpperCase());
+          if (C === this.root.name) {
+            return this.root;
+          }
+          for (const [P, q] of Object.entries(this.roots)) {
+            if (this.sameRoot(C, P)) {
+              return (this.roots[C] = q);
+            }
+          }
+          return (this.roots[C] = new PathScurryWin32(C, this).root);
+        }
+        sameRoot(C, P = this.root.name) {
+          C = C.toUpperCase().replace(/\//g, "\\").replace(Fr, "$1\\");
+          return C === P;
+        }
+      }
+      P.PathWin32 = PathWin32;
+      class PathPosix extends PathBase {
+        splitSep = "/";
+        sep = "/";
+        constructor(C, P = Nr, q, oe, ie, Ge, st) {
+          super(C, P, q, oe, ie, Ge, st);
+        }
+        getRootString(C) {
+          return C.startsWith("/") ? "/" : "";
+        }
+        getRoot(C) {
+          return this.root;
+        }
+        newChild(C, P = Nr, q = {}) {
+          return new PathPosix(C, P, this.root, this.roots, this.nocase, this.childrenCache(), q);
+        }
+      }
+      P.PathPosix = PathPosix;
+      class PathScurryBase {
+        root;
+        rootPath;
+        roots;
+        cwd;
+        #Tt;
+        #St;
+        #it;
+        nocase;
+        #Pe;
+        constructor(C = process.cwd(), P, q, { nocase: oe, childrenCacheSize: ie = 16 * 1024, fs: Ge = Dr } = {}) {
+          this.#Pe = fsFromOption(Ge);
+          if (C instanceof URL || C.startsWith("file://")) {
+            C = (0, Wt.fileURLToPath)(C);
+          }
+          const st = P.resolve(C);
+          this.roots = Object.create(null);
+          this.rootPath = this.parseRootPath(st);
+          this.#Tt = new ResolveCache();
+          this.#St = new ResolveCache();
+          this.#it = new ChildrenCache(ie);
+          const Ot = st.substring(this.rootPath.length).split(q);
+          if (Ot.length === 1 && !Ot[0]) {
+            Ot.pop();
+          }
+          if (oe === undefined) {
+            throw new TypeError("must provide nocase setting to PathScurryBase ctor");
+          }
+          this.nocase = oe;
+          this.root = this.newRoot(this.#Pe);
+          this.roots[this.rootPath] = this.root;
+          let Ar = this.root;
+          let Er = Ot.length - 1;
+          const Ir = P.sep;
+          let Br = this.rootPath;
+          let Qr = false;
+          for (const C of Ot) {
+            const P = Er--;
+            Ar = Ar.child(C, {
+              relative: new Array(P).fill("..").join(Ir),
+              relativePosix: new Array(P).fill("..").join("/"),
+              fullpath: (Br += (Qr ? "" : Ir) + C),
+            });
+            Qr = true;
+          }
+          this.cwd = Ar;
+        }
+        depth(C = this.cwd) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          }
+          return C.depth();
+        }
+        childrenCache() {
+          return this.#it;
+        }
+        resolve(...C) {
+          let P = "";
+          for (let q = C.length - 1; q >= 0; q--) {
+            const oe = C[q];
+            if (!oe || oe === ".") continue;
+            P = P ? `${oe}/${P}` : oe;
+            if (this.isAbsolute(oe)) {
+              break;
+            }
+          }
+          const q = this.#Tt.get(P);
+          if (q !== undefined) {
+            return q;
+          }
+          const oe = this.cwd.resolve(P).fullpath();
+          this.#Tt.set(P, oe);
+          return oe;
+        }
+        resolvePosix(...C) {
+          let P = "";
+          for (let q = C.length - 1; q >= 0; q--) {
+            const oe = C[q];
+            if (!oe || oe === ".") continue;
+            P = P ? `${oe}/${P}` : oe;
+            if (this.isAbsolute(oe)) {
+              break;
+            }
+          }
+          const q = this.#St.get(P);
+          if (q !== undefined) {
+            return q;
+          }
+          const oe = this.cwd.resolve(P).fullpathPosix();
+          this.#St.set(P, oe);
+          return oe;
+        }
+        relative(C = this.cwd) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          }
+          return C.relative();
+        }
+        relativePosix(C = this.cwd) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          }
+          return C.relativePosix();
+        }
+        basename(C = this.cwd) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          }
+          return C.name;
+        }
+        dirname(C = this.cwd) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          }
+          return (C.parent || C).fullpath();
+        }
+        async readdir(C = this.cwd, P = { withFileTypes: true }) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C;
+            C = this.cwd;
+          }
+          const { withFileTypes: q } = P;
+          if (!C.canReaddir()) {
+            return [];
+          } else {
+            const P = await C.readdir();
+            return q ? P : P.map((C) => C.name);
+          }
+        }
+        readdirSync(C = this.cwd, P = { withFileTypes: true }) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C;
+            C = this.cwd;
+          }
+          const { withFileTypes: q = true } = P;
+          if (!C.canReaddir()) {
+            return [];
+          } else if (q) {
+            return C.readdirSync();
+          } else {
+            return C.readdirSync().map((C) => C.name);
+          }
+        }
+        async lstat(C = this.cwd) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          }
+          return C.lstat();
+        }
+        lstatSync(C = this.cwd) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          }
+          return C.lstatSync();
+        }
+        async readlink(C = this.cwd, { withFileTypes: P } = { withFileTypes: false }) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C.withFileTypes;
+            C = this.cwd;
+          }
+          const q = await C.readlink();
+          return P ? q : q?.fullpath();
+        }
+        readlinkSync(C = this.cwd, { withFileTypes: P } = { withFileTypes: false }) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C.withFileTypes;
+            C = this.cwd;
+          }
+          const q = C.readlinkSync();
+          return P ? q : q?.fullpath();
+        }
+        async realpath(C = this.cwd, { withFileTypes: P } = { withFileTypes: false }) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C.withFileTypes;
+            C = this.cwd;
+          }
+          const q = await C.realpath();
+          return P ? q : q?.fullpath();
+        }
+        realpathSync(C = this.cwd, { withFileTypes: P } = { withFileTypes: false }) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C.withFileTypes;
+            C = this.cwd;
+          }
+          const q = C.realpathSync();
+          return P ? q : q?.fullpath();
+        }
+        async walk(C = this.cwd, P = {}) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C;
+            C = this.cwd;
+          }
+          const { withFileTypes: q = true, follow: oe = false, filter: ie, walkFilter: Ge } = P;
+          const st = [];
+          if (!ie || ie(C)) {
+            st.push(q ? C : C.fullpath());
+          }
+          const Ot = new Set();
+          const walk = (C, P) => {
+            Ot.add(C);
+            C.readdirCB((C, Wt) => {
+              if (C) {
+                return P(C);
+              }
+              let Ar = Wt.length;
+              if (!Ar) return P();
+              const next = () => {
+                if (--Ar === 0) {
+                  P();
+                }
+              };
+              for (const C of Wt) {
+                if (!ie || ie(C)) {
+                  st.push(q ? C : C.fullpath());
+                }
+                if (oe && C.isSymbolicLink()) {
+                  C.realpath()
+                    .then((C) => (C?.isUnknown() ? C.lstat() : C))
+                    .then((C) => (C?.shouldWalk(Ot, Ge) ? walk(C, next) : next()));
+                } else {
+                  if (C.shouldWalk(Ot, Ge)) {
+                    walk(C, next);
+                  } else {
+                    next();
+                  }
+                }
+              }
+            }, true);
+          };
+          const Wt = C;
+          return new Promise((C, P) => {
+            walk(Wt, (q) => {
+              if (q) return P(q);
+              C(st);
+            });
+          });
+        }
+        walkSync(C = this.cwd, P = {}) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C;
+            C = this.cwd;
+          }
+          const { withFileTypes: q = true, follow: oe = false, filter: ie, walkFilter: Ge } = P;
+          const st = [];
+          if (!ie || ie(C)) {
+            st.push(q ? C : C.fullpath());
+          }
+          const Ot = new Set([C]);
+          for (const C of Ot) {
+            const P = C.readdirSync();
+            for (const C of P) {
+              if (!ie || ie(C)) {
+                st.push(q ? C : C.fullpath());
+              }
+              let P = C;
+              if (C.isSymbolicLink()) {
+                if (!(oe && (P = C.realpathSync()))) continue;
+                if (P.isUnknown()) P.lstatSync();
+              }
+              if (P.shouldWalk(Ot, Ge)) {
+                Ot.add(P);
+              }
+            }
+          }
+          return st;
+        }
+        [Symbol.asyncIterator]() {
+          return this.iterate();
+        }
+        iterate(C = this.cwd, P = {}) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C;
+            C = this.cwd;
+          }
+          return this.stream(C, P)[Symbol.asyncIterator]();
+        }
+        [Symbol.iterator]() {
+          return this.iterateSync();
+        }
+        *iterateSync(C = this.cwd, P = {}) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C;
+            C = this.cwd;
+          }
+          const { withFileTypes: q = true, follow: oe = false, filter: ie, walkFilter: Ge } = P;
+          if (!ie || ie(C)) {
+            yield q ? C : C.fullpath();
+          }
+          const st = new Set([C]);
+          for (const C of st) {
+            const P = C.readdirSync();
+            for (const C of P) {
+              if (!ie || ie(C)) {
+                yield q ? C : C.fullpath();
+              }
+              let P = C;
+              if (C.isSymbolicLink()) {
+                if (!(oe && (P = C.realpathSync()))) continue;
+                if (P.isUnknown()) P.lstatSync();
+              }
+              if (P.shouldWalk(st, Ge)) {
+                st.add(P);
+              }
+            }
+          }
+        }
+        stream(C = this.cwd, P = {}) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C;
+            C = this.cwd;
+          }
+          const { withFileTypes: q = true, follow: oe = false, filter: ie, walkFilter: Ge } = P;
+          const st = new Qr.Minipass({ objectMode: true });
+          if (!ie || ie(C)) {
+            st.write(q ? C : C.fullpath());
+          }
+          const Ot = new Set();
+          const Wt = [C];
+          let Ar = 0;
+          const process = () => {
+            let C = false;
+            while (!C) {
+              const P = Wt.shift();
+              if (!P) {
+                if (Ar === 0) st.end();
+                return;
+              }
+              Ar++;
+              Ot.add(P);
+              const onReaddir = (P, Ir, Br = false) => {
+                if (P) return st.emit("error", P);
+                if (oe && !Br) {
+                  const C = [];
+                  for (const P of Ir) {
+                    if (P.isSymbolicLink()) {
+                      C.push(P.realpath().then((C) => (C?.isUnknown() ? C.lstat() : C)));
+                    }
+                  }
+                  if (C.length) {
+                    Promise.all(C).then(() => onReaddir(null, Ir, true));
+                    return;
+                  }
+                }
+                for (const P of Ir) {
+                  if (P && (!ie || ie(P))) {
+                    if (!st.write(q ? P : P.fullpath())) {
+                      C = true;
+                    }
+                  }
+                }
+                Ar--;
+                for (const C of Ir) {
+                  const P = C.realpathCached() || C;
+                  if (P.shouldWalk(Ot, Ge)) {
+                    Wt.push(P);
+                  }
+                }
+                if (C && !st.flowing) {
+                  st.once("drain", process);
+                } else if (!Er) {
+                  process();
+                }
+              };
+              let Er = true;
+              P.readdirCB(onReaddir, true);
+              Er = false;
+            }
+          };
+          process();
+          return st;
+        }
+        streamSync(C = this.cwd, P = {}) {
+          if (typeof C === "string") {
+            C = this.cwd.resolve(C);
+          } else if (!(C instanceof PathBase)) {
+            P = C;
+            C = this.cwd;
+          }
+          const { withFileTypes: q = true, follow: oe = false, filter: ie, walkFilter: Ge } = P;
+          const st = new Qr.Minipass({ objectMode: true });
+          const Ot = new Set();
+          if (!ie || ie(C)) {
+            st.write(q ? C : C.fullpath());
+          }
+          const Wt = [C];
+          let Ar = 0;
+          const process = () => {
+            let C = false;
+            while (!C) {
+              const P = Wt.shift();
+              if (!P) {
+                if (Ar === 0) st.end();
+                return;
+              }
+              Ar++;
+              Ot.add(P);
+              const Er = P.readdirSync();
+              for (const P of Er) {
+                if (!ie || ie(P)) {
+                  if (!st.write(q ? P : P.fullpath())) {
+                    C = true;
+                  }
+                }
+              }
+              Ar--;
+              for (const C of Er) {
+                let P = C;
+                if (C.isSymbolicLink()) {
+                  if (!(oe && (P = C.realpathSync()))) continue;
+                  if (P.isUnknown()) P.lstatSync();
+                }
+                if (P.shouldWalk(Ot, Ge)) {
+                  Wt.push(P);
+                }
+              }
+            }
+            if (C && !st.flowing) st.once("drain", process);
+          };
+          process();
+          return st;
+        }
+        chdir(C = this.cwd) {
+          const P = this.cwd;
+          this.cwd = typeof C === "string" ? this.cwd.resolve(C) : C;
+          this.cwd[ss](P);
+        }
+      }
+      P.PathScurryBase = PathScurryBase;
+      class PathScurryWin32 extends PathScurryBase {
+        sep = "\\";
+        constructor(C = process.cwd(), P = {}) {
+          const { nocase: q = true } = P;
+          super(C, Ot.win32, "\\", { ...P, nocase: q });
+          this.nocase = q;
+          for (let C = this.cwd; C; C = C.parent) {
+            C.nocase = this.nocase;
+          }
+        }
+        parseRootPath(C) {
+          return Ot.win32.parse(C).root.toUpperCase();
+        }
+        newRoot(C) {
+          return new PathWin32(this.rootPath, Lr, undefined, this.roots, this.nocase, this.childrenCache(), { fs: C });
+        }
+        isAbsolute(C) {
+          return C.startsWith("/") || C.startsWith("\\") || /^[a-z]:(\/|\\)/i.test(C);
+        }
+      }
+      P.PathScurryWin32 = PathScurryWin32;
+      class PathScurryPosix extends PathScurryBase {
+        sep = "/";
+        constructor(C = process.cwd(), P = {}) {
+          const { nocase: q = false } = P;
+          super(C, Ot.posix, "/", { ...P, nocase: q });
+          this.nocase = q;
+        }
+        parseRootPath(C) {
+          return "/";
+        }
+        newRoot(C) {
+          return new PathPosix(this.rootPath, Lr, undefined, this.roots, this.nocase, this.childrenCache(), { fs: C });
+        }
+        isAbsolute(C) {
+          return C.startsWith("/");
+        }
+      }
+      P.PathScurryPosix = PathScurryPosix;
+      class PathScurryDarwin extends PathScurryPosix {
+        constructor(C = process.cwd(), P = {}) {
+          const { nocase: q = true } = P;
+          super(C, { ...P, nocase: q });
+        }
+      }
+      P.PathScurryDarwin = PathScurryDarwin;
+      P.Path = process.platform === "win32" ? PathWin32 : PathPosix;
+      P.PathScurry = process.platform === "win32" ? PathScurryWin32 : process.platform === "darwin" ? PathScurryDarwin : PathScurryPosix;
     },
     42629: (C) => {
       "use strict";
