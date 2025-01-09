@@ -38221,7 +38221,7 @@
       class Completions extends ie.SuperOpenAi {
         constructor(C, P) {
           super(C, P);
-          this.maxTokens = 100;
+          this.maxTokens = 1e5;
           this.attempts = 0;
           this.tools = { readFile: new Ge.ReadFile(), writeFile: new st.WriteFile(), exploreDir: new Ot.ExploreDir() };
         }
