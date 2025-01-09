@@ -38405,12 +38405,13 @@
       const Ot = q(94049);
       const Wt = q(56310);
       const Ar = 10;
-      const Er = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Ar} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n\nTo use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:\n\`\`\`tool\n{\n  "tool": "readFile|writeFile|exploreDir|searchFiles",\n  "args": {\n    // For readFile:\n    "filename": "path/to/file"\n    \n    // For writeFile:\n    "filename": "path/to/file",\n    "content": "file content"\n    \n    // For exploreDir:\n    "command": "tree"\n\n    // For searchFiles:\n    "pattern": "regex pattern",\n    "filePattern": "glob pattern (optional)",\n    "caseSensitive": boolean (optional),\n    "contextLines": number (optional)\n  }\n}\n\`\`\`\n\nMultiple tool requests will be processed sequentially in the order they appear in your response. Each tool request will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(filename: string)\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Write/update file contents\n- Method: execute(filename: string, content: string)\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(command: 'tree', args?: any)\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(pattern: string, options?: { filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths are relative to the current working directory. You only need to provide filenames.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Ar} attempts to complete each task`;
+      const Er = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Ar} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n\nTo use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:\n\`\`\`tool\n{\n  "tool": "readFile|writeFile|exploreDir|searchFiles",\n  "args": {\n    // For readFile:\n    "filename": "/full/path/from/working/dir/to/file"\n    \n    // For writeFile:\n    "filename": "/full/path/from/working/dir/to/file",\n    "content": "file content"\n    \n    // For exploreDir:\n    "command": "tree"\n\n    // For searchFiles:\n    "pattern": "regex pattern",\n    "filePattern": "glob pattern (optional)",\n    "caseSensitive": boolean (optional),\n    "contextLines": number (optional)\n  }\n}\n\`\`\`\n\nMultiple tool requests will be processed sequentially in the order they appear in your response. Each tool request will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(filename: string)\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Write/update file contents\n- Method: execute(filename: string, content: string)\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(command: 'tree', args?: any)\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(pattern: string, options?: { filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths from the working directory that is provided to you. For example, if the working directory is "/tmp/repo" and you want to write to "src/file.ts", you must specify "/tmp/repo/src/file.ts" as the filename.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Ar} attempts to complete each task`;
       class Completions extends ie.SuperOpenAi {
         constructor(C, P) {
           super(C, P);
           this.maxTokens = 1e5;
-          this.attempts = 0;
+          this.llmAttempts = 0;
+          this.toolAttempts = 0;
           this.tools = { readFile: new Ge.ReadFile(), writeFile: new st.WriteFile(), exploreDir: new Ot.ExploreDir(), searchFiles: new Wt.SearchFiles() };
         }
         _executeToolRequest(C, P) {
@@ -38486,80 +38487,83 @@
         }
         _executeWithRetry(C, P, q, ...ie) {
           return oe(this, void 0, void 0, function* () {
-            this.attempts++;
-            if (this.attempts > Ar) {
+            this.toolAttempts++;
+            if (this.toolAttempts > Ar) {
               return {
                 success: false,
                 error: `Maximum attempts (${Ar}) exceeded`,
-                metadata: { timestamp: Date.now(), toolName: C.name, attempts: this.attempts, workingDir: q },
+                metadata: { timestamp: Date.now(), toolName: C.name, toolAttempts: this.toolAttempts, workingDir: q },
               };
             }
             try {
               const oe = yield C.execute(...ie);
-              if (!oe.success && this.attempts < Ar) {
-                console.log(`Attempt ${this.attempts} failed: ${oe.error}`);
+              if (!oe.success && this.toolAttempts < Ar) {
+                console.log(`Tool attempt ${this.toolAttempts} failed: ${oe.error}`);
                 return this._executeWithRetry(C, P, q, ...ie);
               }
               return oe;
             } catch (oe) {
-              if (this.attempts < Ar) {
-                console.error(`Attempt ${this.attempts} error:`, oe);
+              if (this.toolAttempts < Ar) {
+                console.error(`Tool attempt ${this.toolAttempts} error:`, oe);
                 return this._executeWithRetry(C, P, q, ...ie);
               }
               return {
                 success: false,
                 error: oe instanceof Error ? oe.message : "Unknown error occurred",
-                metadata: { timestamp: Date.now(), toolName: C.name, attempts: this.attempts, workingDir: q },
+                metadata: { timestamp: Date.now(), toolName: C.name, toolAttempts: this.toolAttempts, workingDir: q },
               };
             }
           });
         }
         createCompletion(C, P, q) {
           return oe(this, arguments, void 0, function* (C, P, q, oe = "") {
-            var ie, Ge;
-            this.attempts = 0;
+            var ie, Ge, st;
+            this.llmAttempts = 0;
+            this.toolAttempts = 0;
             this.tools.exploreDir = new Ot.ExploreDir(q);
             this.tools.searchFiles = new Wt.SearchFiles(q);
-            let st = false;
-            let Ir = null;
-            const Br = [{ role: "system", content: Er }];
-            while (this.attempts < Ar && !st) {
-              Br.push({
+            let Ir = false;
+            let Br = null;
+            const Qr = [{ role: "system", content: Er }];
+            while (this.llmAttempts < Ar && !Ir) {
+              const Ot = yield this._getDirectoryTree(q);
+              const Wt = Ot.success && ((ie = Ot.data) === null || ie === void 0 ? void 0 : ie.tree) ? Ot.data.tree : "Unable to get directory tree";
+              Qr.push({
                 role: "user",
-                content: `Current attempt: ${this.attempts + 1}/${Ar}\nWorking directory: ${q}\nPrevious solution state: ${oe}\n\nOriginal request: ${C}`,
+                content: `Current LLM attempt: ${this.llmAttempts + 1}/${Ar}\nWorking directory: ${q}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${oe}\n\nOriginal request: ${C}`,
               });
-              const Ot = yield this.client.chat.completions.create({
+              const Er = yield this.client.chat.completions.create({
                 model: P,
-                messages: Br,
+                messages: Qr,
                 temperature: 0.2,
                 max_tokens: this.maxTokens,
                 top_p: 0.5,
                 frequency_penalty: 0,
                 presence_penalty: 0,
               });
-              this.context.logger.info("LLM response:" + JSON.stringify(Ot, null, 2));
-              Ir = Ot;
-              const Wt = ((Ge = (ie = Ot.choices[0]) === null || ie === void 0 ? void 0 : ie.message) === null || Ge === void 0 ? void 0 : Ge.content) || "";
-              const Er = yield this._processResponse(Wt, q);
-              Br.push({ role: "assistant", content: Er });
-              oe = Er;
-              st = yield this._checkSolution(oe, P);
-              if (!st) {
-                this.attempts++;
-                console.log(`Solution incomplete, attempt ${this.attempts}/${Ar}`);
+              this.context.logger.info("LLM response:" + JSON.stringify(Er, null, 2));
+              Br = Er;
+              const Dr = ((st = (Ge = Er.choices[0]) === null || Ge === void 0 ? void 0 : Ge.message) === null || st === void 0 ? void 0 : st.content) || "";
+              const Fr = yield this._processResponse(Dr, q);
+              Qr.push({ role: "assistant", content: Fr });
+              oe = Fr;
+              Ir = yield this._checkSolution(oe, P);
+              if (!Ir) {
+                this.llmAttempts++;
+                console.log(`Solution incomplete, LLM attempt ${this.llmAttempts}/${Ar}`);
               }
             }
-            return Ir;
+            return Br;
           });
         }
         _readFile(C, P) {
           return oe(this, void 0, void 0, function* () {
-            return this._executeWithRetry(this.tools.readFile, "execute", P, `${P}/${C}`);
+            return this._executeWithRetry(this.tools.readFile, "execute", P, C);
           });
         }
         _writeFile(C, P, q) {
           return oe(this, void 0, void 0, function* () {
-            return this._executeWithRetry(this.tools.writeFile, "execute", q, `${q}/${C}`, P);
+            return this._executeWithRetry(this.tools.writeFile, "execute", q, C, P);
           });
         }
         _getDirectoryTree(C) {
