@@ -3,8 +3,15 @@
   "description": "Personal agent processes commands from UbiquityOS in user's Github actions",
   "ubiquity:listeners": ["issue_comment.created"],
   "configuration": {
-    "default": {},
     "type": "object",
-    "properties": {}
+    "properties": {
+      "model": {
+        "default": "o1-mini",
+        "type": "string"
+      },
+      "openAiBaseUrl": {
+        "type": "string"
+      }
+    }
   }
 }
