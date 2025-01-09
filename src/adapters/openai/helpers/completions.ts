@@ -8,7 +8,7 @@ import { ExploreDir } from "../../../tools/explore-dir";
 import { SearchFiles } from "../../../tools/search-files";
 import { CreatePr } from "../../../tools/create-pr";
 
-const MAX_TRIES = 10;
+const MAX_TRIES = 5;
 
 const sysMsg = `You are a capable AI assistant currently running on a GitHub bot. 
 You are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.
@@ -370,6 +370,8 @@ export class Completions extends SuperOpenAi {
         treeResult.success && (treeResult.data as DirectoryExploreResult)?.tree
           ? (treeResult.data as DirectoryExploreResult).tree
           : "Unable to get directory tree";
+
+      this.context.logger.info("Directory tree:", { tree: treeOutput });
 
       // Add the current state to conversation
       conversationHistory.push({
