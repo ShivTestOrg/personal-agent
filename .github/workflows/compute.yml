@@ -1,4 +1,4 @@
-name: "@ubiquity-os-marketplace/command-ask"
+name: "@ubiquity-os-marketplace/personal-agent"
 
 on:
   workflow_dispatch:

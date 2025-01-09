@@ -121,7 +121,7 @@ export class Completions extends SuperOpenAi {
 
   constructor(client: OpenAI, context: Context) {
     super(client, context);
-    this.maxTokens = 100;
+    this.maxTokens = 100000;
     this.attempts = 0;
     this.tools = {
       readFile: new ReadFile(),
