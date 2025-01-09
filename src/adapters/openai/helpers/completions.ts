@@ -7,7 +7,7 @@ import { WriteFile } from "../../../tools/write-file";
 import { ExploreDir } from "../../../tools/explore-dir";
 import { SearchFiles } from "../../../tools/search-files";
 
-const MAX_TRIES = 20;
+const MAX_TRIES = 10;
 
 const sysMsg = `You are a capable AI assistant currently running on a GitHub bot. 
 You are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.
@@ -15,7 +15,7 @@ Each tool implements a common interface that provides consistent error handling 
 
 Workflow:
 1. The repository has already been cloned and you are in the correct working directory
-2. After each attempt to solve the issue, you will be asked if the solution is complete
+2. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not
 3. If not complete, you will continue with additional attempts up to ${MAX_TRIES} tries
 4. Each attempt should build upon previous attempts, learning from any failures
 
@@ -146,7 +146,7 @@ export class Completions extends SuperOpenAi {
 
   constructor(client: OpenAI, context: Context) {
     super(client, context);
-    this.maxTokens = 100;
+    this.maxTokens = 100000;
     this.attempts = 0;
     this.tools = {
       readFile: new ReadFile(),
@@ -318,6 +318,7 @@ export class Completions extends SuperOpenAi {
         presence_penalty: 0,
       });
 
+      this.context.logger.info("LLM response:" + JSON.stringify(res, null, 2));
       finalResponse = res;
 
       // Get the LLM's response
