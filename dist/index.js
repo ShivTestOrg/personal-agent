@@ -22910,8 +22910,8 @@
           HTTP2_HEADER_PATH: Vs,
           HTTP2_HEADER_SCHEME: js,
           HTTP2_HEADER_CONTENT_LENGTH: Hs,
-          HTTP2_HEADER_EXPECT: Ys,
-          HTTP2_HEADER_STATUS: qs,
+          HTTP2_HEADER_EXPECT: qs,
+          HTTP2_HEADER_STATUS: Ys,
         },
       } = Ls;
       let Js = false;
@@ -24068,7 +24068,7 @@
         P.ref();
         const xr = Ge === "GET" || Ge === "HEAD";
         if (Br) {
-          kr[Ys] = "100-continue";
+          kr[qs] = "100-continue";
           Nr = P.request(kr, { endStream: xr, signal: Qr });
           Nr.once("continue", writeBodyH2);
         } else {
@@ -24077,7 +24077,7 @@
         }
         ++Mr.openStreams;
         Nr.once("response", (C) => {
-          const { [qs]: P, ...oe } = C;
+          const { [Ys]: P, ...oe } = C;
           if (q.onHeaders(Number(P), oe, Nr.resume.bind(Nr), "") === false) {
             Nr.pause();
           }
@@ -38404,39 +38404,52 @@
       const st = q(14164);
       const Ot = q(94049);
       const Wt = q(56310);
-      const Ar = 10;
-      const Er = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Ar} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n\nTo use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:\n\`\`\`tool\n{\n  "tool": "readFile|writeFile|exploreDir|searchFiles",\n  "args": {\n    // For readFile:\n    "filename": "/full/path/from/working/dir/to/file"\n    \n    // For writeFile:\n    "filename": "/full/path/from/working/dir/to/file",\n    "content": "file content"\n    \n    // For exploreDir:\n    "command": "tree"\n\n    // For searchFiles:\n    "pattern": "regex pattern",\n    "filePattern": "glob pattern (optional)",\n    "caseSensitive": boolean (optional),\n    "contextLines": number (optional)\n  }\n}\n\`\`\`\n\nMultiple tool requests will be processed sequentially in the order they appear in your response. Each tool request will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(filename: string)\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Write/update file contents\n- Method: execute(filename: string, content: string)\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(command: 'tree', args?: any)\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(pattern: string, options?: { filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths from the working directory that is provided to you. For example, if the working directory is "/tmp/repo" and you want to write to "src/file.ts", you must specify "/tmp/repo/src/file.ts" as the filename.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Ar} attempts to complete each task`;
+      const Ar = q(40893);
+      const Er = 5;
+      const Ir = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Er} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n\nTo use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:\n\`\`\`tool\n{\n  "tool": "readFile|writeFile|exploreDir|searchFiles",\n  "args": {\n    // For readFile:\n    "filename": "/absolute/path/to/file"\n    \n    // For writeFile:\n    "filename": "/absolute/path/to/file",\n    "content": "diff blocks in format:\n    <<<<<<< SEARCH\n    [existing content to find]\n    =======\n    [new content to replace with]\n    >>>>>>> REPLACE"\n        \n    // For exploreDir:\n    "command": "tree"\n\n    // For searchFiles:\n    "pattern": "regex pattern",\n    "filePattern": "glob pattern (optional)",\n    "caseSensitive": boolean (optional),\n    "contextLines": number (optional)\n  }\n}\n\`\`\`\n\nMultiple tool requests will be processed sequentially in the order they appear in your response. Each tool request will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(filename: string)\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(path: string, diff: string)\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(command: 'tree', args?: any)\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(pattern: string, options?: { filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Er} attempts to complete each task`;
       class Completions extends ie.SuperOpenAi {
         constructor(C, P) {
           super(C, P);
           this.maxTokens = 1e5;
           this.llmAttempts = 0;
           this.toolAttempts = 0;
-          this.tools = { readFile: new Ge.ReadFile(), writeFile: new st.WriteFile(), exploreDir: new Ot.ExploreDir(), searchFiles: new Wt.SearchFiles() };
+          this.tools = {
+            readFile: new Ge.ReadFile(),
+            writeFile: new st.WriteFile(),
+            exploreDir: new Ot.ExploreDir(),
+            searchFiles: new Wt.SearchFiles(),
+            createPr: new Ar.CreatePr(P),
+          };
         }
         _executeToolRequest(C, P) {
           return oe(this, void 0, void 0, function* () {
             this.context.logger.info(`Executing tool request: ${C.tool} with args:`, C.args);
-            switch (C.tool) {
-              case "readFile":
-                if (!C.args.filename) throw new Error("Filename is required for readFile");
-                return this._readFile(C.args.filename, P);
-              case "writeFile":
-                if (!C.args.filename || !C.args.content) {
-                  throw new Error("Filename and content are required for writeFile");
-                }
-                return this._writeFile(C.args.filename, C.args.content, P);
-              case "exploreDir":
-                return this._getDirectoryTree(P);
-              case "searchFiles":
-                if (!C.args.pattern) throw new Error("Search pattern is required");
-                return this._searchFiles(C.args.pattern, P, {
-                  filePattern: C.args.filePattern,
-                  caseSensitive: C.args.caseSensitive,
-                  contextLines: C.args.contextLines,
-                });
-              default:
-                throw new Error(`Unknown tool: ${C.tool}`);
+            try {
+              switch (C.tool) {
+                case "readFile":
+                  if (!C.args.filename) throw new Error("Filename is required for readFile");
+                  return this._readFile(C.args.filename, P);
+                case "writeFile":
+                  if (!C.args.filename || !C.args.content) {
+                    throw new Error("Filename and content are required for writeFile");
+                  }
+                  return this._writeFile(C.args.filename, C.args.content, P);
+                case "exploreDir":
+                  return this._getDirectoryTree(P);
+                case "searchFiles":
+                  if (!C.args.pattern) throw new Error("Search pattern is required");
+                  return this._searchFiles(C.args.pattern, P, {
+                    filePattern: C.args.filePattern,
+                    caseSensitive: C.args.caseSensitive,
+                    contextLines: C.args.contextLines,
+                  });
+                default:
+                  throw new Error(`Unknown tool: ${C.tool}`);
+              }
+            } catch (C) {
+              const P = C instanceof Error ? C : new Error(String(C));
+              this.context.logger.error(`Tool execution failed:`, { error: P });
+              throw C;
             }
           });
         }
@@ -38456,10 +38469,9 @@
                 const Ge = yield this._executeToolRequest(C, P);
                 oe = oe.replace(q, "```result\n" + JSON.stringify(Ge, null, 2) + "\n```");
               } catch (C) {
-                oe = oe.replace(
-                  q,
-                  "```result\n" + JSON.stringify({ success: false, error: C instanceof Error ? C.message : "Unknown error" }, null, 2) + "\n```"
-                );
+                const P = C instanceof Error ? C : new Error(String(C));
+                this.context.logger.error(`Failed to process tool request:`, { error: P });
+                oe = oe.replace(q, "```result\n" + JSON.stringify({ success: false, error: P.message }, null, 2) + "\n```");
               }
             }
             return oe;
@@ -38488,28 +38500,35 @@
         _executeWithRetry(C, P, q, ...ie) {
           return oe(this, void 0, void 0, function* () {
             this.toolAttempts++;
-            if (this.toolAttempts > Ar) {
+            if (this.toolAttempts > Er) {
+              const P = new Error(`Maximum attempts (${Er}) exceeded`);
+              this.context.logger.error(`Tool retry limit exceeded:`, { error: P });
               return {
                 success: false,
-                error: `Maximum attempts (${Ar}) exceeded`,
+                error: P.message,
                 metadata: { timestamp: Date.now(), toolName: C.name, toolAttempts: this.toolAttempts, workingDir: q },
               };
             }
             try {
               const oe = yield C.execute(...ie);
-              if (!oe.success && this.toolAttempts < Ar) {
-                console.log(`Tool attempt ${this.toolAttempts} failed: ${oe.error}`);
+              if (!oe.success && this.toolAttempts < Er) {
+                const Ge = new Error(oe.error || "Unknown error");
+                this.context.logger.error(`Tool attempt ${this.toolAttempts} failed:`, { error: Ge });
                 return this._executeWithRetry(C, P, q, ...ie);
+              }
+              if (oe.success) {
+                this.context.logger.info(`Tool execution successful:`, { toolName: C.name, data: oe.data, metadata: oe.metadata });
               }
               return oe;
             } catch (oe) {
-              if (this.toolAttempts < Ar) {
-                console.error(`Tool attempt ${this.toolAttempts} error:`, oe);
+              const Ge = oe instanceof Error ? oe : new Error(String(oe));
+              this.context.logger.error(`Tool attempt ${this.toolAttempts} error:`, { error: Ge });
+              if (this.toolAttempts < Er) {
                 return this._executeWithRetry(C, P, q, ...ie);
               }
               return {
                 success: false,
-                error: oe instanceof Error ? oe.message : "Unknown error occurred",
+                error: Ge.message,
                 metadata: { timestamp: Date.now(), toolName: C.name, toolAttempts: this.toolAttempts, workingDir: q },
               };
             }
@@ -38522,17 +38541,18 @@
             this.toolAttempts = 0;
             this.tools.exploreDir = new Ot.ExploreDir(q);
             this.tools.searchFiles = new Wt.SearchFiles(q);
-            let Ir = false;
+            let Ar = false;
             let Br = null;
-            const Qr = [{ role: "system", content: Er }];
-            while (this.llmAttempts < Ar && !Ir) {
+            const Qr = [{ role: "system", content: Ir }];
+            while (this.llmAttempts < Er && !Ar) {
               const Ot = yield this._getDirectoryTree(q);
               const Wt = Ot.success && ((ie = Ot.data) === null || ie === void 0 ? void 0 : ie.tree) ? Ot.data.tree : "Unable to get directory tree";
+              this.context.logger.info("Directory tree:", { tree: Wt });
               Qr.push({
                 role: "user",
-                content: `Current LLM attempt: ${this.llmAttempts + 1}/${Ar}\nWorking directory: ${q}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${oe}\n\nOriginal request: ${C}`,
+                content: `Current LLM attempt: ${this.llmAttempts + 1}/${Er}\nWorking directory: ${q}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${oe}\n\nOriginal request: ${C}`,
               });
-              const Er = yield this.client.chat.completions.create({
+              const Ir = yield this.client.chat.completions.create({
                 model: P,
                 messages: Qr,
                 temperature: 0.2,
@@ -38541,19 +38561,34 @@
                 frequency_penalty: 0,
                 presence_penalty: 0,
               });
-              this.context.logger.info("LLM response:" + JSON.stringify(Er, null, 2));
-              Br = Er;
-              const Dr = ((st = (Ge = Er.choices[0]) === null || Ge === void 0 ? void 0 : Ge.message) === null || st === void 0 ? void 0 : st.content) || "";
+              this.context.logger.info("LLM response:", { response: Ir });
+              Br = Ir;
+              const Dr = ((st = (Ge = Ir.choices[0]) === null || Ge === void 0 ? void 0 : Ge.message) === null || st === void 0 ? void 0 : st.content) || "";
               const Fr = yield this._processResponse(Dr, q);
               Qr.push({ role: "assistant", content: Fr });
               oe = Fr;
-              Ir = yield this._checkSolution(oe, P);
-              if (!Ir) {
+              Ar = yield this._checkSolution(oe, P);
+              if (!Ar) {
                 this.llmAttempts++;
-                console.log(`Solution incomplete, LLM attempt ${this.llmAttempts}/${Ar}`);
+                this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${Er}`);
+              }
+            }
+            if (Ar) {
+              const P = `Fix: ${C.split("\n")[0]}`;
+              const q = `This PR addresses the following:\n\n${C}\n\nChanges made:\n${oe}`;
+              const ie = yield this._createPullRequest(P, q);
+              if (ie.success) {
+                this.context.logger.info("Created pull request:", { data: ie.data, metadata: ie.metadata });
+              } else {
+                this.context.logger.error("Failed to create pull request:", { error: new Error(ie.error || "Unknown error"), metadata: ie.metadata });
               }
             }
             return Br;
+          });
+        }
+        _createPullRequest(C, P) {
+          return oe(this, void 0, void 0, function* () {
+            return this._executeWithRetry(this.tools.createPr, "execute", "", C, P);
           });
         }
         _readFile(C, P) {
@@ -38847,6 +38882,94 @@
           yield runPlugin(ie);
         });
       }
+    },
+    40893: function (C, P, q) {
+      "use strict";
+      var oe =
+        (this && this.__awaiter) ||
+        function (C, P, q, oe) {
+          function adopt(C) {
+            return C instanceof q
+              ? C
+              : new q(function (P) {
+                  P(C);
+                });
+          }
+          return new (q || (q = Promise))(function (q, ie) {
+            function fulfilled(C) {
+              try {
+                step(oe.next(C));
+              } catch (C) {
+                ie(C);
+              }
+            }
+            function rejected(C) {
+              try {
+                step(oe["throw"](C));
+              } catch (C) {
+                ie(C);
+              }
+            }
+            function step(C) {
+              C.done ? q(C.value) : adopt(C.value).then(fulfilled, rejected);
+            }
+            step((oe = oe.apply(C, P || [])).next());
+          });
+        };
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.CreatePr = void 0;
+      const ie = q(35317);
+      class CreatePr {
+        constructor(C) {
+          this.name = "create-pr";
+          this.description = "Creates a pull request with the changes";
+          this._context = C;
+        }
+        execute(C, P) {
+          return oe(this, void 0, void 0, function* () {
+            try {
+              try {
+                this._context.logger.info("Staging changes");
+                (0, ie.execSync)("git add .", { stdio: "pipe" });
+                const P = (0, ie.execSync)("git status --porcelain", { stdio: "pipe" }).toString();
+                this._context.logger.info("Changes to be committed:", { status: P });
+                this._context.logger.info("Committing changes");
+                (0, ie.execSync)(`git commit -m "${C}"`, { stdio: "pipe" });
+                const q = (0, ie.execSync)("git rev-parse --abbrev-ref HEAD", { stdio: "pipe" }).toString().trim();
+                this._context.logger.info(`Pushing branch ${q} to remote`);
+                (0, ie.execSync)(`git push origin ${q}`, { stdio: "pipe" });
+              } catch (C) {
+                const P = C instanceof Error ? C : new Error(String(C));
+                this._context.logger.error("Git operation failed:", { error: P });
+                throw P;
+              }
+              this._context.logger.info("Creating pull request");
+              const q = this._context.payload.repository.name;
+              const oe = this._context.payload.repository.owner.login;
+              const Ge = yield this._context.octokit.pulls.create({
+                owner: oe,
+                repo: q,
+                title: C,
+                body: P,
+                head: (0, ie.execSync)("git rev-parse --abbrev-ref HEAD", { stdio: "pipe" }).toString().trim(),
+                base: "development",
+              });
+              return {
+                success: true,
+                data: { url: Ge.data.html_url, number: Ge.data.number, title: Ge.data.title },
+                metadata: { timestamp: Date.now(), toolName: this.name },
+              };
+            } catch (C) {
+              return {
+                success: false,
+                error: C instanceof Error ? C.message : "Unknown error occurred",
+                metadata: { timestamp: Date.now(), toolName: this.name },
+              };
+            }
+          });
+        }
+      }
+      P.CreatePr = CreatePr;
     },
     94049: function (C, P, q) {
       "use strict";
@@ -39337,14 +39460,40 @@
       class WriteFile {
         constructor() {
           this.name = "write-file";
-          this.description = "Writes content to a file at the specified path";
+          this.description = "Applies diff blocks to update file content. Requires absolute file paths.";
+        }
+        _parseDiffBlocks(C) {
+          const P = [];
+          const q = /<<<<<<< SEARCH\n([\s\S]*?)\n=======\n([\s\S]*?)\n>>>>>>> REPLACE/g;
+          let oe;
+          while ((oe = q.exec(C)) !== null) {
+            P.push({ search: oe[1], replace: oe[2] });
+          }
+          return P;
+        }
+        _applyDiff(C, P) {
+          let q = C;
+          for (const C of P) {
+            q = q.replace(C.search, C.replace);
+          }
+          return q;
         }
         execute(C, P) {
           return oe(this, void 0, void 0, function* () {
             try {
-              (0, ie.writeFileSync)(C, P);
-              const q = Buffer.from(P).length;
-              return { success: true, data: { path: C, bytesWritten: q }, metadata: { timestamp: Date.now(), toolName: this.name } };
+              if (!C.startsWith("/")) {
+                throw new Error("File path must be absolute (start with /)");
+              }
+              const q = (0, ie.readFileSync)(C, "utf-8");
+              const oe = this._parseDiffBlocks(P);
+              const Ge = this._applyDiff(q, oe);
+              (0, ie.writeFileSync)(C, Ge);
+              const st = Buffer.from(Ge).length;
+              return {
+                success: true,
+                data: { path: C, bytesWritten: st },
+                metadata: { timestamp: Date.now(), toolName: this.name, diffBlocksApplied: oe.length },
+              };
             } catch (C) {
               return {
                 success: false,
@@ -39434,6 +39583,10 @@
     20181: (C) => {
       "use strict";
       C.exports = require("buffer");
+    },
+    35317: (C) => {
+      "use strict";
+      C.exports = require("child_process");
     },
     64236: (C) => {
       "use strict";
@@ -43483,7 +43636,7 @@
           }
           const q = this.type === "*" || this.type === "+";
           const oe = this.type === "!" ? "(?:(?!(?:" : "(?:";
-          let Ge = this.#Y(P);
+          let Ge = this.#q(P);
           if (this.isStart() && this.isEnd() && !Ge && this.type !== "!") {
             const C = this.toString();
             this.#O = [C];
@@ -43491,7 +43644,7 @@
             this.#F = undefined;
             return [C, (0, ie.unescape)(this.toString()), false, false];
           }
-          let Er = !q || C || P || !Ot ? "" : this.#Y(true);
+          let Er = !q || C || P || !Ot ? "" : this.#q(true);
           if (Er === Ge) {
             Er = "";
           }
@@ -43518,7 +43671,7 @@
           }
           return [Ir, (0, ie.unescape)(Ge), (this.#F = !!this.#F), this.#k];
         }
-        #Y(C) {
+        #q(C) {
           return this.#O
             .map((P) => {
               if (typeof P === "string") {
@@ -44487,17 +44640,17 @@
       class Stack {
         heap;
         length;
-        static #q = false;
+        static #Y = false;
         static create(C) {
           const P = getUintArray(C);
           if (!P) return [];
-          Stack.#q = true;
+          Stack.#Y = true;
           const q = new Stack(C, P);
-          Stack.#q = false;
+          Stack.#Y = false;
           return q;
         }
         constructor(C, P) {
-          if (!Stack.#q) {
+          if (!Stack.#Y) {
             throw new TypeError("instantiate Stack using Stack.create(n)");
           }
           this.heap = new P(C);
@@ -50462,26 +50615,30 @@
       const Ot = Ge(q(61627));
       const Wt = Ge(q(52253));
       const Ar = q(61627);
-      const Er = Ge(q(6847));
-      const Ir = q(6847);
-      const Br = Ge(q(70371));
-      const Qr = q(70371);
-      const Dr = q(52253);
+      const Er = Ge(q(5367));
+      const Ir = q(5367);
+      const Br = Ge(q(6847));
+      const Qr = q(6847);
+      const Dr = Ge(q(70371));
+      const Fr = q(70371);
+      const kr = q(52253);
       class Beta extends st.APIResource {
         constructor() {
           super(...arguments);
-          this.vectorStores = new Br.VectorStores(this._client);
+          this.realtime = new Er.Realtime(this._client);
+          this.vectorStores = new Dr.VectorStores(this._client);
           this.chat = new Wt.Chat(this._client);
           this.assistants = new Ot.Assistants(this._client);
-          this.threads = new Er.Threads(this._client);
+          this.threads = new Br.Threads(this._client);
         }
       }
       P.Beta = Beta;
-      Beta.VectorStores = Qr.VectorStores;
-      Beta.VectorStoresPage = Qr.VectorStoresPage;
+      Beta.Realtime = Ir.Realtime;
+      Beta.VectorStores = Fr.VectorStores;
+      Beta.VectorStoresPage = Fr.VectorStoresPage;
       Beta.Assistants = Ar.Assistants;
       Beta.AssistantsPage = Ar.AssistantsPage;
-      Beta.Threads = Ir.Threads;
+      Beta.Threads = Qr.Threads;
     },
     52253: function (C, P, q) {
       "use strict";
@@ -50605,6 +50762,72 @@
         }
       }
       P.Completions = Completions;
+    },
+    5367: function (C, P, q) {
+      "use strict";
+      var oe =
+        (this && this.__createBinding) ||
+        (Object.create
+          ? function (C, P, q, oe) {
+              if (oe === undefined) oe = q;
+              var ie = Object.getOwnPropertyDescriptor(P, q);
+              if (!ie || ("get" in ie ? !P.__esModule : ie.writable || ie.configurable)) {
+                ie = {
+                  enumerable: true,
+                  get: function () {
+                    return P[q];
+                  },
+                };
+              }
+              Object.defineProperty(C, oe, ie);
+            }
+          : function (C, P, q, oe) {
+              if (oe === undefined) oe = q;
+              C[oe] = P[q];
+            });
+      var ie =
+        (this && this.__setModuleDefault) ||
+        (Object.create
+          ? function (C, P) {
+              Object.defineProperty(C, "default", { enumerable: true, value: P });
+            }
+          : function (C, P) {
+              C["default"] = P;
+            });
+      var Ge =
+        (this && this.__importStar) ||
+        function (C) {
+          if (C && C.__esModule) return C;
+          var P = {};
+          if (C != null) for (var q in C) if (q !== "default" && Object.prototype.hasOwnProperty.call(C, q)) oe(P, C, q);
+          ie(P, C);
+          return P;
+        };
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.Realtime = void 0;
+      const st = q(35535);
+      const Ot = Ge(q(11015));
+      const Wt = q(11015);
+      class Realtime extends st.APIResource {
+        constructor() {
+          super(...arguments);
+          this.sessions = new Ot.Sessions(this._client);
+        }
+      }
+      P.Realtime = Realtime;
+      Realtime.Sessions = Wt.Sessions;
+    },
+    11015: (C, P, q) => {
+      "use strict";
+      Object.defineProperty(P, "__esModule", { value: true });
+      P.Sessions = void 0;
+      const oe = q(35535);
+      class Sessions extends oe.APIResource {
+        create(C, P) {
+          return this._client.post("/realtime/sessions", { body: C, ...P, headers: { "OpenAI-Beta": "assistants=v2", ...P?.headers } });
+        }
+      }
+      P.Sessions = Sessions;
     },
     16648: (C, P, q) => {
       "use strict";
@@ -52280,7 +52503,7 @@
       "use strict";
       Object.defineProperty(P, "__esModule", { value: true });
       P.VERSION = void 0;
-      P.VERSION = "4.77.4";
+      P.VERSION = "4.78.0";
     },
     16577: function (C, P, q) {
       "use strict";
@@ -52466,13 +52689,13 @@
         get blocks() {
           return this.#He;
         }
-        #Ye;
-        get atimeMs() {
-          return this.#Ye;
-        }
         #qe;
-        get mtimeMs() {
+        get atimeMs() {
           return this.#qe;
+        }
+        #Ye;
+        get mtimeMs() {
+          return this.#Ye;
         }
         #Je;
         get ctimeMs() {
@@ -52899,7 +53122,7 @@
             uid: Mr,
           } = C;
           this.#Ke = P;
-          this.#Ye = q;
+          this.#qe = q;
           this.#Ze = oe;
           this.#We = ie;
           this.#Ve = Ge;
@@ -52911,7 +53134,7 @@
           this.#je = Ir;
           this.#Ue = Br;
           this.#ze = Qr;
-          this.#qe = Dr;
+          this.#Ye = Dr;
           this.#Me = Fr;
           this.#xe = kr;
           this.#X = Ur;
