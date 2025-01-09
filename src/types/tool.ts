@@ -38,10 +38,22 @@ export interface TerminalCommandResult {
   command: string;
 }
 
+export interface SearchResult {
+  matches: Array<{
+    file: string;
+    line: number;
+    content: string;
+    context: string[];
+  }>;
+  totalFiles: number;
+  searchPattern: string;
+}
+
 // Tool result type mapping
 export type ToolResultMap = {
   readFile: FileReadResult;
   writeFile: FileWriteResult;
   exploreDir: DirectoryExploreResult;
   terminal: TerminalCommandResult;
+  searchFiles: SearchResult;
 };

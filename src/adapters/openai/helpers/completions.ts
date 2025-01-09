@@ -5,8 +5,9 @@ import { Tool, ToolResult, ToolResultMap } from "../../../types/tool";
 import { ReadFile } from "../../../tools/read-file";
 import { WriteFile } from "../../../tools/write-file";
 import { ExploreDir } from "../../../tools/explore-dir";
+import { SearchFiles } from "../../../tools/search-files";
 
-const MAX_TRIES = 5;
+const MAX_TRIES = 20;
 
 const sysMsg = `You are a capable AI assistant currently running on a GitHub bot. 
 You are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.
@@ -21,7 +22,7 @@ Workflow:
 To use a tool, format your response like this:
 \`\`\`tool
 {
-  "tool": "readFile|writeFile|exploreDir",
+  "tool": "readFile|writeFile|exploreDir|searchFiles",
   "args": {
     // For readFile:
     "filename": "path/to/file"
@@ -32,6 +33,12 @@ To use a tool, format your response like this:
     
     // For exploreDir:
     "command": "tree"
+
+    // For searchFiles:
+    "pattern": "regex pattern",
+    "filePattern": "glob pattern (optional)",
+    "caseSensitive": boolean (optional),
+    "contextLines": number (optional)
   }
 }
 \`\`\`
@@ -80,6 +87,19 @@ Available Tools:
   - error?: string
   - metadata: execution details
 
+### SearchFiles Tool ###
+- Purpose: Search files using regex patterns
+- Method: execute(pattern: string, options?: { filePattern?: string, caseSensitive?: boolean, contextLines?: number })
+- Returns: ToolResult<SearchResult> containing:
+  - success: boolean
+  - data: { 
+    matches: Array<{ file: string, line: number, content: string, context: string[] }>,
+    totalFiles: number,
+    searchPattern: string
+  }
+  - error?: string
+  - metadata: execution details
+
 Note: All file paths are relative to the current working directory. You only need to provide filenames.
 
 Rules and Best Practices:
@@ -96,6 +116,7 @@ interface ToolSet {
   readFile: ReadFile;
   writeFile: WriteFile;
   exploreDir: ExploreDir;
+  searchFiles: SearchFiles;
 }
 
 type ToolName = keyof ToolResultMap;
@@ -106,6 +127,10 @@ interface ToolRequest {
     filename?: string;
     content?: string;
     command?: "tree";
+    pattern?: string;
+    filePattern?: string;
+    caseSensitive?: boolean;
+    contextLines?: number;
   };
 }
 
@@ -121,16 +146,18 @@ export class Completions extends SuperOpenAi {
 
   constructor(client: OpenAI, context: Context) {
     super(client, context);
-    this.maxTokens = 100000;
+    this.maxTokens = 100;
     this.attempts = 0;
     this.tools = {
       readFile: new ReadFile(),
       writeFile: new WriteFile(),
       exploreDir: new ExploreDir(),
+      searchFiles: new SearchFiles(),
     };
   }
 
   private async _executeToolRequest(request: ToolRequest, workingDir: string): Promise<ToolResult<ToolResultMap[ToolName]>> {
+    this.context.logger.info(`Executing tool request: ${request.tool} with args:`, request.args);
     switch (request.tool) {
       case "readFile":
         if (!request.args.filename) throw new Error("Filename is required for readFile");
@@ -144,6 +171,14 @@ export class Completions extends SuperOpenAi {
 
       case "exploreDir":
         return this._getDirectoryTree(workingDir);
+
+      case "searchFiles":
+        if (!request.args.pattern) throw new Error("Search pattern is required");
+        return this._searchFiles(request.args.pattern, workingDir, {
+          filePattern: request.args.filePattern,
+          caseSensitive: request.args.caseSensitive,
+          contextLines: request.args.contextLines,
+        });
 
       default:
         throw new Error(`Unknown tool: ${request.tool}`);
@@ -255,6 +290,7 @@ export class Completions extends SuperOpenAi {
 
     // Update tools with working directory
     this.tools.exploreDir = new ExploreDir(workingDir);
+    this.tools.searchFiles = new SearchFiles(workingDir);
 
     let isSolved = false;
     let finalResponse: OpenAI.Chat.Completions.ChatCompletion | null = null;
@@ -322,5 +358,17 @@ export class Completions extends SuperOpenAi {
 
   private async _getDirectoryTree(workingDir: string) {
     return this._executeWithRetry(this.tools.exploreDir, "execute", workingDir, "tree");
+  }
+
+  private async _searchFiles(
+    pattern: string,
+    workingDir: string,
+    options?: {
+      filePattern?: string;
+      caseSensitive?: boolean;
+      contextLines?: number;
+    }
+  ) {
+    return this._executeWithRetry(this.tools.searchFiles, "execute", workingDir, pattern, options);
   }
 }
