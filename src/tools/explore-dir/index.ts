@@ -114,7 +114,7 @@ export class ExploreDir implements Tool<DirectoryExploreResult> {
 
   private async _cloneRepo(repo: string, owner: string, issueNumber: number): Promise<void> {
     this._currentDir = await this._makeTempDir();
-    const command = `git clone https://github.com/ShivTestOrg/test-public.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${issueNumber}`;
+    const command = `git clone https://github.com/${owner}/${repo}.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${issueNumber}`;
     await this._shellInterface.runCommand(command);
   }
 }
