@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import { Context } from "../../../types/context";
 import { SuperOpenAi } from "./openai";
-import { Tool, ToolResult, ToolResultMap } from "../../../types/tool";
+import { Tool, ToolResult, ToolResultMap, DirectoryExploreResult } from "../../../types/tool";
 import { ReadFile } from "../../../tools/read-file";
 import { WriteFile } from "../../../tools/write-file";
 import { ExploreDir } from "../../../tools/explore-dir";
@@ -26,10 +26,10 @@ To use tools, you can include one or more tool requests in your response. Each t
   "tool": "readFile|writeFile|exploreDir|searchFiles",
   "args": {
     // For readFile:
-    "filename": "path/to/file"
+    "filename": "/full/path/from/working/dir/to/file"
     
     // For writeFile:
-    "filename": "path/to/file",
+    "filename": "/full/path/from/working/dir/to/file",
     "content": "file content"
     
     // For exploreDir:
@@ -103,7 +103,7 @@ Available Tools:
   - error?: string
   - metadata: execution details
 
-Note: All file paths are relative to the current working directory. You only need to provide filenames.
+Note: All file paths must be absolute paths from the working directory that is provided to you. For example, if the working directory is "/tmp/repo" and you want to write to "src/file.ts", you must specify "/tmp/repo/src/file.ts" as the filename.
 
 Rules and Best Practices:
 1. Always check ToolResult.success before using the data
@@ -322,10 +322,17 @@ export class Completions extends SuperOpenAi {
     ];
 
     while (this.attempts < MAX_TRIES && !isSolved) {
+      // Get the directory tree
+      const treeResult = await this._getDirectoryTree(workingDir);
+      const treeOutput =
+        treeResult.success && (treeResult.data as DirectoryExploreResult)?.tree
+          ? (treeResult.data as DirectoryExploreResult).tree
+          : "Unable to get directory tree";
+
       // Add the current state to conversation
       conversationHistory.push({
         role: "user",
-        content: `Current attempt: ${this.attempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${prompt}`,
+        content: `Current attempt: ${this.attempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${prompt}`,
       });
 
       const res = await this.client.chat.completions.create({
@@ -370,11 +377,11 @@ export class Completions extends SuperOpenAi {
 
   // Helper methods to execute tools with retry logic
   private async _readFile(filename: string, workingDir: string) {
-    return this._executeWithRetry(this.tools.readFile, "execute", workingDir, `${workingDir}/${filename}`);
+    return this._executeWithRetry(this.tools.readFile, "execute", workingDir, filename);
   }
 
   private async _writeFile(filename: string, content: string, workingDir: string) {
-    return this._executeWithRetry(this.tools.writeFile, "execute", workingDir, `${workingDir}/${filename}`, content);
+    return this._executeWithRetry(this.tools.writeFile, "execute", workingDir, filename, content);
   }
 
   private async _getDirectoryTree(workingDir: string) {
