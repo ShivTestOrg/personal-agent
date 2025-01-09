@@ -3,6 +3,8 @@ import { LogLevel, Logs } from "@ubiquity-dao/ubiquibot-logger";
 import { delegate } from "./handlers/front-controller";
 import { Context, Env, PluginInputs } from "./types";
 import { isIssueCommentEvent } from "./types/typeguards";
+import { createAdapters } from "./adapters";
+import OpenAI from "openai";
 
 /**
  * The main plugin function. Split for easier testing.
@@ -22,15 +24,24 @@ export async function runPlugin(context: Context) {
  */
 export async function plugin(inputs: PluginInputs, env: Env) {
   const octokit = new Octokit({ auth: env.PERSONAL_AGENT_PAT_CLASSIC });
+  const config = inputs.settings;
+  const openAiObject = {
+    apiKey: (config.openAiBaseUrl && env.OPENROUTER_API_KEY) || env.OPENAI_API_KEY,
+    ...(config.openAiBaseUrl && { baseURL: config.openAiBaseUrl }),
+  };
 
   const context: Context = {
     eventName: inputs.eventName,
     payload: inputs.eventPayload,
-    config: inputs.settings,
+    config: config,
     octokit,
     env,
     logger: new Logs("info" as LogLevel),
+    adapters: {} as ReturnType<typeof createAdapters>,
   };
+
+  const openaiClient = new OpenAI(openAiObject);
+  context.adapters = createAdapters(openaiClient, context);
 
   /**
    * NOTICE: Consider non-database storage solutions unless necessary

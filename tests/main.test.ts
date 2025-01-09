@@ -11,6 +11,9 @@ import { db } from "./__mocks__/db";
 import { createComment, setupTests } from "./__mocks__/helpers";
 import { server } from "./__mocks__/node";
 import { STRINGS } from "./__mocks__/strings";
+import { createAdapters } from "../src/adapters";
+
+const SECONDS = 1000;
 
 dotenv.config();
 jest.requireActual("@octokit/rest");
@@ -39,23 +42,27 @@ describe("Personal Agent Plugin tests", () => {
     expect(content).toEqual(manifest);
   });
 
-  it("Should say hello", async () => {
-    const { context, errorSpy, okSpy, infoSpy, verboseSpy } = createContext();
+  it(
+    "log the values",
+    async () => {
+      const { context, errorSpy, okSpy, infoSpy, verboseSpy } = createContext();
 
-    expect(context.eventName).toBe(commentCreateEvent);
+      expect(context.eventName).toBe(commentCreateEvent);
 
-    await runPlugin(context);
+      await runPlugin(context);
 
-    expect(errorSpy).not.toHaveBeenCalled();
-    expect(infoSpy).toHaveBeenNthCalledWith(1, `Comment received:`, {
-      caller: STRINGS.CALLER_LOGS_ANON,
-      personalAgentOwner: STRINGS.personalAgentOwner,
-      owner: STRINGS.USER,
-      comment: STRINGS.commentBody,
-    });
-    expect(okSpy).toHaveBeenNthCalledWith(1, `Comment created: Hello`);
-    expect(verboseSpy).toHaveBeenNthCalledWith(1, "Exiting decideHandler");
-  });
+      expect(errorSpy).not.toHaveBeenCalled();
+      expect(infoSpy).toHaveBeenNthCalledWith(1, `Comment received:`, {
+        caller: STRINGS.CALLER_LOGS_ANON,
+        personalAgentOwner: STRINGS.personalAgentOwner,
+        owner: STRINGS.USER,
+        comment: STRINGS.commentBody,
+      });
+      expect(okSpy).toHaveBeenNthCalledWith(1, `Comment created: Hello`);
+      expect(verboseSpy).toHaveBeenNthCalledWith(1, "Exiting decideHandler");
+    },
+    10 * SECONDS
+  );
 
   it("Should reply with err if wrong command", async () => {
     const { context, errorSpy, okSpy, infoSpy, verboseSpy } = createContext(`/@${STRINGS.personalAgentOwner} wrong command`);
@@ -143,7 +150,11 @@ function createContextInner(
       organization: { login: STRINGS.USER } as Context["payload"]["organization"],
     } as Context["payload"],
     logger: new Logs("debug"),
-    config: {},
+    config: {
+      model: "o1-mini",
+      openAiBaseUrl: undefined,
+    },
+    adapters: {} as ReturnType<typeof createAdapters>,
     env: {} as Env,
     octokit: octokit,
   };

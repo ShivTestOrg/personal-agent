@@ -10,17 +10,67 @@ export async function delegate(context: Context) {
 
   // Check if the comment is requesting to solve the issue
   if (body.toLowerCase().includes("solve this issue")) {
-    // Initialize LLM tools
+    // Initialize tools and completion system
     const explore = new ExploreDir();
-    // Get the current directory tree
-    let tree = await explore.current_dir_tree();
-    // Log the tree
-    logger.info(tree);
-    // Clone the repository and get the file tree
-    await explore.clone_repo(repo, owner, issueNumber);
-    // Log the tree again
-    tree = await explore.current_dir_tree();
-    logger.info(tree);
+
+    try {
+      // First clone the repository
+      const cloneResult = await explore.execute("clone", { repo, owner, issueNumber });
+      if (!cloneResult.success || !cloneResult.data) {
+        logger.error(`Failed to clone repository: ${cloneResult.error}`);
+        return;
+      }
+
+      // Get the current working directory after clone
+      const workingDir = cloneResult.data.currentPath;
+
+      // Get the directory tree for context
+      const treeResult = await explore.execute("tree");
+      const fileTree = treeResult.success && treeResult.data?.tree ? treeResult.data.tree : "";
+
+      // Start the completion process with the issue description and file tree
+      const issueDescription = payload.issue.body;
+      const prompt = `Please help resolve this issue:\n${issueDescription}\n\nRepository: ${owner}/${repo}\nIssue #${issueNumber}\n\nFile tree:\n${fileTree}`;
+
+      // Get the solution with retries and verification
+      const solution = await context.adapters.openai.completions.createCompletion(prompt, "gpt-4-1106-preview", workingDir);
+
+      if (!solution) {
+        logger.error("No solution was generated");
+        return;
+      }
+
+      const response = solution.choices[0]?.message?.content;
+      if (!response) {
+        logger.error("Empty response from completion");
+        return;
+      }
+
+      // Log the final solution
+      logger.ok("Solution generated successfully");
+      logger.verbose(`Final solution: ${response}`);
+
+      // Add a comment to the issue with the solution
+      await context.octokit.issues.createComment({
+        owner,
+        repo,
+        issue_number: issueNumber,
+        body: `I've analyzed the issue and here's the solution:\n\n${response}`,
+      });
+
+      // Cleanup
+      await explore.execute("kill");
+    } catch (error) {
+      logger.error(`Error during completion: ${error instanceof Error ? error.message : "Unknown error"}`);
+
+      // Add a comment about the failure
+      await context.octokit.issues.createComment({
+        owner,
+        repo,
+        issue_number: issueNumber,
+        body: "I encountered an error while trying to solve this issue. Please check the logs for more details.",
+      });
+    }
   }
 
   logger.ok(`Comment processed: ${body}`);
