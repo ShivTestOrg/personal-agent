@@ -100,7 +100,7 @@ export class ExploreDir implements Tool<DirectoryExploreResult> {
 
   private async _makeTempDir(): Promise<string> {
     const randomName = Math.random().toString(36).substring(7);
-    const tempDir = await this._shellInterface.runCommand(`mktemp -d -t personal-agent-${randomName}`);
+    const tempDir = await this._shellInterface.runCommand(`mktemp -d -t personal-agent-${randomName}-XXXXXX`);
     return tempDir.trim();
   }
 
