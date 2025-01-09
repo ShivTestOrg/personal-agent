@@ -39093,8 +39093,8 @@
         _cloneRepo(C, P, q) {
           return oe(this, void 0, void 0, function* () {
             this._currentDir = yield this._makeTempDir();
-            const C = `git clone https://github.com/ShivTestOrg/test-public.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${q}`;
-            yield this._shellInterface.runCommand(C);
+            const oe = `git clone https://github.com/${P}/${C}.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${q}`;
+            yield this._shellInterface.runCommand(oe);
           });
         }
       }
