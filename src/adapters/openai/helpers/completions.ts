@@ -226,6 +226,8 @@ export class Completions extends SuperOpenAi {
       const toolJson = toolBlock[1];
 
       try {
+        console.log(toolJson);
+        this.context.logger.info(`Processing tool request:`, { toolJson });
         const toolRequest: ToolRequest = JSON.parse(toolJson);
 
         // For writeFile, ensure content is stringified if it's an object
