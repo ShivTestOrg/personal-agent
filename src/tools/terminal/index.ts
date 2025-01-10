@@ -2,13 +2,23 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { resolve } from "node:path";
 import { existsSync, statSync } from "node:fs";
-import { Tool, ToolResult, TerminalCommandResult } from "../../types/tool";
+import { Tool, ToolResult, TerminalCommandResult, FunctionParameters } from "../../types/tool";
 
 const execFilePromise = promisify(execFile);
 
 export class Terminal implements Tool<TerminalCommandResult> {
   readonly name = "terminal";
   readonly description = "Executes shell commands in a terminal environment";
+  readonly parameters: FunctionParameters = {
+    type: "object",
+    properties: {
+      command: {
+        type: "string",
+        description: "The shell command to execute",
+      },
+    },
+    required: ["command"],
+  };
 
   private _cwd: string;
 
@@ -16,8 +26,13 @@ export class Terminal implements Tool<TerminalCommandResult> {
     this._cwd = _workdir;
   }
 
-  async execute(command: string): Promise<ToolResult<TerminalCommandResult>> {
+  async execute(args: Record<string, unknown>): Promise<ToolResult<TerminalCommandResult>> {
     try {
+      const command = args.command as string;
+      if (!command) {
+        throw new Error("Command is required");
+      }
+
       if (command.startsWith("cd ")) {
         const dir = command.slice(3).trim();
         const targetDir = resolve(this._cwd, dir);
@@ -66,7 +81,7 @@ export class Terminal implements Tool<TerminalCommandResult> {
         metadata: {
           timestamp: Date.now(),
           toolName: this.name,
-          command,
+          command: args.command as string,
           cwd: this._cwd,
         },
       };
@@ -74,7 +89,7 @@ export class Terminal implements Tool<TerminalCommandResult> {
   }
 
   async runCommand(command: string): Promise<string> {
-    const result = await this.execute(command);
+    const result = await this.execute({ command });
     if (!result.success) {
       throw new Error(result.error);
     }
@@ -123,7 +138,7 @@ export class TerminalManager {
     const terminal = this._terminals.get(id);
     if (terminal) {
       try {
-        const result = await terminal.execute(command);
+        const result = await terminal.execute({ command });
         if (result.success && result.data) {
           console.log(`Command executed in terminal ${id}: ${result.data.output}`);
         } else {
