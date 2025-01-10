@@ -38691,16 +38691,17 @@
                 q.error(`Failed to clone repository: ${ie.error}`);
                 return;
               }
-              const Ot = new Ge.ReadFile();
-              const Ir = new st.WriteFile();
-              const Br = yield Ot.execute({ path: "README.md" });
-              if (!Br.success) {
-                q.error(`Failed to read file: ${Br.error}`);
+              const Ot = ie.data.currentPath;
+              const Ir = new Ge.ReadFile();
+              const Br = new st.WriteFile();
+              const Qr = yield Ir.execute({ path: Ot + "/README.md" });
+              if (!Qr.success) {
+                q.error(`Failed to read file: ${Qr.error}`);
                 return;
               }
-              const Qr = yield Ir.execute({ path: "output.txt", content: ((P = Br.data) === null || P === void 0 ? void 0 : P.content) || "" });
-              if (!Qr.success) {
-                q.error(`Failed to write file: ${Qr.error}`);
+              const Dr = yield Br.execute({ path: Ot + "/output.txt", content: ((P = Qr.data) === null || P === void 0 ? void 0 : P.content) || "" });
+              if (!Dr.success) {
+                q.error(`Failed to write file: ${Dr.error}`);
                 return;
               }
               q.ok("File operations completed successfully");
