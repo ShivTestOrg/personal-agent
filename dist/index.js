@@ -38673,48 +38673,47 @@
       Object.defineProperty(P, "__esModule", { value: true });
       P.delegate = delegate;
       const ie = q(94049);
+      const Ge = q(71917);
+      const st = q(14164);
       function delegate(C) {
         return oe(this, void 0, void 0, function* () {
-          var P, q, oe;
-          const { logger: Ge, payload: st } = C;
-          const Ot = st.comment.body;
-          const Wt = st.repository.name;
-          const Ar = st.repository.owner.login;
-          const Er = st.issue.number;
+          var P;
+          const { logger: q, payload: oe } = C;
+          const Ot = oe.comment.body;
+          const Wt = oe.repository.name;
+          const Ar = oe.repository.owner.login;
+          const Er = oe.issue.number;
           if (Ot.toLowerCase().includes("solve this issue")) {
-            const Ot = new ie.ExploreDir();
+            const oe = new ie.ExploreDir();
             try {
-              const ie = yield Ot.execute({ command: "clone", repo: Wt, owner: Ar, issueNumber: Er });
+              const ie = yield oe.execute({ command: "clone", repo: Wt, owner: Ar, issueNumber: Er });
               if (!ie.success || !ie.data) {
-                Ge.error(`Failed to clone repository: ${ie.error}`);
+                q.error(`Failed to clone repository: ${ie.error}`);
                 return;
               }
-              const Ir = ie.data.currentPath;
-              const Br = yield Ot.execute({ command: "tree" });
-              const Qr = Br.success && ((P = Br.data) === null || P === void 0 ? void 0 : P.tree) ? Br.data.tree : "";
-              const Dr = st.issue.body;
-              const Fr = `Please help resolve this issue:\n${Dr}\n\nRepository: ${Ar}/${Wt}\nIssue #${Er}\n\nFile tree:\n${Qr}`;
-              const kr = yield C.adapters.openai.completions.createCompletion(Fr, "anthropic/claude-3.5-sonnet", Ir);
-              if (!kr) {
-                Ge.error("No solution was generated");
+              const Ot = new Ge.ReadFile();
+              const Ir = new st.WriteFile();
+              const Br = yield Ot.execute({ path: "README.md" });
+              if (!Br.success) {
+                q.error(`Failed to read file: ${Br.error}`);
                 return;
               }
-              const Nr = (oe = (q = kr.choices[0]) === null || q === void 0 ? void 0 : q.message) === null || oe === void 0 ? void 0 : oe.content;
-              if (!Nr) {
-                Ge.error("Empty response from completion");
+              const Qr = yield Ir.execute({ path: "output.txt", content: ((P = Br.data) === null || P === void 0 ? void 0 : P.content) || "" });
+              if (!Qr.success) {
+                q.error(`Failed to write file: ${Qr.error}`);
                 return;
               }
-              Ge.ok("Solution generated successfully");
-              Ge.verbose(`Final solution: ${Nr}`);
+              q.ok("File operations completed successfully");
+              q.verbose("Files processed: README.md -> output.txt");
               yield C.octokit.issues.createComment({
                 owner: Ar,
                 repo: Wt,
                 issue_number: Er,
-                body: `I've analyzed the issue and here's the solution:\n\n${Nr}`,
+                body: `File operations completed successfully. Processed README.md -> output.txt`,
               });
-              yield Ot.execute({ command: "kill" });
+              yield oe.execute({ command: "kill" });
             } catch (P) {
-              Ge.error(`Error during completion: ${P instanceof Error ? P.message : "Unknown error"}`);
+              q.error(`Error during completion: ${P instanceof Error ? P.message : "Unknown error"}`);
               yield C.octokit.issues.createComment({
                 owner: Ar,
                 repo: Wt,
@@ -38723,8 +38722,8 @@
               });
             }
           }
-          Ge.ok(`Comment processed: ${Ot}`);
-          Ge.verbose(`Exiting delegate`);
+          q.ok(`Comment processed: ${Ot}`);
+          q.verbose(`Exiting delegate`);
         });
       }
     },
@@ -38957,6 +38956,9 @@
                 (0, ie.execSync)("git add .", { stdio: "pipe" });
                 const C = (0, ie.execSync)("git status --porcelain", { stdio: "pipe" }).toString();
                 this._context.logger.info("Changes to be committed:", { status: C });
+                if (!C.trim()) {
+                  throw new Error("No changes to commit. Please make changes before creating a pull request.");
+                }
                 this._context.logger.info("Committing changes");
                 (0, ie.execSync)(`git commit -m "${P}"`, { stdio: "pipe" });
                 const q = (0, ie.execSync)("git rev-parse --abbrev-ref HEAD", { stdio: "pipe" }).toString().trim();
