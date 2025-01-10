@@ -1,3 +1,4 @@
+import { CreatePr } from "../tools/create-pr";
 import { ExploreDir } from "../tools/explore-dir";
 import { ReadFile } from "../tools/read-file";
 import { WriteFile } from "../tools/write-file";
@@ -65,14 +66,14 @@ export async function delegate(context: Context) {
       */
 
       // Example: Read a file and write to another file
-      const readResult = await readFile.execute({ path: workingDir + "/README.md" });
+      const readResult = await readFile.execute({ filename: workingDir + "/README.md" });
       if (!readResult.success) {
-        logger.error(`Failed to read file: ${readResult.error}`);
+        logger.error(`Failed to read file: ${readResult.error} + ${workingDir}`);
         return;
       }
 
       const writeResult = await writeFile.execute({
-        path: workingDir + "/output.txt",
+        filename: workingDir + "/output.txt",
         content: readResult.data?.content || "",
       });
       if (!writeResult.success) {
@@ -82,6 +83,12 @@ export async function delegate(context: Context) {
 
       logger.ok("File operations completed successfully");
       logger.verbose("Files processed: README.md -> output.txt");
+
+      const prTool = new CreatePr(context);
+      await prTool.execute({
+        title: "Solved issue",
+        body: "I have solved this issue. Please review the changes.",
+      });
 
       // Add a comment to the issue with the file operation result
       await context.octokit.issues.createComment({
