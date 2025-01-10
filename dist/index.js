@@ -38462,6 +38462,8 @@
               const q = C[0];
               const ie = C[1];
               try {
+                console.log(ie);
+                this.context.logger.info(`Processing tool request:`, { toolJson: ie });
                 const C = JSON.parse(ie);
                 if (C.tool === "writeFile" && C.args.content && typeof C.args.content === "object") {
                   C.args.content = JSON.stringify(C.args.content, null, 2);
@@ -50401,7 +50403,7 @@
       const oe = q(35535);
       class Speech extends oe.APIResource {
         create(C, P) {
-          return this._client.post("/audio/speech", { body: C, ...P, __binaryResponse: true });
+          return this._client.post("/audio/speech", { body: C, ...P, headers: { Accept: "application/octet-stream", ...P?.headers }, __binaryResponse: true });
         }
       }
       P.Speech = Speech;
@@ -51551,10 +51553,10 @@
           return this._client.delete(`/files/${C}`, P);
         }
         content(C, P) {
-          return this._client.get(`/files/${C}/content`, { ...P, __binaryResponse: true });
+          return this._client.get(`/files/${C}/content`, { ...P, headers: { Accept: "application/binary", ...P?.headers }, __binaryResponse: true });
         }
         retrieveContent(C, P) {
-          return this._client.get(`/files/${C}/content`, { ...P, headers: { Accept: "application/json", ...P?.headers } });
+          return this._client.get(`/files/${C}/content`, P);
         }
         async waitForProcessing(C, { pollInterval: P = 5e3, maxWait: q = 30 * 60 * 1e3 } = {}) {
           const oe = new Set(["processed", "error", "deleted"]);
@@ -52503,7 +52505,7 @@
       "use strict";
       Object.defineProperty(P, "__esModule", { value: true });
       P.VERSION = void 0;
-      P.VERSION = "4.78.0";
+      P.VERSION = "4.78.1";
     },
     16577: function (C, P, q) {
       "use strict";
