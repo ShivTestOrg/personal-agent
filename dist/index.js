@@ -38672,58 +38672,61 @@
         };
       Object.defineProperty(P, "__esModule", { value: true });
       P.delegate = delegate;
-      const ie = q(94049);
-      const Ge = q(71917);
-      const st = q(14164);
+      const ie = q(40893);
+      const Ge = q(94049);
+      const st = q(71917);
+      const Ot = q(14164);
       function delegate(C) {
         return oe(this, void 0, void 0, function* () {
           var P;
           const { logger: q, payload: oe } = C;
-          const Ot = oe.comment.body;
-          const Wt = oe.repository.name;
-          const Ar = oe.repository.owner.login;
-          const Er = oe.issue.number;
-          if (Ot.toLowerCase().includes("solve this issue")) {
-            const oe = new ie.ExploreDir();
+          const Wt = oe.comment.body;
+          const Ar = oe.repository.name;
+          const Er = oe.repository.owner.login;
+          const Ir = oe.issue.number;
+          if (Wt.toLowerCase().includes("solve this issue")) {
+            const oe = new Ge.ExploreDir();
             try {
-              const ie = yield oe.execute({ command: "clone", repo: Wt, owner: Ar, issueNumber: Er });
-              if (!ie.success || !ie.data) {
-                q.error(`Failed to clone repository: ${ie.error}`);
+              const Ge = yield oe.execute({ command: "clone", repo: Ar, owner: Er, issueNumber: Ir });
+              if (!Ge.success || !Ge.data) {
+                q.error(`Failed to clone repository: ${Ge.error}`);
                 return;
               }
-              const Ot = ie.data.currentPath;
-              const Ir = new Ge.ReadFile();
-              const Br = new st.WriteFile();
-              const Qr = yield Ir.execute({ path: Ot + "/README.md" });
-              if (!Qr.success) {
-                q.error(`Failed to read file: ${Qr.error}`);
-                return;
-              }
-              const Dr = yield Br.execute({ path: Ot + "/output.txt", content: ((P = Qr.data) === null || P === void 0 ? void 0 : P.content) || "" });
+              const Wt = Ge.data.currentPath;
+              const Br = new st.ReadFile();
+              const Qr = new Ot.WriteFile();
+              const Dr = yield Br.execute({ filename: Wt + "/README.md" });
               if (!Dr.success) {
-                q.error(`Failed to write file: ${Dr.error}`);
+                q.error(`Failed to read file: ${Dr.error} + ${Wt}`);
+                return;
+              }
+              const Fr = yield Qr.execute({ filename: Wt + "/output.txt", content: ((P = Dr.data) === null || P === void 0 ? void 0 : P.content) || "" });
+              if (!Fr.success) {
+                q.error(`Failed to write file: ${Fr.error}`);
                 return;
               }
               q.ok("File operations completed successfully");
               q.verbose("Files processed: README.md -> output.txt");
+              const kr = new ie.CreatePr(C);
+              yield kr.execute({ title: "Solved issue", body: "I have solved this issue. Please review the changes." });
               yield C.octokit.issues.createComment({
-                owner: Ar,
-                repo: Wt,
-                issue_number: Er,
+                owner: Er,
+                repo: Ar,
+                issue_number: Ir,
                 body: `File operations completed successfully. Processed README.md -> output.txt`,
               });
               yield oe.execute({ command: "kill" });
             } catch (P) {
               q.error(`Error during completion: ${P instanceof Error ? P.message : "Unknown error"}`);
               yield C.octokit.issues.createComment({
-                owner: Ar,
-                repo: Wt,
-                issue_number: Er,
+                owner: Er,
+                repo: Ar,
+                issue_number: Ir,
                 body: "I encountered an error while trying to solve this issue. Please check the logs for more details.",
               });
             }
           }
-          q.ok(`Comment processed: ${Ot}`);
+          q.ok(`Comment processed: ${Wt}`);
           q.verbose(`Exiting delegate`);
         });
       }
