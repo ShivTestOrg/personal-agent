@@ -28,8 +28,8 @@ export async function delegate(context: Context) {
         return;
       }
 
-      // // Get the current working directory after clone
-      // const workingDir = cloneResult.data.currentPath;
+      // Get the current working directory after clone
+      const workingDir = cloneResult.data.currentPath;
 
       // // Get the directory tree for context
       // const treeResult = await explore.execute({ command: "tree" });
@@ -65,14 +65,14 @@ export async function delegate(context: Context) {
       */
 
       // Example: Read a file and write to another file
-      const readResult = await readFile.execute({ path: "README.md" });
+      const readResult = await readFile.execute({ path: workingDir + "/README.md" });
       if (!readResult.success) {
         logger.error(`Failed to read file: ${readResult.error}`);
         return;
       }
 
       const writeResult = await writeFile.execute({
-        path: "output.txt",
+        path: workingDir + "/output.txt",
         content: readResult.data?.content || "",
       });
       if (!writeResult.success) {
