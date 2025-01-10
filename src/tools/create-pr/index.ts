@@ -1,4 +1,4 @@
-import { Tool, ToolResult } from "../../types/tool";
+import { Tool, ToolResult, FunctionParameters } from "../../types/tool";
 import { Context } from "../../types/context";
 import { execSync } from "child_process";
 
@@ -8,17 +8,39 @@ export interface PullRequestResult {
   title: string;
 }
 
-export class CreatePr implements Tool {
-  readonly name = "create-pr";
+export class CreatePr implements Tool<PullRequestResult> {
+  readonly name = "createPr";
   readonly description = "Creates a pull request with the changes";
+  readonly parameters: FunctionParameters = {
+    type: "object",
+    properties: {
+      title: {
+        type: "string",
+        description: "Title of the pull request",
+      },
+      body: {
+        type: "string",
+        description: "Description/body of the pull request",
+      },
+    },
+    required: ["title", "body"],
+  };
+
   private _context: Context;
 
   constructor(context: Context) {
     this._context = context;
   }
 
-  async execute(title: string, body: string): Promise<ToolResult<PullRequestResult>> {
+  async execute(args: Record<string, unknown>): Promise<ToolResult<PullRequestResult>> {
     try {
+      const title = args.title as string;
+      const body = args.body as string;
+
+      if (!title || !body) {
+        throw new Error("Title and body are required");
+      }
+
       try {
         // Stage all changes
         this._context.logger.info("Staging changes");

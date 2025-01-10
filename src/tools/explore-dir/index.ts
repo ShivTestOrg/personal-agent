@@ -1,9 +1,36 @@
 import { Terminal } from "../terminal";
-import { Tool, ToolResult, DirectoryExploreResult } from "../../types/tool";
+import { Tool, ToolResult, DirectoryExploreResult, FunctionParameters } from "../../types/tool";
 
 export class ExploreDir implements Tool<DirectoryExploreResult> {
-  readonly name = "explore-dir";
+  readonly name = "exploreDir";
   readonly description = "Explores and manipulates directories, including git operations";
+  readonly parameters: FunctionParameters = {
+    type: "object",
+    properties: {
+      command: {
+        type: "string",
+        description: "Command to execute",
+        enum: ["change-dir", "tree", "clone", "kill"],
+      },
+      dir: {
+        type: "string",
+        description: "Directory path for change-dir command",
+      },
+      repo: {
+        type: "string",
+        description: "Repository name for clone command",
+      },
+      owner: {
+        type: "string",
+        description: "Repository owner for clone command",
+      },
+      issueNumber: {
+        type: "number",
+        description: "Issue number for clone command",
+      },
+    },
+    required: ["command"],
+  };
 
   private _shellInterface: Terminal;
   private _currentDir: string;
@@ -14,11 +41,13 @@ export class ExploreDir implements Tool<DirectoryExploreResult> {
     this._currentDir = workDir;
   }
 
-  async execute(command: "change-dir" | "tree" | "clone" | "kill", args?: Record<string, unknown>): Promise<ToolResult<DirectoryExploreResult>> {
+  async execute(args: Record<string, unknown>): Promise<ToolResult<DirectoryExploreResult>> {
+    const command = args.command as "change-dir" | "tree" | "clone" | "kill";
+
     try {
       switch (command) {
         case "change-dir": {
-          const dir = args?.dir;
+          const dir = args.dir;
           if (typeof dir !== "string") {
             throw new Error("Directory path must be a string");
           }
@@ -40,7 +69,7 @@ export class ExploreDir implements Tool<DirectoryExploreResult> {
           };
         }
         case "clone": {
-          const { repo, owner, issueNumber } = args || {};
+          const { repo, owner, issueNumber } = args;
           if (!repo || !owner || !issueNumber || typeof repo !== "string" || typeof owner !== "string" || typeof issueNumber !== "number") {
             throw new Error("Missing required clone arguments");
           }

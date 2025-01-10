@@ -1,14 +1,28 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { Tool, ToolResult, FileWriteResult } from "../../types/tool";
+import { Tool, ToolResult, FileWriteResult, FunctionParameters } from "../../types/tool";
 
 interface DiffBlock {
   search: string;
   replace: string;
 }
 
-export class WriteFile implements Tool {
-  readonly name = "write-file";
+export class WriteFile implements Tool<FileWriteResult> {
+  readonly name = "writeFile";
   readonly description = "Applies diff blocks to update file content. Requires absolute file paths.";
+  readonly parameters: FunctionParameters = {
+    type: "object",
+    properties: {
+      filename: {
+        type: "string",
+        description: "Absolute path to the file (must start with /)",
+      },
+      content: {
+        type: "string",
+        description: "Content with diff blocks in format: <<<<<<< SEARCH\n[existing content]\n=======\n[new content]\n>>>>>>> REPLACE",
+      },
+    },
+    required: ["filename", "content"],
+  };
 
   private _parseDiffBlocks(diff: string): DiffBlock[] {
     const blocks: DiffBlock[] = [];
@@ -32,8 +46,15 @@ export class WriteFile implements Tool {
     return result;
   }
 
-  async execute(path: string, diff: string): Promise<ToolResult<FileWriteResult>> {
+  async execute(args: Record<string, unknown>): Promise<ToolResult<FileWriteResult>> {
     try {
+      const path = args.filename as string;
+      const diff = args.content as string;
+
+      if (!path || !diff) {
+        throw new Error("Filename and content are required");
+      }
+
       // Validate absolute path
       if (!path.startsWith("/")) {
         throw new Error("File path must be absolute (start with /)");
@@ -55,6 +76,7 @@ export class WriteFile implements Tool {
         data: {
           path,
           bytesWritten,
+          diffBlocksApplied: blocks.length,
         },
         metadata: {
           timestamp: Date.now(),

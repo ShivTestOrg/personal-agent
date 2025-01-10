@@ -15,7 +15,12 @@ export async function delegate(context: Context) {
 
     try {
       // First clone the repository
-      const cloneResult = await explore.execute("clone", { repo, owner, issueNumber });
+      const cloneResult = await explore.execute({
+        command: "clone",
+        repo,
+        owner,
+        issueNumber,
+      });
       if (!cloneResult.success || !cloneResult.data) {
         logger.error(`Failed to clone repository: ${cloneResult.error}`);
         return;
@@ -25,7 +30,7 @@ export async function delegate(context: Context) {
       const workingDir = cloneResult.data.currentPath;
 
       // Get the directory tree for context
-      const treeResult = await explore.execute("tree");
+      const treeResult = await explore.execute({ command: "tree" });
       const fileTree = treeResult.success && treeResult.data?.tree ? treeResult.data.tree : "";
 
       // Start the completion process with the issue description and file tree
@@ -59,7 +64,7 @@ export async function delegate(context: Context) {
       });
 
       // Cleanup
-      await explore.execute("kill");
+      await explore.execute({ command: "kill" });
     } catch (error) {
       logger.error(`Error during completion: ${error instanceof Error ? error.message : "Unknown error"}`);
 

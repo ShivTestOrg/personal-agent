@@ -1,6 +1,6 @@
 import { glob } from "glob";
 import { readFileSync } from "fs";
-import { Tool, ToolResult } from "../../types/tool";
+import { Tool, ToolResult, FunctionParameters } from "../../types/tool";
 
 export interface SearchResult {
   matches: Array<{
@@ -14,8 +14,30 @@ export interface SearchResult {
 }
 
 export class SearchFiles implements Tool<SearchResult> {
-  readonly name = "search-files";
+  readonly name = "searchFiles";
   readonly description = "Searches for files and content using glob patterns and regex";
+  readonly parameters: FunctionParameters = {
+    type: "object",
+    properties: {
+      pattern: {
+        type: "string",
+        description: "Regex pattern to search for",
+      },
+      filePattern: {
+        type: "string",
+        description: "Optional glob pattern to filter files",
+      },
+      isCaseSensitive: {
+        type: "boolean",
+        description: "Whether to perform case-sensitive search",
+      },
+      contextLines: {
+        type: "number",
+        description: "Number of context lines to include before and after match",
+      },
+    },
+    required: ["pattern"],
+  };
 
   private _workingDir: string;
   private readonly _contextLines = 2; // Number of lines of context before and after match
@@ -24,18 +46,16 @@ export class SearchFiles implements Tool<SearchResult> {
     this._workingDir = workingDir;
   }
 
-  async execute(
-    pattern: string,
-    options?: {
-      filePattern?: string;
-      isCaseSensitive?: boolean;
-      contextLines?: number;
-    }
-  ): Promise<ToolResult<SearchResult>> {
+  async execute(args: Record<string, unknown>): Promise<ToolResult<SearchResult>> {
     try {
-      const filePattern = options?.filePattern || "**/*";
-      const isCaseSensitive = options?.isCaseSensitive ?? false;
-      const contextLines = options?.contextLines ?? this._contextLines;
+      const pattern = args.pattern as string;
+      if (!pattern) {
+        throw new Error("Search pattern is required");
+      }
+
+      const filePattern = (args.filePattern as string) || "**/*";
+      const isCaseSensitive = args.isCaseSensitive ?? false;
+      const contextLines = (args.contextLines as number) ?? this._contextLines;
 
       // Find all files matching the glob pattern
       const files = await glob(filePattern, {

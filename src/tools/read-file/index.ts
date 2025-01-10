@@ -1,12 +1,27 @@
 import { readFileSync } from "fs";
-import { Tool, ToolResult, FileReadResult } from "../../types/tool";
+import { Tool, ToolResult, FileReadResult, FunctionParameters } from "../../types/tool";
 
-export class ReadFile implements Tool {
-  readonly name = "read-file";
+export class ReadFile implements Tool<FileReadResult> {
+  readonly name = "readFile";
   readonly description = "Reads content from a file at the specified path";
+  readonly parameters: FunctionParameters = {
+    type: "object",
+    properties: {
+      filename: {
+        type: "string",
+        description: "Absolute path to the file",
+      },
+    },
+    required: ["filename"],
+  };
 
-  async execute(path: string): Promise<ToolResult<FileReadResult>> {
+  async execute(args: Record<string, unknown>): Promise<ToolResult<FileReadResult>> {
+    const path = args.filename as string;
     try {
+      if (!path) {
+        throw new Error("Filename is required");
+      }
+
       console.log(`Reading file: ${path}`);
       const content = readFileSync(path, "utf8");
 
@@ -35,7 +50,7 @@ export class ReadFile implements Tool {
 
   async batchRead(paths: string[]): Promise<ToolResult<FileReadResult[]>> {
     try {
-      const results = await Promise.all(paths.map((path) => this.execute(path)));
+      const results = await Promise.all(paths.map((path) => this.execute({ filename: path })));
       const successfulReads = results.filter((result) => result.success && result.data).map((result) => result.data as FileReadResult);
 
       return {

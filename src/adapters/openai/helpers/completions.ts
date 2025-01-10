@@ -71,7 +71,7 @@ Available Tools:
 
 ### ReadFile Tool ###
 - Purpose: Read file contents
-- Method: execute(filename: string)
+- Method: execute(args: { filename: string })
 - Returns: ToolResult<FileReadResult> containing:
   - success: boolean
   - data: { content: string, path: string }
@@ -80,7 +80,7 @@ Available Tools:
 
 ### WriteFile Tool ###
 - Purpose: Update file contents using diff blocks
-- Method: execute(path: string, diff: string)
+- Method: execute(args: { filename: string, content: string })
 - Requires absolute file paths (must start with '/')
 - Diff format:
 
@@ -98,7 +98,7 @@ Available Tools:
 
 ### ExploreDir Tool ###
 - Purpose: Directory operations
-- Method: execute(command: 'tree', args?: any)
+- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })
 - Returns: ToolResult<DirectoryExploreResult> containing:
   - success: boolean
   - data: { currentPath: string, tree?: string }
@@ -107,7 +107,7 @@ Available Tools:
 
 ### SearchFiles Tool ###
 - Purpose: Search files using regex patterns
-- Method: execute(pattern: string, options?: { filePattern?: string, caseSensitive?: boolean, contextLines?: number })
+- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })
 - Returns: ToolResult<SearchResult> containing:
   - success: boolean
   - data: { 
@@ -142,15 +142,7 @@ type ToolName = keyof ToolResultMap;
 
 interface ToolRequest {
   tool: ToolName;
-  args: {
-    filename?: string;
-    content?: string;
-    command?: "tree";
-    pattern?: string;
-    filePattern?: string;
-    caseSensitive?: boolean;
-    contextLines?: number;
-  };
+  args: Record<string, unknown>;
 }
 
 type ChatMessage = {
@@ -184,23 +176,23 @@ export class Completions extends SuperOpenAi {
       switch (request.tool) {
         case "readFile":
           if (!request.args.filename) throw new Error("Filename is required for readFile");
-          return this._readFile(request.args.filename, workingDir);
+          return this._readFile(request.args.filename as string, workingDir);
 
         case "writeFile":
           if (!request.args.filename || !request.args.content) {
             throw new Error("Filename and content are required for writeFile");
           }
-          return this._writeFile(request.args.filename, request.args.content, workingDir);
+          return this._writeFile(request.args.filename as string, request.args.content as string, workingDir);
 
         case "exploreDir":
           return this._getDirectoryTree(workingDir);
 
         case "searchFiles":
           if (!request.args.pattern) throw new Error("Search pattern is required");
-          return this._searchFiles(request.args.pattern, workingDir, {
-            filePattern: request.args.filePattern,
-            caseSensitive: request.args.caseSensitive,
-            contextLines: request.args.contextLines,
+          return this._searchFiles(request.args.pattern as string, workingDir, {
+            filePattern: request.args.filePattern as string,
+            caseSensitive: request.args.caseSensitive as boolean,
+            contextLines: request.args.contextLines as number,
           });
 
         default:
@@ -226,9 +218,22 @@ export class Completions extends SuperOpenAi {
       const toolJson = toolBlock[1];
 
       try {
-        console.log(toolJson);
-        this.context.logger.info(`Processing tool request:`, { toolJson });
-        const toolRequest: ToolRequest = JSON.parse(toolJson);
+        // Trim any whitespace and ensure we have valid JSON
+        const trimmedJson = toolJson.trim();
+        if (!trimmedJson.endsWith("}")) {
+          throw new Error("Malformed JSON: Missing closing brace");
+        }
+
+        this.context.logger.info(`Processing tool request:`, { toolJson: trimmedJson });
+        const toolRequest: ToolRequest = JSON.parse(trimmedJson);
+
+        // Validate required fields
+        if (!toolRequest.tool) {
+          throw new Error('Tool request missing required "tool" field');
+        }
+        if (!toolRequest.args) {
+          throw new Error('Tool request missing required "args" field');
+        }
 
         // For writeFile, ensure content is stringified if it's an object
         if (toolRequest.tool === "writeFile" && toolRequest.args.content && typeof toolRequest.args.content === "object") {
@@ -289,7 +294,7 @@ export class Completions extends SuperOpenAi {
     tool: Tool<ToolResultMap[T]>,
     method: string,
     workingDir: string,
-    ...args: unknown[]
+    args: Record<string, unknown>
   ): Promise<ToolResult<ToolResultMap[T]>> {
     this.toolAttempts++;
 
@@ -309,12 +314,12 @@ export class Completions extends SuperOpenAi {
     }
 
     try {
-      const result = await tool.execute(...args);
+      const result = await tool.execute(args);
 
       if (!result.success && this.toolAttempts < MAX_TRIES) {
         const error = new Error(result.error || "Unknown error");
         this.context.logger.error(`Tool attempt ${this.toolAttempts} failed:`, { error });
-        return this._executeWithRetry(tool, method, workingDir, ...args);
+        return this._executeWithRetry(tool, method, workingDir, args);
       }
 
       if (result.success) {
@@ -331,7 +336,7 @@ export class Completions extends SuperOpenAi {
       this.context.logger.error(`Tool attempt ${this.toolAttempts} error:`, { error: errorObj });
 
       if (this.toolAttempts < MAX_TRIES) {
-        return this._executeWithRetry(tool, method, workingDir, ...args);
+        return this._executeWithRetry(tool, method, workingDir, args);
       }
 
       return {
@@ -446,20 +451,20 @@ ${currentSolution}`;
   }
 
   private async _createPullRequest(title: string, body: string) {
-    return this._executeWithRetry(this.tools.createPr, "execute", "", title, body);
+    return this._executeWithRetry(this.tools.createPr, "execute", "", { title, body });
   }
 
   // Helper methods to execute tools with retry logic
   private async _readFile(filename: string, workingDir: string) {
-    return this._executeWithRetry(this.tools.readFile, "execute", workingDir, filename);
+    return this._executeWithRetry(this.tools.readFile, "execute", workingDir, { filename });
   }
 
   private async _writeFile(filename: string, content: string, workingDir: string) {
-    return this._executeWithRetry(this.tools.writeFile, "execute", workingDir, filename, content);
+    return this._executeWithRetry(this.tools.writeFile, "execute", workingDir, { filename, content });
   }
 
   private async _getDirectoryTree(workingDir: string) {
-    return this._executeWithRetry(this.tools.exploreDir, "execute", workingDir, "tree");
+    return this._executeWithRetry(this.tools.exploreDir, "execute", workingDir, { command: "tree" });
   }
 
   private async _searchFiles(
@@ -471,6 +476,9 @@ ${currentSolution}`;
       contextLines?: number;
     }
   ) {
-    return this._executeWithRetry(this.tools.searchFiles, "execute", workingDir, pattern, options);
+    return this._executeWithRetry(this.tools.searchFiles, "execute", workingDir, {
+      pattern,
+      ...options,
+    });
   }
 }
