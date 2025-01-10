@@ -38406,7 +38406,7 @@
       const Wt = q(56310);
       const Ar = q(40893);
       const Er = 5;
-      const Ir = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Er} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n\nTo use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:\n\`\`\`tool\n{\n  "tool": "readFile|writeFile|exploreDir|searchFiles",\n  "args": {\n    // For readFile:\n    "filename": "/absolute/path/to/file"\n    \n    // For writeFile:\n    "filename": "/absolute/path/to/file",\n    "content": "diff blocks in format:\n    <<<<<<< SEARCH\n    [existing content to find]\n    =======\n    [new content to replace with]\n    >>>>>>> REPLACE"\n        \n    // For exploreDir:\n    "command": "tree"\n\n    // For searchFiles:\n    "pattern": "regex pattern",\n    "filePattern": "glob pattern (optional)",\n    "caseSensitive": boolean (optional),\n    "contextLines": number (optional)\n  }\n}\n\`\`\`\n\nMultiple tool requests will be processed sequentially in the order they appear in your response. Each tool request will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(filename: string)\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(path: string, diff: string)\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(command: 'tree', args?: any)\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(pattern: string, options?: { filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Er} attempts to complete each task`;
+      const Ir = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Er} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n\nTo use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:\n\`\`\`tool\n{\n  "tool": "readFile|writeFile|exploreDir|searchFiles",\n  "args": {\n    // For readFile:\n    "filename": "/absolute/path/to/file"\n    \n    // For writeFile:\n    "filename": "/absolute/path/to/file",\n    "content": "diff blocks in format:\n    <<<<<<< SEARCH\n    [existing content to find]\n    =======\n    [new content to replace with]\n    >>>>>>> REPLACE"\n        \n    // For exploreDir:\n    "command": "tree"\n\n    // For searchFiles:\n    "pattern": "regex pattern",\n    "filePattern": "glob pattern (optional)",\n    "caseSensitive": boolean (optional),\n    "contextLines": number (optional)\n  }\n}\n\`\`\`\n\nMultiple tool requests will be processed sequentially in the order they appear in your response. Each tool request will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(args: { filename: string })\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(args: { filename: string, content: string })\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Er} attempts to complete each task`;
       class Completions extends ie.SuperOpenAi {
         constructor(C, P) {
           super(C, P);
@@ -38462,14 +38462,23 @@
               const q = C[0];
               const ie = C[1];
               try {
-                console.log(ie);
-                this.context.logger.info(`Processing tool request:`, { toolJson: ie });
-                const C = JSON.parse(ie);
-                if (C.tool === "writeFile" && C.args.content && typeof C.args.content === "object") {
-                  C.args.content = JSON.stringify(C.args.content, null, 2);
+                const C = ie.trim();
+                if (!C.endsWith("}")) {
+                  throw new Error("Malformed JSON: Missing closing brace");
                 }
-                const Ge = yield this._executeToolRequest(C, P);
-                oe = oe.replace(q, "```result\n" + JSON.stringify(Ge, null, 2) + "\n```");
+                this.context.logger.info(`Processing tool request:`, { toolJson: C });
+                const Ge = JSON.parse(C);
+                if (!Ge.tool) {
+                  throw new Error('Tool request missing required "tool" field');
+                }
+                if (!Ge.args) {
+                  throw new Error('Tool request missing required "args" field');
+                }
+                if (Ge.tool === "writeFile" && Ge.args.content && typeof Ge.args.content === "object") {
+                  Ge.args.content = JSON.stringify(Ge.args.content, null, 2);
+                }
+                const st = yield this._executeToolRequest(Ge, P);
+                oe = oe.replace(q, "```result\n" + JSON.stringify(st, null, 2) + "\n```");
               } catch (C) {
                 const P = C instanceof Error ? C : new Error(String(C));
                 this.context.logger.error(`Failed to process tool request:`, { error: P });
@@ -38499,7 +38508,7 @@
             return Ge.includes("SOLVED");
           });
         }
-        _executeWithRetry(C, P, q, ...ie) {
+        _executeWithRetry(C, P, q, ie) {
           return oe(this, void 0, void 0, function* () {
             this.toolAttempts++;
             if (this.toolAttempts > Er) {
@@ -38512,11 +38521,11 @@
               };
             }
             try {
-              const oe = yield C.execute(...ie);
+              const oe = yield C.execute(ie);
               if (!oe.success && this.toolAttempts < Er) {
                 const Ge = new Error(oe.error || "Unknown error");
                 this.context.logger.error(`Tool attempt ${this.toolAttempts} failed:`, { error: Ge });
-                return this._executeWithRetry(C, P, q, ...ie);
+                return this._executeWithRetry(C, P, q, ie);
               }
               if (oe.success) {
                 this.context.logger.info(`Tool execution successful:`, { toolName: C.name, data: oe.data, metadata: oe.metadata });
@@ -38526,7 +38535,7 @@
               const Ge = oe instanceof Error ? oe : new Error(String(oe));
               this.context.logger.error(`Tool attempt ${this.toolAttempts} error:`, { error: Ge });
               if (this.toolAttempts < Er) {
-                return this._executeWithRetry(C, P, q, ...ie);
+                return this._executeWithRetry(C, P, q, ie);
               }
               return {
                 success: false,
@@ -38590,27 +38599,27 @@
         }
         _createPullRequest(C, P) {
           return oe(this, void 0, void 0, function* () {
-            return this._executeWithRetry(this.tools.createPr, "execute", "", C, P);
+            return this._executeWithRetry(this.tools.createPr, "execute", "", { title: C, body: P });
           });
         }
         _readFile(C, P) {
           return oe(this, void 0, void 0, function* () {
-            return this._executeWithRetry(this.tools.readFile, "execute", P, C);
+            return this._executeWithRetry(this.tools.readFile, "execute", P, { filename: C });
           });
         }
         _writeFile(C, P, q) {
           return oe(this, void 0, void 0, function* () {
-            return this._executeWithRetry(this.tools.writeFile, "execute", q, C, P);
+            return this._executeWithRetry(this.tools.writeFile, "execute", q, { filename: C, content: P });
           });
         }
         _getDirectoryTree(C) {
           return oe(this, void 0, void 0, function* () {
-            return this._executeWithRetry(this.tools.exploreDir, "execute", C, "tree");
+            return this._executeWithRetry(this.tools.exploreDir, "execute", C, { command: "tree" });
           });
         }
         _searchFiles(C, P, q) {
           return oe(this, void 0, void 0, function* () {
-            return this._executeWithRetry(this.tools.searchFiles, "execute", P, C, q);
+            return this._executeWithRetry(this.tools.searchFiles, "execute", P, Object.assign({ pattern: C }, q));
           });
         }
       }
@@ -38675,13 +38684,13 @@
           if (Ot.toLowerCase().includes("solve this issue")) {
             const Ot = new ie.ExploreDir();
             try {
-              const ie = yield Ot.execute("clone", { repo: Wt, owner: Ar, issueNumber: Er });
+              const ie = yield Ot.execute({ command: "clone", repo: Wt, owner: Ar, issueNumber: Er });
               if (!ie.success || !ie.data) {
                 Ge.error(`Failed to clone repository: ${ie.error}`);
                 return;
               }
               const Ir = ie.data.currentPath;
-              const Br = yield Ot.execute("tree");
+              const Br = yield Ot.execute({ command: "tree" });
               const Qr = Br.success && ((P = Br.data) === null || P === void 0 ? void 0 : P.tree) ? Br.data.tree : "";
               const Dr = st.issue.body;
               const Fr = `Please help resolve this issue:\n${Dr}\n\nRepository: ${Ar}/${Wt}\nIssue #${Er}\n\nFile tree:\n${Qr}`;
@@ -38703,7 +38712,7 @@
                 issue_number: Er,
                 body: `I've analyzed the issue and here's the solution:\n\n${Nr}`,
               });
-              yield Ot.execute("kill");
+              yield Ot.execute({ command: "kill" });
             } catch (P) {
               Ge.error(`Error during completion: ${P instanceof Error ? P.message : "Unknown error"}`);
               yield C.octokit.issues.createComment({
@@ -38923,20 +38932,33 @@
       const ie = q(35317);
       class CreatePr {
         constructor(C) {
-          this.name = "create-pr";
+          this.name = "createPr";
           this.description = "Creates a pull request with the changes";
+          this.parameters = {
+            type: "object",
+            properties: {
+              title: { type: "string", description: "Title of the pull request" },
+              body: { type: "string", description: "Description/body of the pull request" },
+            },
+            required: ["title", "body"],
+          };
           this._context = C;
         }
-        execute(C, P) {
+        execute(C) {
           return oe(this, void 0, void 0, function* () {
             try {
+              const P = C.title;
+              const q = C.body;
+              if (!P || !q) {
+                throw new Error("Title and body are required");
+              }
               try {
                 this._context.logger.info("Staging changes");
                 (0, ie.execSync)("git add .", { stdio: "pipe" });
-                const P = (0, ie.execSync)("git status --porcelain", { stdio: "pipe" }).toString();
-                this._context.logger.info("Changes to be committed:", { status: P });
+                const C = (0, ie.execSync)("git status --porcelain", { stdio: "pipe" }).toString();
+                this._context.logger.info("Changes to be committed:", { status: C });
                 this._context.logger.info("Committing changes");
-                (0, ie.execSync)(`git commit -m "${C}"`, { stdio: "pipe" });
+                (0, ie.execSync)(`git commit -m "${P}"`, { stdio: "pipe" });
                 const q = (0, ie.execSync)("git rev-parse --abbrev-ref HEAD", { stdio: "pipe" }).toString().trim();
                 this._context.logger.info(`Pushing branch ${q} to remote`);
                 (0, ie.execSync)(`git push origin ${q}`, { stdio: "pipe" });
@@ -38946,19 +38968,19 @@
                 throw P;
               }
               this._context.logger.info("Creating pull request");
-              const q = this._context.payload.repository.name;
-              const oe = this._context.payload.repository.owner.login;
-              const Ge = yield this._context.octokit.pulls.create({
-                owner: oe,
-                repo: q,
-                title: C,
-                body: P,
+              const oe = this._context.payload.repository.name;
+              const Ge = this._context.payload.repository.owner.login;
+              const st = yield this._context.octokit.pulls.create({
+                owner: Ge,
+                repo: oe,
+                title: P,
+                body: q,
                 head: (0, ie.execSync)("git rev-parse --abbrev-ref HEAD", { stdio: "pipe" }).toString().trim(),
                 base: "development",
               });
               return {
                 success: true,
-                data: { url: Ge.data.html_url, number: Ge.data.number, title: Ge.data.title },
+                data: { url: st.data.html_url, number: st.data.number, title: st.data.title },
                 metadata: { timestamp: Date.now(), toolName: this.name },
               };
             } catch (C) {
@@ -39011,22 +39033,34 @@
       const ie = q(9992);
       class ExploreDir {
         constructor(C = "") {
-          this.name = "explore-dir";
+          this.name = "exploreDir";
           this.description = "Explores and manipulates directories, including git operations";
+          this.parameters = {
+            type: "object",
+            properties: {
+              command: { type: "string", description: "Command to execute", enum: ["change-dir", "tree", "clone", "kill"] },
+              dir: { type: "string", description: "Directory path for change-dir command" },
+              repo: { type: "string", description: "Repository name for clone command" },
+              owner: { type: "string", description: "Repository owner for clone command" },
+              issueNumber: { type: "number", description: "Issue number for clone command" },
+            },
+            required: ["command"],
+          };
           this._tempDir = null;
           this._shellInterface = new ie.Terminal();
           this._currentDir = C;
         }
-        execute(C, P) {
+        execute(C) {
           return oe(this, void 0, void 0, function* () {
+            const P = C.command;
             try {
-              switch (C) {
+              switch (P) {
                 case "change-dir": {
-                  const C = P === null || P === void 0 ? void 0 : P.dir;
-                  if (typeof C !== "string") {
+                  const P = C.dir;
+                  if (typeof P !== "string") {
                     throw new Error("Directory path must be a string");
                   }
-                  yield this._changeDir(C);
+                  yield this._changeDir(P);
                   break;
                 }
                 case "tree": {
@@ -39034,11 +39068,11 @@
                   return { success: true, data: { currentPath: this._currentDir, tree: C }, metadata: { timestamp: Date.now(), toolName: this.name } };
                 }
                 case "clone": {
-                  const { repo: C, owner: q, issueNumber: oe } = P || {};
-                  if (!C || !q || !oe || typeof C !== "string" || typeof q !== "string" || typeof oe !== "number") {
+                  const { repo: P, owner: q, issueNumber: oe } = C;
+                  if (!P || !q || !oe || typeof P !== "string" || typeof q !== "string" || typeof oe !== "number") {
                     throw new Error("Missing required clone arguments");
                   }
-                  yield this._cloneRepo(C, q, oe);
+                  yield this._cloneRepo(P, q, oe);
                   break;
                 }
                 case "kill": {
@@ -39046,15 +39080,15 @@
                   break;
                 }
                 default:
-                  throw new Error(`Unknown command: ${C}`);
+                  throw new Error(`Unknown command: ${P}`);
               }
-              return { success: true, data: { currentPath: this._currentDir }, metadata: { timestamp: Date.now(), toolName: this.name, command: C } };
-            } catch (P) {
+              return { success: true, data: { currentPath: this._currentDir }, metadata: { timestamp: Date.now(), toolName: this.name, command: P } };
+            } catch (C) {
               return {
                 success: false,
-                error: P instanceof Error ? P.message : "Unknown error occurred",
+                error: C instanceof Error ? C.message : "Unknown error occurred",
                 data: { currentPath: this._currentDir },
-                metadata: { timestamp: Date.now(), toolName: this.name, command: C },
+                metadata: { timestamp: Date.now(), toolName: this.name, command: P },
               };
             }
           });
@@ -39140,15 +39174,20 @@
       const ie = q(79896);
       class ReadFile {
         constructor() {
-          this.name = "read-file";
+          this.name = "readFile";
           this.description = "Reads content from a file at the specified path";
+          this.parameters = { type: "object", properties: { filename: { type: "string", description: "Absolute path to the file" } }, required: ["filename"] };
         }
         execute(C) {
           return oe(this, void 0, void 0, function* () {
+            const P = C.filename;
             try {
-              console.log(`Reading file: ${C}`);
-              const P = (0, ie.readFileSync)(C, "utf8");
-              return { success: true, data: { content: P, path: C }, metadata: { timestamp: Date.now(), toolName: this.name } };
+              if (!P) {
+                throw new Error("Filename is required");
+              }
+              console.log(`Reading file: ${P}`);
+              const C = (0, ie.readFileSync)(P, "utf8");
+              return { success: true, data: { content: C, path: P }, metadata: { timestamp: Date.now(), toolName: this.name } };
             } catch (C) {
               return {
                 success: false,
@@ -39161,7 +39200,7 @@
         batchRead(C) {
           return oe(this, void 0, void 0, function* () {
             try {
-              const P = yield Promise.all(C.map((C) => this.execute(C)));
+              const P = yield Promise.all(C.map((C) => this.execute({ filename: C })));
               const q = P.filter((C) => C.success && C.data).map((C) => C.data);
               return {
                 success: q.length === C.length,
@@ -39219,20 +39258,34 @@
       const Ge = q(79896);
       class SearchFiles {
         constructor(C = process.cwd()) {
-          this.name = "search-files";
+          this.name = "searchFiles";
           this.description = "Searches for files and content using glob patterns and regex";
+          this.parameters = {
+            type: "object",
+            properties: {
+              pattern: { type: "string", description: "Regex pattern to search for" },
+              filePattern: { type: "string", description: "Optional glob pattern to filter files" },
+              isCaseSensitive: { type: "boolean", description: "Whether to perform case-sensitive search" },
+              contextLines: { type: "number", description: "Number of context lines to include before and after match" },
+            },
+            required: ["pattern"],
+          };
           this._contextLines = 2;
           this._workingDir = C;
         }
-        execute(C, P) {
+        execute(C) {
           return oe(this, void 0, void 0, function* () {
-            var q, oe;
+            var P, q;
             try {
-              const st = (P === null || P === void 0 ? void 0 : P.filePattern) || "**/*";
-              const Ot = (q = P === null || P === void 0 ? void 0 : P.isCaseSensitive) !== null && q !== void 0 ? q : false;
-              const Wt = (oe = P === null || P === void 0 ? void 0 : P.contextLines) !== null && oe !== void 0 ? oe : this._contextLines;
+              const oe = C.pattern;
+              if (!oe) {
+                throw new Error("Search pattern is required");
+              }
+              const st = C.filePattern || "**/*";
+              const Ot = (P = C.isCaseSensitive) !== null && P !== void 0 ? P : false;
+              const Wt = (q = C.contextLines) !== null && q !== void 0 ? q : this._contextLines;
               const Ar = yield (0, ie.glob)(st, { cwd: this._workingDir, ignore: ["**/node_modules/**", "**/.git/**"], nodir: true, absolute: true });
-              const Er = new RegExp(C, Ot ? "g" : "gi");
+              const Er = new RegExp(oe, Ot ? "g" : "gi");
               const Ir = [];
               for (const C of Ar) {
                 try {
@@ -39254,7 +39307,7 @@
               }
               return {
                 success: true,
-                data: { matches: Ir, totalFiles: Ar.length, searchPattern: C },
+                data: { matches: Ir, totalFiles: Ar.length, searchPattern: oe },
                 metadata: { timestamp: Date.now(), toolName: this.name, filePattern: st, contextLines: Wt },
               };
             } catch (C) {
@@ -39315,29 +39368,34 @@
           this._workdir = C;
           this.name = "terminal";
           this.description = "Executes shell commands in a terminal environment";
+          this.parameters = { type: "object", properties: { command: { type: "string", description: "The shell command to execute" } }, required: ["command"] };
           this._cwd = C;
         }
         execute(C) {
           return oe(this, void 0, void 0, function* () {
             try {
-              if (C.startsWith("cd ")) {
-                const P = C.slice(3).trim();
-                const q = (0, st.resolve)(this._cwd, P);
+              const P = C.command;
+              if (!P) {
+                throw new Error("Command is required");
+              }
+              if (P.startsWith("cd ")) {
+                const C = P.slice(3).trim();
+                const q = (0, st.resolve)(this._cwd, C);
                 if ((0, Ot.existsSync)(q) && isDirectory(q)) {
                   this._cwd = q;
                   return {
                     success: true,
-                    data: { output: "", exitCode: 0, command: C },
+                    data: { output: "", exitCode: 0, command: P },
                     metadata: { timestamp: Date.now(), toolName: this.name, cwd: this._cwd },
                   };
                 } else {
-                  throw new Error(`Directory '${P}' does not exist.`);
+                  throw new Error(`Directory '${C}' does not exist.`);
                 }
               } else {
-                const { stdout: P } = yield Wt("/bin/bash", ["-c", C], { cwd: this._cwd, encoding: "utf8" });
+                const { stdout: C } = yield Wt("/bin/bash", ["-c", P], { cwd: this._cwd, encoding: "utf8" });
                 return {
                   success: true,
-                  data: { output: P, exitCode: 0, command: C },
+                  data: { output: C, exitCode: 0, command: P },
                   metadata: { timestamp: Date.now(), toolName: this.name, cwd: this._cwd },
                 };
               }
@@ -39345,7 +39403,7 @@
               return {
                 success: false,
                 error: P instanceof Error ? P.message : "Unknown error occurred",
-                metadata: { timestamp: Date.now(), toolName: this.name, command: C, cwd: this._cwd },
+                metadata: { timestamp: Date.now(), toolName: this.name, command: C.command, cwd: this._cwd },
               };
             }
           });
@@ -39353,7 +39411,7 @@
         runCommand(C) {
           return oe(this, void 0, void 0, function* () {
             var P, q;
-            const oe = yield this.execute(C);
+            const oe = yield this.execute({ command: C });
             if (!oe.success) {
               throw new Error(oe.error);
             }
@@ -39397,7 +39455,7 @@
             const q = this._terminals.get(C);
             if (q) {
               try {
-                const oe = yield q.execute(P);
+                const oe = yield q.execute({ command: P });
                 if (oe.success && oe.data) {
                   console.log(`Command executed in terminal ${C}: ${oe.data.output}`);
                 } else {
@@ -39461,8 +39519,19 @@
       const ie = q(73024);
       class WriteFile {
         constructor() {
-          this.name = "write-file";
+          this.name = "writeFile";
           this.description = "Applies diff blocks to update file content. Requires absolute file paths.";
+          this.parameters = {
+            type: "object",
+            properties: {
+              filename: { type: "string", description: "Absolute path to the file (must start with /)" },
+              content: {
+                type: "string",
+                description: "Content with diff blocks in format: <<<<<<< SEARCH\n[existing content]\n=======\n[new content]\n>>>>>>> REPLACE",
+              },
+            },
+            required: ["filename", "content"],
+          };
         }
         _parseDiffBlocks(C) {
           const P = [];
@@ -39480,21 +39549,26 @@
           }
           return q;
         }
-        execute(C, P) {
+        execute(C) {
           return oe(this, void 0, void 0, function* () {
             try {
-              if (!C.startsWith("/")) {
+              const P = C.filename;
+              const q = C.content;
+              if (!P || !q) {
+                throw new Error("Filename and content are required");
+              }
+              if (!P.startsWith("/")) {
                 throw new Error("File path must be absolute (start with /)");
               }
-              const q = (0, ie.readFileSync)(C, "utf-8");
-              const oe = this._parseDiffBlocks(P);
-              const Ge = this._applyDiff(q, oe);
-              (0, ie.writeFileSync)(C, Ge);
-              const st = Buffer.from(Ge).length;
+              const oe = (0, ie.readFileSync)(P, "utf-8");
+              const Ge = this._parseDiffBlocks(q);
+              const st = this._applyDiff(oe, Ge);
+              (0, ie.writeFileSync)(P, st);
+              const Ot = Buffer.from(st).length;
               return {
                 success: true,
-                data: { path: C, bytesWritten: st },
-                metadata: { timestamp: Date.now(), toolName: this.name, diffBlocksApplied: oe.length },
+                data: { path: P, bytesWritten: Ot, diffBlocksApplied: Ge.length },
+                metadata: { timestamp: Date.now(), toolName: this.name, diffBlocksApplied: Ge.length },
               };
             } catch (C) {
               return {
