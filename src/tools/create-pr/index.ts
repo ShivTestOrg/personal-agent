@@ -50,6 +50,11 @@ export class CreatePr implements Tool<PullRequestResult> {
         const status = execSync("git status --porcelain", { stdio: "pipe" }).toString();
         this._context.logger.info("Changes to be committed:", { status });
 
+        // Only proceed if there are changes to commit
+        if (!status.trim()) {
+          throw new Error("No changes to commit. Please make changes before creating a pull request.");
+        }
+
         // Commit changes
         this._context.logger.info("Committing changes");
         execSync(`git commit -m "${title}"`, { stdio: "pipe" });

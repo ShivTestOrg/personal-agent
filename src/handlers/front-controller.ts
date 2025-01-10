@@ -1,4 +1,6 @@
 import { ExploreDir } from "../tools/explore-dir";
+import { ReadFile } from "../tools/read-file";
+import { WriteFile } from "../tools/write-file";
 import { Context } from "../types";
 
 export async function delegate(context: Context) {
@@ -26,13 +28,19 @@ export async function delegate(context: Context) {
         return;
       }
 
-      // Get the current working directory after clone
-      const workingDir = cloneResult.data.currentPath;
+      // // Get the current working directory after clone
+      // const workingDir = cloneResult.data.currentPath;
 
-      // Get the directory tree for context
-      const treeResult = await explore.execute({ command: "tree" });
-      const fileTree = treeResult.success && treeResult.data?.tree ? treeResult.data.tree : "";
+      // // Get the directory tree for context
+      // const treeResult = await explore.execute({ command: "tree" });
+      // const fileTree = treeResult.success && treeResult.data?.tree ? treeResult.data.tree : "";
 
+      // Initialize read and write tools
+      const readFile = new ReadFile();
+      const writeFile = new WriteFile();
+
+      // Temporarily commenting out LLM completion code
+      /*
       // Start the completion process with the issue description and file tree
       const issueDescription = payload.issue.body;
       const prompt = `Please help resolve this issue:\n${issueDescription}\n\nRepository: ${owner}/${repo}\nIssue #${issueNumber}\n\nFile tree:\n${fileTree}`;
@@ -54,13 +62,33 @@ export async function delegate(context: Context) {
       // Log the final solution
       logger.ok("Solution generated successfully");
       logger.verbose(`Final solution: ${response}`);
+      */
 
-      // Add a comment to the issue with the solution
+      // Example: Read a file and write to another file
+      const readResult = await readFile.execute({ path: "README.md" });
+      if (!readResult.success) {
+        logger.error(`Failed to read file: ${readResult.error}`);
+        return;
+      }
+
+      const writeResult = await writeFile.execute({
+        path: "output.txt",
+        content: readResult.data?.content || "",
+      });
+      if (!writeResult.success) {
+        logger.error(`Failed to write file: ${writeResult.error}`);
+        return;
+      }
+
+      logger.ok("File operations completed successfully");
+      logger.verbose("Files processed: README.md -> output.txt");
+
+      // Add a comment to the issue with the file operation result
       await context.octokit.issues.createComment({
         owner,
         repo,
         issue_number: issueNumber,
-        body: `I've analyzed the issue and here's the solution:\n\n${response}`,
+        body: `File operations completed successfully. Processed README.md -> output.txt`,
       });
 
       // Cleanup
