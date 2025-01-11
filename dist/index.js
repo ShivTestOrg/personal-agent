@@ -38416,7 +38416,7 @@
           this.tools = {
             readFile: new Ge.ReadFile(),
             writeFile: new st.WriteFile(),
-            exploreDir: new Ot.ExploreDir(),
+            exploreDir: new Ot.ExploreDir(P),
             searchFiles: new Wt.SearchFiles(),
             createPr: new Ar.CreatePr(P),
           };
@@ -38550,7 +38550,7 @@
             var ie, Ge, st;
             this.llmAttempts = 0;
             this.toolAttempts = 0;
-            this.tools.exploreDir = new Ot.ExploreDir(q);
+            this.tools.exploreDir = new Ot.ExploreDir(this.context, q);
             this.tools.searchFiles = new Wt.SearchFiles(q);
             let Ar = false;
             let Br = null;
@@ -38685,7 +38685,7 @@
           const Ir = Wt.repository.owner.login;
           const Br = Wt.issue.number;
           if (Ar.toLowerCase().includes("solve this issue")) {
-            const Wt = new Ge.ExploreDir();
+            const Wt = new Ge.ExploreDir(C);
             try {
               const Ge = yield Wt.execute({ command: "clone", repo: Er, owner: Ir, issueNumber: Br });
               if (!Ge.success || !Ge.data) {
@@ -38970,7 +38970,10 @@
                 yield this._terminal.runCommand(`git commit -m "${P}"`);
                 const q = (yield this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
                 this._context.logger.info(`Pushing branch ${q} to remote`);
-                yield this._terminal.runCommand(`git push origin ${q}`);
+                const oe = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
+                const ie = this._context.payload.repository.name;
+                const Ge = this._context.payload.repository.owner.login;
+                yield this._terminal.runCommand(`git push https://x-access-token:${oe}@github.com/${Ge}/${ie}.git ${q}`);
               } catch (C) {
                 console.log("Error:", C);
                 const P = C instanceof Error ? C : new Error(String(C));
@@ -39042,7 +39045,7 @@
       P.ExploreDir = void 0;
       const ie = q(9992);
       class ExploreDir {
-        constructor(C = "") {
+        constructor(C, P = "") {
           this.name = "exploreDir";
           this.description = "Explores and manipulates directories, including git operations";
           this.parameters = {
@@ -39057,8 +39060,9 @@
             required: ["command"],
           };
           this._tempDir = null;
+          this._context = C;
           this._shellInterface = new ie.Terminal();
-          this._currentDir = C;
+          this._currentDir = P;
         }
         execute(C) {
           return oe(this, void 0, void 0, function* () {
@@ -39139,8 +39143,9 @@
         _cloneRepo(C, P, q) {
           return oe(this, void 0, void 0, function* () {
             this._currentDir = yield this._makeTempDir();
-            const oe = `git clone https://github.com/${P}/${C}.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${q}`;
-            yield this._shellInterface.runCommand(oe);
+            const oe = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
+            const ie = `git clone https://x-access-token:${oe}@github.com/${P}/${C}.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${q}`;
+            yield this._shellInterface.runCommand(ie);
           });
         }
       }
