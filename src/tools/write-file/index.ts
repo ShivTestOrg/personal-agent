@@ -49,15 +49,18 @@ export class WriteFile implements Tool<FileWriteResult> {
 
   async execute(args: Record<string, unknown>): Promise<ToolResult<FileWriteResult>> {
     try {
-      const path = args.filename as string;
-      const diff = args.content as string;
+      const filePath = args.filename as string;
+      const content = args.content as string;
 
-      if (!path || !diff) {
+      if (!filePath || !content) {
         throw new Error("Filename and content are required");
       }
 
       // Resolve path (handles both absolute and relative paths)
-      const resolvedPath = resolve(path);
+      const resolvedPath = resolve(filePath);
+      if (!resolvedPath) {
+        throw new Error(`Failed to resolve path: ${filePath}`);
+      }
 
       // Create directory if it doesn't exist
       const dir = dirname(resolvedPath);
@@ -67,26 +70,40 @@ export class WriteFile implements Tool<FileWriteResult> {
       let diffBlocksApplied = 0;
 
       // Check if content contains diff blocks
-      const hasDiffBlocks = diff.includes("<<<<<<< SEARCH");
+      const hasDiffBlocks = content.includes("<<<<<<< SEARCH");
       const isFilePresent = existsSync(resolvedPath);
 
       if (hasDiffBlocks) {
         if (isFilePresent) {
           // Apply diff blocks to existing file
-          const content = readFileSync(resolvedPath, "utf-8");
-          const blocks = this._parseDiffBlocks(diff);
-          newContent = this._applyDiff(content, blocks);
+          const existingContent = readFileSync(resolvedPath, "utf-8");
+          const blocks = this._parseDiffBlocks(content);
+          if (blocks.length === 0) {
+            throw new Error("No valid diff blocks found in content");
+          }
+          newContent = this._applyDiff(existingContent, blocks);
           diffBlocksApplied = blocks.length;
         } else {
           throw new Error("Cannot apply diff blocks to non-existent file");
         }
       } else {
         // Direct content write - will create new file if doesn't exist
-        newContent = diff;
+        newContent = content;
       }
 
-      // Write content
-      writeFileSync(resolvedPath, newContent);
+      // Write content and verify
+      writeFileSync(resolvedPath, newContent, "utf8");
+
+      // Verify write succeeded
+      if (!existsSync(resolvedPath)) {
+        throw new Error("File write failed - file does not exist after write");
+      }
+
+      const writtenContent = readFileSync(resolvedPath, "utf-8");
+      if (writtenContent !== newContent) {
+        throw new Error("File write verification failed - content mismatch");
+      }
+
       const bytesWritten = Buffer.from(newContent).length;
 
       return {

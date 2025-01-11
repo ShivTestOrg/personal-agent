@@ -72,6 +72,9 @@ export async function delegate(context: Context) {
         return;
       }
 
+      console.log(JSON.stringify(readResult, null, 2));
+      logger.info(`Read content: ${readResult.data?.content}`);
+
       const writeResult = await writeFile.execute({
         filename: workingDir + "/output.txt",
         content: readResult.data?.content || "",
