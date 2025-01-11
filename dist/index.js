@@ -38618,9 +38618,10 @@
             let ie = false;
             yield this.tools.writeFile.execute({
               filename: q + "/wrangler.toml",
-              content: "<<<<<<< SEARCH\nenabled = true\n=======\nenabled = false\n>>>>> REPLACE",
+              content: "<<<<<<< SEARCH\nenabled = true\n=======\nenabled = false\n>>>>>>> REPLACE",
             });
-            const Ge = yield this.tools.readFile.execute({ filename: q + "/nvm.rc" });
+            const Ge = yield this.tools.readFile.execute({ filename: q + "/wrangler.toml" });
+            yield this.tools.writeFile.execute({ filename: q + "/new.md", content: "Hello, world!" });
             console.log(JSON.stringify(Ge, null, 2));
             ie = true;
             if (ie) {
