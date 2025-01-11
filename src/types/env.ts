@@ -14,6 +14,8 @@ export const envSchema = T.Object({
   PERSONAL_AGENT_PAT_CLASSIC: T.String(),
   OPENROUTER_API_KEY: T.String(),
   OPENAI_API_KEY: T.String(),
+  USERNAME: T.String(),
+  EMAIL: T.String(),
 });
 
 export const envValidator = new StandardValidator(envSchema);

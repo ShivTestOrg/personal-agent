@@ -43,3 +43,5 @@ jobs:
           PLUGIN_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          USERNAME: ${{ github.actor }}
+          EMAIL: "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"

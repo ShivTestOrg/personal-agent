@@ -50,10 +50,13 @@ export class CreatePr implements Tool<PullRequestResult> {
       }
 
       try {
+        //Setup git config
+        this._context.logger.info("Setting up git config");
+        await this._terminal.runCommand(`git config --global user.email ${this._context.env.EMAIL}`);
+        await this._terminal.runCommand(`git config --global user.name ${this._context.env.USERNAME}`);
+
         // Stage all changes
         this._context.logger.info("Staging changes");
-        const res = await this._terminal.runCommand("ls -la");
-        this._context.logger.info("ls -la:", { res });
         await this._terminal.runCommand("git add .");
 
         // Get status to log what's being committed
