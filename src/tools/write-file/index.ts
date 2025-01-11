@@ -1,4 +1,5 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 import { Tool, ToolResult, FileWriteResult, FunctionParameters } from "../../types/tool";
 
 interface DiffBlock {
@@ -8,17 +9,17 @@ interface DiffBlock {
 
 export class WriteFile implements Tool<FileWriteResult> {
   readonly name = "writeFile";
-  readonly description = "Applies diff blocks to update file content. Requires absolute file paths.";
+  readonly description = "Write content to a file or apply diff blocks to update existing content. Creates directories if needed.";
   readonly parameters: FunctionParameters = {
     type: "object",
     properties: {
       filename: {
         type: "string",
-        description: "Absolute path to the file (must start with /)",
+        description: "Path to the file (absolute or relative)",
       },
       content: {
         type: "string",
-        description: "Content with diff blocks in format: <<<<<<< SEARCH\n[existing content]\n=======\n[new content]\n>>>>>>> REPLACE",
+        description: "Content to write directly, or diff blocks in format: <<<<<<< SEARCH\n[existing content]\n=======\n[new content]\n>>>>>>> REPLACE",
       },
     },
     required: ["filename", "content"],
@@ -55,33 +56,50 @@ export class WriteFile implements Tool<FileWriteResult> {
         throw new Error("Filename and content are required");
       }
 
-      // Validate absolute path
-      if (!path.startsWith("/")) {
-        throw new Error("File path must be absolute (start with /)");
+      // Resolve path (handles both absolute and relative paths)
+      const resolvedPath = resolve(path);
+
+      // Create directory if it doesn't exist
+      const dir = dirname(resolvedPath);
+      mkdirSync(dir, { recursive: true });
+
+      let newContent: string;
+      let diffBlocksApplied = 0;
+
+      // Check if content contains diff blocks
+      const hasDiffBlocks = diff.includes("<<<<<<< SEARCH");
+      const isFilePresent = existsSync(resolvedPath);
+
+      if (hasDiffBlocks) {
+        if (isFilePresent) {
+          // Apply diff blocks to existing file
+          const content = readFileSync(resolvedPath, "utf-8");
+          const blocks = this._parseDiffBlocks(diff);
+          newContent = this._applyDiff(content, blocks);
+          diffBlocksApplied = blocks.length;
+        } else {
+          throw new Error("Cannot apply diff blocks to non-existent file");
+        }
+      } else {
+        // Direct content write - will create new file if doesn't exist
+        newContent = diff;
       }
 
-      // Read existing content
-      const content = readFileSync(path, "utf-8");
-
-      // Parse and apply diff blocks
-      const blocks = this._parseDiffBlocks(diff);
-      const newContent = this._applyDiff(content, blocks);
-
-      // Write updated content
-      writeFileSync(path, newContent);
+      // Write content
+      writeFileSync(resolvedPath, newContent);
       const bytesWritten = Buffer.from(newContent).length;
 
       return {
         success: true,
         data: {
-          path,
+          path: resolvedPath,
           bytesWritten,
-          diffBlocksApplied: blocks.length,
+          diffBlocksApplied,
         },
         metadata: {
           timestamp: Date.now(),
           toolName: this.name,
-          diffBlocksApplied: blocks.length,
+          diffBlocksApplied,
         },
       };
     } catch (error) {
