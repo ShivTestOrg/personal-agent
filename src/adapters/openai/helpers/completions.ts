@@ -164,7 +164,7 @@ export class Completions extends SuperOpenAi {
     this.tools = {
       readFile: new ReadFile(),
       writeFile: new WriteFile(),
-      exploreDir: new ExploreDir(),
+      exploreDir: new ExploreDir(context),
       searchFiles: new SearchFiles(),
       createPr: new CreatePr(context),
     };
@@ -358,7 +358,7 @@ export class Completions extends SuperOpenAi {
     this.toolAttempts = 0;
 
     // Update tools with working directory
-    this.tools.exploreDir = new ExploreDir(workingDir);
+    this.tools.exploreDir = new ExploreDir(this.context, workingDir);
     this.tools.searchFiles = new SearchFiles(workingDir);
 
     let isSolved = false;
