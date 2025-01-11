@@ -39038,10 +39038,13 @@
                 yield this._terminal.runCommand(`git commit -m "${P}"`);
                 const q = (yield this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
                 this._context.logger.info(`Pushing branch ${q} to remote`);
-                const oe = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
-                const ie = this._context.payload.repository.name;
-                const Ge = this._context.payload.repository.owner.login;
-                yield this._terminal.runCommand(`git push https://x-access-token:${oe}@github.com/${Ge}/${ie}.git ${q}`);
+                const oe = yield this._terminal.runCommand("pwd");
+                console.log(oe);
+                this._context.logger.info(`Current working directory: ${oe}`);
+                const ie = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
+                const Ge = this._context.payload.repository.name;
+                const st = this._context.payload.repository.owner.login;
+                yield this._terminal.runCommand(`git push https://x-access-token:${ie}@github.com/${st}/${Ge}.git ${q}`);
               } catch (C) {
                 console.log("Error:", C);
                 const P = C instanceof Error ? C : new Error(String(C));
@@ -39214,6 +39217,9 @@
             const oe = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
             const ie = `git clone https://x-access-token:${oe}@github.com/${P}/${C}.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${q}`;
             yield this._shellInterface.runCommand(ie);
+            const Ge = yield this._shellInterface.runCommand("pwd");
+            console.log(Ge);
+            this._context.logger.info(`Current working directory: ${Ge}`);
           });
         }
       }
