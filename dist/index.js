@@ -39523,17 +39523,18 @@
       Object.defineProperty(P, "__esModule", { value: true });
       P.WriteFile = void 0;
       const ie = q(73024);
+      const Ge = q(76760);
       class WriteFile {
         constructor() {
           this.name = "writeFile";
-          this.description = "Applies diff blocks to update file content. Requires absolute file paths.";
+          this.description = "Write content to a file or apply diff blocks to update existing content. Creates directories if needed.";
           this.parameters = {
             type: "object",
             properties: {
-              filename: { type: "string", description: "Absolute path to the file (must start with /)" },
+              filename: { type: "string", description: "Path to the file (absolute or relative)" },
               content: {
                 type: "string",
-                description: "Content with diff blocks in format: <<<<<<< SEARCH\n[existing content]\n=======\n[new content]\n>>>>>>> REPLACE",
+                description: "Content to write directly, or diff blocks in format: <<<<<<< SEARCH\n[existing content]\n=======\n[new content]\n>>>>>>> REPLACE",
               },
             },
             required: ["filename", "content"],
@@ -39563,18 +39564,31 @@
               if (!P || !q) {
                 throw new Error("Filename and content are required");
               }
-              if (!P.startsWith("/")) {
-                throw new Error("File path must be absolute (start with /)");
+              const oe = (0, Ge.resolve)(P);
+              const st = (0, Ge.dirname)(oe);
+              (0, ie.mkdirSync)(st, { recursive: true });
+              let Ot;
+              let Wt = 0;
+              const Ar = q.includes("<<<<<<< SEARCH");
+              const Er = (0, ie.existsSync)(oe);
+              if (Ar) {
+                if (Er) {
+                  const C = (0, ie.readFileSync)(oe, "utf-8");
+                  const P = this._parseDiffBlocks(q);
+                  Ot = this._applyDiff(C, P);
+                  Wt = P.length;
+                } else {
+                  throw new Error("Cannot apply diff blocks to non-existent file");
+                }
+              } else {
+                Ot = q;
               }
-              const oe = (0, ie.readFileSync)(P, "utf-8");
-              const Ge = this._parseDiffBlocks(q);
-              const st = this._applyDiff(oe, Ge);
-              (0, ie.writeFileSync)(P, st);
-              const Ot = Buffer.from(st).length;
+              (0, ie.writeFileSync)(oe, Ot);
+              const Ir = Buffer.from(Ot).length;
               return {
                 success: true,
-                data: { path: P, bytesWritten: Ot, diffBlocksApplied: Ge.length },
-                metadata: { timestamp: Date.now(), toolName: this.name, diffBlocksApplied: Ge.length },
+                data: { path: oe, bytesWritten: Ir, diffBlocksApplied: Wt },
+                metadata: { timestamp: Date.now(), toolName: this.name, diffBlocksApplied: Wt },
               };
             } catch (C) {
               return {
