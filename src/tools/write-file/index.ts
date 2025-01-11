@@ -91,20 +91,16 @@ export class WriteFile implements Tool<FileWriteResult> {
         newContent = content;
       }
 
-      // Write content and verify
+      // Write content
       writeFileSync(resolvedPath, newContent, "utf8");
 
-      // Verify write succeeded
-      if (!existsSync(resolvedPath)) {
-        throw new Error("File write failed - file does not exist after write");
+      // Verify the write operation
+      const verificationResult = this._verifyWrite(resolvedPath, newContent);
+      if (!verificationResult.success || verificationResult.bytesWritten === undefined) {
+        throw new Error(`File write verification failed: ${verificationResult.error || "Unknown error"}`);
       }
 
-      const writtenContent = readFileSync(resolvedPath, "utf-8");
-      if (writtenContent !== newContent) {
-        throw new Error("File write verification failed - content mismatch");
-      }
-
-      const bytesWritten = Buffer.from(newContent).length;
+      const bytesWritten = verificationResult.bytesWritten;
 
       return {
         success: true,
@@ -127,6 +123,48 @@ export class WriteFile implements Tool<FileWriteResult> {
           timestamp: Date.now(),
           toolName: this.name,
         },
+      };
+    }
+  }
+
+  private _verifyWrite(filePath: string, expectedContent: string): { success: boolean; error?: string; bytesWritten?: number } {
+    try {
+      // Check if file exists
+      if (!existsSync(filePath)) {
+        return { success: false, error: "File does not exist after write operation" };
+      }
+
+      // Read back the written content
+      const writtenContent = readFileSync(filePath, "utf-8");
+
+      // Check content length
+      const expectedBytes = Buffer.from(expectedContent).length;
+      const actualBytes = Buffer.from(writtenContent).length;
+
+      if (actualBytes !== expectedBytes) {
+        return {
+          success: false,
+          error: `Content length mismatch - expected ${expectedBytes} bytes but got ${actualBytes} bytes`,
+        };
+      }
+
+      // Check content equality
+      if (writtenContent !== expectedContent) {
+        return {
+          success: false,
+          error: "Written content does not match expected content",
+        };
+      }
+
+      // All verifications passed
+      return {
+        success: true,
+        bytesWritten: actualBytes,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: `Verification failed with error: ${error instanceof Error ? error.message : "Unknown error"}`,
       };
     }
   }
