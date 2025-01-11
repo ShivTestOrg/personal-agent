@@ -12955,8 +12955,8 @@
       const Jr = q(75726);
       const Wr = q(40640);
       const Kr = q(40675);
-      const zr = q(78946);
-      const $r = q(30420);
+      const $r = q(78946);
+      const zr = q(30420);
       const Zr = q(33107);
       const Xr = q(80470);
       const es = q(42744);
@@ -12974,7 +12974,7 @@
           return (0, rs.Strict)(C);
         }
         ReadonlyOptional(C) {
-          return (0, zr.ReadonlyOptional)(C);
+          return (0, $r.ReadonlyOptional)(C);
         }
         Readonly(C, P) {
           return (0, Kr.Readonly)(C, P ?? true);
@@ -13061,7 +13061,7 @@
           return (0, Wr.Pick)(C, P, q);
         }
         Record(C, P, q = {}) {
-          return (0, $r.Record)(C, P, q);
+          return (0, zr.Record)(C, P, q);
         }
         Recursive(C, P = {}) {
           return (0, Zr.Recursive)(C, P);
@@ -13367,18 +13367,18 @@
           return Kr.Never;
         },
       });
-      var zr = q(1078);
+      var $r = q(1078);
       Object.defineProperty(P, "Not", {
         enumerable: true,
         get: function () {
-          return zr.Not;
+          return $r.Not;
         },
       });
-      var $r = q(50468);
+      var zr = q(50468);
       Object.defineProperty(P, "Null", {
         enumerable: true,
         get: function () {
-          return $r.Null;
+          return zr.Null;
         },
       });
       var Zr = q(85544);
@@ -19498,7 +19498,7 @@
         const oe = new Jr(C).hostname;
         return q === oe || (q[q.length - oe.length - 1] === "." && q.endsWith(oe));
       };
-      const zr = function isSameProtocol(C, P) {
+      const $r = function isSameProtocol(C, P) {
         const q = new Jr(P).protocol;
         const oe = new Jr(C).protocol;
         return q === oe;
@@ -19626,7 +19626,7 @@
                     timeout: st.timeout,
                     size: st.size,
                   };
-                  if (!Kr(st.url, ie) || !zr(st.url, ie)) {
+                  if (!Kr(st.url, ie) || !$r(st.url, ie)) {
                     for (const C of ["authorization", "www-authenticate", "cookie", "cookie2"]) {
                       oe.headers.delete(C);
                     }
@@ -22853,8 +22853,8 @@
         kClient: Jr,
         kBusy: Wr,
         kParser: Kr,
-        kConnect: zr,
-        kBlocking: $r,
+        kConnect: $r,
+        kBlocking: zr,
         kResuming: Zr,
         kRunning: Xr,
         kPending: es,
@@ -22917,18 +22917,18 @@
       let Js = false;
       const Ws = Buffer[Symbol.species];
       const Ks = Symbol("kClosedResolve");
-      const zs = {};
+      const $s = {};
       try {
         const C = q(31637);
-        zs.sendHeaders = C.channel("undici:client:sendHeaders");
-        zs.beforeConnect = C.channel("undici:client:beforeConnect");
-        zs.connectError = C.channel("undici:client:connectError");
-        zs.connected = C.channel("undici:client:connected");
+        $s.sendHeaders = C.channel("undici:client:sendHeaders");
+        $s.beforeConnect = C.channel("undici:client:beforeConnect");
+        $s.connectError = C.channel("undici:client:connectError");
+        $s.connected = C.channel("undici:client:connected");
       } catch {
-        zs.sendHeaders = { hasSubscribers: false };
-        zs.beforeConnect = { hasSubscribers: false };
-        zs.connectError = { hasSubscribers: false };
-        zs.connected = { hasSubscribers: false };
+        $s.sendHeaders = { hasSubscribers: false };
+        $s.beforeConnect = { hasSubscribers: false };
+        $s.connectError = { hasSubscribers: false };
+        $s.connected = { hasSubscribers: false };
       }
       class Client extends Er {
         constructor(
@@ -22956,8 +22956,8 @@
             connect: Jr,
             maxRequestsPerClient: Wr,
             localAddress: Kr,
-            maxResponseSize: zr,
-            autoSelectFamily: $r,
+            maxResponseSize: $r,
+            autoSelectFamily: zr,
             autoSelectFamilyAttemptTimeout: Xr,
             allowH2: es,
             maxConcurrentStreams: ts,
@@ -23015,7 +23015,7 @@
           if (Kr != null && (typeof Kr !== "string" || ie.isIP(Kr) === 0)) {
             throw new Qr("localAddress must be valid string IP address");
           }
-          if (zr != null && (!Number.isInteger(zr) || zr < -1)) {
+          if ($r != null && (!Number.isInteger($r) || $r < -1)) {
             throw new Qr("maxResponseSize must be a positive number");
           }
           if (Xr != null && (!Number.isInteger(Xr) || Xr < -1)) {
@@ -23034,7 +23034,7 @@
               allowH2: es,
               socketPath: Ur,
               timeout: Ar,
-              ...(Ot.nodeHasAutoSelectFamily && $r ? { autoSelectFamily: $r, autoSelectFamilyAttemptTimeout: Xr } : undefined),
+              ...(Ot.nodeHasAutoSelectFamily && zr ? { autoSelectFamily: zr, autoSelectFamilyAttemptTimeout: Xr } : undefined),
               ...Jr,
             });
           }
@@ -23059,7 +23059,7 @@
           this[bs] = Hr;
           this[Qs] = Wr;
           this[Ks] = null;
-          this[Ds] = zr > -1 ? zr : -1;
+          this[Ds] = $r > -1 ? $r : -1;
           this[Fs] = "h1";
           this[Os] = null;
           this[Ps] = !es ? null : { openStreams: 0, maxConcurrentStreams: ts != null ? ts : 100 };
@@ -23089,9 +23089,9 @@
         }
         get [Wr]() {
           const C = this[ms];
-          return (C && (C[Hr] || C[rs] || C[$r])) || this[ts] >= (this[us] || 1) || this[es] > 0;
+          return (C && (C[Hr] || C[rs] || C[zr])) || this[ts] >= (this[us] || 1) || this[es] > 0;
         }
-        [zr](C) {
+        [$r](C) {
           connect(this);
           this.once("connect", C);
         }
@@ -23186,7 +23186,7 @@
         P.emit("disconnect", P[jr], [P], q);
         resume(P);
       }
-      const $s = q(52824);
+      const zs = q(52824);
       const Zs = q(64415);
       const Xs = Buffer.alloc(0);
       async function lazyllhttp() {
@@ -23249,7 +23249,7 @@
         constructor(C, P, { exports: q }) {
           oe(Number.isFinite(C[fs]) && C[fs] > 0);
           this.llhttp = q;
-          this.ptr = this.llhttp.llhttp_alloc($s.TYPE.RESPONSE);
+          this.ptr = this.llhttp.llhttp_alloc(zs.TYPE.RESPONSE);
           this.client = C;
           this.socket = P;
           this.timeout = null;
@@ -23341,19 +23341,19 @@
               sn = null;
             }
             const ie = q.llhttp_get_error_pos(this.ptr) - on;
-            if (oe === $s.ERROR.PAUSED_UPGRADE) {
+            if (oe === zs.ERROR.PAUSED_UPGRADE) {
               this.onUpgrade(C.slice(ie));
-            } else if (oe === $s.ERROR.PAUSED) {
+            } else if (oe === zs.ERROR.PAUSED) {
               this.paused = true;
               P.unshift(C.slice(ie));
-            } else if (oe !== $s.ERROR.OK) {
+            } else if (oe !== zs.ERROR.OK) {
               const P = q.llhttp_get_error_reason(this.ptr);
               let Ge = "";
               if (P) {
                 const C = new Uint8Array(q.memory.buffer, P).indexOf(0);
                 Ge = "Response does not match the HTTP/1.1 protocol (" + Buffer.from(q.memory.buffer, P, C).toString() + ")";
               }
-              throw new Lr(Ge, $s.ERROR[oe], C.slice(ie));
+              throw new Lr(Ge, zs.ERROR[oe], C.slice(ie));
             }
           } catch (C) {
             Ot.destroy(P, C);
@@ -23518,11 +23518,11 @@
           if (C < 200) {
             return 1;
           }
-          if (Ge[$r]) {
-            Ge[$r] = false;
+          if (Ge[zr]) {
+            Ge[zr] = false;
             resume(ie);
           }
-          return Er ? $s.ERROR.PAUSED : 0;
+          return Er ? zs.ERROR.PAUSED : 0;
         }
         onBody(C) {
           const { client: P, socket: q, statusCode: ie, maxResponseSize: Ge } = this;
@@ -23544,7 +23544,7 @@
           }
           this.bytesRead += C.length;
           if (st.onData(C) === false) {
-            return $s.ERROR.PAUSED;
+            return zs.ERROR.PAUSED;
           }
         }
         onMessageComplete() {
@@ -23579,13 +23579,13 @@
           if (P[rs]) {
             oe.strictEqual(C[Xr], 0);
             Ot.destroy(P, new Ur("reset"));
-            return $s.ERROR.PAUSED;
+            return zs.ERROR.PAUSED;
           } else if (!Ar) {
             Ot.destroy(P, new Ur("reset"));
-            return $s.ERROR.PAUSED;
+            return zs.ERROR.PAUSED;
           } else if (P[Hr] && C[Xr] === 0) {
             Ot.destroy(P, new Ur("reset"));
-            return $s.ERROR.PAUSED;
+            return zs.ERROR.PAUSED;
           } else if (C[us] === 1) {
             setImmediate(resume, C);
           } else {
@@ -23688,8 +23688,8 @@
           q = P;
         }
         C[os] = true;
-        if (zs.beforeConnect.hasSubscribers) {
-          zs.beforeConnect.publish({
+        if ($s.beforeConnect.hasSubscribers) {
+          $s.beforeConnect.publish({
             connectParams: { host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Rs] },
             connector: C[Bs],
           });
@@ -23739,7 +23739,7 @@
             ie[as] = false;
             ie[rs] = false;
             ie[Hr] = false;
-            ie[$r] = false;
+            ie[zr] = false;
             ie[Kr] = new Parser(C, ie, en);
           }
           ie[ws] = 0;
@@ -23748,8 +23748,8 @@
           ie[ds] = null;
           ie.on("error", onSocketError).on("readable", onSocketReadable).on("end", onSocketEnd).on("close", onSocketClose);
           C[ms] = ie;
-          if (zs.connected.hasSubscribers) {
-            zs.connected.publish({
+          if ($s.connected.hasSubscribers) {
+            $s.connected.publish({
               connectParams: { host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Rs] },
               connector: C[Bs],
               socket: ie,
@@ -23761,8 +23761,8 @@
             return;
           }
           C[os] = false;
-          if (zs.connectError.hasSubscribers) {
-            zs.connectError.publish({
+          if ($s.connectError.hasSubscribers) {
+            $s.connectError.publish({
               connectParams: { host: P, hostname: q, protocol: Ge, port: st, servername: C[Yr], localAddress: C[Rs] },
               connector: C[Bs],
               error: ie,
@@ -23867,7 +23867,7 @@
             connect(C);
             return;
           }
-          if (q.destroyed || q[rs] || q[Hr] || q[$r]) {
+          if (q.destroyed || q[rs] || q[Hr] || q[zr]) {
             return;
           }
           if (C[Xr] > 0 && !ie.idempotent) {
@@ -23942,7 +23942,7 @@
           Nr[Hr] = true;
         }
         if (Er) {
-          Nr[$r] = true;
+          Nr[zr] = true;
         }
         let Mr = `${ie} ${Ge} HTTP/1.1\r\n`;
         if (typeof st === "string") {
@@ -23960,8 +23960,8 @@
         if (Ar) {
           Mr += Ar;
         }
-        if (zs.sendHeaders.hasSubscribers) {
-          zs.sendHeaders.publish({ request: P, headers: Mr, socket: Nr });
+        if ($s.sendHeaders.hasSubscribers) {
+          $s.sendHeaders.publish({ request: P, headers: Mr, socket: Nr });
         }
         if (!q || Fr === 0) {
           if (kr === 0) {
@@ -27601,8 +27601,8 @@
         coarsenedSharedCurrentTime: Jr,
         createDeferredPromise: Wr,
         isBlobLike: Kr,
-        sameOrigin: zr,
-        isCancelled: $r,
+        sameOrigin: $r,
+        isCancelled: zr,
         isAborted: Zr,
         isErrorLike: Xr,
         fullyReadBody: es,
@@ -27845,7 +27845,7 @@
         if (oe === null) {
           oe = await (async () => {
             const P = Mr(q);
-            if ((zr(P, q.url) && q.responseTainting === "basic") || P.protocol === "data:" || q.mode === "navigate" || q.mode === "websocket") {
+            if (($r(P, q.url) && q.responseTainting === "basic") || P.protocol === "data:" || q.mode === "navigate" || q.mode === "websocket") {
               q.responseTainting = "basic";
               return await schemeFetch(C);
             }
@@ -27916,7 +27916,7 @@
         }
       }
       function schemeFetch(C) {
-        if ($r(C) && C.request.redirectCount === 0) {
+        if (zr(C) && C.request.redirectCount === 0) {
           return Promise.resolve(Ge(C));
         }
         const { request: P } = C;
@@ -28082,7 +28082,7 @@
           return Promise.resolve(ie("redirect count exceeded"));
         }
         q.redirectCount += 1;
-        if (q.mode === "cors" && (Ge.username || Ge.password) && !zr(q, Ge)) {
+        if (q.mode === "cors" && (Ge.username || Ge.password) && !$r(q, Ge)) {
           return Promise.resolve(ie('cross origin not allowed for request mode "cors"'));
         }
         if (q.responseTainting === "cors" && (Ge.username || Ge.password)) {
@@ -28098,7 +28098,7 @@
             q.headersList.delete(C);
           }
         }
-        if (!zr(Mr(q), Ge)) {
+        if (!$r(Mr(q), Ge)) {
           q.headersList.delete("authorization");
           q.headersList.delete("proxy-authorization", true);
           q.headersList.delete("cookie");
@@ -28215,13 +28215,13 @@
           if (oe.window === "no-window") {
             return ie();
           }
-          if ($r(C)) {
+          if (zr(C)) {
             return Ge(C);
           }
           return ie("proxy authentication required");
         }
         if (Wt.status === 421 && !q && (oe.body == null || oe.body.source != null)) {
-          if ($r(C)) {
+          if (zr(C)) {
             return Ge(C);
           }
           C.controller.connection.destroy();
@@ -28259,14 +28259,14 @@
           queueMicrotask(() => C.processRequestEndOfBody());
         } else if (st.body != null) {
           const processBodyChunk = async function* (P) {
-            if ($r(C)) {
+            if (zr(C)) {
               return;
             }
             yield P;
             C.processRequestBodyChunkLength?.(P.byteLength);
           };
           const processEndOfBody = () => {
-            if ($r(C)) {
+            if (zr(C)) {
               return;
             }
             if (C.processRequestEndOfBody) {
@@ -28274,7 +28274,7 @@
             }
           };
           const processBodyError = (P) => {
-            if ($r(C)) {
+            if (zr(C)) {
               return;
             }
             if (P.name === "AbortError") {
@@ -28536,8 +28536,8 @@
       } = q(87326);
       const { kEnumerableProperty: jr } = Er;
       const { kHeaders: Hr, kSignal: Yr, kState: Jr, kGuard: Wr, kRealm: Kr } = q(89710);
-      const { webidl: zr } = q(74222);
-      const { getGlobalOrigin: $r } = q(75628);
+      const { webidl: $r } = q(74222);
+      const { getGlobalOrigin: zr } = q(75628);
       const { URLSerializer: Zr } = q(94322);
       const { kHeadersList: Xr, kConstruct: es } = q(36443);
       const ts = q(42613);
@@ -28552,12 +28552,12 @@
           if (C === es) {
             return;
           }
-          zr.argumentLengthCheck(arguments, 1, { header: "Request constructor" });
-          C = zr.converters.RequestInfo(C);
-          P = zr.converters.RequestInit(P);
+          $r.argumentLengthCheck(arguments, 1, { header: "Request constructor" });
+          C = $r.converters.RequestInfo(C);
+          P = $r.converters.RequestInit(P);
           this[Kr] = {
             settingsObject: {
-              baseUrl: $r(),
+              baseUrl: zr(),
               get origin() {
                 return this.baseUrl?.origin;
               },
@@ -28657,7 +28657,7 @@
             xr = Ge;
           }
           if (xr === "navigate") {
-            throw zr.errors.exception({ header: "Request constructor", message: "invalid request mode navigate." });
+            throw $r.errors.exception({ header: "Request constructor", message: "invalid request mode navigate." });
           }
           if (xr != null) {
             ie.mode = xr;
@@ -28784,23 +28784,23 @@
           this[Jr].body = cs;
         }
         get method() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].method;
         }
         get url() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return Zr(this[Jr].url);
         }
         get headers() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Hr];
         }
         get destination() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].destination;
         }
         get referrer() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           if (this[Jr].referrer === "no-referrer") {
             return "";
           }
@@ -28810,58 +28810,58 @@
           return this[Jr].referrer.toString();
         }
         get referrerPolicy() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].referrerPolicy;
         }
         get mode() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].mode;
         }
         get credentials() {
           return this[Jr].credentials;
         }
         get cache() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].cache;
         }
         get redirect() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].redirect;
         }
         get integrity() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].integrity;
         }
         get keepalive() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].keepalive;
         }
         get isReloadNavigation() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].reloadNavigation;
         }
         get isHistoryNavigation() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].historyNavigation;
         }
         get signal() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Yr];
         }
         get body() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return this[Jr].body ? this[Jr].body.stream : null;
         }
         get bodyUsed() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return !!this[Jr].body && Er.isDisturbed(this[Jr].body.stream);
         }
         get duplex() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           return "half";
         }
         clone() {
-          zr.brandCheck(this, Request);
+          $r.brandCheck(this, Request);
           if (this.bodyUsed || this.body?.locked) {
             throw new TypeError("unusable");
           }
@@ -28959,32 +28959,32 @@
         mode: jr,
         [Symbol.toStringTag]: { value: "Request", configurable: true },
       });
-      zr.converters.Request = zr.interfaceConverter(Request);
-      zr.converters.RequestInfo = function (C) {
+      $r.converters.Request = $r.interfaceConverter(Request);
+      $r.converters.RequestInfo = function (C) {
         if (typeof C === "string") {
-          return zr.converters.USVString(C);
+          return $r.converters.USVString(C);
         }
         if (C instanceof Request) {
-          return zr.converters.Request(C);
+          return $r.converters.Request(C);
         }
-        return zr.converters.USVString(C);
+        return $r.converters.USVString(C);
       };
-      zr.converters.AbortSignal = zr.interfaceConverter(AbortSignal);
-      zr.converters.RequestInit = zr.dictionaryConverter([
-        { key: "method", converter: zr.converters.ByteString },
-        { key: "headers", converter: zr.converters.HeadersInit },
-        { key: "body", converter: zr.nullableConverter(zr.converters.BodyInit) },
-        { key: "referrer", converter: zr.converters.USVString },
-        { key: "referrerPolicy", converter: zr.converters.DOMString, allowedValues: Ur },
-        { key: "mode", converter: zr.converters.DOMString, allowedValues: Lr },
-        { key: "credentials", converter: zr.converters.DOMString, allowedValues: Gr },
-        { key: "cache", converter: zr.converters.DOMString, allowedValues: xr },
-        { key: "redirect", converter: zr.converters.DOMString, allowedValues: Mr },
-        { key: "integrity", converter: zr.converters.DOMString },
-        { key: "keepalive", converter: zr.converters.boolean },
-        { key: "signal", converter: zr.nullableConverter((C) => zr.converters.AbortSignal(C, { strict: false })) },
-        { key: "window", converter: zr.converters.any },
-        { key: "duplex", converter: zr.converters.DOMString, allowedValues: Vr },
+      $r.converters.AbortSignal = $r.interfaceConverter(AbortSignal);
+      $r.converters.RequestInit = $r.dictionaryConverter([
+        { key: "method", converter: $r.converters.ByteString },
+        { key: "headers", converter: $r.converters.HeadersInit },
+        { key: "body", converter: $r.nullableConverter($r.converters.BodyInit) },
+        { key: "referrer", converter: $r.converters.USVString },
+        { key: "referrerPolicy", converter: $r.converters.DOMString, allowedValues: Ur },
+        { key: "mode", converter: $r.converters.DOMString, allowedValues: Lr },
+        { key: "credentials", converter: $r.converters.DOMString, allowedValues: Gr },
+        { key: "cache", converter: $r.converters.DOMString, allowedValues: xr },
+        { key: "redirect", converter: $r.converters.DOMString, allowedValues: Mr },
+        { key: "integrity", converter: $r.converters.DOMString },
+        { key: "keepalive", converter: $r.converters.boolean },
+        { key: "signal", converter: $r.nullableConverter((C) => $r.converters.AbortSignal(C, { strict: false })) },
+        { key: "window", converter: $r.converters.any },
+        { key: "duplex", converter: $r.converters.DOMString, allowedValues: Vr },
       ]);
       C.exports = { Request: Request, makeRequest: makeRequest };
     },
@@ -29009,8 +29009,8 @@
       const { FormData: Yr } = q(43073);
       const { getGlobalOrigin: Jr } = q(75628);
       const { URLSerializer: Wr } = q(94322);
-      const { kHeadersList: Kr, kConstruct: zr } = q(36443);
-      const $r = q(42613);
+      const { kHeadersList: Kr, kConstruct: $r } = q(36443);
+      const zr = q(42613);
       const { types: Zr } = q(39023);
       const Xr = globalThis.ReadableStream || q(63774).ReadableStream;
       const es = new TextEncoder("utf-8");
@@ -29070,7 +29070,7 @@
           P = Hr.converters.ResponseInit(P);
           this[jr] = { settingsObject: {} };
           this[Gr] = makeResponse({});
-          this[xr] = new oe(zr);
+          this[xr] = new oe($r);
           this[xr][Vr] = "response";
           this[xr][Kr] = this[Gr].headersList;
           this[xr][jr] = this[jr];
@@ -29189,7 +29189,7 @@
             return q in P ? P[q] : C[q];
           },
           set(C, q, oe) {
-            $r(!(q in P));
+            zr(!(q in P));
             C[q] = oe;
             return true;
           },
@@ -29205,11 +29205,11 @@
         } else if (P === "opaqueredirect") {
           return makeFilteredResponse(C, { type: "opaqueredirect", status: 0, statusText: "", headersList: [], body: null });
         } else {
-          $r(false);
+          zr(false);
         }
       }
       function makeAppropriateNetworkError(C, P = null) {
-        $r(Br(C));
+        zr(Br(C));
         return Qr(C)
           ? makeNetworkError(Object.assign(new Lr("The operation was aborted.", "AbortError"), { cause: P }))
           : makeNetworkError(Object.assign(new Lr("Request was cancelled."), { cause: P }));
@@ -33462,7 +33462,7 @@
       const { kEnumerableProperty: Yr, isBlobLike: Jr } = q(3440);
       const { getGlobalDispatcher: Wr } = q(32581);
       const { types: Kr } = q(39023);
-      let zr = false;
+      let $r = false;
       class WebSocket extends EventTarget {
         #p = { open: null, error: null, close: null, message: null };
         #d = 0;
@@ -33471,8 +33471,8 @@
         constructor(C, P = []) {
           super();
           oe.argumentLengthCheck(arguments, 1, { header: "WebSocket constructor" });
-          if (!zr) {
-            zr = true;
+          if (!$r) {
+            $r = true;
             process.emitWarning("WebSockets are experimental, expect them to change at any time.", { code: "UNDICI-WS" });
           }
           const q = oe.converters["DOMString or sequence<DOMString> or WebSocketInit"](P);
@@ -39002,23 +39002,24 @@
                 throw new Error("Title and body are required");
               }
               try {
+                this._context.logger.info("Setting up git config");
+                yield this._terminal.runCommand(`git config --global user.email ${this._context.env.EMAIL}`);
+                yield this._terminal.runCommand(`git config --global user.name ${this._context.env.USERNAME}`);
                 this._context.logger.info("Staging changes");
-                const C = yield this._terminal.runCommand("ls -la");
-                this._context.logger.info("ls -la:", { res: C });
                 yield this._terminal.runCommand("git add .");
-                const q = yield this._terminal.runCommand("git status");
-                this._context.logger.info("Changes to be committed:", { status: q });
-                if (!q.trim()) {
+                const C = yield this._terminal.runCommand("git status");
+                this._context.logger.info("Changes to be committed:", { status: C });
+                if (!C.trim()) {
                   throw new Error("No changes to commit. Please make changes before creating a pull request.");
                 }
                 this._context.logger.info("Committing changes");
                 yield this._terminal.runCommand(`git commit -m "${P}"`);
-                const oe = (yield this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
-                this._context.logger.info(`Pushing branch ${oe} to remote`);
-                const ie = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
-                const Ge = this._context.payload.repository.name;
-                const st = this._context.payload.repository.owner.login;
-                yield this._terminal.runCommand(`git push https://x-access-token:${ie}@github.com/${st}/${Ge}.git ${oe}`);
+                const q = (yield this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
+                this._context.logger.info(`Pushing branch ${q} to remote`);
+                const oe = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
+                const ie = this._context.payload.repository.name;
+                const Ge = this._context.payload.repository.owner.login;
+                yield this._terminal.runCommand(`git push https://x-access-token:${oe}@github.com/${Ge}/${ie}.git ${q}`);
               } catch (C) {
                 console.log("Error:", C);
                 const P = C instanceof Error ? C : new Error(String(C));
@@ -39703,7 +39704,13 @@
       const oe = q(14019);
       q(52874);
       const ie = q(80619);
-      P.envSchema = oe.Type.Object({ PERSONAL_AGENT_PAT_CLASSIC: oe.Type.String(), OPENROUTER_API_KEY: oe.Type.String(), OPENAI_API_KEY: oe.Type.String() });
+      P.envSchema = oe.Type.Object({
+        PERSONAL_AGENT_PAT_CLASSIC: oe.Type.String(),
+        OPENROUTER_API_KEY: oe.Type.String(),
+        OPENAI_API_KEY: oe.Type.String(),
+        USERNAME: oe.Type.String(),
+        EMAIL: oe.Type.String(),
+      });
       P.envValidator = new ie.StandardValidator(P.envSchema);
     },
     31569: function (C, P, q) {
@@ -40471,7 +40478,7 @@
           }
         }
         function checkFinished() {
-          if ($r === 0 && es && !C._done) {
+          if (zr === 0 && es && !C._done) {
             es = false;
             ie.end();
           }
@@ -40487,8 +40494,8 @@
         const Jr = Ar(kr, "headerPairs", 2e3);
         const Wr = Ar(kr, "headerSize", 80 * 1024);
         let Kr = 0;
-        let zr = 0;
         let $r = 0;
+        let zr = 0;
         let Zr;
         let Xr;
         let es = false;
@@ -40584,11 +40591,11 @@
                   ie.parser._ignore();
                   return;
                 }
-                ++$r;
+                ++zr;
                 const q = new FileStream(Gr);
                 Zr = q;
                 q.on("end", function () {
-                  --$r;
+                  --zr;
                   ie._pause = false;
                   checkFinished();
                   if (ie._cb && !ie._needDrain) {
@@ -40630,15 +40637,15 @@
                   q.push(null);
                 };
               } else {
-                if (zr === Hr) {
+                if ($r === Hr) {
                   if (!C.hitFieldsLimit) {
                     C.hitFieldsLimit = true;
                     C.emit("fieldsLimit");
                   }
                   return skipPart(P);
                 }
-                ++zr;
                 ++$r;
+                ++zr;
                 let q = "";
                 let oe = false;
                 Xr = P;
@@ -40658,7 +40665,7 @@
                     q = Ot(q, "binary", kr);
                   }
                   C.emit("field", Er, q, false, oe, Ur, Ar);
-                  --$r;
+                  --zr;
                   checkFinished();
                 };
               }
@@ -44849,8 +44856,8 @@
         #J;
         #W;
         #K;
-        #z;
         #$;
+        #z;
         #Z;
         ttl;
         ttlResolution;
@@ -44922,7 +44929,7 @@
           return this.#X;
         }
         get fetchMethod() {
-          return this.#$;
+          return this.#z;
         }
         get memoMethod() {
           return this.#Z;
@@ -44931,7 +44938,7 @@
           return this.#K;
         }
         get disposeAfter() {
-          return this.#z;
+          return this.#$;
         }
         constructor(C) {
           const {
@@ -44983,7 +44990,7 @@
           if (kr !== undefined && typeof kr !== "function") {
             throw new TypeError("fetchMethod must be a function if specified");
           }
-          this.#$ = kr;
+          this.#z = kr;
           this.#me = !!kr;
           this.#te = new Map();
           this.#re = new Array(P).fill(undefined);
@@ -44999,14 +45006,14 @@
             this.#K = Ar;
           }
           if (typeof Er === "function") {
-            this.#z = Er;
+            this.#$ = Er;
             this.#le = [];
           } else {
-            this.#z = undefined;
+            this.#$ = undefined;
             this.#le = undefined;
           }
           this.#ue = !!this.#K;
-          this.#he = !!this.#z;
+          this.#he = !!this.#$;
           this.noDisposeOnSet = !!Ir;
           this.noUpdateTTL = !!Br;
           this.noDeleteOnFetchRejection = !!Ur;
@@ -45424,7 +45431,7 @@
             const C = this.#le;
             let P;
             while ((P = C?.shift())) {
-              this.#z?.(...P);
+              this.#$?.(...P);
             }
           }
           return this;
@@ -45447,7 +45454,7 @@
               const C = this.#le;
               let P;
               while ((P = C?.shift())) {
-                this.#z?.(...P);
+                this.#$?.(...P);
               }
             }
           }
@@ -45587,7 +45594,7 @@
             }
           };
           const pcall = (P, oe) => {
-            const Ge = this.#$?.(C, ie, Wt);
+            const Ge = this.#z?.(C, ie, Wt);
             if (Ge && Ge instanceof Promise) {
               Ge.then((C) => P(C === undefined ? undefined : C), oe);
             }
@@ -45804,7 +45811,7 @@
             const C = this.#le;
             let P;
             while ((P = C?.shift())) {
-              this.#z?.(...P);
+              this.#$?.(...P);
             }
           }
           return q;
@@ -45846,7 +45853,7 @@
             const C = this.#le;
             let P;
             while ((P = C?.shift())) {
-              this.#z?.(...P);
+              this.#$?.(...P);
             }
           }
         }
@@ -45896,8 +45903,8 @@
       const Jr = Symbol("objectMode");
       const Wr = Symbol("destroyed");
       const Kr = Symbol("error");
-      const zr = Symbol("emitData");
-      const $r = Symbol("emitEnd");
+      const $r = Symbol("emitData");
+      const zr = Symbol("emitEnd");
       const Zr = Symbol("emitEnd2");
       const Xr = Symbol("async");
       const es = Symbol("abort");
@@ -46272,9 +46279,9 @@
           if (C !== "error" && C !== "close" && C !== Wr && this[Wr]) {
             return false;
           } else if (C === "data") {
-            return !this[Jr] && !q ? false : this[Xr] ? (defer(() => this[zr](q)), true) : this[zr](q);
+            return !this[Jr] && !q ? false : this[Xr] ? (defer(() => this[$r](q)), true) : this[$r](q);
           } else if (C === "end") {
-            return this[$r]();
+            return this[zr]();
           } else if (C === "close") {
             this[Qr] = true;
             if (!this[Er] && !this[Wr]) return false;
@@ -46300,7 +46307,7 @@
           this[Ar]();
           return oe;
         }
-        [zr](C) {
+        [$r](C) {
           for (const P of this[Vr]) {
             if (P.dest.write(C) === false) this.pause();
           }
@@ -46308,7 +46315,7 @@
           this[Ar]();
           return P;
         }
-        [$r]() {
+        [zr]() {
           if (this[Er]) return false;
           this[Er] = true;
           this.readable = false;
@@ -49064,8 +49071,8 @@
       var Wt, Ar, Er, Ir, Br, Qr, Dr, Fr, kr, Nr, Ur, Mr, Lr, Gr, xr, Vr, jr, Hr, Yr, Jr, Wr, Kr;
       Object.defineProperty(P, "__esModule", { value: true });
       P.AssistantStream = void 0;
-      const zr = Ge(q(57376));
-      const $r = q(71835);
+      const $r = Ge(q(57376));
+      const zr = q(71835);
       const Zr = q(73269);
       const Xr = q(14283);
       class AssistantStream extends Xr.EventStream {
@@ -49160,7 +49167,7 @@
             q.addEventListener("abort", () => this.controller.abort());
           }
           this._connected();
-          const oe = $r.Stream.fromReadableStream(C, this.controller);
+          const oe = zr.Stream.fromReadableStream(C, this.controller);
           for await (const C of oe) {
             st(this, Wt, "m", Gr).call(this, C);
           }
@@ -49170,7 +49177,7 @@
           return this._addRun(st(this, Wt, "m", xr).call(this));
         }
         toReadableStream() {
-          const C = new $r.Stream(this[Symbol.asyncIterator].bind(this), this.controller);
+          const C = new zr.Stream(this[Symbol.asyncIterator].bind(this), this.controller);
           return C.toReadableStream();
         }
         static createToolAssistantStream(C, P, q, oe, ie) {
@@ -49283,7 +49290,7 @@
               P += oe;
             } else if (typeof P === "number" && typeof oe === "number") {
               P += oe;
-            } else if (zr.isObj(P) && zr.isObj(oe)) {
+            } else if ($r.isObj(P) && $r.isObj(oe)) {
               P = this.accumulateDelta(P, oe);
             } else if (Array.isArray(P) && Array.isArray(oe)) {
               if (P.every((C) => typeof C === "string" || typeof C === "number")) {
@@ -49291,7 +49298,7 @@
                 continue;
               }
               for (const C of oe) {
-                if (!zr.isObj(C)) {
+                if (!$r.isObj(C)) {
                   throw new Error(`Expected array delta entry to be an object but got: ${C}`);
                 }
                 const q = C["index"];
@@ -52773,10 +52780,10 @@
       const Jr = 16;
       const Wr = 32;
       const Kr = 64;
-      const zr = 128;
-      const $r = 256;
+      const $r = 128;
+      const zr = 256;
       const Zr = 512;
-      const Xr = Kr | zr | Zr;
+      const Xr = Kr | $r | Zr;
       const es = 1023;
       const entToType = (C) =>
         C.isFile()
@@ -52891,13 +52898,13 @@
         get atime() {
           return this.#Ke;
         }
-        #ze;
-        get mtime() {
-          return this.#ze;
-        }
         #$e;
-        get ctime() {
+        get mtime() {
           return this.#$e;
+        }
+        #ze;
+        get ctime() {
+          return this.#ze;
         }
         #Ze;
         get birthtime() {
@@ -52990,7 +52997,7 @@
           const Ge = this.#tt ? this.#tt + ie + C : undefined;
           const st = this.newChild(C, Nr, { ...P, parent: this, fullpath: Ge });
           if (!this.canReaddir()) {
-            st.#ot |= zr;
+            st.#ot |= $r;
           }
           q.push(st);
           return st;
@@ -53112,13 +53119,13 @@
           if (this.#at) return true;
           if (!this.parent) return false;
           const C = this.#ot & Hr;
-          return !((C !== Nr && C !== Vr) || this.#ot & $r || this.#ot & zr);
+          return !((C !== Nr && C !== Vr) || this.#ot & zr || this.#ot & $r);
         }
         calledReaddir() {
           return !!(this.#ot & Jr);
         }
         isENOENT() {
-          return !!(this.#ot & zr);
+          return !!(this.#ot & $r);
         }
         isNamed(C) {
           return !this.nocase ? this.#Xe === normalize(C) : this.#Xe === normalizeNocase(C);
@@ -53175,8 +53182,8 @@
           }
         }
         #dt() {
-          if (this.#ot & zr) return;
-          this.#ot = (this.#ot | zr) & Yr;
+          if (this.#ot & $r) return;
+          this.#ot = (this.#ot | $r) & Yr;
           this.#ut();
         }
         #ut() {
@@ -53216,8 +53223,8 @@
         }
         #ct(C = "") {
           let P = this.#ot;
-          P |= $r;
-          if (C === "ENOENT") P |= zr;
+          P |= zr;
+          if (C === "ENOENT") P |= $r;
           if (C === "EINVAL" || C === "UNKNOWN") {
             P &= Yr;
           }
@@ -53263,7 +53270,7 @@
           return P;
         }
         async lstat() {
-          if ((this.#ot & zr) === 0) {
+          if ((this.#ot & $r) === 0) {
             try {
               this.#Bt(await this.#Pe.promises.lstat(this.fullpath()));
               return this;
@@ -53273,7 +53280,7 @@
           }
         }
         lstatSync() {
-          if ((this.#ot & zr) === 0) {
+          if ((this.#ot & $r) === 0) {
             try {
               this.#Bt(this.#Pe.lstatSync(this.fullpath()));
               return this;
@@ -53309,13 +53316,13 @@
           this.#We = ie;
           this.#Ve = Ge;
           this.#He = st;
-          this.#$e = Ot;
+          this.#ze = Ot;
           this.#Je = Wt;
           this.#Ne = Ar;
           this.#Ge = Er;
           this.#je = Ir;
           this.#Ue = Br;
-          this.#ze = Qr;
+          this.#$e = Qr;
           this.#Ye = Dr;
           this.#Me = Fr;
           this.#xe = kr;
@@ -53430,7 +53437,7 @@
         }
         async realpath() {
           if (this.#At) return this.#At;
-          if ((Zr | $r | zr) & this.#ot) return undefined;
+          if ((Zr | zr | $r) & this.#ot) return undefined;
           try {
             const C = await this.#Pe.promises.realpath(this.fullpath());
             return (this.#At = this.resolve(C));
@@ -53440,7 +53447,7 @@
         }
         realpathSync() {
           if (this.#At) return this.#At;
-          if ((Zr | $r | zr) & this.#ot) return undefined;
+          if ((Zr | zr | $r) & this.#ot) return undefined;
           try {
             const C = this.#Pe.realpathSync(this.fullpath());
             return (this.#At = this.resolve(C));
