@@ -38661,7 +38661,7 @@
         }
         _createPullRequest(C, P, q) {
           return oe(this, void 0, void 0, function* () {
-            return this._executeWithRetry(this.tools.createPr, "execute", q, { title: C, body: P });
+            return this._executeWithRetry(this.tools.createPr, "execute", q, { title: C, body: P, workingDir: q });
           });
         }
         _readFile(C, P) {
@@ -39015,6 +39015,11 @@
             try {
               const P = C.title;
               const q = C.body;
+              this._context.logger.info("Creating pull request with args:", { args: C });
+              if (C && C.workDir) {
+                this._terminal.setCwd(C.workDir);
+              }
+              this._context.logger.info("Current working directory:", { cwd: this._terminal.getCwd() });
               if (!P || !q) {
                 throw new Error("Title and body are required");
               }
@@ -39445,6 +39450,12 @@
           this.description = "Executes shell commands in a terminal environment";
           this.parameters = { type: "object", properties: { command: { type: "string", description: "The shell command to execute" } }, required: ["command"] };
           this._cwd = C;
+        }
+        setCwd(C) {
+          this._cwd = C;
+        }
+        getCwd() {
+          return this._cwd;
         }
         execute(C) {
           return oe(this, void 0, void 0, function* () {
