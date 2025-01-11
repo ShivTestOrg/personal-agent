@@ -38551,40 +38551,41 @@
             this.llmAttempts = 0;
             this.toolAttempts = 0;
             this.tools.exploreDir = new Ot.ExploreDir(this.context, q);
+            this.tools.createPr = new Ar.CreatePr(this.context, q);
             this.tools.searchFiles = new Wt.SearchFiles(q);
-            let Ar = false;
-            let Br = null;
-            const Qr = [{ role: "system", content: Ir }];
-            while (this.llmAttempts < Er && !Ar) {
+            let Br = false;
+            let Qr = null;
+            const Dr = [{ role: "system", content: Ir }];
+            while (this.llmAttempts < Er && !Br) {
               const Ot = yield this._getDirectoryTree(q);
               const Wt = Ot.success && ((ie = Ot.data) === null || ie === void 0 ? void 0 : ie.tree) ? Ot.data.tree : "Unable to get directory tree";
               this.context.logger.info("Directory tree:", { tree: Wt });
-              Qr.push({
+              Dr.push({
                 role: "user",
                 content: `Current LLM attempt: ${this.llmAttempts + 1}/${Er}\nWorking directory: ${q}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${oe}\n\nOriginal request: ${C}`,
               });
-              const Ir = yield this.client.chat.completions.create({
+              const Ar = yield this.client.chat.completions.create({
                 model: P,
-                messages: Qr,
+                messages: Dr,
                 temperature: 0.2,
                 max_tokens: this.maxTokens,
                 top_p: 0.5,
                 frequency_penalty: 0,
                 presence_penalty: 0,
               });
-              this.context.logger.info("LLM response:", { response: Ir });
-              Br = Ir;
-              const Dr = ((st = (Ge = Ir.choices[0]) === null || Ge === void 0 ? void 0 : Ge.message) === null || st === void 0 ? void 0 : st.content) || "";
-              const Fr = yield this._processResponse(Dr, q);
-              Qr.push({ role: "assistant", content: Fr });
+              this.context.logger.info("LLM response:", { response: Ar });
+              Qr = Ar;
+              const Ir = ((st = (Ge = Ar.choices[0]) === null || Ge === void 0 ? void 0 : Ge.message) === null || st === void 0 ? void 0 : st.content) || "";
+              const Fr = yield this._processResponse(Ir, q);
+              Dr.push({ role: "assistant", content: Fr });
               oe = Fr;
-              Ar = yield this._checkSolution(oe, P);
-              if (!Ar) {
+              Br = yield this._checkSolution(oe, P);
+              if (!Br) {
                 this.llmAttempts++;
                 this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${Er}`);
               }
             }
-            if (Ar) {
+            if (Br) {
               const P = `Fix: ${C.split("\n")[0]}`;
               const q = `This PR addresses the following:\n\n${C}\n\nChanges made:\n${oe}`;
               const ie = yield this._createPullRequest(P, q);
@@ -38594,7 +38595,7 @@
                 this.context.logger.error("Failed to create pull request:", { error: new Error(ie.error || "Unknown error"), metadata: ie.metadata });
               }
             }
-            return Br;
+            return Qr;
           });
         }
         _createPullRequest(C, P) {
@@ -38674,62 +38675,60 @@
       P.delegate = delegate;
       const ie = q(40893);
       const Ge = q(94049);
-      const st = q(71917);
-      const Ot = q(14164);
       function delegate(C) {
         return oe(this, void 0, void 0, function* () {
-          var P, q;
-          const { logger: oe, payload: Wt } = C;
-          const Ar = Wt.comment.body;
-          const Er = Wt.repository.name;
-          const Ir = Wt.repository.owner.login;
-          const Br = Wt.issue.number;
-          if (Ar.toLowerCase().includes("solve this issue")) {
+          var P, q, oe;
+          const { logger: st, payload: Ot } = C;
+          const Wt = Ot.comment.body;
+          const Ar = Ot.repository.name;
+          const Er = Ot.repository.owner.login;
+          const Ir = Ot.issue.number;
+          if (Wt.toLowerCase().includes("solve this issue")) {
             const Wt = new Ge.ExploreDir(C);
             try {
-              const Ge = yield Wt.execute({ command: "clone", repo: Er, owner: Ir, issueNumber: Br });
+              const Ge = yield Wt.execute({ command: "clone", repo: Ar, owner: Er, issueNumber: Ir });
               if (!Ge.success || !Ge.data) {
-                oe.error(`Failed to clone repository: ${Ge.error}`);
+                st.error(`Failed to clone repository: ${Ge.error}`);
                 return;
               }
-              const Ar = Ge.data.currentPath;
-              const Qr = new st.ReadFile();
-              const Dr = new Ot.WriteFile();
-              const Fr = yield Qr.execute({ filename: Ar + "/README.md" });
-              if (!Fr.success) {
-                oe.error(`Failed to read file: ${Fr.error} + ${Ar}`);
+              const Br = Ge.data.currentPath;
+              const Qr = yield Wt.execute({ command: "tree" });
+              const Dr = Qr.success && ((P = Qr.data) === null || P === void 0 ? void 0 : P.tree) ? Qr.data.tree : "";
+              const Fr = Ot.issue.body;
+              const kr = `Please help resolve this issue:\n${Fr}\n\nRepository: ${Er}/${Ar}\nIssue #${Ir}\n\nFile tree:\n${Dr}`;
+              const Nr = yield C.adapters.openai.completions.createCompletion(kr, "anthropic/claude-3.5-sonnet", Br);
+              if (!Nr) {
+                st.error("No solution was generated");
                 return;
               }
-              console.log(JSON.stringify(Fr, null, 2));
-              oe.info(`Read content: ${(P = Fr.data) === null || P === void 0 ? void 0 : P.content}`);
-              const kr = yield Dr.execute({ filename: Ar + "/output.txt", content: ((q = Fr.data) === null || q === void 0 ? void 0 : q.content) || "" });
-              if (!kr.success) {
-                oe.error(`Failed to write file: ${kr.error}`);
+              const Ur = (oe = (q = Nr.choices[0]) === null || q === void 0 ? void 0 : q.message) === null || oe === void 0 ? void 0 : oe.content;
+              if (!Ur) {
+                st.error("Empty response from completion");
                 return;
               }
-              oe.ok("File operations completed successfully");
-              oe.verbose("Files processed: README.md -> output.txt");
-              const Nr = new ie.CreatePr(C, Ar);
-              yield Nr.execute({ title: "Solved issue", body: "I have solved this issue. Please review the changes." });
+              st.ok("Solution generated successfully");
+              st.verbose(`Final solution: ${Ur}`);
+              const Mr = new ie.CreatePr(C, Br);
+              yield Mr.execute({ title: "Solved issue", body: "I have solved this issue. Please review the changes." });
               yield C.octokit.issues.createComment({
-                owner: Ir,
-                repo: Er,
-                issue_number: Br,
-                body: `File operations completed successfully. Processed README.md -> output.txt`,
+                owner: Er,
+                repo: Ar,
+                issue_number: Ir,
+                body: `I have generated and implemented a solution for this issue. Please review the pull request.`,
               });
               yield Wt.execute({ command: "kill" });
             } catch (P) {
-              oe.error(`Error during completion: ${P instanceof Error ? P.message : "Unknown error"}`);
+              st.error(`Error during completion: ${P instanceof Error ? P.message : "Unknown error"}`);
               yield C.octokit.issues.createComment({
-                owner: Ir,
-                repo: Er,
-                issue_number: Br,
+                owner: Er,
+                repo: Ar,
+                issue_number: Ir,
                 body: "I encountered an error while trying to solve this issue. Please check the logs for more details.",
               });
             }
           }
-          oe.ok(`Comment processed: ${Ar}`);
-          oe.verbose(`Exiting delegate`);
+          st.ok(`Comment processed: ${Wt}`);
+          st.verbose(`Exiting delegate`);
         });
       }
     },
