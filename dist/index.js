@@ -39027,6 +39027,7 @@
                 this._context.logger.info("Staging changes");
                 const C = yield this._terminal.runCommand("ls -la");
                 this._context.logger.info("ls -la:", { res: C });
+                yield this._terminal.runCommand("git update-index --refresh");
                 yield this._terminal.runCommand("git add .");
                 const q = yield this._terminal.runCommand("git status");
                 this._context.logger.info("Changes to be committed:", { status: q });
@@ -39697,6 +39698,7 @@
               return { success: false, error: "File does not exist after write operation" };
             }
             const q = (0, ie.readFileSync)(C, "utf-8");
+            console.log("Written content:", q);
             const oe = Buffer.from(P).length;
             const Ge = Buffer.from(q).length;
             if (Ge !== oe) {
