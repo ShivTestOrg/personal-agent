@@ -1,4 +1,3 @@
-import { CreatePr } from "../tools/create-pr";
 import { ExploreDir } from "../tools/explore-dir";
 import { Context } from "../types";
 
@@ -56,12 +55,6 @@ export async function delegate(context: Context) {
       logger.ok("Solution generated successfully");
       logger.verbose(`Final solution: ${response}`);
 
-      const prTool = new CreatePr(context, workingDir);
-      await prTool.execute({
-        title: "Solved issue",
-        body: "I have solved this issue. Please review the changes.",
-      });
-
       // Add a comment to the issue with the solution result
       await context.octokit.issues.createComment({
         owner,
@@ -80,7 +73,11 @@ export async function delegate(context: Context) {
         owner,
         repo,
         issue_number: issueNumber,
-        body: "I encountered an error while trying to solve this issue. Please check the logs for more details.",
+        body: `I encountered an error while trying to solve this issue. Please check the logs for more details.
+        \`\`\`plaintext
+        Error: Failed to generate a solution for this issue.
+        More Info: ${error instanceof Error ? error.message : "Unknown error"}
+        \`\`\``,
       });
     }
   }

@@ -211,8 +211,14 @@ export class Completions extends SuperOpenAi {
     workingDir: string,
     model: string,
     currentSolution: string,
-    conversationHistory: ChatMessage[]
-  ): Promise<ToolRequest> {
+    conversationHistory: ChatMessage[],
+    totalInputToken: number = 0,
+    totalOutputToken: number = 0
+  ): Promise<{
+    tool: ToolRequest;
+    totalInputToken: number;
+    totalOutputToken: number;
+  }> {
     let attempts = 0;
     let lastError: Error | null = null;
 
@@ -258,6 +264,13 @@ Return only the fixed JSON without any explanation.`;
         });
 
         const fixedJson = fixResponse.choices[0]?.message?.content?.trim() || "";
+
+        //Add to the total input and output tokens
+        if (fixResponse.usage) {
+          totalInputToken += fixResponse.usage.prompt_tokens;
+          totalOutputToken += fixResponse.usage.completion_tokens;
+        }
+
         this.context.logger.info("LLM suggested fix:", { fixedJson });
 
         const toolRequest = JSON.parse(fixedJson);
@@ -265,7 +278,11 @@ Return only the fixed JSON without any explanation.`;
           throw new Error("Fixed JSON is missing required fields");
         }
 
-        return toolRequest;
+        return {
+          tool: toolRequest,
+          totalInputToken,
+          totalOutputToken,
+        };
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
         //Add this to the conversation history
@@ -286,11 +303,22 @@ Return only the fixed JSON without any explanation.`;
     workingDir: string,
     model: string,
     currentSolution: string,
-    conversationHistory: ChatMessage[]
-  ): Promise<string> {
+    conversationHistory: ChatMessage[],
+    totalInputToken: number = 0,
+    totalOutputToken: number = 0
+  ): Promise<{
+    output: string;
+    totalInputToken: number;
+    totalOutputToken: number;
+  }> {
     // Find all tool blocks in the response
     const toolBlocks = [...response.matchAll(/```tool\n([\s\S]*?)```/g)];
-    if (toolBlocks.length === 0) return response;
+    if (toolBlocks.length === 0)
+      return {
+        output: response,
+        totalInputToken,
+        totalOutputToken,
+      };
 
     let processedResponse = response;
 
@@ -314,7 +342,18 @@ Return only the fixed JSON without any explanation.`;
         } catch (error: unknown) {
           if (trimmedJson.includes('"tool": "writeFile"')) {
             try {
-              toolRequest = await this._fixMalformedWriteFile(trimmedJson, workingDir, model, currentSolution, conversationHistory);
+              const output = await this._fixMalformedWriteFile(
+                trimmedJson,
+                workingDir,
+                model,
+                currentSolution,
+                conversationHistory,
+                totalInputToken,
+                totalOutputToken
+              );
+              toolRequest = output.tool;
+              totalInputToken += output.totalInputToken;
+              totalOutputToken += output.totalOutputToken;
               this.context.logger.info("Successfully fixed and parsed JSON");
               // Reset tool attempts since we're starting fresh with fixed JSON
               this._toolAttempts.set("writeFile", 0);
@@ -374,10 +413,23 @@ Return only the fixed JSON without any explanation.`;
       }
     }
 
-    return processedResponse;
+    return {
+      output: processedResponse,
+      totalInputToken,
+      totalOutputToken,
+    };
   }
 
-  private async _checkSolution(prompt: string, model: string): Promise<boolean> {
+  private async _checkSolution(
+    prompt: string,
+    model: string,
+    totalInputToken: number = 0,
+    totalOutputToknen: number = 0
+  ): Promise<{
+    isSolved: boolean;
+    totalInputToken: number;
+    totalOutputToknen: number;
+  }> {
     const res = await this.client.chat.completions.create({
       model,
       messages: [
@@ -395,8 +447,17 @@ Return only the fixed JSON without any explanation.`;
       max_tokens: 50,
     });
 
+    if (res.usage) {
+      totalInputToken += res.usage.prompt_tokens;
+      totalOutputToknen += res.usage.completion_tokens;
+    }
+
     const response = res.choices[0]?.message?.content || "";
-    return response.includes("SOLVED");
+    return {
+      isSolved: response.trim().toLowerCase() === "solved",
+      totalInputToken,
+      totalOutputToknen,
+    };
   }
 
   private async _executeWithRetry<T extends ToolName>(
@@ -476,6 +537,9 @@ Return only the fixed JSON without any explanation.`;
 
     let isSolved = false;
     let finalResponse: OpenAI.Chat.Completions.ChatCompletion | null = null;
+    let totalInputTokens = 0;
+    let totalOutputTokens = 0;
+    let pullRequestResult: ToolResult<ToolResultMap["createPr"]> | null = null;
     const conversationHistory: ChatMessage[] = [
       {
         role: "system",
@@ -510,25 +574,47 @@ Return only the fixed JSON without any explanation.`;
       });
 
       this.context.logger.info("LLM response:", { response: res });
+
+      // Track token usage
+      if (res.usage) {
+        totalInputTokens += res.usage.prompt_tokens;
+        totalOutputTokens += res.usage.completion_tokens;
+      }
+
       finalResponse = res;
 
       // Get the LLM's response
       const llmResponse = res.choices[0]?.message?.content || "";
 
       // Process any tool requests in the response
-      const processedResponse = await this._processResponse(llmResponse, workingDir, model, currentSolution, conversationHistory);
+      const processedResponse = await this._processResponse(
+        llmResponse,
+        workingDir,
+        model,
+        currentSolution,
+        conversationHistory,
+        totalInputTokens,
+        totalOutputTokens
+      );
 
       // Add the processed response to conversation history
       conversationHistory.push({
         role: "assistant",
-        content: processedResponse,
+        content: processedResponse.output,
       });
 
       // Update current solution state
-      currentSolution = processedResponse;
+      currentSolution = processedResponse.output;
+
+      // Update token usage
+      totalInputTokens += processedResponse.totalInputToken;
+      totalOutputTokens += processedResponse.totalOutputToken;
 
       // Check if the solution is complete
-      isSolved = await this._checkSolution(currentSolution, model);
+      const solOutput = await this._checkSolution(currentSolution, model, totalInputTokens, totalOutputTokens);
+      isSolved = solOutput.isSolved;
+      totalInputTokens += solOutput.totalInputToken;
+      totalOutputTokens += solOutput.totalOutputToknen;
 
       if (!isSolved) {
         this.llmAttempts++;
@@ -539,28 +625,44 @@ Return only the fixed JSON without any explanation.`;
     if (isSolved) {
       // Create a pull request with the changes
       const prTitle = `Fix: ${prompt.split("\n")[0]}`; // Use first line of prompt as PR title
+
+      // Add token usage information to PR body
       const prBody = `This PR addresses the following:
 
 ${prompt}
 
 Changes made:
-${currentSolution}`;
+${currentSolution}
 
-      const prResult = await this._createPullRequest(prTitle, prBody, workingDir);
-      if (prResult.success) {
+Token Usage:
+- Total Input Tokens: ${totalInputTokens}
+- Total Output Tokens: ${totalOutputTokens}
+- Total Tokens: ${totalInputTokens + totalOutputTokens}`;
+
+      pullRequestResult = (await this._createPullRequest(prTitle, prBody, workingDir)) as ToolResult<ToolResultMap["createPr"]>;
+      if (pullRequestResult.success) {
         this.context.logger.info("Created pull request:", {
-          data: prResult.data,
-          metadata: prResult.metadata,
+          data: pullRequestResult.data,
+          metadata: pullRequestResult.metadata,
         });
       } else {
         this.context.logger.error("Failed to create pull request:", {
-          error: new Error(prResult.error || "Unknown error"),
-          metadata: prResult.metadata,
+          error: new Error(pullRequestResult.error || "Unknown error"),
+          metadata: pullRequestResult.metadata,
         });
       }
     }
 
-    return finalResponse;
+    // Return enhanced response with token counts and PR link
+    return {
+      completion: finalResponse,
+      prUrl: pullRequestResult?.success ? (pullRequestResult.data as { url?: string })?.url || null : null,
+      tokenUsage: {
+        inputTokens: totalInputTokens,
+        outputTokens: totalOutputTokens,
+        totalTokens: totalInputTokens + totalOutputTokens,
+      },
+    };
   }
 
   private async _createPullRequest(title: string, body: string, workingDir: string) {
