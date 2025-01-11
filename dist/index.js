@@ -38709,7 +38709,7 @@
               }
               oe.ok("File operations completed successfully");
               oe.verbose("Files processed: README.md -> output.txt");
-              const Nr = new ie.CreatePr(C);
+              const Nr = new ie.CreatePr(C, Ar);
               yield Nr.execute({ title: "Solved issue", body: "I have solved this issue. Please review the changes." });
               yield C.octokit.issues.createComment({
                 owner: Ir,
@@ -38934,9 +38934,9 @@
         };
       Object.defineProperty(P, "__esModule", { value: true });
       P.CreatePr = void 0;
-      const ie = q(35317);
+      const ie = q(9992);
       class CreatePr {
-        constructor(C) {
+        constructor(C, P = "") {
           this.name = "createPr";
           this.description = "Creates a pull request with the changes";
           this.parameters = {
@@ -38948,6 +38948,7 @@
             required: ["title", "body"],
           };
           this._context = C;
+          this._terminal = new ie.Terminal(P);
         }
         execute(C) {
           return oe(this, void 0, void 0, function* () {
@@ -38959,17 +38960,17 @@
               }
               try {
                 this._context.logger.info("Staging changes");
-                (0, ie.execSync)("git add .", { stdio: "pipe" });
-                const C = (0, ie.execSync)("git status", { stdio: "pipe" }).toString();
+                yield this._terminal.runCommand("git add .");
+                const C = yield this._terminal.runCommand("git status");
                 this._context.logger.info("Changes to be committed:", { status: C });
                 if (!C.trim()) {
                   throw new Error("No changes to commit. Please make changes before creating a pull request.");
                 }
                 this._context.logger.info("Committing changes");
-                (0, ie.execSync)(`git commit -m "${P}"`, { stdio: "pipe" });
-                const q = (0, ie.execSync)("git rev-parse --abbrev-ref HEAD", { stdio: "pipe" }).toString().trim();
+                yield this._terminal.runCommand(`git commit -m "${P}"`);
+                const q = (yield this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
                 this._context.logger.info(`Pushing branch ${q} to remote`);
-                (0, ie.execSync)(`git push origin ${q}`, { stdio: "pipe" });
+                yield this._terminal.runCommand(`git push origin ${q}`);
               } catch (C) {
                 console.log("Error:", C);
                 const P = C instanceof Error ? C : new Error(String(C));
@@ -38978,18 +38979,18 @@
               }
               this._context.logger.info("Creating pull request");
               const oe = this._context.payload.repository.name;
-              const Ge = this._context.payload.repository.owner.login;
-              const st = yield this._context.octokit.pulls.create({
-                owner: Ge,
+              const ie = this._context.payload.repository.owner.login;
+              const Ge = yield this._context.octokit.pulls.create({
+                owner: ie,
                 repo: oe,
                 title: P,
                 body: q,
-                head: (0, ie.execSync)("git rev-parse --abbrev-ref HEAD", { stdio: "pipe" }).toString().trim(),
+                head: (yield this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim(),
                 base: "development",
               });
               return {
                 success: true,
-                data: { url: st.data.html_url, number: st.data.number, title: st.data.title },
+                data: { url: Ge.data.html_url, number: Ge.data.number, title: Ge.data.title },
                 metadata: { timestamp: Date.now(), toolName: this.name },
               };
             } catch (C) {
@@ -39695,10 +39696,6 @@
     20181: (C) => {
       "use strict";
       C.exports = require("buffer");
-    },
-    35317: (C) => {
-      "use strict";
-      C.exports = require("child_process");
     },
     64236: (C) => {
       "use strict";
