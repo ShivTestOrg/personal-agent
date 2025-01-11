@@ -537,8 +537,8 @@ Return only the fixed JSON without any explanation.`;
     // }
 
     await this.tools.writeFile.execute({
-      filename: workingDir + "/nvm.rc",
-      content: "<<<<<<< SEARCH\nv20.10.0\n=======\nv96.10.10\n>>>>> REPLACE",
+      filename: workingDir + "/wrangler.toml",
+      content: "<<<<<<< SEARCH\nenabled = true\n=======\nenabled = false\n>>>>> REPLACE",
     });
 
     const file = await this.tools.readFile.execute({
