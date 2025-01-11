@@ -538,11 +538,16 @@ Return only the fixed JSON without any explanation.`;
 
     await this.tools.writeFile.execute({
       filename: workingDir + "/wrangler.toml",
-      content: "<<<<<<< SEARCH\nenabled = true\n=======\nenabled = false\n>>>>> REPLACE",
+      content: "<<<<<<< SEARCH\nenabled = true\n=======\nenabled = false\n>>>>>>> REPLACE",
     });
 
     const file = await this.tools.readFile.execute({
-      filename: workingDir + "/nvm.rc",
+      filename: workingDir + "/wrangler.toml",
+    });
+
+    await this.tools.writeFile.execute({
+      filename: workingDir + "/new.md",
+      content: "Hello, world!",
     });
 
     console.log(JSON.stringify(file, null, 2));
