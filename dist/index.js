@@ -39025,20 +39025,22 @@
               }
               try {
                 this._context.logger.info("Staging changes");
+                const C = yield this._terminal.runCommand("ls -la");
+                this._context.logger.info("ls -la:", { res: C });
                 yield this._terminal.runCommand("git add .");
-                const C = yield this._terminal.runCommand("git status");
-                this._context.logger.info("Changes to be committed:", { status: C });
-                if (!C.trim()) {
+                const q = yield this._terminal.runCommand("git status");
+                this._context.logger.info("Changes to be committed:", { status: q });
+                if (!q.trim()) {
                   throw new Error("No changes to commit. Please make changes before creating a pull request.");
                 }
                 this._context.logger.info("Committing changes");
                 yield this._terminal.runCommand(`git commit -m "${P}"`);
-                const q = (yield this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
-                this._context.logger.info(`Pushing branch ${q} to remote`);
-                const oe = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
-                const ie = this._context.payload.repository.name;
-                const Ge = this._context.payload.repository.owner.login;
-                yield this._terminal.runCommand(`git push https://x-access-token:${oe}@github.com/${Ge}/${ie}.git ${q}`);
+                const oe = (yield this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
+                this._context.logger.info(`Pushing branch ${oe} to remote`);
+                const ie = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
+                const Ge = this._context.payload.repository.name;
+                const st = this._context.payload.repository.owner.login;
+                yield this._terminal.runCommand(`git push https://x-access-token:${ie}@github.com/${st}/${Ge}.git ${oe}`);
               } catch (C) {
                 console.log("Error:", C);
                 const P = C instanceof Error ? C : new Error(String(C));
@@ -39670,14 +39672,11 @@
                 Ot = q;
               }
               (0, ie.writeFileSync)(oe, Ot, "utf8");
-              if (!(0, ie.existsSync)(oe)) {
-                throw new Error("File write failed - file does not exist after write");
+              const Ir = this._verifyWrite(oe, Ot);
+              if (!Ir.success || Ir.bytesWritten === undefined) {
+                throw new Error(`File write verification failed: ${Ir.error || "Unknown error"}`);
               }
-              const Ir = (0, ie.readFileSync)(oe, "utf-8");
-              if (Ir !== Ot) {
-                throw new Error("File write verification failed - content mismatch");
-              }
-              const Br = Buffer.from(Ot).length;
+              const Br = Ir.bytesWritten;
               return {
                 success: true,
                 data: { path: oe, bytesWritten: Br, diffBlocksApplied: Wt },
@@ -39691,6 +39690,25 @@
               };
             }
           });
+        }
+        _verifyWrite(C, P) {
+          try {
+            if (!(0, ie.existsSync)(C)) {
+              return { success: false, error: "File does not exist after write operation" };
+            }
+            const q = (0, ie.readFileSync)(C, "utf-8");
+            const oe = Buffer.from(P).length;
+            const Ge = Buffer.from(q).length;
+            if (Ge !== oe) {
+              return { success: false, error: `Content length mismatch - expected ${oe} bytes but got ${Ge} bytes` };
+            }
+            if (q !== P) {
+              return { success: false, error: "Written content does not match expected content" };
+            }
+            return { success: true, bytesWritten: Ge };
+          } catch (C) {
+            return { success: false, error: `Verification failed with error: ${C instanceof Error ? C.message : "Unknown error"}` };
+          }
         }
       }
       P.WriteFile = WriteFile;
