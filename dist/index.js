@@ -38616,7 +38616,10 @@
             this.tools.createPr = new Ar.CreatePr(this.context, q);
             this.tools.searchFiles = new Wt.SearchFiles(q);
             let ie = false;
-            yield this.tools.writeFile.execute({ filename: q + "/nvm.rc", content: "<<<<<<< SEARCH\nv20.10.0\n=======\nv96.10.10\n>>>>> REPLACE" });
+            yield this.tools.writeFile.execute({
+              filename: q + "/wrangler.toml",
+              content: "<<<<<<< SEARCH\nenabled = true\n=======\nenabled = false\n>>>>> REPLACE",
+            });
             const Ge = yield this.tools.readFile.execute({ filename: q + "/nvm.rc" });
             console.log(JSON.stringify(Ge, null, 2));
             ie = true;
