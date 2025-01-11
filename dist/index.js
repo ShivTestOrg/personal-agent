@@ -38466,14 +38466,24 @@
                 if (!C.endsWith("}")) {
                   throw new Error("Malformed JSON: Missing closing brace");
                 }
-                this.context.logger.info(`Processing tool request:`, { toolJson: C });
-                const Ge = JSON.parse(C);
+                this.context.logger.info(`Processing tool request:`, { toolJson: C, caller: new Error().stack });
+                let Ge;
+                try {
+                  Ge = JSON.parse(C);
+                  this.context.logger.info(`Parsed tool request:`, { toolRequest: Ge });
+                } catch (P) {
+                  this.context.logger.error(`Failed to parse tool request JSON:`, { error: P instanceof Error ? P : new Error(String(P)), toolJson: C });
+                  throw P;
+                }
                 if (!Ge.tool) {
+                  this.context.logger.error('Tool request missing required "tool" field', { toolRequest: Ge });
                   throw new Error('Tool request missing required "tool" field');
                 }
                 if (!Ge.args) {
+                  this.context.logger.error('Tool request missing required "args" field', { toolRequest: Ge });
                   throw new Error('Tool request missing required "args" field');
                 }
+                this.context.logger.info(`Tool request validation passed`, { tool: Ge.tool, args: Ge.args });
                 if (Ge.tool === "writeFile" && Ge.args.content && typeof Ge.args.content === "object") {
                   Ge.args.content = JSON.stringify(Ge.args.content, null, 2);
                 }
