@@ -137,6 +137,8 @@ export class WriteFile implements Tool<FileWriteResult> {
       // Read back the written content
       const writtenContent = readFileSync(filePath, "utf-8");
 
+      console.log("Written content:", writtenContent);
+
       // Check content length
       const expectedBytes = Buffer.from(expectedContent).length;
       const actualBytes = Buffer.from(writtenContent).length;

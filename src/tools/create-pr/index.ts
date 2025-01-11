@@ -54,6 +54,7 @@ export class CreatePr implements Tool<PullRequestResult> {
         this._context.logger.info("Staging changes");
         const res = await this._terminal.runCommand("ls -la");
         this._context.logger.info("ls -la:", { res });
+        await this._terminal.runCommand("git update-index --refresh");
         await this._terminal.runCommand("git add .");
 
         // Get status to log what's being committed
