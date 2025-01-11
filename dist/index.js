@@ -38958,7 +38958,7 @@
               try {
                 this._context.logger.info("Staging changes");
                 (0, ie.execSync)("git add .", { stdio: "pipe" });
-                const C = (0, ie.execSync)("git status --porcelain", { stdio: "pipe" }).toString();
+                const C = (0, ie.execSync)("git status", { stdio: "pipe" }).toString();
                 this._context.logger.info("Changes to be committed:", { status: C });
                 if (!C.trim()) {
                   throw new Error("No changes to commit. Please make changes before creating a pull request.");
@@ -38969,6 +38969,7 @@
                 this._context.logger.info(`Pushing branch ${q} to remote`);
                 (0, ie.execSync)(`git push origin ${q}`, { stdio: "pipe" });
               } catch (C) {
+                console.log("Error:", C);
                 const P = C instanceof Error ? C : new Error(String(C));
                 this._context.logger.error("Git operation failed:", { error: P });
                 throw P;
