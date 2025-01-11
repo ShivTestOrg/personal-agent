@@ -11,7 +11,7 @@ import { CreatePr } from "../../../tools/create-pr";
 const MAX_TRIES = 5;
 const MAX_RETRY_MALFORMED = 3;
 
-const sysMsg = `You are a capable AI assistant currently running on a GitHub bot. 
+const _sysMsg = `You are a capable AI assistant currently running on a GitHub bot. 
 You are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.
 Each tool implements a common interface that provides consistent error handling and result reporting.
 
@@ -475,66 +475,78 @@ Return only the fixed JSON without any explanation.`;
     this.tools.searchFiles = new SearchFiles(workingDir);
 
     let isSolved = false;
-    let finalResponse: OpenAI.Chat.Completions.ChatCompletion | null = null;
-    const conversationHistory: ChatMessage[] = [
-      {
-        role: "system",
-        content: sysMsg,
-      },
-    ];
+    // let finalResponse: OpenAI.Chat.Completions.ChatCompletion | null = null;
+    // const conversationHistory: ChatMessage[] = [
+    //   {
+    //     role: "system",
+    //     content: _sysMsg,
+    //   },
+    // ];
 
-    while (this.llmAttempts < MAX_TRIES && !isSolved) {
-      // Get the directory tree
-      const treeResult = await this._getDirectoryTree(workingDir);
-      const treeOutput =
-        treeResult.success && (treeResult.data as DirectoryExploreResult)?.tree
-          ? (treeResult.data as DirectoryExploreResult).tree
-          : "Unable to get directory tree";
+    // while (this.llmAttempts < MAX_TRIES && !isSolved) {
+    //   // Get the directory tree
+    //   const treeResult = await this._getDirectoryTree(workingDir);
+    //   const treeOutput =
+    //     treeResult.success && (treeResult.data as DirectoryExploreResult)?.tree
+    //       ? (treeResult.data as DirectoryExploreResult).tree
+    //       : "Unable to get directory tree";
 
-      this.context.logger.info("Directory tree:", { tree: treeOutput });
+    //   this.context.logger.info("Directory tree:", { tree: treeOutput });
 
-      // Add the current state to conversation
-      conversationHistory.push({
-        role: "user",
-        content: `Current LLM attempt: ${this.llmAttempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${prompt}`,
-      });
+    //   // Add the current state to conversation
+    //   conversationHistory.push({
+    //     role: "user",
+    //     content: `Current LLM attempt: ${this.llmAttempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${prompt}`,
+    //   });
 
-      const res = await this.client.chat.completions.create({
-        model,
-        messages: conversationHistory,
-        temperature: 0.2,
-        max_tokens: this.maxTokens,
-        top_p: 0.5,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      });
+    //   const res = await this.client.chat.completions.create({
+    //     model,
+    //     messages: conversationHistory,
+    //     temperature: 0.2,
+    //     max_tokens: this.maxTokens,
+    //     top_p: 0.5,
+    //     frequency_penalty: 0,
+    //     presence_penalty: 0,
+    //   });
 
-      this.context.logger.info("LLM response:", { response: res });
-      finalResponse = res;
+    //   this.context.logger.info("LLM response:", { response: res });
+    //   finalResponse = res;
 
-      // Get the LLM's response
-      const llmResponse = res.choices[0]?.message?.content || "";
+    //   // Get the LLM's response
+    //   const llmResponse = res.choices[0]?.message?.content || "";
 
-      // Process any tool requests in the response
-      const processedResponse = await this._processResponse(llmResponse, workingDir, model, currentSolution, conversationHistory);
+    //   // Process any tool requests in the response
+    //   const processedResponse = await this._processResponse(llmResponse, workingDir, model, currentSolution, conversationHistory);
 
-      // Add the processed response to conversation history
-      conversationHistory.push({
-        role: "assistant",
-        content: processedResponse,
-      });
+    //   // Add the processed response to conversation history
+    //   conversationHistory.push({
+    //     role: "assistant",
+    //     content: processedResponse,
+    //   });
 
-      // Update current solution state
-      currentSolution = processedResponse;
+    //   // Update current solution state
+    //   currentSolution = processedResponse;
 
-      // Check if the solution is complete
-      isSolved = await this._checkSolution(currentSolution, model);
+    //   // Check if the solution is complete
+    //   isSolved = await this._checkSolution(currentSolution, model);
 
-      if (!isSolved) {
-        this.llmAttempts++;
-        this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${MAX_TRIES}`);
-      }
-    }
+    //   if (!isSolved) {
+    //     this.llmAttempts++;
+    //     this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${MAX_TRIES}`);
+    //   }
+    // }
+
+    await this.tools.writeFile.execute({
+      filename: workingDir + "/nvm.rc",
+      content: "<<<<<<< SEARCH\nv20.10.0\n=======\nv96.10.10\n>>>>> REPLACE",
+    });
+
+    const file = await this.tools.readFile.execute({
+      filename: workingDir + "/nvm.rc",
+    });
+
+    console.log(JSON.stringify(file, null, 2));
+    isSolved = true;
 
     if (isSolved) {
       // Create a pull request with the changes
@@ -560,24 +572,24 @@ ${currentSolution}`;
       }
     }
 
-    return finalResponse;
+    return "finalResponse";
   }
 
   private async _createPullRequest(title: string, body: string, workingDir: string) {
-    return this._executeWithRetry(this.tools.createPr, "execute", workingDir, { title, body, workingDir });
+    return await this._executeWithRetry(this.tools.createPr, "execute", workingDir, { title, body, workingDir });
   }
 
   // Helper methods to execute tools with retry logic
   private async _readFile(filename: string, workingDir: string) {
-    return this._executeWithRetry(this.tools.readFile, "execute", workingDir, { filename });
+    return await this._executeWithRetry(this.tools.readFile, "execute", workingDir, { filename });
   }
 
   private async _writeFile(filename: string, content: string, workingDir: string) {
-    return this._executeWithRetry(this.tools.writeFile, "execute", workingDir, { filename, content });
+    return await this._executeWithRetry(this.tools.writeFile, "execute", workingDir, { filename, content });
   }
 
   private async _getDirectoryTree(workingDir: string) {
-    return this._executeWithRetry(this.tools.exploreDir, "execute", workingDir, { command: "tree" });
+    return await this._executeWithRetry(this.tools.exploreDir, "execute", workingDir, { command: "tree" });
   }
 
   private async _searchFiles(
@@ -589,7 +601,7 @@ ${currentSolution}`;
       contextLines?: number;
     }
   ) {
-    return this._executeWithRetry(this.tools.searchFiles, "execute", workingDir, {
+    return await this._executeWithRetry(this.tools.searchFiles, "execute", workingDir, {
       pattern,
       ...options,
     });

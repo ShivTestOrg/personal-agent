@@ -46,7 +46,7 @@ export async function delegate(context: Context) {
         return;
       }
 
-      const response = solution.choices[0]?.message?.content;
+      const response = solution;
       if (!response) {
         logger.error("Empty response from completion");
         return;
