@@ -546,7 +546,7 @@ ${prompt}
 Changes made:
 ${currentSolution}`;
 
-      const prResult = await this._createPullRequest(prTitle, prBody);
+      const prResult = await this._createPullRequest(prTitle, prBody, workingDir);
       if (prResult.success) {
         this.context.logger.info("Created pull request:", {
           data: prResult.data,
@@ -563,8 +563,8 @@ ${currentSolution}`;
     return finalResponse;
   }
 
-  private async _createPullRequest(title: string, body: string) {
-    return this._executeWithRetry(this.tools.createPr, "execute", "", { title, body });
+  private async _createPullRequest(title: string, body: string, workingDir: string) {
+    return this._executeWithRetry(this.tools.createPr, "execute", workingDir, { title, body });
   }
 
   // Helper methods to execute tools with retry logic
