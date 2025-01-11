@@ -38678,56 +38678,58 @@
       const Ot = q(14164);
       function delegate(C) {
         return oe(this, void 0, void 0, function* () {
-          var P;
-          const { logger: q, payload: oe } = C;
-          const Wt = oe.comment.body;
-          const Ar = oe.repository.name;
-          const Er = oe.repository.owner.login;
-          const Ir = oe.issue.number;
-          if (Wt.toLowerCase().includes("solve this issue")) {
-            const oe = new Ge.ExploreDir();
+          var P, q;
+          const { logger: oe, payload: Wt } = C;
+          const Ar = Wt.comment.body;
+          const Er = Wt.repository.name;
+          const Ir = Wt.repository.owner.login;
+          const Br = Wt.issue.number;
+          if (Ar.toLowerCase().includes("solve this issue")) {
+            const Wt = new Ge.ExploreDir();
             try {
-              const Ge = yield oe.execute({ command: "clone", repo: Ar, owner: Er, issueNumber: Ir });
+              const Ge = yield Wt.execute({ command: "clone", repo: Er, owner: Ir, issueNumber: Br });
               if (!Ge.success || !Ge.data) {
-                q.error(`Failed to clone repository: ${Ge.error}`);
+                oe.error(`Failed to clone repository: ${Ge.error}`);
                 return;
               }
-              const Wt = Ge.data.currentPath;
-              const Br = new st.ReadFile();
-              const Qr = new Ot.WriteFile();
-              const Dr = yield Br.execute({ filename: Wt + "/README.md" });
-              if (!Dr.success) {
-                q.error(`Failed to read file: ${Dr.error} + ${Wt}`);
-                return;
-              }
-              const Fr = yield Qr.execute({ filename: Wt + "/output.txt", content: ((P = Dr.data) === null || P === void 0 ? void 0 : P.content) || "" });
+              const Ar = Ge.data.currentPath;
+              const Qr = new st.ReadFile();
+              const Dr = new Ot.WriteFile();
+              const Fr = yield Qr.execute({ filename: Ar + "/README.md" });
               if (!Fr.success) {
-                q.error(`Failed to write file: ${Fr.error}`);
+                oe.error(`Failed to read file: ${Fr.error} + ${Ar}`);
                 return;
               }
-              q.ok("File operations completed successfully");
-              q.verbose("Files processed: README.md -> output.txt");
-              const kr = new ie.CreatePr(C);
-              yield kr.execute({ title: "Solved issue", body: "I have solved this issue. Please review the changes." });
+              console.log(JSON.stringify(Fr, null, 2));
+              oe.info(`Read content: ${(P = Fr.data) === null || P === void 0 ? void 0 : P.content}`);
+              const kr = yield Dr.execute({ filename: Ar + "/output.txt", content: ((q = Fr.data) === null || q === void 0 ? void 0 : q.content) || "" });
+              if (!kr.success) {
+                oe.error(`Failed to write file: ${kr.error}`);
+                return;
+              }
+              oe.ok("File operations completed successfully");
+              oe.verbose("Files processed: README.md -> output.txt");
+              const Nr = new ie.CreatePr(C);
+              yield Nr.execute({ title: "Solved issue", body: "I have solved this issue. Please review the changes." });
               yield C.octokit.issues.createComment({
-                owner: Er,
-                repo: Ar,
-                issue_number: Ir,
+                owner: Ir,
+                repo: Er,
+                issue_number: Br,
                 body: `File operations completed successfully. Processed README.md -> output.txt`,
               });
-              yield oe.execute({ command: "kill" });
+              yield Wt.execute({ command: "kill" });
             } catch (P) {
-              q.error(`Error during completion: ${P instanceof Error ? P.message : "Unknown error"}`);
+              oe.error(`Error during completion: ${P instanceof Error ? P.message : "Unknown error"}`);
               yield C.octokit.issues.createComment({
-                owner: Er,
-                repo: Ar,
-                issue_number: Ir,
+                owner: Ir,
+                repo: Er,
+                issue_number: Br,
                 body: "I encountered an error while trying to solve this issue. Please check the logs for more details.",
               });
             }
           }
-          q.ok(`Comment processed: ${Wt}`);
-          q.verbose(`Exiting delegate`);
+          oe.ok(`Comment processed: ${Ar}`);
+          oe.verbose(`Exiting delegate`);
         });
       }
     },
@@ -39566,6 +39568,9 @@
                 throw new Error("Filename and content are required");
               }
               const oe = (0, Ge.resolve)(P);
+              if (!oe) {
+                throw new Error(`Failed to resolve path: ${P}`);
+              }
               const st = (0, Ge.dirname)(oe);
               (0, ie.mkdirSync)(st, { recursive: true });
               let Ot;
@@ -39576,6 +39581,9 @@
                 if (Er) {
                   const C = (0, ie.readFileSync)(oe, "utf-8");
                   const P = this._parseDiffBlocks(q);
+                  if (P.length === 0) {
+                    throw new Error("No valid diff blocks found in content");
+                  }
                   Ot = this._applyDiff(C, P);
                   Wt = P.length;
                 } else {
@@ -39584,11 +39592,18 @@
               } else {
                 Ot = q;
               }
-              (0, ie.writeFileSync)(oe, Ot);
-              const Ir = Buffer.from(Ot).length;
+              (0, ie.writeFileSync)(oe, Ot, "utf8");
+              if (!(0, ie.existsSync)(oe)) {
+                throw new Error("File write failed - file does not exist after write");
+              }
+              const Ir = (0, ie.readFileSync)(oe, "utf-8");
+              if (Ir !== Ot) {
+                throw new Error("File write verification failed - content mismatch");
+              }
+              const Br = Buffer.from(Ot).length;
               return {
                 success: true,
-                data: { path: oe, bytesWritten: Ir, diffBlocksApplied: Wt },
+                data: { path: oe, bytesWritten: Br, diffBlocksApplied: Wt },
                 metadata: { timestamp: Date.now(), toolName: this.name, diffBlocksApplied: Wt },
               };
             } catch (C) {
