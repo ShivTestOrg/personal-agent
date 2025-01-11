@@ -9,6 +9,7 @@ import { SearchFiles } from "../../../tools/search-files";
 import { CreatePr } from "../../../tools/create-pr";
 
 const MAX_TRIES = 5;
+const MAX_RETRY_MALFORMED = 3;
 
 const sysMsg = `You are a capable AI assistant currently running on a GitHub bot. 
 You are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.
@@ -205,7 +206,88 @@ export class Completions extends SuperOpenAi {
     }
   }
 
-  private async _processResponse(response: string, workingDir: string): Promise<string> {
+  private async _fixMalformedWriteFile(
+    malformedJson: string,
+    workingDir: string,
+    model: string,
+    currentSolution: string,
+    conversationHistory: ChatMessage[]
+  ): Promise<ToolRequest> {
+    let attempts = 0;
+    let lastError: Error | null = null;
+
+    while (attempts < MAX_RETRY_MALFORMED) {
+      try {
+        this.context.logger.info(`Attempt ${attempts + 1} to fix malformed writeFile request`);
+
+        // Get directory tree for context
+        const treeResult = await this._getDirectoryTree(workingDir);
+        const treeOutput = treeResult.success && treeResult.data ? (treeResult.data as DirectoryExploreResult).tree : "";
+
+        const fixPrompt = `You are currently helping fix a GitHub issue. Here's the context:
+
+Working Directory: ${workingDir}
+Directory Structure:
+${treeOutput}
+
+Previous Solution State:
+${currentSolution}
+
+Previous Conversation:
+${conversationHistory.map((msg) => `${msg.role}: ${msg.content}`).join("\n")}
+
+The following writeFile tool request is malformed. Fix it to be valid JSON with properly escaped content:
+${malformedJson}
+
+Return only the fixed JSON without any explanation.`;
+
+        const fixResponse = await this.client.chat.completions.create({
+          model,
+          messages: [
+            {
+              role: "system",
+              content:
+                "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
+            },
+            {
+              role: "user",
+              content: fixPrompt,
+            },
+          ],
+          temperature: 0,
+        });
+
+        const fixedJson = fixResponse.choices[0]?.message?.content?.trim() || "";
+        this.context.logger.info("LLM suggested fix:", { fixedJson });
+
+        const toolRequest = JSON.parse(fixedJson);
+        if (!toolRequest.tool || !toolRequest.args || !toolRequest.args.filename || !toolRequest.args.content) {
+          throw new Error("Fixed JSON is missing required fields");
+        }
+
+        return toolRequest;
+      } catch (error) {
+        lastError = error instanceof Error ? error : new Error(String(error));
+        //Add this to the conversation history
+        conversationHistory.push({
+          role: "assistant",
+          content: `Failed to fix malformed JSON (attempt ${attempts + 1}): ${lastError.message}`,
+        });
+        this.context.logger.error(`Failed to fix JSON (attempt ${attempts + 1}):`, { error: lastError });
+        attempts++;
+      }
+    }
+
+    throw new Error(`Failed to fix malformed JSON after ${MAX_RETRY_MALFORMED} attempts: ${lastError?.message}`);
+  }
+
+  private async _processResponse(
+    response: string,
+    workingDir: string,
+    model: string,
+    currentSolution: string,
+    conversationHistory: ChatMessage[]
+  ): Promise<string> {
     // Find all tool blocks in the response
     const toolBlocks = [...response.matchAll(/```tool\n([\s\S]*?)```/g)];
     if (toolBlocks.length === 0) return response;
@@ -224,17 +306,28 @@ export class Completions extends SuperOpenAi {
           throw new Error("Malformed JSON: Missing closing brace");
         }
 
-        this.context.logger.info(`Processing tool request:`, { toolJson: trimmedJson, caller: new Error().stack });
+        this.context.logger.info(`Processing tool request:`, { toolJson: trimmedJson });
         let toolRequest: ToolRequest;
         try {
           toolRequest = JSON.parse(trimmedJson);
           this.context.logger.info(`Parsed tool request:`, { toolRequest });
-        } catch (error) {
-          this.context.logger.error(`Failed to parse tool request JSON:`, {
-            error: error instanceof Error ? error : new Error(String(error)),
-            toolJson: trimmedJson,
-          });
-          throw error;
+        } catch (error: unknown) {
+          if (trimmedJson.includes('"tool": "writeFile"')) {
+            try {
+              toolRequest = await this._fixMalformedWriteFile(trimmedJson, workingDir, model, currentSolution, conversationHistory);
+              this.context.logger.info("Successfully fixed and parsed JSON");
+            } catch (fixError) {
+              this.context.logger.error("Failed to fix malformed JSON:", { error: fixError instanceof Error ? fixError : new Error(String(fixError)) });
+              throw fixError;
+            }
+          } else {
+            const errorObj = error instanceof Error ? error : new Error(String(error));
+            this.context.logger.error(`Failed to parse tool request JSON:`, {
+              error: errorObj,
+              toolJson: trimmedJson,
+            });
+            throw errorObj;
+          }
         }
 
         // Validate required fields
@@ -418,7 +511,7 @@ export class Completions extends SuperOpenAi {
       const llmResponse = res.choices[0]?.message?.content || "";
 
       // Process any tool requests in the response
-      const processedResponse = await this._processResponse(llmResponse, workingDir);
+      const processedResponse = await this._processResponse(llmResponse, workingDir, model, currentSolution, conversationHistory);
 
       // Add the processed response to conversation history
       conversationHistory.push({
