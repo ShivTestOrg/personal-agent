@@ -38648,20 +38648,20 @@
             }
             if (Ir) {
               const P = `Fix: ${C.split("\n")[0]}`;
-              const q = `This PR addresses the following:\n\n${C}\n\nChanges made:\n${oe}`;
-              const ie = yield this._createPullRequest(P, q);
-              if (ie.success) {
-                this.context.logger.info("Created pull request:", { data: ie.data, metadata: ie.metadata });
+              const ie = `This PR addresses the following:\n\n${C}\n\nChanges made:\n${oe}`;
+              const Ge = yield this._createPullRequest(P, ie, q);
+              if (Ge.success) {
+                this.context.logger.info("Created pull request:", { data: Ge.data, metadata: Ge.metadata });
               } else {
-                this.context.logger.error("Failed to create pull request:", { error: new Error(ie.error || "Unknown error"), metadata: ie.metadata });
+                this.context.logger.error("Failed to create pull request:", { error: new Error(Ge.error || "Unknown error"), metadata: Ge.metadata });
               }
             }
             return Qr;
           });
         }
-        _createPullRequest(C, P) {
+        _createPullRequest(C, P, q) {
           return oe(this, void 0, void 0, function* () {
-            return this._executeWithRetry(this.tools.createPr, "execute", "", { title: C, body: P });
+            return this._executeWithRetry(this.tools.createPr, "execute", q, { title: C, body: P });
           });
         }
         _readFile(C, P) {
