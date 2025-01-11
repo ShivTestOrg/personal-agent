@@ -359,6 +359,7 @@ export class Completions extends SuperOpenAi {
 
     // Update tools with working directory
     this.tools.exploreDir = new ExploreDir(this.context, workingDir);
+    this.tools.createPr = new CreatePr(this.context, workingDir);
     this.tools.searchFiles = new SearchFiles(workingDir);
 
     let isSolved = false;
