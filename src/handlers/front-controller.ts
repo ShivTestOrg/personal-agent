@@ -14,7 +14,7 @@ export async function delegate(context: Context) {
   // Check if the comment is requesting to solve the issue
   if (body.toLowerCase().includes("solve this issue")) {
     // Initialize tools and completion system
-    const explore = new ExploreDir();
+    const explore = new ExploreDir(context);
 
     try {
       // First clone the repository

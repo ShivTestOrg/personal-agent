@@ -1,5 +1,6 @@
 import { Terminal } from "../terminal";
 import { Tool, ToolResult, DirectoryExploreResult, FunctionParameters } from "../../types/tool";
+import { Context } from "../../types/context";
 
 export class ExploreDir implements Tool<DirectoryExploreResult> {
   readonly name = "exploreDir";
@@ -35,8 +36,10 @@ export class ExploreDir implements Tool<DirectoryExploreResult> {
   private _shellInterface: Terminal;
   private _currentDir: string;
   private _tempDir: string | null = null;
+  private _context: Context;
 
-  constructor(workDir: string = "") {
+  constructor(context: Context, workDir: string = "") {
+    this._context = context;
     this._shellInterface = new Terminal();
     this._currentDir = workDir;
   }
@@ -143,7 +146,8 @@ export class ExploreDir implements Tool<DirectoryExploreResult> {
 
   private async _cloneRepo(repo: string, owner: string, issueNumber: number): Promise<void> {
     this._currentDir = await this._makeTempDir();
-    const command = `git clone https://github.com/${owner}/${repo}.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${issueNumber}`;
+    const token = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
+    const command = `git clone https://x-access-token:${token}@github.com/${owner}/${repo}.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${issueNumber}`;
     await this._shellInterface.runCommand(command);
   }
 }

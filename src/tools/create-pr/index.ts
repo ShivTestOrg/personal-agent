@@ -61,10 +61,13 @@ export class CreatePr implements Tool<PullRequestResult> {
         this._context.logger.info("Committing changes");
         await this._terminal.runCommand(`git commit -m "${title}"`);
 
-        // Push to remote
+        // Push to remote using token
         const currentBranch = (await this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
         this._context.logger.info(`Pushing branch ${currentBranch} to remote`);
-        await this._terminal.runCommand(`git push origin ${currentBranch}`);
+        const token = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
+        const repo = this._context.payload.repository.name;
+        const owner = this._context.payload.repository.owner.login;
+        await this._terminal.runCommand(`git push https://x-access-token:${token}@github.com/${owner}/${repo}.git ${currentBranch}`);
       } catch (error) {
         console.log("Error:", error);
         const gitError = error instanceof Error ? error : new Error(String(error));
