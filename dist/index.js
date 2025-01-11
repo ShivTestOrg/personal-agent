@@ -38413,7 +38413,7 @@
           super(C, P);
           this.maxTokens = 1e5;
           this.llmAttempts = 0;
-          this.toolAttempts = 0;
+          this._toolAttempts = new Map();
           this.tools = {
             readFile: new Ge.ReadFile(),
             writeFile: new st.WriteFile(),
@@ -38521,6 +38521,7 @@
                     try {
                       Wt = yield this._fixMalformedWriteFile(C, P, q, ie, Ge);
                       this.context.logger.info("Successfully fixed and parsed JSON");
+                      this._toolAttempts.set("writeFile", 0);
                     } catch (C) {
                       this.context.logger.error("Failed to fix malformed JSON:", { error: C instanceof Error ? C : new Error(String(C)) });
                       throw C;
@@ -38576,38 +38577,32 @@
         }
         _executeWithRetry(C, P, q, ie) {
           return oe(this, void 0, void 0, function* () {
-            this.toolAttempts++;
-            if (this.toolAttempts > Er) {
-              const P = new Error(`Maximum attempts (${Er}) exceeded`);
-              this.context.logger.error(`Tool retry limit exceeded:`, { error: P });
-              return {
-                success: false,
-                error: P.message,
-                metadata: { timestamp: Date.now(), toolName: C.name, toolAttempts: this.toolAttempts, workingDir: q },
-              };
+            const oe = (this._toolAttempts.get(C.name) || 0) + 1;
+            this._toolAttempts.set(C.name, oe);
+            if (oe > Er) {
+              const P = new Error(`Maximum attempts (${Er}) exceeded for tool ${C.name}`);
+              this.context.logger.error(`Tool retry limit exceeded:`, { error: P, tool: C.name });
+              return { success: false, error: P.message, metadata: { timestamp: Date.now(), toolName: C.name, toolAttempts: oe, workingDir: q } };
             }
             try {
-              const oe = yield C.execute(ie);
-              if (!oe.success && this.toolAttempts < Er) {
-                const Ge = new Error(oe.error || "Unknown error");
-                this.context.logger.error(`Tool attempt ${this.toolAttempts} failed:`, { error: Ge });
+              const Ge = yield C.execute(ie);
+              if (!Ge.success && oe < Er) {
+                const st = new Error(Ge.error || "Unknown error");
+                this.context.logger.error(`Tool attempt ${oe} failed:`, { error: st, tool: C.name });
                 return this._executeWithRetry(C, P, q, ie);
               }
-              if (oe.success) {
-                this.context.logger.info(`Tool execution successful:`, { toolName: C.name, data: oe.data, metadata: oe.metadata });
+              if (Ge.success) {
+                this.context.logger.info(`Tool execution successful:`, { toolName: C.name, data: Ge.data, metadata: Ge.metadata });
+                this._toolAttempts.set(C.name, 0);
               }
-              return oe;
-            } catch (oe) {
-              const Ge = oe instanceof Error ? oe : new Error(String(oe));
-              this.context.logger.error(`Tool attempt ${this.toolAttempts} error:`, { error: Ge });
-              if (this.toolAttempts < Er) {
+              return Ge;
+            } catch (Ge) {
+              const st = Ge instanceof Error ? Ge : new Error(String(Ge));
+              this.context.logger.error(`Tool attempt ${oe} error:`, { error: st, tool: C.name });
+              if (oe < Er) {
                 return this._executeWithRetry(C, P, q, ie);
               }
-              return {
-                success: false,
-                error: Ge.message,
-                metadata: { timestamp: Date.now(), toolName: C.name, toolAttempts: this.toolAttempts, workingDir: q },
-              };
+              return { success: false, error: st.message, metadata: { timestamp: Date.now(), toolName: C.name, toolAttempts: oe, workingDir: q } };
             }
           });
         }
@@ -38615,7 +38610,7 @@
           return oe(this, arguments, void 0, function* (C, P, q, oe = "") {
             var ie, Ge, st;
             this.llmAttempts = 0;
-            this.toolAttempts = 0;
+            this._toolAttempts.clear();
             this.tools.exploreDir = new Ot.ExploreDir(this.context, q);
             this.tools.createPr = new Ar.CreatePr(this.context, q);
             this.tools.searchFiles = new Wt.SearchFiles(q);
