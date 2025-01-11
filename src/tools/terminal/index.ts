@@ -26,6 +26,14 @@ export class Terminal implements Tool<TerminalCommandResult> {
     this._cwd = _workdir;
   }
 
+  setCwd(cwd: string) {
+    this._cwd = cwd;
+  }
+
+  getCwd() {
+    return this._cwd;
+  }
+
   async execute(args: Record<string, unknown>): Promise<ToolResult<TerminalCommandResult>> {
     try {
       const command = args.command as string;

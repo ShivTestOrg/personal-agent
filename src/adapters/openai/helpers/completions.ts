@@ -564,7 +564,7 @@ ${currentSolution}`;
   }
 
   private async _createPullRequest(title: string, body: string, workingDir: string) {
-    return this._executeWithRetry(this.tools.createPr, "execute", workingDir, { title, body });
+    return this._executeWithRetry(this.tools.createPr, "execute", workingDir, { title, body, workingDir });
   }
 
   // Helper methods to execute tools with retry logic

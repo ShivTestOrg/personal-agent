@@ -39,6 +39,12 @@ export class CreatePr implements Tool<PullRequestResult> {
       const title = args.title as string;
       const body = args.body as string;
 
+      this._context.logger.info("Creating pull request with args:", { args });
+      if (args && args.workDir) {
+        this._terminal.setCwd(args.workDir as string);
+      }
+      this._context.logger.info("Current working directory:", { cwd: this._terminal.getCwd() });
+
       if (!title || !body) {
         throw new Error("Title and body are required");
       }
