@@ -47,7 +47,7 @@ export class CreatePr implements Tool<PullRequestResult> {
         execSync("git add .", { stdio: "pipe" });
 
         // Get status to log what's being committed
-        const status = execSync("git status --porcelain", { stdio: "pipe" }).toString();
+        const status = execSync("git status", { stdio: "pipe" }).toString();
         this._context.logger.info("Changes to be committed:", { status });
 
         // Only proceed if there are changes to commit
@@ -64,6 +64,7 @@ export class CreatePr implements Tool<PullRequestResult> {
         this._context.logger.info(`Pushing branch ${currentBranch} to remote`);
         execSync(`git push origin ${currentBranch}`, { stdio: "pipe" });
       } catch (error) {
+        console.log("Error:", error);
         const gitError = error instanceof Error ? error : new Error(String(error));
         this._context.logger.error("Git operation failed:", { error: gitError });
         throw gitError;
