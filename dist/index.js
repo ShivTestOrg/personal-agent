@@ -39005,7 +39005,6 @@
                 this._context.logger.info("Staging changes");
                 const C = yield this._terminal.runCommand("ls -la");
                 this._context.logger.info("ls -la:", { res: C });
-                yield this._terminal.runCommand("git update-index --refresh");
                 yield this._terminal.runCommand("git add .");
                 const q = yield this._terminal.runCommand("git status");
                 this._context.logger.info("Changes to be committed:", { status: q });
