@@ -155,13 +155,13 @@ export class Completions extends SuperOpenAi {
   protected maxTokens: number;
   protected tools: ToolSet;
   protected llmAttempts: number;
-  protected toolAttempts: number;
+  private _toolAttempts: Map<string, number>;
 
   constructor(client: OpenAI, context: Context) {
     super(client, context);
     this.maxTokens = 100000;
     this.llmAttempts = 0;
-    this.toolAttempts = 0;
+    this._toolAttempts = new Map();
     this.tools = {
       readFile: new ReadFile(),
       writeFile: new WriteFile(),
@@ -316,6 +316,8 @@ Return only the fixed JSON without any explanation.`;
             try {
               toolRequest = await this._fixMalformedWriteFile(trimmedJson, workingDir, model, currentSolution, conversationHistory);
               this.context.logger.info("Successfully fixed and parsed JSON");
+              // Reset tool attempts since we're starting fresh with fixed JSON
+              this._toolAttempts.set("writeFile", 0);
             } catch (fixError) {
               this.context.logger.error("Failed to fix malformed JSON:", { error: fixError instanceof Error ? fixError : new Error(String(fixError)) });
               throw fixError;
@@ -403,18 +405,19 @@ Return only the fixed JSON without any explanation.`;
     workingDir: string,
     args: Record<string, unknown>
   ): Promise<ToolResult<ToolResultMap[T]>> {
-    this.toolAttempts++;
+    const currentAttempts = (this._toolAttempts.get(tool.name) || 0) + 1;
+    this._toolAttempts.set(tool.name, currentAttempts);
 
-    if (this.toolAttempts > MAX_TRIES) {
-      const error = new Error(`Maximum attempts (${MAX_TRIES}) exceeded`);
-      this.context.logger.error(`Tool retry limit exceeded:`, { error });
+    if (currentAttempts > MAX_TRIES) {
+      const error = new Error(`Maximum attempts (${MAX_TRIES}) exceeded for tool ${tool.name}`);
+      this.context.logger.error(`Tool retry limit exceeded:`, { error, tool: tool.name });
       return {
         success: false,
         error: error.message,
         metadata: {
           timestamp: Date.now(),
           toolName: tool.name,
-          toolAttempts: this.toolAttempts,
+          toolAttempts: currentAttempts,
           workingDir,
         },
       };
@@ -423,9 +426,9 @@ Return only the fixed JSON without any explanation.`;
     try {
       const result = await tool.execute(args);
 
-      if (!result.success && this.toolAttempts < MAX_TRIES) {
+      if (!result.success && currentAttempts < MAX_TRIES) {
         const error = new Error(result.error || "Unknown error");
-        this.context.logger.error(`Tool attempt ${this.toolAttempts} failed:`, { error });
+        this.context.logger.error(`Tool attempt ${currentAttempts} failed:`, { error, tool: tool.name });
         return this._executeWithRetry(tool, method, workingDir, args);
       }
 
@@ -435,14 +438,16 @@ Return only the fixed JSON without any explanation.`;
           data: result.data,
           metadata: result.metadata,
         });
+        // Reset attempts on success
+        this._toolAttempts.set(tool.name, 0);
       }
 
       return result;
     } catch (error) {
       const errorObj = error instanceof Error ? error : new Error(String(error));
-      this.context.logger.error(`Tool attempt ${this.toolAttempts} error:`, { error: errorObj });
+      this.context.logger.error(`Tool attempt ${currentAttempts} error:`, { error: errorObj, tool: tool.name });
 
-      if (this.toolAttempts < MAX_TRIES) {
+      if (currentAttempts < MAX_TRIES) {
         return this._executeWithRetry(tool, method, workingDir, args);
       }
 
@@ -452,7 +457,7 @@ Return only the fixed JSON without any explanation.`;
         metadata: {
           timestamp: Date.now(),
           toolName: tool.name,
-          toolAttempts: this.toolAttempts,
+          toolAttempts: currentAttempts,
           workingDir,
         },
       };
@@ -462,7 +467,7 @@ Return only the fixed JSON without any explanation.`;
   async createCompletion(prompt: string, model: string, workingDir: string, currentSolution: string = "") {
     // Reset attempts counter for new completion
     this.llmAttempts = 0;
-    this.toolAttempts = 0;
+    this._toolAttempts.clear();
 
     // Update tools with working directory
     this.tools.exploreDir = new ExploreDir(this.context, workingDir);
