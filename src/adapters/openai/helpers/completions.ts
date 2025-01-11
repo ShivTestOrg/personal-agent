@@ -8,8 +8,8 @@ import { ExploreDir } from "../../../tools/explore-dir";
 import { SearchFiles } from "../../../tools/search-files";
 import { CreatePr } from "../../../tools/create-pr";
 
-const MAX_TRIES = 5;
-const MAX_RETRY_MALFORMED = 3;
+const MAX_TRIES = 10;
+const MAX_RETRY_MALFORMED = 1;
 
 const sysMsg = `You are a capable AI assistant currently running on a GitHub bot. 
 You are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.
@@ -423,16 +423,19 @@ Return only the fixed JSON without any explanation.`;
   private async _checkSolution(
     prompt: string,
     model: string,
+    conversationHistory: ChatMessage[] = [],
     totalInputToken: number = 0,
     totalOutputToknen: number = 0
   ): Promise<{
     isSolved: boolean;
     totalInputToken: number;
     totalOutputToknen: number;
+    conversationHistory: ChatMessage[];
   }> {
     const res = await this.client.chat.completions.create({
       model,
       messages: [
+        ...conversationHistory,
         {
           role: "system",
           content:
@@ -447,6 +450,14 @@ Return only the fixed JSON without any explanation.`;
       max_tokens: 50,
     });
 
+    //Add the reason why more work is needed
+    if (res && res.choices[0]?.message?.content?.trim().toLowerCase() === "continue") {
+      conversationHistory.push({
+        role: "assistant",
+        content: `The issue is not completely resolved. More work is needed. ${res.choices[0]?.message?.content}`,
+      });
+    }
+
     if (res.usage) {
       totalInputToken += res.usage.prompt_tokens;
       totalOutputToknen += res.usage.completion_tokens;
@@ -457,6 +468,7 @@ Return only the fixed JSON without any explanation.`;
       isSolved: response.trim().toLowerCase() === "solved",
       totalInputToken,
       totalOutputToknen,
+      conversationHistory,
     };
   }
 
@@ -540,7 +552,7 @@ Return only the fixed JSON without any explanation.`;
     let totalInputTokens = 0;
     let totalOutputTokens = 0;
     let pullRequestResult: ToolResult<ToolResultMap["createPr"]> | null = null;
-    const conversationHistory: ChatMessage[] = [
+    let conversationHistory: ChatMessage[] = [
       {
         role: "system",
         content: sysMsg,
@@ -611,10 +623,11 @@ Return only the fixed JSON without any explanation.`;
       totalOutputTokens += processedResponse.totalOutputToken;
 
       // Check if the solution is complete
-      const solOutput = await this._checkSolution(currentSolution, model, totalInputTokens, totalOutputTokens);
+      const solOutput = await this._checkSolution(currentSolution, model, conversationHistory, totalInputTokens, totalOutputTokens);
       isSolved = solOutput.isSolved;
       totalInputTokens += solOutput.totalInputToken;
       totalOutputTokens += solOutput.totalOutputToknen;
+      conversationHistory = solOutput.conversationHistory;
 
       if (!isSolved) {
         this.llmAttempts++;
@@ -622,7 +635,7 @@ Return only the fixed JSON without any explanation.`;
       }
     }
 
-    if (isSolved) {
+    if (isSolved || this.llmAttempts >= MAX_TRIES) {
       // Create a pull request with the changes
       const prTitle = `Fix: ${prompt.split("\n")[0]}`; // Use first line of prompt as PR title
 
