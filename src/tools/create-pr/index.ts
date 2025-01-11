@@ -75,6 +75,10 @@ export class CreatePr implements Tool<PullRequestResult> {
         // Push to remote using token
         const currentBranch = (await this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
         this._context.logger.info(`Pushing branch ${currentBranch} to remote`);
+        //Print the current pwd
+        const val = await this._terminal.runCommand("pwd");
+        console.log(val);
+        this._context.logger.info(`Current working directory: ${val}`);
         const token = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
         const repo = this._context.payload.repository.name;
         const owner = this._context.payload.repository.owner.login;

@@ -149,5 +149,10 @@ export class ExploreDir implements Tool<DirectoryExploreResult> {
     const token = this._context.env.PERSONAL_AGENT_PAT_CLASSIC;
     const command = `git clone https://x-access-token:${token}@github.com/${owner}/${repo}.git ${this._currentDir} && cd ${this._currentDir} && git checkout -b issue-${issueNumber}`;
     await this._shellInterface.runCommand(command);
+
+    //Print the current pwd
+    const val = await this._shellInterface.runCommand("pwd");
+    console.log(val);
+    this._context.logger.info(`Current working directory: ${val}`);
   }
 }
