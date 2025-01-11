@@ -38455,17 +38455,17 @@
           });
         }
         _fixMalformedWriteFile(C, P, q, ie, Ge) {
-          return oe(this, void 0, void 0, function* () {
-            var oe, st, Ot;
-            let Wt = 0;
-            let Ar = null;
-            while (Wt < Ir) {
+          return oe(this, arguments, void 0, function* (C, P, q, oe, ie, Ge = 0, st = 0) {
+            var Ot, Wt, Ar;
+            let Er = 0;
+            let Br = null;
+            while (Er < Ir) {
               try {
-                this.context.logger.info(`Attempt ${Wt + 1} to fix malformed writeFile request`);
-                const Ar = yield this._getDirectoryTree(P);
-                const Er = Ar.success && Ar.data ? Ar.data.tree : "";
-                const Ir = `You are currently helping fix a GitHub issue. Here's the context:\n\nWorking Directory: ${P}\nDirectory Structure:\n${Er}\n\nPrevious Solution State:\n${ie}\n\nPrevious Conversation:\n${Ge.map((C) => `${C.role}: ${C.content}`).join("\n")}\n\nThe following writeFile tool request is malformed. Fix it to be valid JSON with properly escaped content:\n${C}\n\nReturn only the fixed JSON without any explanation.`;
-                const Br = yield this.client.chat.completions.create({
+                this.context.logger.info(`Attempt ${Er + 1} to fix malformed writeFile request`);
+                const Ir = yield this._getDirectoryTree(P);
+                const Br = Ir.success && Ir.data ? Ir.data.tree : "";
+                const Qr = `You are currently helping fix a GitHub issue. Here's the context:\n\nWorking Directory: ${P}\nDirectory Structure:\n${Br}\n\nPrevious Solution State:\n${oe}\n\nPrevious Conversation:\n${ie.map((C) => `${C.role}: ${C.content}`).join("\n")}\n\nThe following writeFile tool request is malformed. Fix it to be valid JSON with properly escaped content:\n${C}\n\nReturn only the fixed JSON without any explanation.`;
+                const Dr = yield this.client.chat.completions.create({
                   model: q,
                   messages: [
                     {
@@ -38473,53 +38473,60 @@
                       content:
                         "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
                     },
-                    { role: "user", content: Ir },
+                    { role: "user", content: Qr },
                   ],
                   temperature: 0,
                 });
-                const Qr =
-                  ((Ot = (st = (oe = Br.choices[0]) === null || oe === void 0 ? void 0 : oe.message) === null || st === void 0 ? void 0 : st.content) ===
-                    null || Ot === void 0
+                const Fr =
+                  ((Ar = (Wt = (Ot = Dr.choices[0]) === null || Ot === void 0 ? void 0 : Ot.message) === null || Wt === void 0 ? void 0 : Wt.content) ===
+                    null || Ar === void 0
                     ? void 0
-                    : Ot.trim()) || "";
-                this.context.logger.info("LLM suggested fix:", { fixedJson: Qr });
-                const Dr = JSON.parse(Qr);
-                if (!Dr.tool || !Dr.args || !Dr.args.filename || !Dr.args.content) {
+                    : Ar.trim()) || "";
+                if (Dr.usage) {
+                  Ge += Dr.usage.prompt_tokens;
+                  st += Dr.usage.completion_tokens;
+                }
+                this.context.logger.info("LLM suggested fix:", { fixedJson: Fr });
+                const kr = JSON.parse(Fr);
+                if (!kr.tool || !kr.args || !kr.args.filename || !kr.args.content) {
                   throw new Error("Fixed JSON is missing required fields");
                 }
-                return Dr;
+                return { tool: kr, totalInputToken: Ge, totalOutputToken: st };
               } catch (C) {
-                Ar = C instanceof Error ? C : new Error(String(C));
-                Ge.push({ role: "assistant", content: `Failed to fix malformed JSON (attempt ${Wt + 1}): ${Ar.message}` });
-                this.context.logger.error(`Failed to fix JSON (attempt ${Wt + 1}):`, { error: Ar });
-                Wt++;
+                Br = C instanceof Error ? C : new Error(String(C));
+                ie.push({ role: "assistant", content: `Failed to fix malformed JSON (attempt ${Er + 1}): ${Br.message}` });
+                this.context.logger.error(`Failed to fix JSON (attempt ${Er + 1}):`, { error: Br });
+                Er++;
               }
             }
-            throw new Error(`Failed to fix malformed JSON after ${Ir} attempts: ${Ar === null || Ar === void 0 ? void 0 : Ar.message}`);
+            throw new Error(`Failed to fix malformed JSON after ${Ir} attempts: ${Br === null || Br === void 0 ? void 0 : Br.message}`);
           });
         }
         _processResponse(C, P, q, ie, Ge) {
-          return oe(this, void 0, void 0, function* () {
-            const oe = [...C.matchAll(/```tool\n([\s\S]*?)```/g)];
-            if (oe.length === 0) return C;
-            let st = C;
-            for (const C of oe) {
-              const oe = C[0];
-              const Ot = C[1];
+          return oe(this, arguments, void 0, function* (C, P, q, oe, ie, Ge = 0, st = 0) {
+            const Ot = [...C.matchAll(/```tool\n([\s\S]*?)```/g)];
+            if (Ot.length === 0) return { output: C, totalInputToken: Ge, totalOutputToken: st };
+            let Wt = C;
+            for (const C of Ot) {
+              const Ot = C[0];
+              const Ar = C[1];
               try {
-                const C = Ot.trim();
+                const C = Ar.trim();
                 if (!C.endsWith("}")) {
                   throw new Error("Malformed JSON: Missing closing brace");
                 }
                 this.context.logger.info(`Processing tool request:`, { toolJson: C });
-                let Wt;
+                let Er;
                 try {
-                  Wt = JSON.parse(C);
-                  this.context.logger.info(`Parsed tool request:`, { toolRequest: Wt });
-                } catch (oe) {
+                  Er = JSON.parse(C);
+                  this.context.logger.info(`Parsed tool request:`, { toolRequest: Er });
+                } catch (Ot) {
                   if (C.includes('"tool": "writeFile"')) {
                     try {
-                      Wt = yield this._fixMalformedWriteFile(C, P, q, ie, Ge);
+                      const Ot = yield this._fixMalformedWriteFile(C, P, q, oe, ie, Ge, st);
+                      Er = Ot.tool;
+                      Ge += Ot.totalInputToken;
+                      st += Ot.totalOutputToken;
                       this.context.logger.info("Successfully fixed and parsed JSON");
                       this._toolAttempts.set("writeFile", 0);
                     } catch (C) {
@@ -38527,38 +38534,38 @@
                       throw C;
                     }
                   } else {
-                    const P = oe instanceof Error ? oe : new Error(String(oe));
+                    const P = Ot instanceof Error ? Ot : new Error(String(Ot));
                     this.context.logger.error(`Failed to parse tool request JSON:`, { error: P, toolJson: C });
                     throw P;
                   }
                 }
-                if (!Wt.tool) {
-                  this.context.logger.error('Tool request missing required "tool" field', { toolRequest: Wt });
+                if (!Er.tool) {
+                  this.context.logger.error('Tool request missing required "tool" field', { toolRequest: Er });
                   throw new Error('Tool request missing required "tool" field');
                 }
-                if (!Wt.args) {
-                  this.context.logger.error('Tool request missing required "args" field', { toolRequest: Wt });
+                if (!Er.args) {
+                  this.context.logger.error('Tool request missing required "args" field', { toolRequest: Er });
                   throw new Error('Tool request missing required "args" field');
                 }
-                this.context.logger.info(`Tool request validation passed`, { tool: Wt.tool, args: Wt.args });
-                if (Wt.tool === "writeFile" && Wt.args.content && typeof Wt.args.content === "object") {
-                  Wt.args.content = JSON.stringify(Wt.args.content, null, 2);
+                this.context.logger.info(`Tool request validation passed`, { tool: Er.tool, args: Er.args });
+                if (Er.tool === "writeFile" && Er.args.content && typeof Er.args.content === "object") {
+                  Er.args.content = JSON.stringify(Er.args.content, null, 2);
                 }
-                const Ar = yield this._executeToolRequest(Wt, P);
-                st = st.replace(oe, "```result\n" + JSON.stringify(Ar, null, 2) + "\n```");
+                const Ir = yield this._executeToolRequest(Er, P);
+                Wt = Wt.replace(Ot, "```result\n" + JSON.stringify(Ir, null, 2) + "\n```");
               } catch (C) {
                 const P = C instanceof Error ? C : new Error(String(C));
                 this.context.logger.error(`Failed to process tool request:`, { error: P });
-                st = st.replace(oe, "```result\n" + JSON.stringify({ success: false, error: P.message }, null, 2) + "\n```");
+                Wt = Wt.replace(Ot, "```result\n" + JSON.stringify({ success: false, error: P.message }, null, 2) + "\n```");
               }
             }
-            return st;
+            return { output: Wt, totalInputToken: Ge, totalOutputToken: st };
           });
         }
         _checkSolution(C, P) {
-          return oe(this, void 0, void 0, function* () {
-            var q, oe;
-            const ie = yield this.client.chat.completions.create({
+          return oe(this, arguments, void 0, function* (C, P, q = 0, oe = 0) {
+            var ie, Ge;
+            const st = yield this.client.chat.completions.create({
               model: P,
               messages: [
                 {
@@ -38571,8 +38578,12 @@
               temperature: 0.2,
               max_tokens: 50,
             });
-            const Ge = ((oe = (q = ie.choices[0]) === null || q === void 0 ? void 0 : q.message) === null || oe === void 0 ? void 0 : oe.content) || "";
-            return Ge.includes("SOLVED");
+            if (st.usage) {
+              q += st.usage.prompt_tokens;
+              oe += st.usage.completion_tokens;
+            }
+            const Ot = ((Ge = (ie = st.choices[0]) === null || ie === void 0 ? void 0 : ie.message) === null || Ge === void 0 ? void 0 : Ge.content) || "";
+            return { isSolved: Ot.trim().toLowerCase() === "solved", totalInputToken: q, totalOutputToknen: oe };
           });
         }
         _executeWithRetry(C, P, q, ie) {
@@ -38608,26 +38619,29 @@
         }
         createCompletion(C, P, q) {
           return oe(this, arguments, void 0, function* (C, P, q, oe = "") {
-            var ie, Ge, st;
+            var ie, Ge, st, Ir;
             this.llmAttempts = 0;
             this._toolAttempts.clear();
             this.tools.exploreDir = new Ot.ExploreDir(this.context, q);
             this.tools.createPr = new Ar.CreatePr(this.context, q);
             this.tools.searchFiles = new Wt.SearchFiles(q);
-            let Ir = false;
-            let Qr = null;
-            const Dr = [{ role: "system", content: Br }];
-            while (this.llmAttempts < Er && !Ir) {
+            let Qr = false;
+            let Dr = null;
+            let Fr = 0;
+            let kr = 0;
+            let Nr = null;
+            const Ur = [{ role: "system", content: Br }];
+            while (this.llmAttempts < Er && !Qr) {
               const Ot = yield this._getDirectoryTree(q);
               const Wt = Ot.success && ((ie = Ot.data) === null || ie === void 0 ? void 0 : ie.tree) ? Ot.data.tree : "Unable to get directory tree";
               this.context.logger.info("Directory tree:", { tree: Wt });
-              Dr.push({
+              Ur.push({
                 role: "user",
                 content: `Current LLM attempt: ${this.llmAttempts + 1}/${Er}\nWorking directory: ${q}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${oe}\n\nOriginal request: ${C}`,
               });
               const Ar = yield this.client.chat.completions.create({
                 model: P,
-                messages: Dr,
+                messages: Ur,
                 temperature: 0.2,
                 max_tokens: this.maxTokens,
                 top_p: 0.5,
@@ -38635,28 +38649,41 @@
                 presence_penalty: 0,
               });
               this.context.logger.info("LLM response:", { response: Ar });
-              Qr = Ar;
-              const Br = ((st = (Ge = Ar.choices[0]) === null || Ge === void 0 ? void 0 : Ge.message) === null || st === void 0 ? void 0 : st.content) || "";
-              const Fr = yield this._processResponse(Br, q, P, oe, Dr);
-              Dr.push({ role: "assistant", content: Fr });
-              oe = Fr;
-              Ir = yield this._checkSolution(oe, P);
-              if (!Ir) {
+              if (Ar.usage) {
+                Fr += Ar.usage.prompt_tokens;
+                kr += Ar.usage.completion_tokens;
+              }
+              Dr = Ar;
+              const Ir = ((st = (Ge = Ar.choices[0]) === null || Ge === void 0 ? void 0 : Ge.message) === null || st === void 0 ? void 0 : st.content) || "";
+              const Br = yield this._processResponse(Ir, q, P, oe, Ur, Fr, kr);
+              Ur.push({ role: "assistant", content: Br.output });
+              oe = Br.output;
+              Fr += Br.totalInputToken;
+              kr += Br.totalOutputToken;
+              const Nr = yield this._checkSolution(oe, P, Fr, kr);
+              Qr = Nr.isSolved;
+              Fr += Nr.totalInputToken;
+              kr += Nr.totalOutputToknen;
+              if (!Qr) {
                 this.llmAttempts++;
                 this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${Er}`);
               }
             }
-            if (Ir) {
+            if (Qr) {
               const P = `Fix: ${C.split("\n")[0]}`;
-              const ie = `This PR addresses the following:\n\n${C}\n\nChanges made:\n${oe}`;
-              const Ge = yield this._createPullRequest(P, ie, q);
-              if (Ge.success) {
-                this.context.logger.info("Created pull request:", { data: Ge.data, metadata: Ge.metadata });
+              const ie = `This PR addresses the following:\n\n${C}\n\nChanges made:\n${oe}\n\nToken Usage:\n- Total Input Tokens: ${Fr}\n- Total Output Tokens: ${kr}\n- Total Tokens: ${Fr + kr}`;
+              Nr = yield this._createPullRequest(P, ie, q);
+              if (Nr.success) {
+                this.context.logger.info("Created pull request:", { data: Nr.data, metadata: Nr.metadata });
               } else {
-                this.context.logger.error("Failed to create pull request:", { error: new Error(Ge.error || "Unknown error"), metadata: Ge.metadata });
+                this.context.logger.error("Failed to create pull request:", { error: new Error(Nr.error || "Unknown error"), metadata: Nr.metadata });
               }
             }
-            return Qr;
+            return {
+              completion: Dr,
+              prUrl: (Nr === null || Nr === void 0 ? void 0 : Nr.success) ? ((Ir = Nr.data) === null || Ir === void 0 ? void 0 : Ir.url) || null : null,
+              tokenUsage: { inputTokens: Fr, outputTokens: kr, totalTokens: Fr + kr },
+            };
           });
         }
         _createPullRequest(C, P, q) {
@@ -38734,61 +38761,58 @@
         };
       Object.defineProperty(P, "__esModule", { value: true });
       P.delegate = delegate;
-      const ie = q(40893);
-      const Ge = q(94049);
+      const ie = q(94049);
       function delegate(C) {
         return oe(this, void 0, void 0, function* () {
           var P;
           const { logger: q, payload: oe } = C;
-          const st = oe.comment.body;
-          const Ot = oe.repository.name;
-          const Wt = oe.repository.owner.login;
-          const Ar = oe.issue.number;
-          if (st.toLowerCase().includes("solve this issue")) {
-            const st = new Ge.ExploreDir(C);
+          const Ge = oe.comment.body;
+          const st = oe.repository.name;
+          const Ot = oe.repository.owner.login;
+          const Wt = oe.issue.number;
+          if (Ge.toLowerCase().includes("solve this issue")) {
+            const Ge = new ie.ExploreDir(C);
             try {
-              const Ge = yield st.execute({ command: "clone", repo: Ot, owner: Wt, issueNumber: Ar });
-              if (!Ge.success || !Ge.data) {
-                q.error(`Failed to clone repository: ${Ge.error}`);
+              const ie = yield Ge.execute({ command: "clone", repo: st, owner: Ot, issueNumber: Wt });
+              if (!ie.success || !ie.data) {
+                q.error(`Failed to clone repository: ${ie.error}`);
                 return;
               }
-              const Er = Ge.data.currentPath;
-              const Ir = yield st.execute({ command: "tree" });
-              const Br = Ir.success && ((P = Ir.data) === null || P === void 0 ? void 0 : P.tree) ? Ir.data.tree : "";
-              const Qr = oe.issue.body;
-              const Dr = `Please help resolve this issue:\n${Qr}\n\nRepository: ${Wt}/${Ot}\nIssue #${Ar}\n\nFile tree:\n${Br}`;
-              const Fr = yield C.adapters.openai.completions.createCompletion(Dr, "anthropic/claude-3.5-sonnet", Er);
-              if (!Fr) {
+              const Ar = ie.data.currentPath;
+              const Er = yield Ge.execute({ command: "tree" });
+              const Ir = Er.success && ((P = Er.data) === null || P === void 0 ? void 0 : P.tree) ? Er.data.tree : "";
+              const Br = oe.issue.body;
+              const Qr = `Please help resolve this issue:\n${Br}\n\nRepository: ${Ot}/${st}\nIssue #${Wt}\n\nFile tree:\n${Ir}`;
+              const Dr = yield C.adapters.openai.completions.createCompletion(Qr, "anthropic/claude-3.5-sonnet", Ar);
+              if (!Dr) {
                 q.error("No solution was generated");
                 return;
               }
-              const kr = Fr;
-              if (!kr) {
+              const Fr = Dr;
+              if (!Fr) {
                 q.error("Empty response from completion");
                 return;
               }
               q.ok("Solution generated successfully");
-              q.verbose(`Final solution: ${kr}`);
-              const Nr = new ie.CreatePr(C, Er);
-              yield Nr.execute({ title: "Solved issue", body: "I have solved this issue. Please review the changes." });
+              q.verbose(`Final solution: ${Fr}`);
               yield C.octokit.issues.createComment({
-                owner: Wt,
-                repo: Ot,
-                issue_number: Ar,
+                owner: Ot,
+                repo: st,
+                issue_number: Wt,
                 body: `I have generated and implemented a solution for this issue. Please review the pull request.`,
               });
-              yield st.execute({ command: "kill" });
+              yield Ge.execute({ command: "kill" });
             } catch (P) {
               q.error(`Error during completion: ${P instanceof Error ? P.message : "Unknown error"}`);
               yield C.octokit.issues.createComment({
-                owner: Wt,
-                repo: Ot,
-                issue_number: Ar,
-                body: "I encountered an error while trying to solve this issue. Please check the logs for more details.",
+                owner: Ot,
+                repo: st,
+                issue_number: Wt,
+                body: `I encountered an error while trying to solve this issue. Please check the logs for more details.\n        \`\`\`plaintext\n        Error: Failed to generate a solution for this issue.\n        More Info: ${P instanceof Error ? P.message : "Unknown error"}\n        \`\`\``,
               });
             }
           }
-          q.ok(`Comment processed: ${st}`);
+          q.ok(`Comment processed: ${Ge}`);
           q.verbose(`Exiting delegate`);
         });
       }
