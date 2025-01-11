@@ -87,7 +87,7 @@ export async function delegate(context: Context) {
       logger.ok("File operations completed successfully");
       logger.verbose("Files processed: README.md -> output.txt");
 
-      const prTool = new CreatePr(context);
+      const prTool = new CreatePr(context, workingDir);
       await prTool.execute({
         title: "Solved issue",
         body: "I have solved this issue. Please review the changes.",

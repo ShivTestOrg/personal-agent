@@ -1,6 +1,6 @@
 import { Tool, ToolResult, FunctionParameters } from "../../types/tool";
 import { Context } from "../../types/context";
-import { execSync } from "child_process";
+import { Terminal } from "../terminal";
 
 export interface PullRequestResult {
   url: string;
@@ -27,9 +27,11 @@ export class CreatePr implements Tool<PullRequestResult> {
   };
 
   private _context: Context;
+  private _terminal: Terminal;
 
-  constructor(context: Context) {
+  constructor(context: Context, workDir: string = "") {
     this._context = context;
+    this._terminal = new Terminal(workDir);
   }
 
   async execute(args: Record<string, unknown>): Promise<ToolResult<PullRequestResult>> {
@@ -44,10 +46,10 @@ export class CreatePr implements Tool<PullRequestResult> {
       try {
         // Stage all changes
         this._context.logger.info("Staging changes");
-        execSync("git add .", { stdio: "pipe" });
+        await this._terminal.runCommand("git add .");
 
         // Get status to log what's being committed
-        const status = execSync("git status", { stdio: "pipe" }).toString();
+        const status = await this._terminal.runCommand("git status");
         this._context.logger.info("Changes to be committed:", { status });
 
         // Only proceed if there are changes to commit
@@ -57,12 +59,12 @@ export class CreatePr implements Tool<PullRequestResult> {
 
         // Commit changes
         this._context.logger.info("Committing changes");
-        execSync(`git commit -m "${title}"`, { stdio: "pipe" });
+        await this._terminal.runCommand(`git commit -m "${title}"`);
 
         // Push to remote
-        const currentBranch = execSync("git rev-parse --abbrev-ref HEAD", { stdio: "pipe" }).toString().trim();
+        const currentBranch = (await this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim();
         this._context.logger.info(`Pushing branch ${currentBranch} to remote`);
-        execSync(`git push origin ${currentBranch}`, { stdio: "pipe" });
+        await this._terminal.runCommand(`git push origin ${currentBranch}`);
       } catch (error) {
         console.log("Error:", error);
         const gitError = error instanceof Error ? error : new Error(String(error));
@@ -78,7 +80,7 @@ export class CreatePr implements Tool<PullRequestResult> {
         repo: repo,
         title,
         body,
-        head: execSync("git rev-parse --abbrev-ref HEAD", { stdio: "pipe" }).toString().trim(),
+        head: (await this._terminal.runCommand("git rev-parse --abbrev-ref HEAD")).trim(),
         base: "development",
       });
 
