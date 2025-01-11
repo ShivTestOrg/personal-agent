@@ -224,16 +224,30 @@ export class Completions extends SuperOpenAi {
           throw new Error("Malformed JSON: Missing closing brace");
         }
 
-        this.context.logger.info(`Processing tool request:`, { toolJson: trimmedJson });
-        const toolRequest: ToolRequest = JSON.parse(trimmedJson);
+        this.context.logger.info(`Processing tool request:`, { toolJson: trimmedJson, caller: new Error().stack });
+        let toolRequest: ToolRequest;
+        try {
+          toolRequest = JSON.parse(trimmedJson);
+          this.context.logger.info(`Parsed tool request:`, { toolRequest });
+        } catch (error) {
+          this.context.logger.error(`Failed to parse tool request JSON:`, {
+            error: error instanceof Error ? error : new Error(String(error)),
+            toolJson: trimmedJson,
+          });
+          throw error;
+        }
 
         // Validate required fields
         if (!toolRequest.tool) {
+          this.context.logger.error('Tool request missing required "tool" field', { toolRequest });
           throw new Error('Tool request missing required "tool" field');
         }
         if (!toolRequest.args) {
+          this.context.logger.error('Tool request missing required "args" field', { toolRequest });
           throw new Error('Tool request missing required "args" field');
         }
+
+        this.context.logger.info(`Tool request validation passed`, { tool: toolRequest.tool, args: toolRequest.args });
 
         // For writeFile, ensure content is stringified if it's an object
         if (toolRequest.tool === "writeFile" && toolRequest.args.content && typeof toolRequest.args.content === "object") {
