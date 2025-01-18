@@ -41,7 +41,8 @@
     "glob": "^11.0.0",
     "globby": "^14.0.2",
     "openai": "^4.78.1",
-    "typebox-validators": "0.3.5"
+    "typebox-validators": "0.3.5",
+    "web-tree-sitter": "^0.24.7"
   },
   "devDependencies": {
     "@commitlint/cli": "19.3.0",
