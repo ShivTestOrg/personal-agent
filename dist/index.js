@@ -47315,7 +47315,7 @@
               (0, Ge.readFile)((0, st.join)(P, "yarn.lock"))
                 .then(() => true)
                 .catch(() => false),
-              (0, Ge.readFile)((0, st.join)(P, "bunlock.db"))
+              (0, Ge.readFile)((0, st.join)(P, "bun.lockdb"))
                 .then(() => true)
                 .catch(() => false),
               (0, Ge.readFile)((0, st.join)(P, "package-lock.json"))
