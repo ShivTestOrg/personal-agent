@@ -10,7 +10,7 @@ export async function detectPackageManager(projectPath: string): Promise<Package
       readFile(join(projectPath, "yarn.lock"))
         .then(() => true)
         .catch(() => false),
-      readFile(join(projectPath, "bunlock.db"))
+      readFile(join(projectPath, "bun.lockdb"))
         .then(() => true)
         .catch(() => false),
       readFile(join(projectPath, "package-lock.json"))
