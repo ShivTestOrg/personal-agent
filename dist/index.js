@@ -47315,6 +47315,9 @@
               (0, Ge.readFile)((0, st.join)(P, "yarn.lock"))
                 .then(() => true)
                 .catch(() => false),
+              (0, Ge.readFile)((0, st.join)(P, "bunlock.db"))
+                .then(() => true)
+                .catch(() => false),
               (0, Ge.readFile)((0, st.join)(P, "package-lock.json"))
                 .then(() => true)
                 .catch(() => false),
@@ -47323,8 +47326,9 @@
                 .catch(() => false),
             ]);
             if (q[0]) return "yarn";
-            if (q[1]) return "npm";
-            if (q[2]) return "pnpm";
+            if (q[1]) return "bun";
+            if (q[2]) return "npm";
+            if (q[3]) return "pnpm";
             return "npm";
           } catch (P) {
             console.error("Error detecting package manager:", P);
@@ -47335,7 +47339,7 @@
       function installDependencies(P) {
         return ie(this, void 0, void 0, function* () {
           const q = yield detectPackageManager(P);
-          const oe = { npm: "npm install", yarn: "yarn install", pnpm: "pnpm install" };
+          const oe = { npm: "npm install", yarn: "yarn install", bun: "bun install", pnpm: "pnpm install" };
           return oe[q];
         });
       }
