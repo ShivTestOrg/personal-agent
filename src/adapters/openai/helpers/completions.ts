@@ -7,6 +7,8 @@ import { WriteFile } from "../../../tools/write-file";
 import { ExploreDir } from "../../../tools/explore-dir";
 import { SearchFiles } from "../../../tools/search-files";
 import { CreatePr } from "../../../tools/create-pr";
+import { AnalyzeCode } from "../../../tools/analyze-code";
+import { TestRunner } from "../../../tools/test-runner";
 
 const MAX_TRIES = 10;
 const MAX_RETRY_MALFORMED = 1;
@@ -25,7 +27,7 @@ Workflow:
 To use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:
 \`\`\`tool
 {
-  "tool": "readFile|writeFile|exploreDir|searchFiles",
+  "tool": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",
   "args": {
     // For readFile:
     "filename": "/absolute/path/to/file"
@@ -47,6 +49,15 @@ To use tools, you can include one or more tool requests in your response. Each t
     "filePattern": "glob pattern (optional)",
     "caseSensitive": boolean (optional),
     "contextLines": number (optional)
+
+    // For analyzeCode:
+    "path": "/absolute/path/to/file/or/directory"
+
+    // For testRunner:
+    "mode": "run" | "generate",
+    "functionCode": "code to test (for generate mode)",
+    "testDescription": "what to test (for generate mode)",
+    "projectPath": "path to project root (optional)"
   }
 }
 \`\`\`
@@ -119,6 +130,30 @@ Available Tools:
   - error?: string
   - metadata: execution details
 
+### AnalyzeCode Tool ###
+- Purpose: Analyze source code to extract definitions using tree-sitter
+- Method: execute(args: { path: string })
+- Returns: ToolResult<CodeAnalysisResult> containing:
+  - success: boolean
+  - data: { definitions: string, path: string }
+  - error?: string
+  - metadata: execution details
+
+### TestRunner Tool ###
+- Purpose: Generate and run tests using TDD principles
+- Method: execute(args: { mode: "run" | "generate", functionCode?: string, testDescription?: string, projectPath?: string })
+- Returns: ToolResult<TestRunnerResult> containing:
+  - success: boolean
+  - data: {
+    success: boolean,
+    testOutput?: string,
+    failedTests?: string[],
+    passedTests?: string[],
+    suggestions?: string[]
+  }
+  - error?: string
+  - metadata: execution details
+
 Note: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.
 
 Rules and Best Practices:
@@ -137,6 +172,8 @@ interface ToolSet {
   exploreDir: ExploreDir;
   searchFiles: SearchFiles;
   createPr: CreatePr;
+  analyzeCode: AnalyzeCode;
+  testRunner: TestRunner;
 }
 
 type ToolName = keyof ToolResultMap;
@@ -168,6 +205,8 @@ export class Completions extends SuperOpenAi {
       exploreDir: new ExploreDir(context),
       searchFiles: new SearchFiles(),
       createPr: new CreatePr(context),
+      analyzeCode: new AnalyzeCode(),
+      testRunner: new TestRunner(this.client, context),
     };
   }
 
@@ -195,6 +234,13 @@ export class Completions extends SuperOpenAi {
             caseSensitive: request.args.caseSensitive as boolean,
             contextLines: request.args.contextLines as number,
           });
+
+        case "analyzeCode":
+          if (!request.args.path) throw new Error("Path is required for analyzeCode");
+          return this._analyzeCode(request.args.path as string, workingDir);
+
+        case "testRunner":
+          return this._executeWithRetry(this.tools.testRunner, "execute", workingDir, request.args);
 
         default:
           throw new Error(`Unknown tool: ${request.tool}`);
@@ -254,6 +300,8 @@ Return only the fixed JSON without any explanation.`;
               role: "system",
               content:
                 "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
+              //@ts-expect-error
+              cache_control: { type: "ephemeral" },
             },
             {
               role: "user",
@@ -440,6 +488,8 @@ Return only the fixed JSON without any explanation.`;
           role: "system",
           content:
             "You are a solution validator. Respond with 'SOLVED' if the issue is completely resolved, or 'CONTINUE' if more work is needed. Provide a brief explanation after your decision.",
+          //@ts-expect-error
+          cache_control: { type: "ephemeral" },
         },
         {
           role: "user",
@@ -546,6 +596,8 @@ Return only the fixed JSON without any explanation.`;
     this.tools.exploreDir = new ExploreDir(this.context, workingDir);
     this.tools.createPr = new CreatePr(this.context, workingDir);
     this.tools.searchFiles = new SearchFiles(workingDir);
+    this.tools.analyzeCode = new AnalyzeCode(workingDir);
+    this.tools.testRunner = new TestRunner(this.client, this.context, workingDir);
 
     let isSolved = false;
     let finalResponse: OpenAI.Chat.Completions.ChatCompletion | null = null;
@@ -556,6 +608,8 @@ Return only the fixed JSON without any explanation.`;
       {
         role: "system",
         content: sysMsg,
+        //@ts-expect-error
+        cache_control: { type: "ephemeral" },
       },
     ];
 
@@ -708,5 +762,9 @@ Token Usage:
       pattern,
       ...options,
     });
+  }
+
+  private async _analyzeCode(path: string, workingDir: string) {
+    return this._executeWithRetry(this.tools.analyzeCode, "execute", workingDir, { path });
   }
 }

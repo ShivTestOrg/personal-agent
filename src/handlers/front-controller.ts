@@ -1,5 +1,12 @@
 import { ExploreDir } from "../tools/explore-dir";
 import { Context } from "../types";
+import { detectPackageManager, installDependencies } from "../helpers/package-manager";
+import { findEntryPoint } from "../helpers/entry-point";
+import { detectTestConfiguration } from "../helpers/test-config";
+import { exec } from "child_process";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
 
 export async function delegate(context: Context) {
   const { logger, payload } = context;
@@ -29,13 +36,62 @@ export async function delegate(context: Context) {
       // Get the current working directory after clone
       const workingDir = cloneResult.data.currentPath;
 
+      // Setup project: detect and install package manager
+      const packageManager = await detectPackageManager(workingDir);
+      const installCommand = await installDependencies(workingDir);
+
+      logger.info(`Installing dependencies using ${packageManager}...`);
+      const { stdout: installOutput, stderr: installError } = await execAsync(installCommand, {
+        cwd: workingDir,
+      });
+
+      if (installError) {
+        throw new Error(`Package installation failed: ${installError}`);
+      }
+      logger.ok("Dependencies installed successfully");
+
+      // Find project entry point
+      const entryPoint = await findEntryPoint(workingDir);
+      if (!entryPoint) {
+        throw new Error("Could not find project entry point");
+      }
+      logger.ok(`Found project entry point: ${entryPoint}`);
+
       // Get the directory tree for context
       const treeResult = await explore.execute({ command: "tree" });
       const fileTree = treeResult.success && treeResult.data?.tree ? treeResult.data.tree : "";
 
-      // Start the completion process with the issue description and file tree
+      // Detect test configuration
+      const testConfig = await detectTestConfiguration(workingDir);
+      logger.ok(`Found test configuration: ${testConfig.runner}`);
+
+      // Start the completion process with project info and issue description
       const issueDescription = payload.issue.body;
-      const prompt = `Please help resolve this issue:\n${issueDescription}\n\nRepository: ${owner}/${repo}\nIssue #${issueNumber}\n\nFile tree:\n${fileTree}`;
+      const prompt = `Please help resolve this issue using Test-Driven Development (TDD):
+
+Issue Description:
+${issueDescription}
+
+Project Information:
+- Repository: ${owner}/${repo}
+- Issue #${issueNumber}
+- Package Manager: ${packageManager}
+- Entry Point: ${entryPoint}
+- Test Runner: ${testConfig.runner}
+- Test Command: ${testConfig.command}
+- Test Pattern: ${testConfig.testPattern}
+${testConfig.configFile ? `- Test Config: ${testConfig.configFile}` : ""}
+
+File Structure:
+${fileTree}
+
+Follow TDD Process:
+1. First write failing tests for the required functionality
+2. Implement the minimum code to make tests pass
+3. Refactor while keeping tests passing
+4. Repeat until the issue is resolved
+
+Use the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
 
       // Get the solution with retries and verification
       const solution = await context.adapters.openai.completions.createCompletion(prompt, "anthropic/claude-3.5-sonnet", workingDir);

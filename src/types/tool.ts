@@ -149,7 +149,61 @@ export const toolFunctions = {
       required: ["pattern"],
     },
   },
+  analyzeCode: {
+    name: "analyzeCode",
+    description: "Analyze source code to extract definitions using tree-sitter",
+    parameters: {
+      type: "object",
+      properties: {
+        path: {
+          type: "string",
+          description: "Path to the file or directory to analyze",
+        },
+      },
+      required: ["path"],
+    },
+  },
+  testRunner: {
+    name: "testRunner",
+    description: "Generate and run tests using TDD principles",
+    parameters: {
+      type: "object",
+      properties: {
+        mode: {
+          type: "string",
+          enum: ["run", "generate"],
+          description: "Whether to run existing tests or generate new ones",
+        },
+        functionCode: {
+          type: "string",
+          description: "The function code to generate tests for",
+        },
+        testDescription: {
+          type: "string",
+          description: "Description of what the test should verify",
+        },
+        projectPath: {
+          type: "string",
+          description: "Path to the project root",
+        },
+      },
+      required: ["mode"],
+    },
+  },
 };
+
+export interface CodeAnalysisResult {
+  definitions: string;
+  path: string;
+}
+
+export interface TestRunnerResult {
+  success: boolean;
+  testOutput?: string;
+  failedTests?: string[];
+  passedTests?: string[];
+  suggestions?: string[];
+}
 
 export type ToolResultMap = {
   readFile: FileReadResult;
@@ -158,4 +212,6 @@ export type ToolResultMap = {
   terminal: TerminalCommandResult;
   searchFiles: SearchResult;
   createPr: PullRequestResult;
+  analyzeCode: CodeAnalysisResult;
+  testRunner: TestRunnerResult;
 };
