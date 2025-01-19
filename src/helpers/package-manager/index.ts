@@ -39,8 +39,8 @@ export async function installDependencies(projectPath: string): Promise<string> 
 
   const commands = {
     npm: "npm install",
-    yarn: "bun install --frozen-lockfile",
-    bun: "bun install",
+    yarn: "yarn install --immutable --immutable-cache --check-cache",
+    bun: "bun install --frozen-lockfile",
     pnpm: "pnpm install",
   };
 
