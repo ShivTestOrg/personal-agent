@@ -46990,10 +46990,8 @@
               const kr = yield (0, st.installDependencies)(Fr);
               oe.info(`Installing dependencies using ${Dr}...`);
               const { stdout: Nr, stderr: Mr } = yield Ir(kr, { cwd: Fr });
-              if (Mr && Mr.length > 0) {
-                oe.debug(`Install error: ${Nr}`);
-                throw new Error(`Package installation failed: ${Mr}`);
-              }
+              oe.ok(`Install output: ${Nr}`);
+              oe.ok(`Install error: ${Mr}`);
               oe.ok("Dependencies installed successfully");
               const Ur = yield (0, Ot.findEntryPoint)(Fr);
               if (!Ur) {
