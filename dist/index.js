@@ -46985,7 +46985,7 @@
                 oe.error(`Failed to clone repository: ${Ge.error}`);
                 return;
               }
-              const Fr = Ge.data.currentPath;
+              const Fr = Ar.getCurrentWorkingDir();
               const Dr = yield (0, st.detectPackageManager)(Fr);
               const kr = yield (0, st.installDependencies)(Fr);
               oe.info(`Installing dependencies using ${Dr}...`);
