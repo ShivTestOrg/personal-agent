@@ -47329,7 +47329,7 @@
             if (q[1]) return "bun";
             if (q[2]) return "npm";
             if (q[3]) return "pnpm";
-            return "yarn";
+            return "bun";
           } catch (P) {
             console.error("Error detecting package manager:", P);
             return "yarn";
@@ -47339,7 +47339,7 @@
       function installDependencies(P) {
         return ie(this, void 0, void 0, function* () {
           const q = yield detectPackageManager(P);
-          const oe = { npm: "npm install", yarn: "yarn install --immutable --immutable-cache --check-cache", bun: "bun install", pnpm: "pnpm install" };
+          const oe = { npm: "npm install", yarn: "bun install --frozen-lockfile", bun: "bun install", pnpm: "pnpm install" };
           return oe[q];
         });
       }
