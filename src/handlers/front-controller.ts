@@ -54,7 +54,7 @@ export async function delegate(context: Context) {
       logger.ok("Dependencies installed successfully");
 
       // Find project entry point
-      const entryPoint = await findEntryPoint(workingDir);
+      const entryPoint = await findEntryPoint(workingDir, logger);
       if (!entryPoint) {
         throw new Error("Could not find project entry point");
       }
