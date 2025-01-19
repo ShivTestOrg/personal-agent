@@ -13721,8 +13721,8 @@
       const os = oe(26609);
       const is = oe(67575);
       const as = oe(7521);
-      const ls = oe(69100);
-      const As = oe(51897);
+      const As = oe(69100);
+      const ls = oe(51897);
       const cs = oe(23339);
       class JsonTypeBuilder {
         Strict(P) {
@@ -13846,10 +13846,10 @@
           return (0, Nr.Uncapitalize)(P, q);
         }
         Union(P, q = {}) {
-          return (0, ls.Union)(P, q);
+          return (0, As.Union)(P, q);
         }
         Unknown(P = {}) {
-          return (0, As.Unknown)(P);
+          return (0, ls.Unknown)(P);
         }
         Unsafe(P = {}) {
           return (0, cs.Unsafe)(P);
@@ -14199,18 +14199,18 @@
           return as.Readonly;
         },
       });
-      var ls = oe(78946);
+      var As = oe(78946);
       Object.defineProperty(q, "ReadonlyOptional", {
         enumerable: true,
         get: function () {
-          return ls.ReadonlyOptional;
+          return As.ReadonlyOptional;
         },
       });
-      var As = oe(30420);
+      var ls = oe(30420);
       Object.defineProperty(q, "Record", {
         enumerable: true,
         get: function () {
-          return As.Record;
+          return ls.Record;
         },
       });
       var cs = oe(33107);
@@ -23204,7 +23204,7 @@
         let os = 0;
         let is;
         let as;
-        let ls = { value: "", depth: 0, isGlob: false };
+        let As = { value: "", depth: 0, isGlob: false };
         const eos = () => Yr >= Lr;
         const peek = () => Hr.charCodeAt(Yr + 1);
         const advance = () => {
@@ -23215,7 +23215,7 @@
           as = advance();
           let P;
           if (as === Ot) {
-            ts = ls.backslashes = true;
+            ts = As.backslashes = true;
             as = advance();
             if (as === Br) {
               es = true;
@@ -23226,7 +23226,7 @@
             os++;
             while (eos() !== true && (as = advance())) {
               if (as === Ot) {
-                ts = ls.backslashes = true;
+                ts = As.backslashes = true;
                 advance();
                 continue;
               }
@@ -23235,8 +23235,8 @@
                 continue;
               }
               if (es !== true && as === Ar && (as = advance()) === Ar) {
-                $r = ls.isBrace = true;
-                zr = ls.isGlob = true;
+                $r = As.isBrace = true;
+                zr = As.isGlob = true;
                 ns = true;
                 if (xr === true) {
                   continue;
@@ -23244,8 +23244,8 @@
                 break;
               }
               if (es !== true && as === Wt) {
-                $r = ls.isBrace = true;
-                zr = ls.isGlob = true;
+                $r = As.isBrace = true;
+                zr = As.isGlob = true;
                 ns = true;
                 if (xr === true) {
                   continue;
@@ -23256,7 +23256,7 @@
                 os--;
                 if (os === 0) {
                   es = false;
-                  $r = ls.isBrace = true;
+                  $r = As.isBrace = true;
                   ns = true;
                   break;
                 }
@@ -23269,8 +23269,8 @@
           }
           if (as === Ir) {
             Gr.push(Yr);
-            jr.push(ls);
-            ls = { value: "", depth: 0, isGlob: false };
+            jr.push(As);
+            As = { value: "", depth: 0, isGlob: false };
             if (ns === true) continue;
             if (is === Ar && Yr === Wr + 1) {
               Wr += 2;
@@ -23282,8 +23282,8 @@
           if (oe.noext !== true) {
             const P = as === Dr || as === st || as === Ge || as === kr || as === Er;
             if (P === true && peek() === Qr) {
-              zr = ls.isGlob = true;
-              Zr = ls.isExtglob = true;
+              zr = As.isGlob = true;
+              Zr = As.isExtglob = true;
               ns = true;
               if (as === Er && Yr === Wr) {
                 ss = true;
@@ -23291,12 +23291,12 @@
               if (xr === true) {
                 while (eos() !== true && (as = advance())) {
                   if (as === Ot) {
-                    ts = ls.backslashes = true;
+                    ts = As.backslashes = true;
                     as = advance();
                     continue;
                   }
                   if (as === Mr) {
-                    zr = ls.isGlob = true;
+                    zr = As.isGlob = true;
                     ns = true;
                     break;
                   }
@@ -23307,8 +23307,8 @@
             }
           }
           if (as === Ge) {
-            if (is === Ge) Xr = ls.isGlobstar = true;
-            zr = ls.isGlob = true;
+            if (is === Ge) Xr = As.isGlobstar = true;
+            zr = As.isGlob = true;
             ns = true;
             if (xr === true) {
               continue;
@@ -23316,7 +23316,7 @@
             break;
           }
           if (as === kr) {
-            zr = ls.isGlob = true;
+            zr = As.isGlob = true;
             ns = true;
             if (xr === true) {
               continue;
@@ -23326,13 +23326,13 @@
           if (as === Fr) {
             while (eos() !== true && (P = advance())) {
               if (P === Ot) {
-                ts = ls.backslashes = true;
+                ts = As.backslashes = true;
                 advance();
                 continue;
               }
               if (P === Ur) {
-                Kr = ls.isBracket = true;
-                zr = ls.isGlob = true;
+                Kr = As.isBracket = true;
+                zr = As.isGlob = true;
                 ns = true;
                 break;
               }
@@ -23343,16 +23343,16 @@
             break;
           }
           if (oe.nonegate !== true && as === Er && Yr === Wr) {
-            rs = ls.negated = true;
+            rs = As.negated = true;
             Wr++;
             continue;
           }
           if (oe.noparen !== true && as === Qr) {
-            zr = ls.isGlob = true;
+            zr = As.isGlob = true;
             if (xr === true) {
               while (eos() !== true && (as = advance())) {
                 if (as === Qr) {
-                  ts = ls.backslashes = true;
+                  ts = As.backslashes = true;
                   as = advance();
                   continue;
                 }
@@ -23377,7 +23377,7 @@
           Zr = false;
           zr = false;
         }
-        let As = Hr;
+        let ls = Hr;
         let cs = "";
         let us = "";
         if (Wr > 0) {
@@ -23385,31 +23385,31 @@
           Hr = Hr.slice(Wr);
           Jr -= Wr;
         }
-        if (As && zr === true && Jr > 0) {
-          As = Hr.slice(0, Jr);
+        if (ls && zr === true && Jr > 0) {
+          ls = Hr.slice(0, Jr);
           us = Hr.slice(Jr);
         } else if (zr === true) {
-          As = "";
+          ls = "";
           us = Hr;
         } else {
-          As = Hr;
+          ls = Hr;
         }
-        if (As && As !== "" && As !== "/" && As !== Hr) {
-          if (isPathSeparator(As.charCodeAt(As.length - 1))) {
-            As = As.slice(0, -1);
+        if (ls && ls !== "" && ls !== "/" && ls !== Hr) {
+          if (isPathSeparator(ls.charCodeAt(ls.length - 1))) {
+            ls = ls.slice(0, -1);
           }
         }
         if (oe.unescape === true) {
           if (us) us = ie.removeBackslashes(us);
-          if (As && ts === true) {
-            As = ie.removeBackslashes(As);
+          if (ls && ts === true) {
+            ls = ie.removeBackslashes(ls);
           }
         }
         const ds = {
           prefix: cs,
           input: P,
           start: Wr,
-          base: As,
+          base: ls,
           glob: us,
           isBrace: $r,
           isBracket: Kr,
@@ -23422,7 +23422,7 @@
         if (oe.tokens === true) {
           ds.maxDepth = 0;
           if (!isPathSeparator(as)) {
-            jr.push(ls);
+            jr.push(As);
           }
           ds.tokens = jr;
         }
@@ -23510,517 +23510,6 @@
         }
         return st;
       };
-    },
-    76058: (P, q, oe) => {
-      "use strict";
-      const ie = typeof process === "object" && process ? process : { stdout: null, stderr: null };
-      const Ge = oe(24434);
-      const st = oe(2203);
-      const Ot = oe(13193);
-      const Wt = Ot.StringDecoder;
-      const Ar = Symbol("EOF");
-      const Er = Symbol("maybeEmitEnd");
-      const Ir = Symbol("emittedEnd");
-      const Br = Symbol("emittingEnd");
-      const Qr = Symbol("emittedError");
-      const Fr = Symbol("closed");
-      const Dr = Symbol("read");
-      const kr = Symbol("flush");
-      const Nr = Symbol("flushChunk");
-      const Mr = Symbol("encoding");
-      const Ur = Symbol("decoder");
-      const Lr = Symbol("flowing");
-      const xr = Symbol("paused");
-      const Gr = Symbol("resume");
-      const jr = Symbol("buffer");
-      const Vr = Symbol("pipes");
-      const Hr = Symbol("bufferLength");
-      const Yr = Symbol("bufferPush");
-      const Wr = Symbol("bufferShift");
-      const Jr = Symbol("objectMode");
-      const $r = Symbol("destroyed");
-      const Kr = Symbol("error");
-      const zr = Symbol("emitData");
-      const Zr = Symbol("emitEnd");
-      const Xr = Symbol("emitEnd2");
-      const es = Symbol("async");
-      const ts = Symbol("abort");
-      const rs = Symbol("aborted");
-      const ss = Symbol("signal");
-      const defer = (P) => Promise.resolve().then(P);
-      const ns = global._MP_NO_ITERATOR_SYMBOLS_ !== "1";
-      const os = (ns && Symbol.asyncIterator) || Symbol("asyncIterator not implemented");
-      const is = (ns && Symbol.iterator) || Symbol("iterator not implemented");
-      const isEndish = (P) => P === "end" || P === "finish" || P === "prefinish";
-      const isArrayBuffer = (P) =>
-        P instanceof ArrayBuffer || (typeof P === "object" && P.constructor && P.constructor.name === "ArrayBuffer" && P.byteLength >= 0);
-      const isArrayBufferView = (P) => !Buffer.isBuffer(P) && ArrayBuffer.isView(P);
-      class Pipe {
-        constructor(P, q, oe) {
-          this.src = P;
-          this.dest = q;
-          this.opts = oe;
-          this.ondrain = () => P[Gr]();
-          q.on("drain", this.ondrain);
-        }
-        unpipe() {
-          this.dest.removeListener("drain", this.ondrain);
-        }
-        proxyErrors() {}
-        end() {
-          this.unpipe();
-          if (this.opts.end) this.dest.end();
-        }
-      }
-      class PipeProxyErrors extends Pipe {
-        unpipe() {
-          this.src.removeListener("error", this.proxyErrors);
-          super.unpipe();
-        }
-        constructor(P, q, oe) {
-          super(P, q, oe);
-          this.proxyErrors = (P) => q.emit("error", P);
-          P.on("error", this.proxyErrors);
-        }
-      }
-      class Minipass extends st {
-        constructor(P) {
-          super();
-          this[Lr] = false;
-          this[xr] = false;
-          this[Vr] = [];
-          this[jr] = [];
-          this[Jr] = (P && P.objectMode) || false;
-          if (this[Jr]) this[Mr] = null;
-          else this[Mr] = (P && P.encoding) || null;
-          if (this[Mr] === "buffer") this[Mr] = null;
-          this[es] = (P && !!P.async) || false;
-          this[Ur] = this[Mr] ? new Wt(this[Mr]) : null;
-          this[Ar] = false;
-          this[Ir] = false;
-          this[Br] = false;
-          this[Fr] = false;
-          this[Qr] = null;
-          this.writable = true;
-          this.readable = true;
-          this[Hr] = 0;
-          this[$r] = false;
-          if (P && P.debugExposeBuffer === true) {
-            Object.defineProperty(this, "buffer", { get: () => this[jr] });
-          }
-          if (P && P.debugExposePipes === true) {
-            Object.defineProperty(this, "pipes", { get: () => this[Vr] });
-          }
-          this[ss] = P && P.signal;
-          this[rs] = false;
-          if (this[ss]) {
-            this[ss].addEventListener("abort", () => this[ts]());
-            if (this[ss].aborted) {
-              this[ts]();
-            }
-          }
-        }
-        get bufferLength() {
-          return this[Hr];
-        }
-        get encoding() {
-          return this[Mr];
-        }
-        set encoding(P) {
-          if (this[Jr]) throw new Error("cannot set encoding in objectMode");
-          if (this[Mr] && P !== this[Mr] && ((this[Ur] && this[Ur].lastNeed) || this[Hr])) throw new Error("cannot change encoding");
-          if (this[Mr] !== P) {
-            this[Ur] = P ? new Wt(P) : null;
-            if (this[jr].length) this[jr] = this[jr].map((P) => this[Ur].write(P));
-          }
-          this[Mr] = P;
-        }
-        setEncoding(P) {
-          this.encoding = P;
-        }
-        get objectMode() {
-          return this[Jr];
-        }
-        set objectMode(P) {
-          this[Jr] = this[Jr] || !!P;
-        }
-        get ["async"]() {
-          return this[es];
-        }
-        set ["async"](P) {
-          this[es] = this[es] || !!P;
-        }
-        [ts]() {
-          this[rs] = true;
-          this.emit("abort", this[ss].reason);
-          this.destroy(this[ss].reason);
-        }
-        get aborted() {
-          return this[rs];
-        }
-        set aborted(P) {}
-        write(P, q, oe) {
-          if (this[rs]) return false;
-          if (this[Ar]) throw new Error("write after end");
-          if (this[$r]) {
-            this.emit("error", Object.assign(new Error("Cannot call write after a stream was destroyed"), { code: "ERR_STREAM_DESTROYED" }));
-            return true;
-          }
-          if (typeof q === "function") (oe = q), (q = "utf8");
-          if (!q) q = "utf8";
-          const ie = this[es] ? defer : (P) => P();
-          if (!this[Jr] && !Buffer.isBuffer(P)) {
-            if (isArrayBufferView(P)) P = Buffer.from(P.buffer, P.byteOffset, P.byteLength);
-            else if (isArrayBuffer(P)) P = Buffer.from(P);
-            else if (typeof P !== "string") this.objectMode = true;
-          }
-          if (this[Jr]) {
-            if (this.flowing && this[Hr] !== 0) this[kr](true);
-            if (this.flowing) this.emit("data", P);
-            else this[Yr](P);
-            if (this[Hr] !== 0) this.emit("readable");
-            if (oe) ie(oe);
-            return this.flowing;
-          }
-          if (!P.length) {
-            if (this[Hr] !== 0) this.emit("readable");
-            if (oe) ie(oe);
-            return this.flowing;
-          }
-          if (typeof P === "string" && !(q === this[Mr] && !this[Ur].lastNeed)) {
-            P = Buffer.from(P, q);
-          }
-          if (Buffer.isBuffer(P) && this[Mr]) P = this[Ur].write(P);
-          if (this.flowing && this[Hr] !== 0) this[kr](true);
-          if (this.flowing) this.emit("data", P);
-          else this[Yr](P);
-          if (this[Hr] !== 0) this.emit("readable");
-          if (oe) ie(oe);
-          return this.flowing;
-        }
-        read(P) {
-          if (this[$r]) return null;
-          if (this[Hr] === 0 || P === 0 || P > this[Hr]) {
-            this[Er]();
-            return null;
-          }
-          if (this[Jr]) P = null;
-          if (this[jr].length > 1 && !this[Jr]) {
-            if (this.encoding) this[jr] = [this[jr].join("")];
-            else this[jr] = [Buffer.concat(this[jr], this[Hr])];
-          }
-          const q = this[Dr](P || null, this[jr][0]);
-          this[Er]();
-          return q;
-        }
-        [Dr](P, q) {
-          if (P === q.length || P === null) this[Wr]();
-          else {
-            this[jr][0] = q.slice(P);
-            q = q.slice(0, P);
-            this[Hr] -= P;
-          }
-          this.emit("data", q);
-          if (!this[jr].length && !this[Ar]) this.emit("drain");
-          return q;
-        }
-        end(P, q, oe) {
-          if (typeof P === "function") (oe = P), (P = null);
-          if (typeof q === "function") (oe = q), (q = "utf8");
-          if (P) this.write(P, q);
-          if (oe) this.once("end", oe);
-          this[Ar] = true;
-          this.writable = false;
-          if (this.flowing || !this[xr]) this[Er]();
-          return this;
-        }
-        [Gr]() {
-          if (this[$r]) return;
-          this[xr] = false;
-          this[Lr] = true;
-          this.emit("resume");
-          if (this[jr].length) this[kr]();
-          else if (this[Ar]) this[Er]();
-          else this.emit("drain");
-        }
-        resume() {
-          return this[Gr]();
-        }
-        pause() {
-          this[Lr] = false;
-          this[xr] = true;
-        }
-        get destroyed() {
-          return this[$r];
-        }
-        get flowing() {
-          return this[Lr];
-        }
-        get paused() {
-          return this[xr];
-        }
-        [Yr](P) {
-          if (this[Jr]) this[Hr] += 1;
-          else this[Hr] += P.length;
-          this[jr].push(P);
-        }
-        [Wr]() {
-          if (this[Jr]) this[Hr] -= 1;
-          else this[Hr] -= this[jr][0].length;
-          return this[jr].shift();
-        }
-        [kr](P) {
-          do {} while (this[Nr](this[Wr]()) && this[jr].length);
-          if (!P && !this[jr].length && !this[Ar]) this.emit("drain");
-        }
-        [Nr](P) {
-          this.emit("data", P);
-          return this.flowing;
-        }
-        pipe(P, q) {
-          if (this[$r]) return;
-          const oe = this[Ir];
-          q = q || {};
-          if (P === ie.stdout || P === ie.stderr) q.end = false;
-          else q.end = q.end !== false;
-          q.proxyErrors = !!q.proxyErrors;
-          if (oe) {
-            if (q.end) P.end();
-          } else {
-            this[Vr].push(!q.proxyErrors ? new Pipe(this, P, q) : new PipeProxyErrors(this, P, q));
-            if (this[es]) defer(() => this[Gr]());
-            else this[Gr]();
-          }
-          return P;
-        }
-        unpipe(P) {
-          const q = this[Vr].find((q) => q.dest === P);
-          if (q) {
-            this[Vr].splice(this[Vr].indexOf(q), 1);
-            q.unpipe();
-          }
-        }
-        addListener(P, q) {
-          return this.on(P, q);
-        }
-        on(P, q) {
-          const oe = super.on(P, q);
-          if (P === "data" && !this[Vr].length && !this.flowing) this[Gr]();
-          else if (P === "readable" && this[Hr] !== 0) super.emit("readable");
-          else if (isEndish(P) && this[Ir]) {
-            super.emit(P);
-            this.removeAllListeners(P);
-          } else if (P === "error" && this[Qr]) {
-            if (this[es]) defer(() => q.call(this, this[Qr]));
-            else q.call(this, this[Qr]);
-          }
-          return oe;
-        }
-        get emittedEnd() {
-          return this[Ir];
-        }
-        [Er]() {
-          if (!this[Br] && !this[Ir] && !this[$r] && this[jr].length === 0 && this[Ar]) {
-            this[Br] = true;
-            this.emit("end");
-            this.emit("prefinish");
-            this.emit("finish");
-            if (this[Fr]) this.emit("close");
-            this[Br] = false;
-          }
-        }
-        emit(P, q, ...oe) {
-          if (P !== "error" && P !== "close" && P !== $r && this[$r]) return;
-          else if (P === "data") {
-            return !this[Jr] && !q ? false : this[es] ? defer(() => this[zr](q)) : this[zr](q);
-          } else if (P === "end") {
-            return this[Zr]();
-          } else if (P === "close") {
-            this[Fr] = true;
-            if (!this[Ir] && !this[$r]) return;
-            const P = super.emit("close");
-            this.removeAllListeners("close");
-            return P;
-          } else if (P === "error") {
-            this[Qr] = q;
-            super.emit(Kr, q);
-            const P = !this[ss] || this.listeners("error").length ? super.emit("error", q) : false;
-            this[Er]();
-            return P;
-          } else if (P === "resume") {
-            const P = super.emit("resume");
-            this[Er]();
-            return P;
-          } else if (P === "finish" || P === "prefinish") {
-            const q = super.emit(P);
-            this.removeAllListeners(P);
-            return q;
-          }
-          const ie = super.emit(P, q, ...oe);
-          this[Er]();
-          return ie;
-        }
-        [zr](P) {
-          for (const q of this[Vr]) {
-            if (q.dest.write(P) === false) this.pause();
-          }
-          const q = super.emit("data", P);
-          this[Er]();
-          return q;
-        }
-        [Zr]() {
-          if (this[Ir]) return;
-          this[Ir] = true;
-          this.readable = false;
-          if (this[es]) defer(() => this[Xr]());
-          else this[Xr]();
-        }
-        [Xr]() {
-          if (this[Ur]) {
-            const P = this[Ur].end();
-            if (P) {
-              for (const q of this[Vr]) {
-                q.dest.write(P);
-              }
-              super.emit("data", P);
-            }
-          }
-          for (const P of this[Vr]) {
-            P.end();
-          }
-          const P = super.emit("end");
-          this.removeAllListeners("end");
-          return P;
-        }
-        collect() {
-          const P = [];
-          if (!this[Jr]) P.dataLength = 0;
-          const q = this.promise();
-          this.on("data", (q) => {
-            P.push(q);
-            if (!this[Jr]) P.dataLength += q.length;
-          });
-          return q.then(() => P);
-        }
-        concat() {
-          return this[Jr]
-            ? Promise.reject(new Error("cannot concat in objectMode"))
-            : this.collect().then((P) =>
-                this[Jr] ? Promise.reject(new Error("cannot concat in objectMode")) : this[Mr] ? P.join("") : Buffer.concat(P, P.dataLength)
-              );
-        }
-        promise() {
-          return new Promise((P, q) => {
-            this.on($r, () => q(new Error("stream destroyed")));
-            this.on("error", (P) => q(P));
-            this.on("end", () => P());
-          });
-        }
-        [os]() {
-          let P = false;
-          const stop = () => {
-            this.pause();
-            P = true;
-            return Promise.resolve({ done: true });
-          };
-          const next = () => {
-            if (P) return stop();
-            const q = this.read();
-            if (q !== null) return Promise.resolve({ done: false, value: q });
-            if (this[Ar]) return stop();
-            let oe = null;
-            let ie = null;
-            const onerr = (P) => {
-              this.removeListener("data", ondata);
-              this.removeListener("end", onend);
-              this.removeListener($r, ondestroy);
-              stop();
-              ie(P);
-            };
-            const ondata = (P) => {
-              this.removeListener("error", onerr);
-              this.removeListener("end", onend);
-              this.removeListener($r, ondestroy);
-              this.pause();
-              oe({ value: P, done: !!this[Ar] });
-            };
-            const onend = () => {
-              this.removeListener("error", onerr);
-              this.removeListener("data", ondata);
-              this.removeListener($r, ondestroy);
-              stop();
-              oe({ done: true });
-            };
-            const ondestroy = () => onerr(new Error("stream destroyed"));
-            return new Promise((P, q) => {
-              ie = q;
-              oe = P;
-              this.once($r, ondestroy);
-              this.once("error", onerr);
-              this.once("end", onend);
-              this.once("data", ondata);
-            });
-          };
-          return {
-            next: next,
-            throw: stop,
-            return: stop,
-            [os]() {
-              return this;
-            },
-          };
-        }
-        [is]() {
-          let P = false;
-          const stop = () => {
-            this.pause();
-            this.removeListener(Kr, stop);
-            this.removeListener($r, stop);
-            this.removeListener("end", stop);
-            P = true;
-            return { done: true };
-          };
-          const next = () => {
-            if (P) return stop();
-            const q = this.read();
-            return q === null ? stop() : { value: q };
-          };
-          this.once("end", stop);
-          this.once(Kr, stop);
-          this.once($r, stop);
-          return {
-            next: next,
-            throw: stop,
-            return: stop,
-            [is]() {
-              return this;
-            },
-          };
-        }
-        destroy(P) {
-          if (this[$r]) {
-            if (P) this.emit("error", P);
-            else this.emit($r);
-            return this;
-          }
-          this[$r] = true;
-          this[jr].length = 0;
-          this[Hr] = 0;
-          if (typeof this.close === "function" && !this[Fr]) this.close();
-          if (P) this.emit("error", P);
-          else this.emit($r);
-          return this;
-        }
-        static isStream(P) {
-          return (
-            !!P &&
-            (P instanceof Minipass ||
-              P instanceof st ||
-              (P instanceof Ge && (typeof P.pipe === "function" || (typeof P.write === "function" && typeof P.end === "function"))))
-          );
-        }
-      }
-      P.exports = Minipass;
     },
     70744: (P) => {
       var q = 1e3;
@@ -28639,8 +28128,8 @@
         kConnected: os,
         kConnecting: is,
         kNeedDrain: as,
-        kNoRef: ls,
-        kKeepAliveDefaultTimeout: As,
+        kNoRef: As,
+        kKeepAliveDefaultTimeout: ls,
         kHostHeader: cs,
         kPendingIdx: us,
         kRunningIdx: ds,
@@ -28819,10 +28308,10 @@
           this[hs] = null;
           this[ms] = Lr != null ? Lr : 1;
           this[Es] = oe || st.maxHeaderSize;
-          this[As] = Dr == null ? 4e3 : Dr;
+          this[ls] = Dr == null ? 4e3 : Dr;
           this[ys] = Nr == null ? 6e5 : Nr;
           this[Is] = Mr == null ? 1e3 : Mr;
-          this[gs] = this[As];
+          this[gs] = this[ls];
           this[Wr] = null;
           this[Ds] = Kr != null ? Kr : null;
           this[Xr] = 0;
@@ -28977,7 +28466,7 @@
             wasm_on_url: (P, q, oe) => 0,
             wasm_on_status: (P, q, oe) => {
               ie.strictEqual(nn.ptr, P);
-              const Ge = q - ln + on.byteOffset;
+              const Ge = q - An + on.byteOffset;
               return nn.onStatus(new Ks(on.buffer, Ge, oe)) || 0;
             },
             wasm_on_message_begin: (P) => {
@@ -28986,12 +28475,12 @@
             },
             wasm_on_header_field: (P, q, oe) => {
               ie.strictEqual(nn.ptr, P);
-              const Ge = q - ln + on.byteOffset;
+              const Ge = q - An + on.byteOffset;
               return nn.onHeaderField(new Ks(on.buffer, Ge, oe)) || 0;
             },
             wasm_on_header_value: (P, q, oe) => {
               ie.strictEqual(nn.ptr, P);
-              const Ge = q - ln + on.byteOffset;
+              const Ge = q - An + on.byteOffset;
               return nn.onHeaderValue(new Ks(on.buffer, Ge, oe)) || 0;
             },
             wasm_on_headers_complete: (P, q, oe, Ge) => {
@@ -29000,7 +28489,7 @@
             },
             wasm_on_body: (P, q, oe) => {
               ie.strictEqual(nn.ptr, P);
-              const Ge = q - ln + on.byteOffset;
+              const Ge = q - An + on.byteOffset;
               return nn.onBody(new Ks(on.buffer, Ge, oe)) || 0;
             },
             wasm_on_message_complete: (P) => {
@@ -29016,8 +28505,8 @@
       let nn = null;
       let on = null;
       let an = 0;
-      let ln = null;
-      const An = 1;
+      let An = null;
+      const ln = 1;
       const cn = 2;
       const un = 3;
       class Parser {
@@ -29096,26 +28585,26 @@
           ie(!this.paused);
           const { socket: q, llhttp: oe } = this;
           if (P.length > an) {
-            if (ln) {
-              oe.free(ln);
+            if (An) {
+              oe.free(An);
             }
             an = Math.ceil(P.length / 4096) * 4096;
-            ln = oe.malloc(an);
+            An = oe.malloc(an);
           }
-          new Uint8Array(oe.memory.buffer, ln, an).set(P);
+          new Uint8Array(oe.memory.buffer, An, an).set(P);
           try {
             let ie;
             try {
               on = P;
               nn = this;
-              ie = oe.llhttp_execute(this.ptr, ln, P.length);
+              ie = oe.llhttp_execute(this.ptr, An, P.length);
             } catch (P) {
               throw P;
             } finally {
               nn = null;
               on = null;
             }
-            const Ge = oe.llhttp_get_error_pos(this.ptr) - ln;
+            const Ge = oe.llhttp_get_error_pos(this.ptr) - An;
             if (ie === Xs.ERROR.PAUSED_UPGRADE) {
               this.onUpgrade(P.slice(Ge));
             } else if (ie === Xs.ERROR.PAUSED) {
@@ -29244,7 +28733,7 @@
             Wt.destroy(st, new Mr("bad upgrade", Wt.getSocketInfo(st)));
             return -1;
           }
-          ie.strictEqual(this.timeoutType, An);
+          ie.strictEqual(this.timeoutType, ln);
           this.statusCode = P;
           this.shouldKeepAlive = oe || (Er.method === "HEAD" && !st[Yr] && this.connection.toLowerCase() === "keep-alive");
           if (this.statusCode >= 200) {
@@ -29278,7 +28767,7 @@
                 Ge[gs] = q;
               }
             } else {
-              Ge[gs] = Ge[As];
+              Ge[gs] = Ge[ls];
             }
           } else {
             st[Yr] = true;
@@ -29370,7 +28859,7 @@
       }
       function onParserTimeout(P) {
         const { socket: q, timeoutType: oe, client: Ge } = P;
-        if (oe === An) {
+        if (oe === ln) {
           if (!q[ss] || q.writableNeedDrain || Ge[es] > 1) {
             ie(!P.paused, "cannot be paused while waiting for headers");
             Wt.destroy(q, new kr());
@@ -29511,7 +29000,7 @@
               rn = await sn;
               sn = null;
             }
-            Ge[ls] = false;
+            Ge[As] = false;
             Ge[ss] = false;
             Ge[Yr] = false;
             Ge[Zr] = false;
@@ -29587,23 +29076,23 @@
           const oe = P[hs];
           if (oe && !oe.destroyed && oe.alpnProtocol !== "h2") {
             if (P[rs] === 0) {
-              if (!oe[ls] && oe.unref) {
+              if (!oe[As] && oe.unref) {
                 oe.unref();
-                oe[ls] = true;
+                oe[As] = true;
               }
-            } else if (oe[ls] && oe.ref) {
+            } else if (oe[As] && oe.ref) {
               oe.ref();
-              oe[ls] = false;
+              oe[As] = false;
             }
             if (P[rs] === 0) {
               if (oe[Kr].timeoutType !== un) {
                 oe[Kr].setTimeout(P[gs], un);
               }
             } else if (P[es] > 0 && oe[Kr].statusCode < 200) {
-              if (oe[Kr].timeoutType !== An) {
+              if (oe[Kr].timeoutType !== ln) {
                 const q = P[ns][P[ds]];
                 const ie = q.headersTimeout != null ? q.headersTimeout : P[Cs];
-                oe[Kr].setTimeout(ie, An);
+                oe[Kr].setTimeout(ie, ln);
               }
             }
           }
@@ -30125,7 +29614,7 @@
           q.uncork();
           oe.onBodySent(P);
           if (!Er) {
-            if (q[Kr].timeout && q[Kr].timeoutType === An) {
+            if (q[Kr].timeout && q[Kr].timeoutType === ln) {
               if (q[Kr].timeout.refresh) {
                 q[Kr].timeout.refresh();
               }
@@ -30159,7 +29648,7 @@
               process.emitWarning(new Br());
             }
           }
-          if (P[Kr].timeout && P[Kr].timeoutType === An) {
+          if (P[Kr].timeout && P[Kr].timeoutType === ln) {
             if (P[Kr].timeout.refresh) {
               P[Kr].timeout.refresh();
             }
@@ -33394,7 +32883,7 @@
         urlIsHttpHttpsScheme: os,
         urlHasHttpsScheme: is,
       } = oe(15523);
-      const { kState: as, kHeaders: ls, kGuard: As, kRealm: cs } = oe(89710);
+      const { kState: as, kHeaders: As, kGuard: ls, kRealm: cs } = oe(89710);
       const us = oe(42613);
       const { safelyExtractBody: ds } = oe(8923);
       const { redirectStatusSet: ps, nullBodyStatus: ms, safeMethodsSet: hs, requestBodyHeader: gs, subresourceSet: Es, DOMException: ys } = oe(87326);
@@ -33485,9 +32974,9 @@
           Wt = new ie();
           Wt[as] = P;
           Wt[cs] = Ar;
-          Wt[ls][Is] = P.headersList;
-          Wt[ls][As] = "immutable";
-          Wt[ls][cs] = Ar;
+          Wt[As][Is] = P.headersList;
+          Wt[As][ls] = "immutable";
+          Wt[As][cs] = Ar;
           oe.resolve(Wt);
         };
         Br = fetching({ request: st, processResponseEndOfBody: handleFetchDone, processResponse: processResponse, dispatcher: q.dispatcher ?? Ds() });
@@ -34325,8 +33814,8 @@
       const rs = oe(42613);
       const { getMaxListeners: ss, setMaxListeners: ns, getEventListeners: os, defaultMaxListeners: is } = oe(24434);
       let as = globalThis.TransformStream;
-      const ls = Symbol("abortController");
-      const As = new Er(({ signal: P, abort: q }) => {
+      const As = Symbol("abortController");
+      const ls = new Er(({ signal: P, abort: q }) => {
         P.removeEventListener("abort", q);
       });
       class Request {
@@ -34487,7 +33976,7 @@
             if (Ur.aborted) {
               Vr.abort(Ur.reason);
             } else {
-              this[ls] = Vr;
+              this[As] = Vr;
               const P = new WeakRef(Vr);
               const abort = function () {
                 const q = P.deref();
@@ -34503,7 +33992,7 @@
                 }
               } catch {}
               Ir.addAbortListener(Ur, abort);
-              As.register(Vr, { signal: Ur, abort: abort });
+              ls.register(Vr, { signal: Ur, abort: abort });
             }
           }
           this[Yr] = new Ot(ts);
@@ -38921,8 +38410,8 @@
       class ByteParser extends ie {
         #i = [];
         #a = 0;
-        #l = st.INFO;
-        #A = {};
+        #A = st.INFO;
+        #l = {};
         #c = [];
         constructor(P) {
           super();
@@ -38935,44 +38424,44 @@
         }
         run(P) {
           while (true) {
-            if (this.#l === st.INFO) {
+            if (this.#A === st.INFO) {
               if (this.#a < 2) {
                 return P();
               }
               const q = this.consume(2);
-              this.#A.fin = (q[0] & 128) !== 0;
-              this.#A.opcode = q[0] & 15;
-              this.#A.originalOpcode ??= this.#A.opcode;
-              this.#A.fragmented = !this.#A.fin && this.#A.opcode !== Ot.CONTINUATION;
-              if (this.#A.fragmented && this.#A.opcode !== Ot.BINARY && this.#A.opcode !== Ot.TEXT) {
+              this.#l.fin = (q[0] & 128) !== 0;
+              this.#l.opcode = q[0] & 15;
+              this.#l.originalOpcode ??= this.#l.opcode;
+              this.#l.fragmented = !this.#l.fin && this.#l.opcode !== Ot.CONTINUATION;
+              if (this.#l.fragmented && this.#l.opcode !== Ot.BINARY && this.#l.opcode !== Ot.TEXT) {
                 Dr(this.ws, "Invalid frame type was fragmented.");
                 return;
               }
               const oe = q[1] & 127;
               if (oe <= 125) {
-                this.#A.payloadLength = oe;
-                this.#l = st.READ_DATA;
+                this.#l.payloadLength = oe;
+                this.#A = st.READ_DATA;
               } else if (oe === 126) {
-                this.#l = st.PAYLOADLENGTH_16;
+                this.#A = st.PAYLOADLENGTH_16;
               } else if (oe === 127) {
-                this.#l = st.PAYLOADLENGTH_64;
+                this.#A = st.PAYLOADLENGTH_64;
               }
-              if (this.#A.fragmented && oe > 125) {
+              if (this.#l.fragmented && oe > 125) {
                 Dr(this.ws, "Fragmented frame exceeded 125 bytes.");
                 return;
-              } else if ((this.#A.opcode === Ot.PING || this.#A.opcode === Ot.PONG || this.#A.opcode === Ot.CLOSE) && oe > 125) {
+              } else if ((this.#l.opcode === Ot.PING || this.#l.opcode === Ot.PONG || this.#l.opcode === Ot.CLOSE) && oe > 125) {
                 Dr(this.ws, "Payload length for control frame exceeded 125 bytes.");
                 return;
-              } else if (this.#A.opcode === Ot.CLOSE) {
+              } else if (this.#l.opcode === Ot.CLOSE) {
                 if (oe === 1) {
                   Dr(this.ws, "Received close frame with a 1-byte body.");
                   return;
                 }
                 const P = this.consume(oe);
-                this.#A.closeInfo = this.parseCloseBody(false, P);
+                this.#l.closeInfo = this.parseCloseBody(false, P);
                 if (!this.ws[Ir]) {
                   const P = Buffer.allocUnsafe(2);
-                  P.writeUInt16BE(this.#A.closeInfo.code, 0);
+                  P.writeUInt16BE(this.#l.closeInfo.code, 0);
                   const q = new Nr(P);
                   this.ws[Br].socket.write(q.createFrame(Ot.CLOSE), (P) => {
                     if (!P) {
@@ -38984,7 +38473,7 @@
                 this.ws[Qr] = true;
                 this.end();
                 return;
-              } else if (this.#A.opcode === Ot.PING) {
+              } else if (this.#l.opcode === Ot.PING) {
                 const q = this.consume(oe);
                 if (!this.ws[Qr]) {
                   const P = new Nr(q);
@@ -38993,14 +38482,14 @@
                     Mr.ping.publish({ payload: q });
                   }
                 }
-                this.#l = st.INFO;
+                this.#A = st.INFO;
                 if (this.#a > 0) {
                   continue;
                 } else {
                   P();
                   return;
                 }
-              } else if (this.#A.opcode === Ot.PONG) {
+              } else if (this.#l.opcode === Ot.PONG) {
                 const q = this.consume(oe);
                 if (Mr.pong.hasSubscribers) {
                   Mr.pong.publish({ payload: q });
@@ -39012,14 +38501,14 @@
                   return;
                 }
               }
-            } else if (this.#l === st.PAYLOADLENGTH_16) {
+            } else if (this.#A === st.PAYLOADLENGTH_16) {
               if (this.#a < 2) {
                 return P();
               }
               const q = this.consume(2);
-              this.#A.payloadLength = q.readUInt16BE(0);
-              this.#l = st.READ_DATA;
-            } else if (this.#l === st.PAYLOADLENGTH_64) {
+              this.#l.payloadLength = q.readUInt16BE(0);
+              this.#A = st.READ_DATA;
+            } else if (this.#A === st.PAYLOADLENGTH_64) {
               if (this.#a < 8) {
                 return P();
               }
@@ -39030,21 +38519,21 @@
                 return;
               }
               const ie = q.readUInt32BE(4);
-              this.#A.payloadLength = (oe << 8) + ie;
-              this.#l = st.READ_DATA;
-            } else if (this.#l === st.READ_DATA) {
-              if (this.#a < this.#A.payloadLength) {
+              this.#l.payloadLength = (oe << 8) + ie;
+              this.#A = st.READ_DATA;
+            } else if (this.#A === st.READ_DATA) {
+              if (this.#a < this.#l.payloadLength) {
                 return P();
-              } else if (this.#a >= this.#A.payloadLength) {
-                const P = this.consume(this.#A.payloadLength);
+              } else if (this.#a >= this.#l.payloadLength) {
+                const P = this.consume(this.#l.payloadLength);
                 this.#c.push(P);
-                if (!this.#A.fragmented || (this.#A.fin && this.#A.opcode === Ot.CONTINUATION)) {
+                if (!this.#l.fragmented || (this.#l.fin && this.#l.opcode === Ot.CONTINUATION)) {
                   const P = Buffer.concat(this.#c);
-                  kr(this.ws, this.#A.originalOpcode, P);
-                  this.#A = {};
+                  kr(this.ws, this.#l.originalOpcode, P);
+                  this.#l = {};
                   this.#c.length = 0;
                 }
-                this.#l = st.INFO;
+                this.#A = st.INFO;
               }
             }
             if (this.#a > 0) {
@@ -39111,7 +38600,7 @@
           return { code: oe, reason: ie };
         }
         get closingInfo() {
-          return this.#A.closeInfo;
+          return this.#l.closeInfo;
         }
       }
       P.exports = { ByteParser: ByteParser };
@@ -49096,7 +48585,7 @@
         };
       Object.defineProperty(q, "__esModule", { value: true });
       q.SearchFiles = void 0;
-      const Ge = oe(57178);
+      const Ge = oe(21363);
       const st = oe(79896);
       class SearchFiles {
         constructor(P = process.cwd()) {
@@ -52417,15 +51906,15 @@
       }
       q["default"] = isPlainObject;
     },
-    18307: (P, q, oe) => {
+    72981: (P, q, oe) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.Glob = void 0;
-      const ie = oe(90364);
-      const Ge = oe(16577);
-      const st = oe(87016);
-      const Ot = oe(31304);
-      const Wt = oe(79915);
+      const ie = oe(91409);
+      const Ge = oe(73136);
+      const st = oe(16577);
+      const Ot = oe(47813);
+      const Wt = oe(11157);
       const Ar = typeof process === "object" && process && typeof process.platform === "string" ? process.platform : "linux";
       class Glob {
         absolute;
@@ -52452,9 +51941,11 @@
         signal;
         windowsPathsNoEscape;
         withFileTypes;
+        includeChildMatches;
         opts;
         patterns;
         constructor(P, q) {
+          if (!q) throw new TypeError("glob options required");
           this.withFileTypes = !!q.withFileTypes;
           this.signal = q.signal;
           this.follow = !!q.follow;
@@ -52465,7 +51956,7 @@
           if (!q.cwd) {
             this.cwd = "";
           } else if (q.cwd instanceof URL || q.cwd.startsWith("file://")) {
-            q.cwd = (0, st.fileURLToPath)(q.cwd);
+            q.cwd = (0, Ge.fileURLToPath)(q.cwd);
           }
           this.cwd = q.cwd || "";
           this.root = q.root;
@@ -52474,6 +51965,7 @@
           this.noext = !!q.noext;
           this.realpath = !!q.realpath;
           this.absolute = q.absolute;
+          this.includeChildMatches = q.includeChildMatches !== false;
           this.noglobstar = !!q.noglobstar;
           this.matchBase = !!q.matchBase;
           this.maxDepth = typeof q.maxDepth === "number" ? q.maxDepth : Infinity;
@@ -52505,17 +51997,18 @@
             }
           } else {
             const P =
-              q.platform === "win32" ? Ge.PathScurryWin32 : q.platform === "darwin" ? Ge.PathScurryDarwin : q.platform ? Ge.PathScurryPosix : Ge.PathScurry;
+              q.platform === "win32" ? st.PathScurryWin32 : q.platform === "darwin" ? st.PathScurryDarwin : q.platform ? st.PathScurryPosix : st.PathScurry;
             this.scurry = new P(this.cwd, { nocase: q.nocase, fs: q.fs });
           }
           this.nocase = this.scurry.nocase;
-          const oe = {
+          const oe = this.platform === "darwin" || this.platform === "win32";
+          const Wt = {
             ...q,
             dot: this.dot,
             matchBase: this.matchBase,
             nobrace: this.nobrace,
             nocase: this.nocase,
-            nocaseMagicOnly: true,
+            nocaseMagicOnly: oe,
             nocomment: true,
             noext: this.noext,
             nonegate: true,
@@ -52524,8 +52017,8 @@
             windowsPathsNoEscape: this.windowsPathsNoEscape,
             debug: !!this.opts.debug,
           };
-          const Wt = this.pattern.map((P) => new ie.Minimatch(P, oe));
-          const [Er, Ir] = Wt.reduce(
+          const Er = this.pattern.map((P) => new ie.Minimatch(P, Wt));
+          const [Ir, Br] = Er.reduce(
             (P, q) => {
               P[0].push(...q.set);
               P[1].push(...q.globParts);
@@ -52533,7 +52026,11 @@
             },
             [[], []]
           );
-          this.patterns = Er.map((P, q) => new Ot.Pattern(P, Ir[q], 0, this.platform));
+          this.patterns = Ir.map((P, q) => {
+            const oe = Br[q];
+            if (!oe) throw new Error("invalid pattern object");
+            return new Ot.Pattern(P, oe, 0, this.platform);
+          });
         }
         async walk() {
           return [
@@ -52542,6 +52039,7 @@
               maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
               platform: this.platform,
               nocase: this.nocase,
+              includeChildMatches: this.includeChildMatches,
             }).walk()),
           ];
         }
@@ -52552,6 +52050,7 @@
               maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
               platform: this.platform,
               nocase: this.nocase,
+              includeChildMatches: this.includeChildMatches,
             }).walkSync(),
           ];
         }
@@ -52561,6 +52060,7 @@
             maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
             platform: this.platform,
             nocase: this.nocase,
+            includeChildMatches: this.includeChildMatches,
           }).stream();
         }
         streamSync() {
@@ -52569,6 +52069,7 @@
             maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
             platform: this.platform,
             nocase: this.nocase,
+            includeChildMatches: this.includeChildMatches,
           }).streamSync();
         }
         iterateSync() {
@@ -52586,11 +52087,11 @@
       }
       q.Glob = Glob;
     },
-    12183: (P, q, oe) => {
+    45197: (P, q, oe) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.hasMagic = void 0;
-      const ie = oe(90364);
+      const ie = oe(91409);
       const hasMagic = (P, q = {}) => {
         if (!Array.isArray(P)) {
           P = [P];
@@ -52602,39 +52103,50 @@
       };
       q.hasMagic = hasMagic;
     },
-    3855: (P, q, oe) => {
+    5637: (P, q, oe) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.Ignore = void 0;
-      const ie = oe(90364);
-      const Ge = oe(31304);
+      const ie = oe(91409);
+      const Ge = oe(47813);
       const st = typeof process === "object" && process && typeof process.platform === "string" ? process.platform : "linux";
       class Ignore {
         relative;
         relativeChildren;
         absolute;
         absoluteChildren;
-        constructor(P, { nobrace: q, nocase: oe, noext: Ot, noglobstar: Wt, platform: Ar = st }) {
+        platform;
+        mmopts;
+        constructor(P, { nobrace: q, nocase: oe, noext: ie, noglobstar: Ge, platform: Ot = st }) {
           this.relative = [];
           this.absolute = [];
           this.relativeChildren = [];
           this.absoluteChildren = [];
-          const Er = { dot: true, nobrace: q, nocase: oe, noext: Ot, noglobstar: Wt, optimizationLevel: 2, platform: Ar, nocomment: true, nonegate: true };
-          for (const q of P) {
-            const P = new ie.Minimatch(q, Er);
-            for (let q = 0; q < P.set.length; q++) {
-              const oe = P.set[q];
-              const st = P.globParts[q];
-              const Ot = new Ge.Pattern(oe, st, 0, Ar);
-              const Wt = new ie.Minimatch(Ot.globString(), Er);
-              const Ir = st[st.length - 1] === "**";
-              const Br = Ot.isAbsolute();
-              if (Br) this.absolute.push(Wt);
-              else this.relative.push(Wt);
-              if (Ir) {
-                if (Br) this.absoluteChildren.push(Wt);
-                else this.relativeChildren.push(Wt);
-              }
+          this.platform = Ot;
+          this.mmopts = { dot: true, nobrace: q, nocase: oe, noext: ie, noglobstar: Ge, optimizationLevel: 2, platform: Ot, nocomment: true, nonegate: true };
+          for (const q of P) this.add(q);
+        }
+        add(P) {
+          const q = new ie.Minimatch(P, this.mmopts);
+          for (let P = 0; P < q.set.length; P++) {
+            const oe = q.set[P];
+            const st = q.globParts[P];
+            if (!oe || !st) {
+              throw new Error("invalid pattern object");
+            }
+            while (oe[0] === "." && st[0] === ".") {
+              oe.shift();
+              st.shift();
+            }
+            const Ot = new Ge.Pattern(oe, st, 0, this.platform);
+            const Wt = new ie.Minimatch(Ot.globString(), this.mmopts);
+            const Ar = st[st.length - 1] === "**";
+            const Er = Ot.isAbsolute();
+            if (Er) this.absolute.push(Wt);
+            else this.relative.push(Wt);
+            if (Ar) {
+              if (Er) this.absoluteChildren.push(Wt);
+              else this.relativeChildren.push(Wt);
             }
           }
         }
@@ -52658,75 +52170,26 @@
             if (P.match(oe)) return true;
           }
           for (const P of this.absoluteChildren) {
-            if (P.match(q)) true;
+            if (P.match(q)) return true;
           }
           return false;
         }
       }
       q.Ignore = Ignore;
     },
-    57178: function (P, q, oe) {
-      "use strict";
-      var ie =
-        (this && this.__importDefault) ||
-        function (P) {
-          return P && P.__esModule ? P : { default: P };
-        };
-      const Ge = ie(oe(77893));
-      P.exports = Object.assign(Ge.default, { default: Ge.default, glob: Ge.default });
-    },
-    77893: (P, q, oe) => {
+    21363: (P, q, oe) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
-      q.hasMagic =
-        q.Glob =
-        q.unescape =
-        q.escape =
-        q.sync =
-        q.iterate =
-        q.iterateSync =
-        q.stream =
-        q.streamSync =
-        q.globIterate =
-        q.globIterateSync =
-        q.glob =
-        q.globSync =
-        q.globStream =
-        q.globStreamSync =
-          void 0;
-      const ie = oe(90364);
-      const Ge = oe(18307);
-      const st = oe(12183);
-      function globStreamSync(P, q = {}) {
-        return new Ge.Glob(P, q).streamSync();
-      }
+      q.glob = q.sync = q.iterate = q.iterateSync = q.stream = q.streamSync = q.Ignore = q.hasMagic = q.Glob = q.unescape = q.escape = void 0;
       q.globStreamSync = globStreamSync;
-      function globStream(P, q = {}) {
-        return new Ge.Glob(P, q).stream();
-      }
       q.globStream = globStream;
-      function globSync(P, q = {}) {
-        return new Ge.Glob(P, q).walkSync();
-      }
       q.globSync = globSync;
-      async function glob(P, q = {}) {
-        return new Ge.Glob(P, q).walk();
-      }
-      q.glob = glob;
-      function globIterateSync(P, q = {}) {
-        return new Ge.Glob(P, q).iterateSync();
-      }
       q.globIterateSync = globIterateSync;
-      function globIterate(P, q = {}) {
-        return new Ge.Glob(P, q).iterate();
-      }
       q.globIterate = globIterate;
-      q.streamSync = globStreamSync;
-      q.stream = Object.assign(globStream, { sync: globStreamSync });
-      q.iterateSync = globIterateSync;
-      q.iterate = Object.assign(globIterate, { sync: globIterateSync });
-      q.sync = Object.assign(globSync, { stream: globStreamSync, iterate: globIterateSync });
-      var Ot = oe(90364);
+      const ie = oe(91409);
+      const Ge = oe(72981);
+      const st = oe(45197);
+      var Ot = oe(91409);
       Object.defineProperty(q, "escape", {
         enumerable: true,
         get: function () {
@@ -52739,22 +52202,52 @@
           return Ot.unescape;
         },
       });
-      var Wt = oe(18307);
+      var Wt = oe(72981);
       Object.defineProperty(q, "Glob", {
         enumerable: true,
         get: function () {
           return Wt.Glob;
         },
       });
-      var Ar = oe(12183);
+      var Ar = oe(45197);
       Object.defineProperty(q, "hasMagic", {
         enumerable: true,
         get: function () {
           return Ar.hasMagic;
         },
       });
-      q["default"] = Object.assign(glob, {
-        glob: glob,
+      var Er = oe(5637);
+      Object.defineProperty(q, "Ignore", {
+        enumerable: true,
+        get: function () {
+          return Er.Ignore;
+        },
+      });
+      function globStreamSync(P, q = {}) {
+        return new Ge.Glob(P, q).streamSync();
+      }
+      function globStream(P, q = {}) {
+        return new Ge.Glob(P, q).stream();
+      }
+      function globSync(P, q = {}) {
+        return new Ge.Glob(P, q).walkSync();
+      }
+      async function glob_(P, q = {}) {
+        return new Ge.Glob(P, q).walk();
+      }
+      function globIterateSync(P, q = {}) {
+        return new Ge.Glob(P, q).iterateSync();
+      }
+      function globIterate(P, q = {}) {
+        return new Ge.Glob(P, q).iterate();
+      }
+      q.streamSync = globStreamSync;
+      q.stream = Object.assign(globStream, { sync: globStreamSync });
+      q.iterateSync = globIterateSync;
+      q.iterate = Object.assign(globIterate, { sync: globIterateSync });
+      q.sync = Object.assign(globSync, { stream: globStreamSync, iterate: globIterateSync });
+      q.glob = Object.assign(glob_, {
+        glob: glob_,
         globSync: globSync,
         sync: q.sync,
         globStream: globStream,
@@ -52770,12 +52263,13 @@
         escape: ie.escape,
         unescape: ie.unescape,
       });
+      q.glob.glob = q.glob;
     },
-    31304: (P, q, oe) => {
+    47813: (P, q, oe) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.Pattern = void 0;
-      const ie = oe(90364);
+      const ie = oe(91409);
       const isPatternList = (P) => P.length >= 1;
       const isGlobList = (P) => P.length >= 1;
       class Pattern {
@@ -52896,11 +52390,11 @@
       }
       q.Pattern = Pattern;
     },
-    28501: (P, q, oe) => {
+    37843: (P, q, oe) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.Processor = q.SubWalks = q.MatchRecord = q.HasWalkedCache = void 0;
-      const ie = oe(90364);
+      const ie = oe(91409);
       class HasWalkedCache {
         store;
         constructor(P = new Map()) {
@@ -52997,7 +52491,6 @@
             let Wt = false;
             while (typeof (st = q.pattern()) === "string" && (Ot = q.rest())) {
               const oe = P.resolve(st);
-              if (oe.isUnknown() && st !== "..") break;
               P = oe;
               q = Ot;
               Wt = true;
@@ -53009,12 +52502,8 @@
               this.hasWalkedCache.storeWalked(P, q);
             }
             if (typeof st === "string") {
-              if (!Ot) {
-                const q = st === ".." || st === "" || st === ".";
-                this.matches.add(P.resolve(st), Ge, q);
-              } else {
-                this.subwalks.add(P, q);
-              }
+              const q = st === ".." || st === "" || st === ".";
+              this.matches.add(P.resolve(st), Ge, q);
               continue;
             } else if (st === ie.GLOBSTAR) {
               if (!P.isSymbolicLink() || this.follow || q.checkFollowGlobstar()) {
@@ -53112,19 +52601,14 @@
       }
       q.Processor = Processor;
     },
-    79915: function (P, q, oe) {
+    11157: (P, q, oe) => {
       "use strict";
-      var ie =
-        (this && this.__importDefault) ||
-        function (P) {
-          return P && P.__esModule ? P : { default: P };
-        };
       Object.defineProperty(q, "__esModule", { value: true });
       q.GlobStream = q.GlobWalker = q.GlobUtil = void 0;
-      const Ge = ie(oe(76058));
-      const st = oe(3855);
-      const Ot = oe(28501);
-      const makeIgnore = (P, q) => (typeof P === "string" ? new st.Ignore([P], q) : Array.isArray(P) ? new st.Ignore(P, q) : P);
+      const ie = oe(78275);
+      const Ge = oe(5637);
+      const st = oe(37843);
+      const makeIgnore = (P, q) => (typeof P === "string" ? new Ge.Ignore([P], q) : Array.isArray(P) ? new Ge.Ignore(P, q) : P);
       class GlobUtil {
         path;
         patterns;
@@ -53137,13 +52621,19 @@
         #T;
         signal;
         maxDepth;
+        includeChildMatches;
         constructor(P, q, oe) {
           this.patterns = P;
           this.path = q;
           this.opts = oe;
-          this.#T = oe.platform === "win32" ? "\\" : "/";
-          if (oe.ignore) {
-            this.#v = makeIgnore(oe.ignore, oe);
+          this.#T = !oe.posix && oe.platform === "win32" ? "\\" : "/";
+          this.includeChildMatches = oe.includeChildMatches !== false;
+          if (oe.ignore || !this.includeChildMatches) {
+            this.#v = makeIgnore(oe.ignore ?? [], oe);
+            if (!this.includeChildMatches && typeof this.#v.add !== "function") {
+              const P = "cannot ignore child matches, ignore lacks add() method.";
+              throw new Error(P);
+            }
           }
           this.maxDepth = oe.maxDepth || Infinity;
           if (oe.signal) {
@@ -53187,13 +52677,21 @@
             P = oe;
           }
           const ie = P.isUnknown() || this.opts.stat;
-          return this.matchCheckTest(ie ? await P.lstat() : P, q);
+          const Ge = ie ? await P.lstat() : P;
+          if (this.opts.follow && this.opts.nodir && Ge?.isSymbolicLink()) {
+            const P = await Ge.realpath();
+            if (P && (P.isUnknown() || this.opts.stat)) {
+              await P.lstat();
+            }
+          }
+          return this.matchCheckTest(Ge, q);
         }
         matchCheckTest(P, q) {
           return P &&
             (this.maxDepth === Infinity || P.depth() <= this.maxDepth) &&
             (!q || P.canReaddir()) &&
             (!this.opts.nodir || !P.isDirectory()) &&
+            (!this.opts.nodir || !this.opts.follow || !P.isSymbolicLink() || !P.realpathCached()?.isDirectory()) &&
             !this.#S(P)
             ? P
             : undefined;
@@ -53207,21 +52705,33 @@
             P = oe;
           }
           const ie = P.isUnknown() || this.opts.stat;
-          return this.matchCheckTest(ie ? P.lstatSync() : P, q);
+          const Ge = ie ? P.lstatSync() : P;
+          if (this.opts.follow && this.opts.nodir && Ge?.isSymbolicLink()) {
+            const P = Ge.realpathSync();
+            if (P && (P?.isUnknown() || this.opts.stat)) {
+              P.lstatSync();
+            }
+          }
+          return this.matchCheckTest(Ge, q);
         }
         matchFinish(P, q) {
           if (this.#S(P)) return;
+          if (!this.includeChildMatches && this.#v?.add) {
+            const q = `${P.relativePosix()}/**`;
+            this.#v.add(q);
+          }
           const oe = this.opts.absolute === undefined ? q : this.opts.absolute;
           this.seen.add(P);
           const ie = this.opts.mark && P.isDirectory() ? this.#T : "";
           if (this.opts.withFileTypes) {
             this.matchEmit(P);
           } else if (oe) {
-            this.matchEmit(P.fullpath() + ie);
+            const q = this.opts.posix ? P.fullpathPosix() : P.fullpath();
+            this.matchEmit(q + ie);
           } else {
-            const q = P.relative();
+            const q = this.opts.posix ? P.relativePosix() : P.relative();
             const oe = this.opts.dotRelative && !q.startsWith(".." + this.#T) ? "." + this.#T : "";
-            this.matchEmit(!q && ie ? "." + ie : oe + q + ie);
+            this.matchEmit(!q ? "." + ie : oe + q + ie);
           }
         }
         async match(P, q, oe) {
@@ -53234,7 +52744,7 @@
         }
         walkCB(P, q, oe) {
           if (this.signal?.aborted) oe();
-          this.walkCB2(P, q, new Ot.Processor(this.opts), oe);
+          this.walkCB2(P, q, new st.Processor(this.opts), oe);
         }
         walkCB2(P, q, oe, ie) {
           if (this.#R(P)) return ie();
@@ -53285,7 +52795,7 @@
         }
         walkCBSync(P, q, oe) {
           if (this.signal?.aborted) oe();
-          this.walkCB2Sync(P, q, new Ot.Processor(this.opts), oe);
+          this.walkCB2Sync(P, q, new st.Processor(this.opts), oe);
         }
         walkCB2Sync(P, q, oe, ie) {
           if (this.#R(P)) return ie();
@@ -53332,10 +52842,9 @@
       }
       q.GlobUtil = GlobUtil;
       class GlobWalker extends GlobUtil {
-        matches;
+        matches = new Set();
         constructor(P, q, oe) {
           super(P, q, oe);
-          this.matches = new Set();
         }
         matchEmit(P) {
           this.matches.add(P);
@@ -53372,7 +52881,7 @@
         results;
         constructor(P, q, oe) {
           super(P, q, oe);
-          this.results = new Ge.default({ signal: this.signal, objectMode: true });
+          this.results = new ie.Minipass({ signal: this.signal, objectMode: true });
           this.results.on("drain", () => this.resume());
           this.results.on("resume", () => this.resume());
         }
@@ -53401,7 +52910,7 @@
       }
       q.GlobStream = GlobStream;
     },
-    68113: (P, q) => {
+    8895: (P, q) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.assertValidPattern = void 0;
@@ -53416,15 +52925,15 @@
       };
       q.assertValidPattern = assertValidPattern;
     },
-    13811: (P, q, oe) => {
+    20857: (P, q, oe) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.AST = void 0;
-      const ie = oe(24410);
-      const Ge = oe(731);
+      const ie = oe(65192);
+      const Ge = oe(9829);
       const st = new Set(["!", "?", "+", "*", "@"]);
       const isExtglobType = (P) => st.has(P);
-      const Ot = "(?!\\.\\.?(?:$|/))";
+      const Ot = "(?!(?:^|/)\\.\\.?(?:$|/))";
       const Wt = "(?!\\.)";
       const Ar = new Set(["[", "."]);
       const Er = new Set(["..", "."]);
@@ -53666,65 +53175,90 @@
           const Ot = (this.#L.nocase ? "i" : "") + (Ge ? "u" : "");
           return Object.assign(new RegExp(`^${q}$`, Ot), { _src: q, _glob: P });
         }
-        toRegExpSource() {
+        get options() {
+          return this.#L;
+        }
+        toRegExpSource(P) {
+          const q = P ?? !!this.#L.dot;
           if (this.#F === this) this.#j();
           if (!this.type) {
-            const P = this.isStart() && this.isEnd();
-            const q = this.#O
+            const oe = this.isStart() && this.isEnd();
+            const ie = this.#O
               .map((q) => {
-                const [oe, ie, Ge, st] = typeof q === "string" ? AST.#H(q, this.#D, P) : q.toRegExpSource();
-                this.#D = this.#D || Ge;
-                this.#k = this.#k || st;
-                return oe;
+                const [ie, Ge, st, Ot] = typeof q === "string" ? AST.#H(q, this.#D, oe) : q.toRegExpSource(P);
+                this.#D = this.#D || st;
+                this.#k = this.#k || Ot;
+                return ie;
               })
               .join("");
-            let oe = "";
+            let st = "";
             if (this.isStart()) {
               if (typeof this.#O[0] === "string") {
-                const P = this.#O.length === 1 && Er.has(this.#O[0]);
-                if (!P) {
-                  const P = Ar;
-                  const ie =
-                    (this.#L.dot && P.has(q.charAt(0))) || (q.startsWith("\\.") && P.has(q.charAt(2))) || (q.startsWith("\\.\\.") && P.has(q.charAt(4)));
-                  const Ge = !this.#L.dot && P.has(q.charAt(0));
-                  oe = ie ? Ot : Ge ? Wt : "";
+                const oe = this.#O.length === 1 && Er.has(this.#O[0]);
+                if (!oe) {
+                  const oe = Ar;
+                  const Ge = (q && oe.has(ie.charAt(0))) || (ie.startsWith("\\.") && oe.has(ie.charAt(2))) || (ie.startsWith("\\.\\.") && oe.has(ie.charAt(4)));
+                  const Er = !q && !P && oe.has(ie.charAt(0));
+                  st = Ge ? Ot : Er ? Wt : "";
                 }
               }
             }
-            let ie = "";
+            let Ir = "";
             if (this.isEnd() && this.#F.#U && this.#P?.type === "!") {
-              ie = "(?:$|\\/)";
+              Ir = "(?:$|\\/)";
             }
-            const st = oe + q + ie;
-            return [st, (0, Ge.unescape)(q), (this.#D = !!this.#D), this.#k];
+            const Br = st + ie + Ir;
+            return [Br, (0, Ge.unescape)(ie), (this.#D = !!this.#D), this.#k];
           }
-          const P = this.type === "!" ? "(?:(?!(?:" : "(?:";
-          const q = this.#O
-            .map((P) => {
-              if (typeof P === "string") {
-                throw new Error("string type in extglob ast??");
-              }
-              const [q, oe, ie, Ge] = P.toRegExpSource();
-              this.#k = this.#k || Ge;
-              return q;
-            })
-            .filter((P) => !(this.isStart() && this.isEnd()) || !!P)
-            .join("|");
-          if (this.isStart() && this.isEnd() && !q && this.type !== "!") {
+          const oe = this.type === "*" || this.type === "+";
+          const ie = this.type === "!" ? "(?:(?!(?:" : "(?:";
+          let st = this.#q(q);
+          if (this.isStart() && this.isEnd() && !st && this.type !== "!") {
             const P = this.toString();
             this.#O = [P];
             this.type = null;
             this.#D = undefined;
             return [P, (0, Ge.unescape)(this.toString()), false, false];
           }
-          let oe = "";
-          if (this.type === "!" && this.#G) {
-            oe = (this.isStart() && !this.#L.dot ? Wt : "") + Fr;
-          } else {
-            const ie = this.type === "!" ? "))" + (this.isStart() && !this.#L.dot ? Wt : "") + Qr + ")" : this.type === "@" ? ")" : `)${this.type}`;
-            oe = P + q + ie;
+          let Ir = !oe || P || q || !Wt ? "" : this.#q(true);
+          if (Ir === st) {
+            Ir = "";
           }
-          return [oe, (0, Ge.unescape)(q), (this.#D = !!this.#D), this.#k];
+          if (Ir) {
+            st = `(?:${st})(?:${Ir})*?`;
+          }
+          let Br = "";
+          if (this.type === "!" && this.#G) {
+            Br = (this.isStart() && !q ? Wt : "") + Fr;
+          } else {
+            const oe =
+              this.type === "!"
+                ? "))" + (this.isStart() && !q && !P ? Wt : "") + Qr + ")"
+                : this.type === "@"
+                  ? ")"
+                  : this.type === "?"
+                    ? ")?"
+                    : this.type === "+" && Ir
+                      ? ")"
+                      : this.type === "*" && Ir
+                        ? `)?`
+                        : `)${this.type}`;
+            Br = ie + st + oe;
+          }
+          return [Br, (0, Ge.unescape)(st), (this.#D = !!this.#D), this.#k];
+        }
+        #q(P) {
+          return this.#O
+            .map((q) => {
+              if (typeof q === "string") {
+                throw new Error("string type in extglob ast??");
+              }
+              const [oe, ie, Ge, st] = q.toRegExpSource(P);
+              this.#k = this.#k || st;
+              return oe;
+            })
+            .filter((P) => !(this.isStart() && this.isEnd()) || !!P)
+            .join("|");
         }
         static #H(P, q, oe = false) {
           let st = false;
@@ -53773,7 +53307,7 @@
       }
       q.AST = AST;
     },
-    24410: (P, q) => {
+    65192: (P, q) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.parseClass = void 0;
@@ -53884,24 +53418,14 @@
       };
       q.parseClass = parseClass;
     },
-    84088: (P, q) => {
+    76726: (P, q) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.escape = void 0;
       const escape = (P, { windowsPathsNoEscape: q = false } = {}) => (q ? P.replace(/[?*()[\]]/g, "[$&]") : P.replace(/[?*()[\]\\]/g, "\\$&"));
       q.escape = escape;
     },
-    90364: function (P, q, oe) {
-      "use strict";
-      var ie =
-        (this && this.__importDefault) ||
-        function (P) {
-          return P && P.__esModule ? P : { default: P };
-        };
-      const Ge = ie(oe(81811));
-      P.exports = Object.assign(Ge.default, { default: Ge.default, minimatch: Ge.default });
-    },
-    81811: function (P, q, oe) {
+    91409: function (P, q, oe) {
       "use strict";
       var ie =
         (this && this.__importDefault) ||
@@ -53911,10 +53435,10 @@
       Object.defineProperty(q, "__esModule", { value: true });
       q.unescape = q.escape = q.AST = q.Minimatch = q.match = q.makeRe = q.braceExpand = q.defaults = q.filter = q.GLOBSTAR = q.sep = q.minimatch = void 0;
       const Ge = ie(oe(61765));
-      const st = oe(68113);
-      const Ot = oe(13811);
-      const Wt = oe(84088);
-      const Ar = oe(731);
+      const st = oe(8895);
+      const Ot = oe(20857);
+      const Wt = oe(76726);
+      const Ar = oe(9829);
       const minimatch = (P, q, oe = {}) => {
         (0, st.assertValidPattern)(q);
         if (!oe.nocomment && q.charAt(0) === "#") {
@@ -53923,7 +53447,6 @@
         return new Minimatch(q, oe).match(P);
       };
       q.minimatch = minimatch;
-      q["default"] = q.minimatch;
       const Er = /^\*+([^+@!?\*\[\(]*)$/;
       const starDotExtTest = (P) => (q) => !q.startsWith(".") && q.endsWith(P);
       const starDotExtTestDot = (P) => (q) => q.endsWith(P);
@@ -54303,9 +53826,11 @@
           for (let q = 0; q < P.length - 1; q++) {
             for (let oe = q + 1; oe < P.length; oe++) {
               const ie = this.partsMatch(P[q], P[oe], !this.preserveMultipleSlashes);
-              if (!ie) continue;
-              P[q] = ie;
-              P[oe] = [];
+              if (ie) {
+                P[q] = [];
+                P[oe] = ie;
+                break;
+              }
             }
           }
           return P.filter((P) => P.length);
@@ -54359,26 +53884,21 @@
         matchOne(P, oe, ie = false) {
           const Ge = this.options;
           if (this.isWindows) {
-            const q = P[0] === "" && P[1] === "" && P[2] === "?" && typeof P[3] === "string" && /^[a-z]:$/i.test(P[3]);
-            const ie = oe[0] === "" && oe[1] === "" && oe[2] === "?" && typeof oe[3] === "string" && /^[a-z]:$/i.test(oe[3]);
-            if (q && ie) {
-              const q = P[3];
-              const ie = oe[3];
+            const q = typeof P[0] === "string" && /^[a-z]:$/i.test(P[0]);
+            const ie = !q && P[0] === "" && P[1] === "" && P[2] === "?" && /^[a-z]:$/i.test(P[3]);
+            const Ge = typeof oe[0] === "string" && /^[a-z]:$/i.test(oe[0]);
+            const st = !Ge && oe[0] === "" && oe[1] === "" && oe[2] === "?" && typeof oe[3] === "string" && /^[a-z]:$/i.test(oe[3]);
+            const Ot = ie ? 3 : q ? 0 : undefined;
+            const Wt = st ? 3 : Ge ? 0 : undefined;
+            if (typeof Ot === "number" && typeof Wt === "number") {
+              const [q, ie] = [P[Ot], oe[Wt]];
               if (q.toLowerCase() === ie.toLowerCase()) {
-                P[3] = ie;
-              }
-            } else if (ie && typeof P[0] === "string") {
-              const q = oe[3];
-              const ie = P[0];
-              if (q.toLowerCase() === ie.toLowerCase()) {
-                oe[3] = ie;
-                oe = oe.slice(3);
-              }
-            } else if (q && typeof oe[0] === "string") {
-              const q = P[3];
-              if (q.toLowerCase() === oe[0].toLowerCase()) {
-                oe[0] = q;
-                P = P.slice(3);
+                oe[Wt] = q;
+                if (Wt > Ot) {
+                  oe = oe.slice(Wt);
+                } else if (Ot > Wt) {
+                  P = P.slice(Ot);
+                }
               }
             }
           }
@@ -54472,7 +53992,10 @@
             Ge = dotStarTest;
           }
           const Wt = Ot.AST.fromGlob(P, this.options).toMMPattern();
-          return Ge ? Object.assign(Wt, { test: Ge }) : Wt;
+          if (Ge && typeof Wt === "object") {
+            Reflect.defineProperty(Wt, "test", { value: Ge });
+          }
+          return Wt;
         }
         makeRe() {
           if (this.regexp || this.regexp === false) return this.regexp;
@@ -54580,21 +54103,21 @@
         }
       }
       q.Minimatch = Minimatch;
-      var Gr = oe(13811);
+      var Gr = oe(20857);
       Object.defineProperty(q, "AST", {
         enumerable: true,
         get: function () {
           return Gr.AST;
         },
       });
-      var jr = oe(84088);
+      var jr = oe(76726);
       Object.defineProperty(q, "escape", {
         enumerable: true,
         get: function () {
           return jr.escape;
         },
       });
-      var Vr = oe(731);
+      var Vr = oe(9829);
       Object.defineProperty(q, "unescape", {
         enumerable: true,
         get: function () {
@@ -54606,7 +54129,7 @@
       q.minimatch.escape = Wt.escape;
       q.minimatch.unescape = Ar.unescape;
     },
-    731: (P, q) => {
+    9829: (P, q) => {
       "use strict";
       Object.defineProperty(q, "__esModule", { value: true });
       q.unescape = void 0;
@@ -54693,17 +54216,17 @@
       class Stack {
         heap;
         length;
-        static #q = false;
+        static #Y = false;
         static create(P) {
           const q = getUintArray(P);
           if (!q) return [];
-          Stack.#q = true;
+          Stack.#Y = true;
           const oe = new Stack(P, q);
-          Stack.#q = false;
+          Stack.#Y = false;
           return oe;
         }
         constructor(P, q) {
-          if (!Stack.#q) {
+          if (!Stack.#Y) {
             throw new TypeError("instantiate Stack using Stack.create(n)");
           }
           this.heap = new q(P);
@@ -54717,12 +54240,12 @@
         }
       }
       class LRUCache {
-        #Y;
         #W;
         #J;
         #$;
         #K;
         #z;
+        #Z;
         ttl;
         ttlResolution;
         ttlAutopurge;
@@ -54738,7 +54261,6 @@
         allowStaleOnFetchAbort;
         allowStaleOnFetchRejection;
         ignoreFetchAbort;
-        #Z;
         #X;
         #ee;
         #te;
@@ -54748,61 +54270,62 @@
         #oe;
         #ie;
         #ae;
-        #le;
         #Ae;
+        #le;
         #ce;
         #ue;
         #de;
         #pe;
         #fe;
+        #me;
         static unsafeExposeInternals(P) {
           return {
-            starts: P.#ce,
-            ttls: P.#ue,
-            sizes: P.#Ae,
-            keyMap: P.#ee,
-            keyList: P.#te,
-            valList: P.#re,
-            next: P.#se,
-            prev: P.#ne,
+            starts: P.#ue,
+            ttls: P.#de,
+            sizes: P.#ce,
+            keyMap: P.#te,
+            keyList: P.#re,
+            valList: P.#se,
+            next: P.#ne,
+            prev: P.#oe,
             get head() {
-              return P.#oe;
-            },
-            get tail() {
               return P.#ie;
             },
-            free: P.#ae,
-            isBackgroundFetch: (q) => P.#me(q),
-            backgroundFetch: (q, oe, ie, Ge) => P.#he(q, oe, ie, Ge),
-            moveToTail: (q) => P.#ge(q),
-            indexes: (q) => P.#Ee(q),
-            rindexes: (q) => P.#ye(q),
-            isStale: (q) => P.#Ie(q),
+            get tail() {
+              return P.#ae;
+            },
+            free: P.#Ae,
+            isBackgroundFetch: (q) => P.#he(q),
+            backgroundFetch: (q, oe, ie, Ge) => P.#ge(q, oe, ie, Ge),
+            moveToTail: (q) => P.#Ee(q),
+            indexes: (q) => P.#ye(q),
+            rindexes: (q) => P.#Ie(q),
+            isStale: (q) => P.#Ce(q),
           };
         }
         get max() {
-          return this.#Y;
-        }
-        get maxSize() {
           return this.#W;
         }
-        get calculatedSize() {
-          return this.#X;
-        }
-        get size() {
-          return this.#Z;
-        }
-        get fetchMethod() {
-          return this.#K;
-        }
-        get memoMethod() {
-          return this.#z;
-        }
-        get dispose() {
+        get maxSize() {
           return this.#J;
         }
-        get disposeAfter() {
+        get calculatedSize() {
+          return this.#ee;
+        }
+        get size() {
+          return this.#X;
+        }
+        get fetchMethod() {
+          return this.#z;
+        }
+        get memoMethod() {
+          return this.#Z;
+        }
+        get dispose() {
           return this.#$;
+        }
+        get disposeAfter() {
+          return this.#K;
         }
         constructor(P) {
           const {
@@ -54835,12 +54358,12 @@
           if (!Vr) {
             throw new Error("invalid max value: " + q);
           }
-          this.#Y = q;
-          this.#W = Fr;
-          this.maxEntrySize = Dr || this.#W;
+          this.#W = q;
+          this.#J = Fr;
+          this.maxEntrySize = Dr || this.#J;
           this.sizeCalculation = kr;
           if (this.sizeCalculation) {
-            if (!this.#W && !this.maxEntrySize) {
+            if (!this.#J && !this.maxEntrySize) {
               throw new TypeError("cannot set sizeCalculation without setting maxSize or maxEntrySize");
             }
             if (typeof this.sizeCalculation !== "function") {
@@ -54850,34 +54373,34 @@
           if (Mr !== undefined && typeof Mr !== "function") {
             throw new TypeError("memoMethod must be a function if defined");
           }
-          this.#z = Mr;
+          this.#Z = Mr;
           if (Nr !== undefined && typeof Nr !== "function") {
             throw new TypeError("fetchMethod must be a function if specified");
           }
-          this.#K = Nr;
-          this.#pe = !!Nr;
-          this.#ee = new Map();
-          this.#te = new Array(q).fill(undefined);
+          this.#z = Nr;
+          this.#fe = !!Nr;
+          this.#te = new Map();
           this.#re = new Array(q).fill(undefined);
-          this.#se = new Vr(q);
+          this.#se = new Array(q).fill(undefined);
           this.#ne = new Vr(q);
-          this.#oe = 0;
+          this.#oe = new Vr(q);
           this.#ie = 0;
-          this.#ae = Stack.create(q);
-          this.#Z = 0;
+          this.#ae = 0;
+          this.#Ae = Stack.create(q);
           this.#X = 0;
+          this.#ee = 0;
           if (typeof Er === "function") {
-            this.#J = Er;
+            this.#$ = Er;
           }
           if (typeof Ir === "function") {
-            this.#$ = Ir;
+            this.#K = Ir;
             this.#le = [];
           } else {
-            this.#$ = undefined;
+            this.#K = undefined;
             this.#le = undefined;
           }
-          this.#de = !!this.#J;
-          this.#fe = !!this.#$;
+          this.#pe = !!this.#$;
+          this.#me = !!this.#K;
           this.noDisposeOnSet = !!Br;
           this.noUpdateTTL = !!Qr;
           this.noDeleteOnFetchRejection = !!Ur;
@@ -54885,15 +54408,15 @@
           this.allowStaleOnFetchAbort = !!Gr;
           this.ignoreFetchAbort = !!jr;
           if (this.maxEntrySize !== 0) {
-            if (this.#W !== 0) {
-              if (!isPosInt(this.#W)) {
+            if (this.#J !== 0) {
+              if (!isPosInt(this.#J)) {
                 throw new TypeError("maxSize must be a positive integer if specified");
               }
             }
             if (!isPosInt(this.maxEntrySize)) {
               throw new TypeError("maxEntrySize must be a positive integer if specified");
             }
-            this.#Ce();
+            this.#_e();
           }
           this.allowStale = !!Ar;
           this.noDeleteOnStaleGet = !!Lr;
@@ -54906,12 +54429,12 @@
             if (!isPosInt(this.ttl)) {
               throw new TypeError("ttl must be a positive integer if specified");
             }
-            this.#_e();
+            this.#be();
           }
-          if (this.#Y === 0 && this.ttl === 0 && this.#W === 0) {
+          if (this.#W === 0 && this.ttl === 0 && this.#J === 0) {
             throw new TypeError("At least one of max, maxSize, or ttl is required");
           }
-          if (!this.ttlAutopurge && !this.#Y && !this.#W) {
+          if (!this.ttlAutopurge && !this.#W && !this.#J) {
             const P = "LRU_CACHE_UNBOUNDED";
             if (shouldWarn(P)) {
               ie.add(P);
@@ -54921,20 +54444,20 @@
           }
         }
         getRemainingTTL(P) {
-          return this.#ee.has(P) ? Infinity : 0;
+          return this.#te.has(P) ? Infinity : 0;
         }
-        #_e() {
-          const P = new ZeroArray(this.#Y);
-          const q = new ZeroArray(this.#Y);
-          this.#ue = P;
-          this.#ce = q;
-          this.#be = (ie, Ge, st = oe.now()) => {
+        #be() {
+          const P = new ZeroArray(this.#W);
+          const q = new ZeroArray(this.#W);
+          this.#de = P;
+          this.#ue = q;
+          this.#we = (ie, Ge, st = oe.now()) => {
             q[ie] = Ge !== 0 ? st : 0;
             P[ie] = Ge;
             if (Ge !== 0 && this.ttlAutopurge) {
               const P = setTimeout(() => {
-                if (this.#Ie(ie)) {
-                  this.#we(this.#te[ie], "expire");
+                if (this.#Ce(ie)) {
+                  this.#Be(this.#re[ie], "expire");
                 }
               }, Ge + 1);
               if (P.unref) {
@@ -54942,10 +54465,10 @@
               }
             }
           };
-          this.#Be = (ie) => {
+          this.#Qe = (ie) => {
             q[ie] = P[ie] !== 0 ? oe.now() : 0;
           };
-          this.#Qe = (oe, Ge) => {
+          this.#ve = (oe, Ge) => {
             if (P[Ge]) {
               const st = P[Ge];
               const Ot = q[Ge];
@@ -54970,7 +54493,7 @@
             return P;
           };
           this.getRemainingTTL = (oe) => {
-            const Ge = this.#ee.get(oe);
+            const Ge = this.#te.get(oe);
             if (Ge === undefined) {
               return 0;
             }
@@ -54982,26 +54505,26 @@
             const Wt = (ie || getNow()) - Ot;
             return st - Wt;
           };
-          this.#Ie = (oe) => {
+          this.#Ce = (oe) => {
             const Ge = q[oe];
             const st = P[oe];
             return !!st && !!Ge && (ie || getNow()) - Ge > st;
           };
         }
-        #Be = () => {};
         #Qe = () => {};
-        #be = () => {};
-        #Ie = () => false;
-        #Ce() {
-          const P = new ZeroArray(this.#Y);
-          this.#X = 0;
-          this.#Ae = P;
-          this.#ve = (q) => {
-            this.#X -= P[q];
+        #ve = () => {};
+        #we = () => {};
+        #Ce = () => false;
+        #_e() {
+          const P = new ZeroArray(this.#W);
+          this.#ee = 0;
+          this.#ce = P;
+          this.#Te = (q) => {
+            this.#ee -= P[q];
             P[q] = 0;
           };
-          this.#Te = (P, q, oe, ie) => {
-            if (this.#me(q)) {
+          this.#Se = (P, q, oe, ie) => {
+            if (this.#he(q)) {
               return 0;
             }
             if (!isPosInt(oe)) {
@@ -55021,39 +54544,56 @@
             }
             return oe;
           };
-          this.#Se = (q, oe, ie) => {
+          this.#Re = (q, oe, ie) => {
             P[q] = oe;
-            if (this.#W) {
-              const oe = this.#W - P[q];
-              while (this.#X > oe) {
-                this.#Re(true);
+            if (this.#J) {
+              const oe = this.#J - P[q];
+              while (this.#ee > oe) {
+                this.#Fe(true);
               }
             }
-            this.#X += P[q];
+            this.#ee += P[q];
             if (ie) {
               ie.entrySize = oe;
-              ie.totalCalculatedSize = this.#X;
+              ie.totalCalculatedSize = this.#ee;
             }
           };
         }
-        #ve = (P) => {};
-        #Se = (P, q, oe) => {};
-        #Te = (P, q, oe, ie) => {
+        #Te = (P) => {};
+        #Re = (P, q, oe) => {};
+        #Se = (P, q, oe, ie) => {
           if (oe || ie) {
             throw new TypeError("cannot set size without setting maxSize or maxEntrySize on cache");
           }
           return 0;
         };
-        *#Ee({ allowStale: P = this.allowStale } = {}) {
-          if (this.#Z) {
-            for (let q = this.#ie; true; ) {
-              if (!this.#Fe(q)) {
+        *#ye({ allowStale: P = this.allowStale } = {}) {
+          if (this.#X) {
+            for (let q = this.#ae; true; ) {
+              if (!this.#De(q)) {
                 break;
               }
-              if (P || !this.#Ie(q)) {
+              if (P || !this.#Ce(q)) {
                 yield q;
               }
-              if (q === this.#oe) {
+              if (q === this.#ie) {
+                break;
+              } else {
+                q = this.#oe[q];
+              }
+            }
+          }
+        }
+        *#Ie({ allowStale: P = this.allowStale } = {}) {
+          if (this.#X) {
+            for (let q = this.#ie; true; ) {
+              if (!this.#De(q)) {
+                break;
+              }
+              if (P || !this.#Ce(q)) {
+                yield q;
+              }
+              if (q === this.#ae) {
                 break;
               } else {
                 q = this.#ne[q];
@@ -55061,69 +54601,52 @@
             }
           }
         }
-        *#ye({ allowStale: P = this.allowStale } = {}) {
-          if (this.#Z) {
-            for (let q = this.#oe; true; ) {
-              if (!this.#Fe(q)) {
-                break;
-              }
-              if (P || !this.#Ie(q)) {
-                yield q;
-              }
-              if (q === this.#ie) {
-                break;
-              } else {
-                q = this.#se[q];
-              }
-            }
-          }
-        }
-        #Fe(P) {
-          return P !== undefined && this.#ee.get(this.#te[P]) === P;
+        #De(P) {
+          return P !== undefined && this.#te.get(this.#re[P]) === P;
         }
         *entries() {
-          for (const P of this.#Ee()) {
-            if (this.#re[P] !== undefined && this.#te[P] !== undefined && !this.#me(this.#re[P])) {
-              yield [this.#te[P], this.#re[P]];
+          for (const P of this.#ye()) {
+            if (this.#se[P] !== undefined && this.#re[P] !== undefined && !this.#he(this.#se[P])) {
+              yield [this.#re[P], this.#se[P]];
             }
           }
         }
         *rentries() {
-          for (const P of this.#ye()) {
-            if (this.#re[P] !== undefined && this.#te[P] !== undefined && !this.#me(this.#re[P])) {
-              yield [this.#te[P], this.#re[P]];
+          for (const P of this.#Ie()) {
+            if (this.#se[P] !== undefined && this.#re[P] !== undefined && !this.#he(this.#se[P])) {
+              yield [this.#re[P], this.#se[P]];
             }
           }
         }
         *keys() {
-          for (const P of this.#Ee()) {
-            const q = this.#te[P];
-            if (q !== undefined && !this.#me(this.#re[P])) {
+          for (const P of this.#ye()) {
+            const q = this.#re[P];
+            if (q !== undefined && !this.#he(this.#se[P])) {
               yield q;
             }
           }
         }
         *rkeys() {
-          for (const P of this.#ye()) {
-            const q = this.#te[P];
-            if (q !== undefined && !this.#me(this.#re[P])) {
+          for (const P of this.#Ie()) {
+            const q = this.#re[P];
+            if (q !== undefined && !this.#he(this.#se[P])) {
               yield q;
             }
           }
         }
         *values() {
-          for (const P of this.#Ee()) {
-            const q = this.#re[P];
-            if (q !== undefined && !this.#me(this.#re[P])) {
-              yield this.#re[P];
+          for (const P of this.#ye()) {
+            const q = this.#se[P];
+            if (q !== undefined && !this.#he(this.#se[P])) {
+              yield this.#se[P];
             }
           }
         }
         *rvalues() {
-          for (const P of this.#ye()) {
-            const q = this.#re[P];
-            if (q !== undefined && !this.#me(this.#re[P])) {
-              yield this.#re[P];
+          for (const P of this.#Ie()) {
+            const q = this.#se[P];
+            if (q !== undefined && !this.#he(this.#se[P])) {
+              yield this.#se[P];
             }
           }
         }
@@ -55132,77 +54655,77 @@
         }
         [Symbol.toStringTag] = "LRUCache";
         find(P, q = {}) {
-          for (const oe of this.#Ee()) {
-            const ie = this.#re[oe];
-            const Ge = this.#me(ie) ? ie.__staleWhileFetching : ie;
+          for (const oe of this.#ye()) {
+            const ie = this.#se[oe];
+            const Ge = this.#he(ie) ? ie.__staleWhileFetching : ie;
             if (Ge === undefined) continue;
-            if (P(Ge, this.#te[oe], this)) {
-              return this.get(this.#te[oe], q);
+            if (P(Ge, this.#re[oe], this)) {
+              return this.get(this.#re[oe], q);
             }
           }
         }
         forEach(P, q = this) {
-          for (const oe of this.#Ee()) {
-            const ie = this.#re[oe];
-            const Ge = this.#me(ie) ? ie.__staleWhileFetching : ie;
+          for (const oe of this.#ye()) {
+            const ie = this.#se[oe];
+            const Ge = this.#he(ie) ? ie.__staleWhileFetching : ie;
             if (Ge === undefined) continue;
-            P.call(q, Ge, this.#te[oe], this);
+            P.call(q, Ge, this.#re[oe], this);
           }
         }
         rforEach(P, q = this) {
-          for (const oe of this.#ye()) {
-            const ie = this.#re[oe];
-            const Ge = this.#me(ie) ? ie.__staleWhileFetching : ie;
+          for (const oe of this.#Ie()) {
+            const ie = this.#se[oe];
+            const Ge = this.#he(ie) ? ie.__staleWhileFetching : ie;
             if (Ge === undefined) continue;
-            P.call(q, Ge, this.#te[oe], this);
+            P.call(q, Ge, this.#re[oe], this);
           }
         }
         purgeStale() {
           let P = false;
-          for (const q of this.#ye({ allowStale: true })) {
-            if (this.#Ie(q)) {
-              this.#we(this.#te[q], "expire");
+          for (const q of this.#Ie({ allowStale: true })) {
+            if (this.#Ce(q)) {
+              this.#Be(this.#re[q], "expire");
               P = true;
             }
           }
           return P;
         }
         info(P) {
-          const q = this.#ee.get(P);
+          const q = this.#te.get(P);
           if (q === undefined) return undefined;
-          const ie = this.#re[q];
-          const Ge = this.#me(ie) ? ie.__staleWhileFetching : ie;
+          const ie = this.#se[q];
+          const Ge = this.#he(ie) ? ie.__staleWhileFetching : ie;
           if (Ge === undefined) return undefined;
           const st = { value: Ge };
-          if (this.#ue && this.#ce) {
-            const P = this.#ue[q];
-            const ie = this.#ce[q];
+          if (this.#de && this.#ue) {
+            const P = this.#de[q];
+            const ie = this.#ue[q];
             if (P && ie) {
               const q = P - (oe.now() - ie);
               st.ttl = q;
               st.start = Date.now();
             }
           }
-          if (this.#Ae) {
-            st.size = this.#Ae[q];
+          if (this.#ce) {
+            st.size = this.#ce[q];
           }
           return st;
         }
         dump() {
           const P = [];
-          for (const q of this.#Ee({ allowStale: true })) {
-            const ie = this.#te[q];
-            const Ge = this.#re[q];
-            const st = this.#me(Ge) ? Ge.__staleWhileFetching : Ge;
+          for (const q of this.#ye({ allowStale: true })) {
+            const ie = this.#re[q];
+            const Ge = this.#se[q];
+            const st = this.#he(Ge) ? Ge.__staleWhileFetching : Ge;
             if (st === undefined || ie === undefined) continue;
             const Ot = { value: st };
-            if (this.#ue && this.#ce) {
-              Ot.ttl = this.#ue[q];
-              const P = oe.now() - this.#ce[q];
+            if (this.#de && this.#ue) {
+              Ot.ttl = this.#de[q];
+              const P = oe.now() - this.#ue[q];
               Ot.start = Math.floor(Date.now() - P);
             }
-            if (this.#Ae) {
-              Ot.size = this.#Ae[q];
+            if (this.#ce) {
+              Ot.size = this.#ce[q];
             }
             P.unshift([ie, Ot]);
           }
@@ -55225,87 +54748,87 @@
           }
           const { ttl: ie = this.ttl, start: Ge, noDisposeOnSet: st = this.noDisposeOnSet, sizeCalculation: Ot = this.sizeCalculation, status: Wt } = oe;
           let { noUpdateTTL: Ar = this.noUpdateTTL } = oe;
-          const Er = this.#Te(P, q, oe.size || 0, Ot);
+          const Er = this.#Se(P, q, oe.size || 0, Ot);
           if (this.maxEntrySize && Er > this.maxEntrySize) {
             if (Wt) {
               Wt.set = "miss";
               Wt.maxEntrySizeExceeded = true;
             }
-            this.#we(P, "set");
+            this.#Be(P, "set");
             return this;
           }
-          let Ir = this.#Z === 0 ? undefined : this.#ee.get(P);
+          let Ir = this.#X === 0 ? undefined : this.#te.get(P);
           if (Ir === undefined) {
-            Ir = this.#Z === 0 ? this.#ie : this.#ae.length !== 0 ? this.#ae.pop() : this.#Z === this.#Y ? this.#Re(false) : this.#Z;
-            this.#te[Ir] = P;
-            this.#re[Ir] = q;
-            this.#ee.set(P, Ir);
-            this.#se[this.#ie] = Ir;
-            this.#ne[Ir] = this.#ie;
-            this.#ie = Ir;
-            this.#Z++;
-            this.#Se(Ir, Er, Wt);
+            Ir = this.#X === 0 ? this.#ae : this.#Ae.length !== 0 ? this.#Ae.pop() : this.#X === this.#W ? this.#Fe(false) : this.#X;
+            this.#re[Ir] = P;
+            this.#se[Ir] = q;
+            this.#te.set(P, Ir);
+            this.#ne[this.#ae] = Ir;
+            this.#oe[Ir] = this.#ae;
+            this.#ae = Ir;
+            this.#X++;
+            this.#Re(Ir, Er, Wt);
             if (Wt) Wt.set = "add";
             Ar = false;
           } else {
-            this.#ge(Ir);
-            const oe = this.#re[Ir];
+            this.#Ee(Ir);
+            const oe = this.#se[Ir];
             if (q !== oe) {
-              if (this.#pe && this.#me(oe)) {
+              if (this.#fe && this.#he(oe)) {
                 oe.__abortController.abort(new Error("replaced"));
                 const { __staleWhileFetching: q } = oe;
                 if (q !== undefined && !st) {
-                  if (this.#de) {
-                    this.#J?.(q, P, "set");
+                  if (this.#pe) {
+                    this.#$?.(q, P, "set");
                   }
-                  if (this.#fe) {
+                  if (this.#me) {
                     this.#le?.push([q, P, "set"]);
                   }
                 }
               } else if (!st) {
-                if (this.#de) {
-                  this.#J?.(oe, P, "set");
+                if (this.#pe) {
+                  this.#$?.(oe, P, "set");
                 }
-                if (this.#fe) {
+                if (this.#me) {
                   this.#le?.push([oe, P, "set"]);
                 }
               }
-              this.#ve(Ir);
-              this.#Se(Ir, Er, Wt);
-              this.#re[Ir] = q;
+              this.#Te(Ir);
+              this.#Re(Ir, Er, Wt);
+              this.#se[Ir] = q;
               if (Wt) {
                 Wt.set = "replace";
-                const P = oe && this.#me(oe) ? oe.__staleWhileFetching : oe;
+                const P = oe && this.#he(oe) ? oe.__staleWhileFetching : oe;
                 if (P !== undefined) Wt.oldValue = P;
               }
             } else if (Wt) {
               Wt.set = "update";
             }
           }
-          if (ie !== 0 && !this.#ue) {
-            this.#_e();
+          if (ie !== 0 && !this.#de) {
+            this.#be();
           }
-          if (this.#ue) {
+          if (this.#de) {
             if (!Ar) {
-              this.#be(Ir, ie, Ge);
+              this.#we(Ir, ie, Ge);
             }
-            if (Wt) this.#Qe(Wt, Ir);
+            if (Wt) this.#ve(Wt, Ir);
           }
-          if (!st && this.#fe && this.#le) {
+          if (!st && this.#me && this.#le) {
             const P = this.#le;
             let q;
             while ((q = P?.shift())) {
-              this.#$?.(...q);
+              this.#K?.(...q);
             }
           }
           return this;
         }
         pop() {
           try {
-            while (this.#Z) {
-              const P = this.#re[this.#oe];
-              this.#Re(true);
-              if (this.#me(P)) {
+            while (this.#X) {
+              const P = this.#se[this.#ie];
+              this.#Fe(true);
+              if (this.#he(P)) {
                 if (P.__staleWhileFetching) {
                   return P.__staleWhileFetching;
                 }
@@ -55314,65 +54837,65 @@
               }
             }
           } finally {
-            if (this.#fe && this.#le) {
+            if (this.#me && this.#le) {
               const P = this.#le;
               let q;
               while ((q = P?.shift())) {
-                this.#$?.(...q);
+                this.#K?.(...q);
               }
             }
           }
         }
-        #Re(P) {
-          const q = this.#oe;
-          const oe = this.#te[q];
-          const ie = this.#re[q];
-          if (this.#pe && this.#me(ie)) {
+        #Fe(P) {
+          const q = this.#ie;
+          const oe = this.#re[q];
+          const ie = this.#se[q];
+          if (this.#fe && this.#he(ie)) {
             ie.__abortController.abort(new Error("evicted"));
-          } else if (this.#de || this.#fe) {
-            if (this.#de) {
-              this.#J?.(ie, oe, "evict");
+          } else if (this.#pe || this.#me) {
+            if (this.#pe) {
+              this.#$?.(ie, oe, "evict");
             }
-            if (this.#fe) {
+            if (this.#me) {
               this.#le?.push([ie, oe, "evict"]);
             }
           }
-          this.#ve(q);
+          this.#Te(q);
           if (P) {
-            this.#te[q] = undefined;
             this.#re[q] = undefined;
-            this.#ae.push(q);
+            this.#se[q] = undefined;
+            this.#Ae.push(q);
           }
-          if (this.#Z === 1) {
-            this.#oe = this.#ie = 0;
-            this.#ae.length = 0;
+          if (this.#X === 1) {
+            this.#ie = this.#ae = 0;
+            this.#Ae.length = 0;
           } else {
-            this.#oe = this.#se[q];
+            this.#ie = this.#ne[q];
           }
-          this.#ee.delete(oe);
-          this.#Z--;
+          this.#te.delete(oe);
+          this.#X--;
           return q;
         }
         has(P, q = {}) {
           const { updateAgeOnHas: oe = this.updateAgeOnHas, status: ie } = q;
-          const Ge = this.#ee.get(P);
+          const Ge = this.#te.get(P);
           if (Ge !== undefined) {
-            const P = this.#re[Ge];
-            if (this.#me(P) && P.__staleWhileFetching === undefined) {
+            const P = this.#se[Ge];
+            if (this.#he(P) && P.__staleWhileFetching === undefined) {
               return false;
             }
-            if (!this.#Ie(Ge)) {
+            if (!this.#Ce(Ge)) {
               if (oe) {
-                this.#Be(Ge);
+                this.#Qe(Ge);
               }
               if (ie) {
                 ie.has = "hit";
-                this.#Qe(ie, Ge);
+                this.#ve(ie, Ge);
               }
               return true;
             } else if (ie) {
               ie.has = "stale";
-              this.#Qe(ie, Ge);
+              this.#ve(ie, Ge);
             }
           } else if (ie) {
             ie.has = "miss";
@@ -55381,16 +54904,16 @@
         }
         peek(P, q = {}) {
           const { allowStale: oe = this.allowStale } = q;
-          const ie = this.#ee.get(P);
-          if (ie === undefined || (!oe && this.#Ie(ie))) {
+          const ie = this.#te.get(P);
+          if (ie === undefined || (!oe && this.#Ce(ie))) {
             return;
           }
-          const Ge = this.#re[ie];
-          return this.#me(Ge) ? Ge.__staleWhileFetching : Ge;
+          const Ge = this.#se[ie];
+          return this.#he(Ge) ? Ge.__staleWhileFetching : Ge;
         }
-        #he(P, q, oe, ie) {
-          const Ge = q === undefined ? undefined : this.#re[q];
-          if (this.#me(Ge)) {
+        #ge(P, q, oe, ie) {
+          const Ge = q === undefined ? undefined : this.#se[q];
+          if (this.#he(Ge)) {
             return Ge;
           }
           const Ot = new st();
@@ -55413,12 +54936,12 @@
               return fetchFail(Ot.signal.reason);
             }
             const Ir = Er;
-            if (this.#re[q] === Er) {
+            if (this.#se[q] === Er) {
               if (ie === undefined) {
                 if (Ir.__staleWhileFetching) {
-                  this.#re[q] = Ir.__staleWhileFetching;
+                  this.#se[q] = Ir.__staleWhileFetching;
                 } else {
-                  this.#we(P, "fetch");
+                  this.#Be(P, "fetch");
                 }
               } else {
                 if (oe.status) oe.status.fetchUpdated = true;
@@ -55440,12 +54963,12 @@
             const Wt = st || oe.allowStaleOnFetchRejection;
             const Ar = Wt || oe.noDeleteOnFetchRejection;
             const Ir = Er;
-            if (this.#re[q] === Er) {
+            if (this.#se[q] === Er) {
               const oe = !Ar || Ir.__staleWhileFetching === undefined;
               if (oe) {
-                this.#we(P, "fetch");
+                this.#Be(P, "fetch");
               } else if (!st) {
-                this.#re[q] = Ir.__staleWhileFetching;
+                this.#se[q] = Ir.__staleWhileFetching;
               }
             }
             if (Wt) {
@@ -55458,7 +54981,7 @@
             }
           };
           const pcall = (q, ie) => {
-            const st = this.#K?.(P, Ge, Ar);
+            const st = this.#z?.(P, Ge, Ar);
             if (st && st instanceof Promise) {
               st.then((P) => q(P === undefined ? undefined : P), ie);
             }
@@ -55476,14 +54999,14 @@
           const Ir = Object.assign(Er, { __abortController: Ot, __staleWhileFetching: Ge, __returned: undefined });
           if (q === undefined) {
             this.set(P, Ir, { ...Ar.options, status: undefined });
-            q = this.#ee.get(P);
+            q = this.#te.get(P);
           } else {
-            this.#re[q] = Ir;
+            this.#se[q] = Ir;
           }
           return Ir;
         }
-        #me(P) {
-          if (!this.#pe) return false;
+        #he(P) {
+          if (!this.#fe) return false;
           const q = P;
           return !!q && q instanceof Promise && q.hasOwnProperty("__staleWhileFetching") && q.__abortController instanceof st;
         }
@@ -55506,7 +55029,7 @@
             status: Nr,
             signal: Mr,
           } = q;
-          if (!this.#pe) {
+          if (!this.#fe) {
             if (Nr) Nr.fetch = "get";
             return this.get(P, { allowStale: oe, updateAgeOnGet: ie, noDeleteOnStaleGet: Ge, status: Nr });
           }
@@ -55526,14 +55049,14 @@
             status: Nr,
             signal: Mr,
           };
-          let Lr = this.#ee.get(P);
+          let Lr = this.#te.get(P);
           if (Lr === undefined) {
             if (Nr) Nr.fetch = "miss";
-            const q = this.#he(P, Lr, Ur, Dr);
+            const q = this.#ge(P, Lr, Ur, Dr);
             return (q.__returned = q);
           } else {
-            const q = this.#re[Lr];
-            if (this.#me(q)) {
+            const q = this.#se[Lr];
+            if (this.#he(q)) {
               const P = oe && q.__staleWhileFetching !== undefined;
               if (Nr) {
                 Nr.fetch = "inflight";
@@ -55541,17 +55064,17 @@
               }
               return P ? q.__staleWhileFetching : (q.__returned = q);
             }
-            const Ge = this.#Ie(Lr);
+            const Ge = this.#Ce(Lr);
             if (!kr && !Ge) {
               if (Nr) Nr.fetch = "hit";
-              this.#ge(Lr);
+              this.#Ee(Lr);
               if (ie) {
-                this.#Be(Lr);
+                this.#Qe(Lr);
               }
-              if (Nr) this.#Qe(Nr, Lr);
+              if (Nr) this.#ve(Nr, Lr);
               return q;
             }
-            const st = this.#he(P, Lr, Ur, Dr);
+            const st = this.#ge(P, Lr, Ur, Dr);
             const Ot = st.__staleWhileFetching !== undefined;
             const Wt = Ot && oe;
             if (Nr) {
@@ -55567,7 +55090,7 @@
           return oe;
         }
         memo(P, q = {}) {
-          const oe = this.#z;
+          const oe = this.#Z;
           if (!oe) {
             throw new Error("no memoMethod provided to constructor");
           }
@@ -55585,16 +55108,16 @@
             noDeleteOnStaleGet: Ge = this.noDeleteOnStaleGet,
             status: st,
           } = q;
-          const Ot = this.#ee.get(P);
+          const Ot = this.#te.get(P);
           if (Ot !== undefined) {
-            const q = this.#re[Ot];
-            const Wt = this.#me(q);
-            if (st) this.#Qe(st, Ot);
-            if (this.#Ie(Ot)) {
+            const q = this.#se[Ot];
+            const Wt = this.#he(q);
+            if (st) this.#ve(st, Ot);
+            if (this.#Ce(Ot)) {
               if (st) st.get = "stale";
               if (!Wt) {
                 if (!Ge) {
-                  this.#we(P, "expire");
+                  this.#Be(P, "expire");
                 }
                 if (st && oe) st.returnedStale = true;
                 return oe ? q : undefined;
@@ -55609,9 +55132,9 @@
               if (Wt) {
                 return q.__staleWhileFetching;
               }
-              this.#ge(Ot);
+              this.#Ee(Ot);
               if (ie) {
-                this.#Be(Ot);
+                this.#Qe(Ot);
               }
               return q;
             }
@@ -55619,115 +55142,723 @@
             st.get = "miss";
           }
         }
-        #De(P, q) {
-          this.#ne[q] = P;
-          this.#se[P] = q;
+        #ke(P, q) {
+          this.#oe[q] = P;
+          this.#ne[P] = q;
         }
-        #ge(P) {
-          if (P !== this.#ie) {
-            if (P === this.#oe) {
-              this.#oe = this.#se[P];
+        #Ee(P) {
+          if (P !== this.#ae) {
+            if (P === this.#ie) {
+              this.#ie = this.#ne[P];
             } else {
-              this.#De(this.#ne[P], this.#se[P]);
+              this.#ke(this.#oe[P], this.#ne[P]);
             }
-            this.#De(this.#ie, P);
-            this.#ie = P;
+            this.#ke(this.#ae, P);
+            this.#ae = P;
           }
         }
         delete(P) {
-          return this.#we(P, "delete");
+          return this.#Be(P, "delete");
         }
-        #we(P, q) {
+        #Be(P, q) {
           let oe = false;
-          if (this.#Z !== 0) {
-            const ie = this.#ee.get(P);
+          if (this.#X !== 0) {
+            const ie = this.#te.get(P);
             if (ie !== undefined) {
               oe = true;
-              if (this.#Z === 1) {
-                this.#ke(q);
+              if (this.#X === 1) {
+                this.#Oe(q);
               } else {
-                this.#ve(ie);
-                const oe = this.#re[ie];
-                if (this.#me(oe)) {
+                this.#Te(ie);
+                const oe = this.#se[ie];
+                if (this.#he(oe)) {
                   oe.__abortController.abort(new Error("deleted"));
-                } else if (this.#de || this.#fe) {
-                  if (this.#de) {
-                    this.#J?.(oe, P, q);
+                } else if (this.#pe || this.#me) {
+                  if (this.#pe) {
+                    this.#$?.(oe, P, q);
                   }
-                  if (this.#fe) {
+                  if (this.#me) {
                     this.#le?.push([oe, P, q]);
                   }
                 }
-                this.#ee.delete(P);
-                this.#te[ie] = undefined;
+                this.#te.delete(P);
                 this.#re[ie] = undefined;
-                if (ie === this.#ie) {
+                this.#se[ie] = undefined;
+                if (ie === this.#ae) {
+                  this.#ae = this.#oe[ie];
+                } else if (ie === this.#ie) {
                   this.#ie = this.#ne[ie];
-                } else if (ie === this.#oe) {
-                  this.#oe = this.#se[ie];
                 } else {
-                  const P = this.#ne[ie];
-                  this.#se[P] = this.#se[ie];
-                  const q = this.#se[ie];
-                  this.#ne[q] = this.#ne[ie];
+                  const P = this.#oe[ie];
+                  this.#ne[P] = this.#ne[ie];
+                  const q = this.#ne[ie];
+                  this.#oe[q] = this.#oe[ie];
                 }
-                this.#Z--;
-                this.#ae.push(ie);
+                this.#X--;
+                this.#Ae.push(ie);
               }
             }
           }
-          if (this.#fe && this.#le?.length) {
+          if (this.#me && this.#le?.length) {
             const P = this.#le;
             let q;
             while ((q = P?.shift())) {
-              this.#$?.(...q);
+              this.#K?.(...q);
             }
           }
           return oe;
         }
         clear() {
-          return this.#ke("delete");
+          return this.#Oe("delete");
         }
-        #ke(P) {
-          for (const q of this.#ye({ allowStale: true })) {
-            const oe = this.#re[q];
-            if (this.#me(oe)) {
+        #Oe(P) {
+          for (const q of this.#Ie({ allowStale: true })) {
+            const oe = this.#se[q];
+            if (this.#he(oe)) {
               oe.__abortController.abort(new Error("deleted"));
             } else {
-              const ie = this.#te[q];
-              if (this.#de) {
-                this.#J?.(oe, ie, P);
+              const ie = this.#re[q];
+              if (this.#pe) {
+                this.#$?.(oe, ie, P);
               }
-              if (this.#fe) {
+              if (this.#me) {
                 this.#le?.push([oe, ie, P]);
               }
             }
           }
-          this.#ee.clear();
+          this.#te.clear();
+          this.#se.fill(undefined);
           this.#re.fill(undefined);
-          this.#te.fill(undefined);
-          if (this.#ue && this.#ce) {
+          if (this.#de && this.#ue) {
+            this.#de.fill(0);
             this.#ue.fill(0);
+          }
+          if (this.#ce) {
             this.#ce.fill(0);
           }
-          if (this.#Ae) {
-            this.#Ae.fill(0);
-          }
-          this.#oe = 0;
           this.#ie = 0;
-          this.#ae.length = 0;
+          this.#ae = 0;
+          this.#Ae.length = 0;
+          this.#ee = 0;
           this.#X = 0;
-          this.#Z = 0;
-          if (this.#fe && this.#le) {
+          if (this.#me && this.#le) {
             const P = this.#le;
             let q;
             while ((q = P?.shift())) {
-              this.#$?.(...q);
+              this.#K?.(...q);
             }
           }
         }
       }
       q.LRUCache = LRUCache;
+    },
+    78275: function (P, q, oe) {
+      "use strict";
+      var ie =
+        (this && this.__importDefault) ||
+        function (P) {
+          return P && P.__esModule ? P : { default: P };
+        };
+      Object.defineProperty(q, "__esModule", { value: true });
+      q.Minipass = q.isWritable = q.isReadable = q.isStream = void 0;
+      const Ge = typeof process === "object" && process ? process : { stdout: null, stderr: null };
+      const st = oe(78474);
+      const Ot = ie(oe(57075));
+      const Wt = oe(46193);
+      const isStream = (P) =>
+        !!P && typeof P === "object" && (P instanceof Minipass || P instanceof Ot.default || (0, q.isReadable)(P) || (0, q.isWritable)(P));
+      q.isStream = isStream;
+      const isReadable = (P) =>
+        !!P && typeof P === "object" && P instanceof st.EventEmitter && typeof P.pipe === "function" && P.pipe !== Ot.default.Writable.prototype.pipe;
+      q.isReadable = isReadable;
+      const isWritable = (P) => !!P && typeof P === "object" && P instanceof st.EventEmitter && typeof P.write === "function" && typeof P.end === "function";
+      q.isWritable = isWritable;
+      const Ar = Symbol("EOF");
+      const Er = Symbol("maybeEmitEnd");
+      const Ir = Symbol("emittedEnd");
+      const Br = Symbol("emittingEnd");
+      const Qr = Symbol("emittedError");
+      const Fr = Symbol("closed");
+      const Dr = Symbol("read");
+      const kr = Symbol("flush");
+      const Nr = Symbol("flushChunk");
+      const Mr = Symbol("encoding");
+      const Ur = Symbol("decoder");
+      const Lr = Symbol("flowing");
+      const xr = Symbol("paused");
+      const Gr = Symbol("resume");
+      const jr = Symbol("buffer");
+      const Vr = Symbol("pipes");
+      const Hr = Symbol("bufferLength");
+      const Yr = Symbol("bufferPush");
+      const Wr = Symbol("bufferShift");
+      const Jr = Symbol("objectMode");
+      const $r = Symbol("destroyed");
+      const Kr = Symbol("error");
+      const zr = Symbol("emitData");
+      const Zr = Symbol("emitEnd");
+      const Xr = Symbol("emitEnd2");
+      const es = Symbol("async");
+      const ts = Symbol("abort");
+      const rs = Symbol("aborted");
+      const ss = Symbol("signal");
+      const ns = Symbol("dataListeners");
+      const os = Symbol("discarded");
+      const defer = (P) => Promise.resolve().then(P);
+      const nodefer = (P) => P();
+      const isEndish = (P) => P === "end" || P === "finish" || P === "prefinish";
+      const isArrayBufferLike = (P) =>
+        P instanceof ArrayBuffer || (!!P && typeof P === "object" && P.constructor && P.constructor.name === "ArrayBuffer" && P.byteLength >= 0);
+      const isArrayBufferView = (P) => !Buffer.isBuffer(P) && ArrayBuffer.isView(P);
+      class Pipe {
+        src;
+        dest;
+        opts;
+        ondrain;
+        constructor(P, q, oe) {
+          this.src = P;
+          this.dest = q;
+          this.opts = oe;
+          this.ondrain = () => P[Gr]();
+          this.dest.on("drain", this.ondrain);
+        }
+        unpipe() {
+          this.dest.removeListener("drain", this.ondrain);
+        }
+        proxyErrors(P) {}
+        end() {
+          this.unpipe();
+          if (this.opts.end) this.dest.end();
+        }
+      }
+      class PipeProxyErrors extends Pipe {
+        unpipe() {
+          this.src.removeListener("error", this.proxyErrors);
+          super.unpipe();
+        }
+        constructor(P, q, oe) {
+          super(P, q, oe);
+          this.proxyErrors = (P) => q.emit("error", P);
+          P.on("error", this.proxyErrors);
+        }
+      }
+      const isObjectModeOptions = (P) => !!P.objectMode;
+      const isEncodingOptions = (P) => !P.objectMode && !!P.encoding && P.encoding !== "buffer";
+      class Minipass extends st.EventEmitter {
+        [Lr] = false;
+        [xr] = false;
+        [Vr] = [];
+        [jr] = [];
+        [Jr];
+        [Mr];
+        [es];
+        [Ur];
+        [Ar] = false;
+        [Ir] = false;
+        [Br] = false;
+        [Fr] = false;
+        [Qr] = null;
+        [Hr] = 0;
+        [$r] = false;
+        [ss];
+        [rs] = false;
+        [ns] = 0;
+        [os] = false;
+        writable = true;
+        readable = true;
+        constructor(...P) {
+          const q = P[0] || {};
+          super();
+          if (q.objectMode && typeof q.encoding === "string") {
+            throw new TypeError("Encoding and objectMode may not be used together");
+          }
+          if (isObjectModeOptions(q)) {
+            this[Jr] = true;
+            this[Mr] = null;
+          } else if (isEncodingOptions(q)) {
+            this[Mr] = q.encoding;
+            this[Jr] = false;
+          } else {
+            this[Jr] = false;
+            this[Mr] = null;
+          }
+          this[es] = !!q.async;
+          this[Ur] = this[Mr] ? new Wt.StringDecoder(this[Mr]) : null;
+          if (q && q.debugExposeBuffer === true) {
+            Object.defineProperty(this, "buffer", { get: () => this[jr] });
+          }
+          if (q && q.debugExposePipes === true) {
+            Object.defineProperty(this, "pipes", { get: () => this[Vr] });
+          }
+          const { signal: oe } = q;
+          if (oe) {
+            this[ss] = oe;
+            if (oe.aborted) {
+              this[ts]();
+            } else {
+              oe.addEventListener("abort", () => this[ts]());
+            }
+          }
+        }
+        get bufferLength() {
+          return this[Hr];
+        }
+        get encoding() {
+          return this[Mr];
+        }
+        set encoding(P) {
+          throw new Error("Encoding must be set at instantiation time");
+        }
+        setEncoding(P) {
+          throw new Error("Encoding must be set at instantiation time");
+        }
+        get objectMode() {
+          return this[Jr];
+        }
+        set objectMode(P) {
+          throw new Error("objectMode must be set at instantiation time");
+        }
+        get ["async"]() {
+          return this[es];
+        }
+        set ["async"](P) {
+          this[es] = this[es] || !!P;
+        }
+        [ts]() {
+          this[rs] = true;
+          this.emit("abort", this[ss]?.reason);
+          this.destroy(this[ss]?.reason);
+        }
+        get aborted() {
+          return this[rs];
+        }
+        set aborted(P) {}
+        write(P, q, oe) {
+          if (this[rs]) return false;
+          if (this[Ar]) throw new Error("write after end");
+          if (this[$r]) {
+            this.emit("error", Object.assign(new Error("Cannot call write after a stream was destroyed"), { code: "ERR_STREAM_DESTROYED" }));
+            return true;
+          }
+          if (typeof q === "function") {
+            oe = q;
+            q = "utf8";
+          }
+          if (!q) q = "utf8";
+          const ie = this[es] ? defer : nodefer;
+          if (!this[Jr] && !Buffer.isBuffer(P)) {
+            if (isArrayBufferView(P)) {
+              P = Buffer.from(P.buffer, P.byteOffset, P.byteLength);
+            } else if (isArrayBufferLike(P)) {
+              P = Buffer.from(P);
+            } else if (typeof P !== "string") {
+              throw new Error("Non-contiguous data written to non-objectMode stream");
+            }
+          }
+          if (this[Jr]) {
+            if (this[Lr] && this[Hr] !== 0) this[kr](true);
+            if (this[Lr]) this.emit("data", P);
+            else this[Yr](P);
+            if (this[Hr] !== 0) this.emit("readable");
+            if (oe) ie(oe);
+            return this[Lr];
+          }
+          if (!P.length) {
+            if (this[Hr] !== 0) this.emit("readable");
+            if (oe) ie(oe);
+            return this[Lr];
+          }
+          if (typeof P === "string" && !(q === this[Mr] && !this[Ur]?.lastNeed)) {
+            P = Buffer.from(P, q);
+          }
+          if (Buffer.isBuffer(P) && this[Mr]) {
+            P = this[Ur].write(P);
+          }
+          if (this[Lr] && this[Hr] !== 0) this[kr](true);
+          if (this[Lr]) this.emit("data", P);
+          else this[Yr](P);
+          if (this[Hr] !== 0) this.emit("readable");
+          if (oe) ie(oe);
+          return this[Lr];
+        }
+        read(P) {
+          if (this[$r]) return null;
+          this[os] = false;
+          if (this[Hr] === 0 || P === 0 || (P && P > this[Hr])) {
+            this[Er]();
+            return null;
+          }
+          if (this[Jr]) P = null;
+          if (this[jr].length > 1 && !this[Jr]) {
+            this[jr] = [this[Mr] ? this[jr].join("") : Buffer.concat(this[jr], this[Hr])];
+          }
+          const q = this[Dr](P || null, this[jr][0]);
+          this[Er]();
+          return q;
+        }
+        [Dr](P, q) {
+          if (this[Jr]) this[Wr]();
+          else {
+            const oe = q;
+            if (P === oe.length || P === null) this[Wr]();
+            else if (typeof oe === "string") {
+              this[jr][0] = oe.slice(P);
+              q = oe.slice(0, P);
+              this[Hr] -= P;
+            } else {
+              this[jr][0] = oe.subarray(P);
+              q = oe.subarray(0, P);
+              this[Hr] -= P;
+            }
+          }
+          this.emit("data", q);
+          if (!this[jr].length && !this[Ar]) this.emit("drain");
+          return q;
+        }
+        end(P, q, oe) {
+          if (typeof P === "function") {
+            oe = P;
+            P = undefined;
+          }
+          if (typeof q === "function") {
+            oe = q;
+            q = "utf8";
+          }
+          if (P !== undefined) this.write(P, q);
+          if (oe) this.once("end", oe);
+          this[Ar] = true;
+          this.writable = false;
+          if (this[Lr] || !this[xr]) this[Er]();
+          return this;
+        }
+        [Gr]() {
+          if (this[$r]) return;
+          if (!this[ns] && !this[Vr].length) {
+            this[os] = true;
+          }
+          this[xr] = false;
+          this[Lr] = true;
+          this.emit("resume");
+          if (this[jr].length) this[kr]();
+          else if (this[Ar]) this[Er]();
+          else this.emit("drain");
+        }
+        resume() {
+          return this[Gr]();
+        }
+        pause() {
+          this[Lr] = false;
+          this[xr] = true;
+          this[os] = false;
+        }
+        get destroyed() {
+          return this[$r];
+        }
+        get flowing() {
+          return this[Lr];
+        }
+        get paused() {
+          return this[xr];
+        }
+        [Yr](P) {
+          if (this[Jr]) this[Hr] += 1;
+          else this[Hr] += P.length;
+          this[jr].push(P);
+        }
+        [Wr]() {
+          if (this[Jr]) this[Hr] -= 1;
+          else this[Hr] -= this[jr][0].length;
+          return this[jr].shift();
+        }
+        [kr](P = false) {
+          do {} while (this[Nr](this[Wr]()) && this[jr].length);
+          if (!P && !this[jr].length && !this[Ar]) this.emit("drain");
+        }
+        [Nr](P) {
+          this.emit("data", P);
+          return this[Lr];
+        }
+        pipe(P, q) {
+          if (this[$r]) return P;
+          this[os] = false;
+          const oe = this[Ir];
+          q = q || {};
+          if (P === Ge.stdout || P === Ge.stderr) q.end = false;
+          else q.end = q.end !== false;
+          q.proxyErrors = !!q.proxyErrors;
+          if (oe) {
+            if (q.end) P.end();
+          } else {
+            this[Vr].push(!q.proxyErrors ? new Pipe(this, P, q) : new PipeProxyErrors(this, P, q));
+            if (this[es]) defer(() => this[Gr]());
+            else this[Gr]();
+          }
+          return P;
+        }
+        unpipe(P) {
+          const q = this[Vr].find((q) => q.dest === P);
+          if (q) {
+            if (this[Vr].length === 1) {
+              if (this[Lr] && this[ns] === 0) {
+                this[Lr] = false;
+              }
+              this[Vr] = [];
+            } else this[Vr].splice(this[Vr].indexOf(q), 1);
+            q.unpipe();
+          }
+        }
+        addListener(P, q) {
+          return this.on(P, q);
+        }
+        on(P, q) {
+          const oe = super.on(P, q);
+          if (P === "data") {
+            this[os] = false;
+            this[ns]++;
+            if (!this[Vr].length && !this[Lr]) {
+              this[Gr]();
+            }
+          } else if (P === "readable" && this[Hr] !== 0) {
+            super.emit("readable");
+          } else if (isEndish(P) && this[Ir]) {
+            super.emit(P);
+            this.removeAllListeners(P);
+          } else if (P === "error" && this[Qr]) {
+            const P = q;
+            if (this[es]) defer(() => P.call(this, this[Qr]));
+            else P.call(this, this[Qr]);
+          }
+          return oe;
+        }
+        removeListener(P, q) {
+          return this.off(P, q);
+        }
+        off(P, q) {
+          const oe = super.off(P, q);
+          if (P === "data") {
+            this[ns] = this.listeners("data").length;
+            if (this[ns] === 0 && !this[os] && !this[Vr].length) {
+              this[Lr] = false;
+            }
+          }
+          return oe;
+        }
+        removeAllListeners(P) {
+          const q = super.removeAllListeners(P);
+          if (P === "data" || P === undefined) {
+            this[ns] = 0;
+            if (!this[os] && !this[Vr].length) {
+              this[Lr] = false;
+            }
+          }
+          return q;
+        }
+        get emittedEnd() {
+          return this[Ir];
+        }
+        [Er]() {
+          if (!this[Br] && !this[Ir] && !this[$r] && this[jr].length === 0 && this[Ar]) {
+            this[Br] = true;
+            this.emit("end");
+            this.emit("prefinish");
+            this.emit("finish");
+            if (this[Fr]) this.emit("close");
+            this[Br] = false;
+          }
+        }
+        emit(P, ...q) {
+          const oe = q[0];
+          if (P !== "error" && P !== "close" && P !== $r && this[$r]) {
+            return false;
+          } else if (P === "data") {
+            return !this[Jr] && !oe ? false : this[es] ? (defer(() => this[zr](oe)), true) : this[zr](oe);
+          } else if (P === "end") {
+            return this[Zr]();
+          } else if (P === "close") {
+            this[Fr] = true;
+            if (!this[Ir] && !this[$r]) return false;
+            const P = super.emit("close");
+            this.removeAllListeners("close");
+            return P;
+          } else if (P === "error") {
+            this[Qr] = oe;
+            super.emit(Kr, oe);
+            const P = !this[ss] || this.listeners("error").length ? super.emit("error", oe) : false;
+            this[Er]();
+            return P;
+          } else if (P === "resume") {
+            const P = super.emit("resume");
+            this[Er]();
+            return P;
+          } else if (P === "finish" || P === "prefinish") {
+            const q = super.emit(P);
+            this.removeAllListeners(P);
+            return q;
+          }
+          const ie = super.emit(P, ...q);
+          this[Er]();
+          return ie;
+        }
+        [zr](P) {
+          for (const q of this[Vr]) {
+            if (q.dest.write(P) === false) this.pause();
+          }
+          const q = this[os] ? false : super.emit("data", P);
+          this[Er]();
+          return q;
+        }
+        [Zr]() {
+          if (this[Ir]) return false;
+          this[Ir] = true;
+          this.readable = false;
+          return this[es] ? (defer(() => this[Xr]()), true) : this[Xr]();
+        }
+        [Xr]() {
+          if (this[Ur]) {
+            const P = this[Ur].end();
+            if (P) {
+              for (const q of this[Vr]) {
+                q.dest.write(P);
+              }
+              if (!this[os]) super.emit("data", P);
+            }
+          }
+          for (const P of this[Vr]) {
+            P.end();
+          }
+          const P = super.emit("end");
+          this.removeAllListeners("end");
+          return P;
+        }
+        async collect() {
+          const P = Object.assign([], { dataLength: 0 });
+          if (!this[Jr]) P.dataLength = 0;
+          const q = this.promise();
+          this.on("data", (q) => {
+            P.push(q);
+            if (!this[Jr]) P.dataLength += q.length;
+          });
+          await q;
+          return P;
+        }
+        async concat() {
+          if (this[Jr]) {
+            throw new Error("cannot concat in objectMode");
+          }
+          const P = await this.collect();
+          return this[Mr] ? P.join("") : Buffer.concat(P, P.dataLength);
+        }
+        async promise() {
+          return new Promise((P, q) => {
+            this.on($r, () => q(new Error("stream destroyed")));
+            this.on("error", (P) => q(P));
+            this.on("end", () => P());
+          });
+        }
+        [Symbol.asyncIterator]() {
+          this[os] = false;
+          let P = false;
+          const stop = async () => {
+            this.pause();
+            P = true;
+            return { value: undefined, done: true };
+          };
+          const next = () => {
+            if (P) return stop();
+            const q = this.read();
+            if (q !== null) return Promise.resolve({ done: false, value: q });
+            if (this[Ar]) return stop();
+            let oe;
+            let ie;
+            const onerr = (P) => {
+              this.off("data", ondata);
+              this.off("end", onend);
+              this.off($r, ondestroy);
+              stop();
+              ie(P);
+            };
+            const ondata = (P) => {
+              this.off("error", onerr);
+              this.off("end", onend);
+              this.off($r, ondestroy);
+              this.pause();
+              oe({ value: P, done: !!this[Ar] });
+            };
+            const onend = () => {
+              this.off("error", onerr);
+              this.off("data", ondata);
+              this.off($r, ondestroy);
+              stop();
+              oe({ done: true, value: undefined });
+            };
+            const ondestroy = () => onerr(new Error("stream destroyed"));
+            return new Promise((P, q) => {
+              ie = q;
+              oe = P;
+              this.once($r, ondestroy);
+              this.once("error", onerr);
+              this.once("end", onend);
+              this.once("data", ondata);
+            });
+          };
+          return {
+            next: next,
+            throw: stop,
+            return: stop,
+            [Symbol.asyncIterator]() {
+              return this;
+            },
+          };
+        }
+        [Symbol.iterator]() {
+          this[os] = false;
+          let P = false;
+          const stop = () => {
+            this.pause();
+            this.off(Kr, stop);
+            this.off($r, stop);
+            this.off("end", stop);
+            P = true;
+            return { done: true, value: undefined };
+          };
+          const next = () => {
+            if (P) return stop();
+            const q = this.read();
+            return q === null ? stop() : { done: false, value: q };
+          };
+          this.once("end", stop);
+          this.once(Kr, stop);
+          this.once($r, stop);
+          return {
+            next: next,
+            throw: stop,
+            return: stop,
+            [Symbol.iterator]() {
+              return this;
+            },
+          };
+        }
+        destroy(P) {
+          if (this[$r]) {
+            if (P) this.emit("error", P);
+            else this.emit($r);
+            return this;
+          }
+          this[$r] = true;
+          this[os] = true;
+          this[jr].length = 0;
+          this[Hr] = 0;
+          const q = this;
+          if (typeof q.close === "function" && !this[Fr]) q.close();
+          if (P) this.emit("error", P);
+          else this.emit($r);
+          return this;
+        }
+        static get isStream() {
+          return q.isStream;
+        }
+      }
+      q.Minipass = Minipass;
     },
     74793: (P, q) => {
       "use strict";
@@ -62042,7 +62173,7 @@
       const Ir = st(oe(73024));
       const Br = Er.realpathSync.native;
       const Qr = oe(51455);
-      const Fr = oe(32047);
+      const Fr = oe(78275);
       const Dr = {
         lstatSync: Er.lstatSync,
         readdir: Er.readdir,
@@ -62125,80 +62256,79 @@
         parent;
         nocase;
         isCWD = false;
-        #Oe;
         #Pe;
-        get dev() {
-          return this.#Pe;
-        }
         #Ne;
-        get mode() {
+        get dev() {
           return this.#Ne;
         }
         #Me;
-        get nlink() {
+        get mode() {
           return this.#Me;
         }
         #Ue;
-        get uid() {
+        get nlink() {
           return this.#Ue;
         }
         #Le;
-        get gid() {
+        get uid() {
           return this.#Le;
         }
         #xe;
-        get rdev() {
+        get gid() {
           return this.#xe;
         }
         #Ge;
-        get blksize() {
+        get rdev() {
           return this.#Ge;
         }
         #je;
-        get ino() {
+        get blksize() {
           return this.#je;
         }
-        #Z;
-        get size() {
-          return this.#Z;
-        }
         #Ve;
-        get blocks() {
+        get ino() {
           return this.#Ve;
         }
+        #X;
+        get size() {
+          return this.#X;
+        }
         #He;
-        get atimeMs() {
+        get blocks() {
           return this.#He;
         }
         #qe;
-        get mtimeMs() {
+        get atimeMs() {
           return this.#qe;
         }
         #Ye;
-        get ctimeMs() {
+        get mtimeMs() {
           return this.#Ye;
         }
         #We;
-        get birthtimeMs() {
+        get ctimeMs() {
           return this.#We;
         }
         #Je;
-        get atime() {
+        get birthtimeMs() {
           return this.#Je;
         }
         #$e;
-        get mtime() {
+        get atime() {
           return this.#$e;
         }
         #Ke;
-        get ctime() {
+        get mtime() {
           return this.#Ke;
         }
         #ze;
-        get birthtime() {
+        get ctime() {
           return this.#ze;
         }
         #Ze;
+        get birthtime() {
+          return this.#Ze;
+        }
         #Xe;
         #et;
         #tt;
@@ -62208,6 +62338,7 @@
         #ot;
         #it;
         #at;
+        #At;
         get parentPath() {
           return (this.parent || this).fullpath();
         }
@@ -62216,29 +62347,29 @@
         }
         constructor(P, q = Mr, oe, ie, Ge, st, Ot) {
           this.name = P;
-          this.#Ze = Ge ? normalizeNocase(P) : normalize(P);
-          this.#nt = q & ts;
+          this.#Xe = Ge ? normalizeNocase(P) : normalize(P);
+          this.#ot = q & ts;
           this.nocase = Ge;
           this.roots = ie;
           this.root = oe || this;
-          this.#ot = st;
-          this.#et = Ot.fullpath;
-          this.#rt = Ot.relative;
-          this.#st = Ot.relativePosix;
+          this.#it = st;
+          this.#tt = Ot.fullpath;
+          this.#st = Ot.relative;
+          this.#nt = Ot.relativePosix;
           this.parent = Ot.parent;
           if (this.parent) {
-            this.#Oe = this.parent.#Oe;
+            this.#Pe = this.parent.#Pe;
           } else {
-            this.#Oe = fsFromOption(Ot.fs);
+            this.#Pe = fsFromOption(Ot.fs);
           }
         }
         depth() {
-          if (this.#Xe !== undefined) return this.#Xe;
-          if (!this.parent) return (this.#Xe = 0);
-          return (this.#Xe = this.parent.depth() + 1);
+          if (this.#et !== undefined) return this.#et;
+          if (!this.parent) return (this.#et = 0);
+          return (this.#et = this.parent.depth() + 1);
         }
         childrenCache() {
-          return this.#ot;
+          return this.#it;
         }
         resolve(P) {
           if (!P) {
@@ -62258,13 +62389,13 @@
           return q;
         }
         children() {
-          const P = this.#ot.get(this);
+          const P = this.#it.get(this);
           if (P) {
             return P;
           }
           const q = Object.assign([], { provisional: 0 });
-          this.#ot.set(this, q);
-          this.#nt &= ~Jr;
+          this.#it.set(this, q);
+          this.#ot &= ~Jr;
           return q;
         }
         child(P, q) {
@@ -62277,28 +62408,28 @@
           const oe = this.children();
           const ie = this.nocase ? normalizeNocase(P) : normalize(P);
           for (const P of oe) {
-            if (P.#Ze === ie) {
+            if (P.#Xe === ie) {
               return P;
             }
           }
           const Ge = this.parent ? this.sep : "";
-          const st = this.#et ? this.#et + Ge + P : undefined;
+          const st = this.#tt ? this.#tt + Ge + P : undefined;
           const Ot = this.newChild(P, Mr, { ...q, parent: this, fullpath: st });
           if (!this.canReaddir()) {
-            Ot.#nt |= zr;
+            Ot.#ot |= zr;
           }
           oe.push(Ot);
           return Ot;
         }
         relative() {
           if (this.isCWD) return "";
-          if (this.#rt !== undefined) {
-            return this.#rt;
+          if (this.#st !== undefined) {
+            return this.#st;
           }
           const P = this.name;
           const q = this.parent;
           if (!q) {
-            return (this.#rt = this.name);
+            return (this.#st = this.name);
           }
           const oe = q.relative();
           return oe + (!oe || !q.parent ? "" : this.sep) + P;
@@ -62306,46 +62437,46 @@
         relativePosix() {
           if (this.sep === "/") return this.relative();
           if (this.isCWD) return "";
-          if (this.#st !== undefined) return this.#st;
+          if (this.#nt !== undefined) return this.#nt;
           const P = this.name;
           const q = this.parent;
           if (!q) {
-            return (this.#st = this.fullpathPosix());
+            return (this.#nt = this.fullpathPosix());
           }
           const oe = q.relativePosix();
           return oe + (!oe || !q.parent ? "" : "/") + P;
         }
         fullpath() {
-          if (this.#et !== undefined) {
-            return this.#et;
+          if (this.#tt !== undefined) {
+            return this.#tt;
           }
           const P = this.name;
           const q = this.parent;
           if (!q) {
-            return (this.#et = this.name);
+            return (this.#tt = this.name);
           }
           const oe = q.fullpath();
           const ie = oe + (!q.parent ? "" : this.sep) + P;
-          return (this.#et = ie);
+          return (this.#tt = ie);
         }
         fullpathPosix() {
-          if (this.#tt !== undefined) return this.#tt;
-          if (this.sep === "/") return (this.#tt = this.fullpath());
+          if (this.#rt !== undefined) return this.#rt;
+          if (this.sep === "/") return (this.#rt = this.fullpath());
           if (!this.parent) {
             const P = this.fullpath().replace(/\\/g, "/");
             if (/^[a-z]:\//i.test(P)) {
-              return (this.#tt = `//?/${P}`);
+              return (this.#rt = `//?/${P}`);
             } else {
-              return (this.#tt = P);
+              return (this.#rt = P);
             }
           }
           const P = this.parent;
           const q = P.fullpathPosix();
           const oe = q + (!q || !P.parent ? "" : "/") + this.name;
-          return (this.#tt = oe);
+          return (this.#rt = oe);
         }
         isUnknown() {
-          return (this.#nt & Yr) === Mr;
+          return (this.#ot & Yr) === Mr;
         }
         isType(P) {
           return this[`is${P}`]();
@@ -62370,56 +62501,56 @@
                           : "Unknown";
         }
         isFile() {
-          return (this.#nt & Yr) === jr;
+          return (this.#ot & Yr) === jr;
         }
         isDirectory() {
-          return (this.#nt & Yr) === xr;
+          return (this.#ot & Yr) === xr;
         }
         isCharacterDevice() {
-          return (this.#nt & Yr) === Lr;
+          return (this.#ot & Yr) === Lr;
         }
         isBlockDevice() {
-          return (this.#nt & Yr) === Gr;
+          return (this.#ot & Yr) === Gr;
         }
         isFIFO() {
-          return (this.#nt & Yr) === Ur;
+          return (this.#ot & Yr) === Ur;
         }
         isSocket() {
-          return (this.#nt & Yr) === Hr;
+          return (this.#ot & Yr) === Hr;
         }
         isSymbolicLink() {
-          return (this.#nt & Vr) === Vr;
+          return (this.#ot & Vr) === Vr;
         }
         lstatCached() {
-          return this.#nt & $r ? this : undefined;
+          return this.#ot & $r ? this : undefined;
         }
         readlinkCached() {
-          return this.#it;
+          return this.#at;
         }
         realpathCached() {
-          return this.#at;
+          return this.#At;
         }
         readdirCached() {
           const P = this.children();
           return P.slice(0, P.provisional);
         }
         canReadlink() {
-          if (this.#it) return true;
+          if (this.#at) return true;
           if (!this.parent) return false;
-          const P = this.#nt & Yr;
-          return !((P !== Mr && P !== Vr) || this.#nt & Zr || this.#nt & zr);
+          const P = this.#ot & Yr;
+          return !((P !== Mr && P !== Vr) || this.#ot & Zr || this.#ot & zr);
         }
         calledReaddir() {
-          return !!(this.#nt & Jr);
+          return !!(this.#ot & Jr);
         }
         isENOENT() {
-          return !!(this.#nt & zr);
+          return !!(this.#ot & zr);
         }
         isNamed(P) {
-          return !this.nocase ? this.#Ze === normalize(P) : this.#Ze === normalizeNocase(P);
+          return !this.nocase ? this.#Xe === normalize(P) : this.#Xe === normalizeNocase(P);
         }
         async readlink() {
-          const P = this.#it;
+          const P = this.#at;
           if (P) {
             return P;
           }
@@ -62430,18 +62561,18 @@
             return undefined;
           }
           try {
-            const P = await this.#Oe.promises.readlink(this.fullpath());
+            const P = await this.#Pe.promises.readlink(this.fullpath());
             const q = (await this.parent.realpath())?.resolve(P);
             if (q) {
-              return (this.#it = q);
+              return (this.#at = q);
             }
           } catch (P) {
-            this.#At(P.code);
+            this.#ct(P.code);
             return undefined;
           }
         }
         readlinkSync() {
-          const P = this.#it;
+          const P = this.#at;
           if (P) {
             return P;
           }
@@ -62452,102 +62583,102 @@
             return undefined;
           }
           try {
-            const P = this.#Oe.readlinkSync(this.fullpath());
+            const P = this.#Pe.readlinkSync(this.fullpath());
             const q = this.parent.realpathSync()?.resolve(P);
             if (q) {
-              return (this.#it = q);
+              return (this.#at = q);
             }
           } catch (P) {
-            this.#At(P.code);
+            this.#ct(P.code);
             return undefined;
           }
         }
-        #ct(P) {
-          this.#nt |= Jr;
+        #ut(P) {
+          this.#ot |= Jr;
           for (let q = P.provisional; q < P.length; q++) {
             const oe = P[q];
-            if (oe) oe.#ut();
+            if (oe) oe.#dt();
           }
         }
-        #ut() {
-          if (this.#nt & zr) return;
-          this.#nt = (this.#nt | zr) & Wr;
-          this.#dt();
-        }
         #dt() {
+          if (this.#ot & zr) return;
+          this.#ot = (this.#ot | zr) & Wr;
+          this.#pt();
+        }
+        #pt() {
           const P = this.children();
           P.provisional = 0;
           for (const q of P) {
-            q.#ut();
+            q.#dt();
           }
         }
-        #pt() {
-          this.#nt |= Xr;
-          this.#ft();
-        }
         #ft() {
-          if (this.#nt & Kr) return;
-          let P = this.#nt;
-          if ((P & Yr) === xr) P &= Wr;
-          this.#nt = P | Kr;
-          this.#dt();
+          this.#ot |= Xr;
+          this.#mt();
         }
-        #mt(P = "") {
+        #mt() {
+          if (this.#ot & Kr) return;
+          let P = this.#ot;
+          if ((P & Yr) === xr) P &= Wr;
+          this.#ot = P | Kr;
+          this.#pt();
+        }
+        #ht(P = "") {
           if (P === "ENOTDIR" || P === "EPERM") {
-            this.#ft();
+            this.#mt();
           } else if (P === "ENOENT") {
-            this.#ut();
+            this.#dt();
           } else {
             this.children().provisional = 0;
           }
         }
-        #ht(P = "") {
+        #gt(P = "") {
           if (P === "ENOTDIR") {
             const P = this.parent;
-            P.#ft();
+            P.#mt();
           } else if (P === "ENOENT") {
-            this.#ut();
+            this.#dt();
           }
         }
-        #At(P = "") {
-          let q = this.#nt;
+        #ct(P = "") {
+          let q = this.#ot;
           q |= Zr;
           if (P === "ENOENT") q |= zr;
           if (P === "EINVAL" || P === "UNKNOWN") {
             q &= Wr;
           }
-          this.#nt = q;
+          this.#ot = q;
           if (P === "ENOTDIR" && this.parent) {
-            this.parent.#ft();
+            this.parent.#mt();
           }
         }
-        #gt(P, q) {
-          return this.#Et(P, q) || this.#yt(P, q);
+        #Et(P, q) {
+          return this.#yt(P, q) || this.#It(P, q);
         }
-        #yt(P, q) {
+        #It(P, q) {
           const oe = entToType(P);
           const ie = this.newChild(P.name, oe, { parent: this });
-          const Ge = ie.#nt & Yr;
+          const Ge = ie.#ot & Yr;
           if (Ge !== xr && Ge !== Vr && Ge !== Mr) {
-            ie.#nt |= Kr;
+            ie.#ot |= Kr;
           }
           q.unshift(ie);
           q.provisional++;
           return ie;
         }
-        #Et(P, q) {
+        #yt(P, q) {
           for (let oe = q.provisional; oe < q.length; oe++) {
             const ie = q[oe];
             const Ge = this.nocase ? normalizeNocase(P.name) : normalize(P.name);
-            if (Ge !== ie.#Ze) {
+            if (Ge !== ie.#Xe) {
               continue;
             }
-            return this.#It(P, ie, oe, q);
+            return this.#Ct(P, ie, oe, q);
           }
         }
-        #It(P, q, oe, ie) {
+        #Ct(P, q, oe, ie) {
           const Ge = q.name;
-          q.#nt = (q.#nt & Wr) | entToType(P);
+          q.#ot = (q.#ot & Wr) | entToType(P);
           if (Ge !== P.name) q.name = P.name;
           if (oe !== ie.provisional) {
             if (oe === ie.length - 1) ie.pop();
@@ -62558,26 +62689,26 @@
           return q;
         }
         async lstat() {
-          if ((this.#nt & zr) === 0) {
+          if ((this.#ot & zr) === 0) {
             try {
-              this.#Ct(await this.#Oe.promises.lstat(this.fullpath()));
+              this.#_t(await this.#Pe.promises.lstat(this.fullpath()));
               return this;
             } catch (P) {
-              this.#ht(P.code);
+              this.#gt(P.code);
             }
           }
         }
         lstatSync() {
-          if ((this.#nt & zr) === 0) {
+          if ((this.#ot & zr) === 0) {
             try {
-              this.#Ct(this.#Oe.lstatSync(this.fullpath()));
+              this.#_t(this.#Pe.lstatSync(this.fullpath()));
               return this;
             } catch (P) {
-              this.#ht(P.code);
+              this.#gt(P.code);
             }
           }
         }
-        #Ct(P) {
+        #_t(P) {
           const {
             atime: q,
             atimeMs: oe,
@@ -62598,36 +62729,36 @@
             size: Ur,
             uid: Lr,
           } = P;
-          this.#Je = q;
-          this.#He = oe;
-          this.#ze = ie;
-          this.#We = Ge;
-          this.#Ge = st;
-          this.#Ve = Ot;
-          this.#Ke = Wt;
-          this.#Ye = Ar;
-          this.#Pe = Er;
-          this.#Le = Ir;
-          this.#je = Br;
-          this.#Ne = Qr;
-          this.#$e = Fr;
-          this.#qe = Dr;
-          this.#Me = kr;
-          this.#xe = Nr;
-          this.#Z = Ur;
-          this.#Ue = Lr;
+          this.#$e = q;
+          this.#qe = oe;
+          this.#Ze = ie;
+          this.#Je = Ge;
+          this.#je = st;
+          this.#He = Ot;
+          this.#ze = Wt;
+          this.#We = Ar;
+          this.#Ne = Er;
+          this.#xe = Ir;
+          this.#Ve = Br;
+          this.#Me = Qr;
+          this.#Ke = Fr;
+          this.#Ye = Dr;
+          this.#Ue = kr;
+          this.#Ge = Nr;
+          this.#X = Ur;
+          this.#Le = Lr;
           const Gr = entToType(P);
-          this.#nt = (this.#nt & Wr) | Gr | $r;
+          this.#ot = (this.#ot & Wr) | Gr | $r;
           if (Gr !== Mr && Gr !== xr && Gr !== Vr) {
-            this.#nt |= Kr;
+            this.#ot |= Kr;
           }
         }
-        #_t = [];
-        #bt = false;
-        #wt(P) {
-          this.#bt = false;
-          const q = this.#_t.slice();
-          this.#_t.length = 0;
+        #bt = [];
+        #wt = false;
+        #Bt(P) {
+          this.#wt = false;
+          const q = this.#bt.slice();
+          this.#bt.length = 0;
           q.forEach((q) => q(null, P));
         }
         readdirCB(P, q = false) {
@@ -62643,27 +62774,27 @@
             else queueMicrotask(() => P(null, ie));
             return;
           }
-          this.#_t.push(P);
-          if (this.#bt) {
+          this.#bt.push(P);
+          if (this.#wt) {
             return;
           }
-          this.#bt = true;
+          this.#wt = true;
           const ie = this.fullpath();
-          this.#Oe.readdir(ie, { withFileTypes: true }, (P, q) => {
+          this.#Pe.readdir(ie, { withFileTypes: true }, (P, q) => {
             if (P) {
-              this.#mt(P.code);
+              this.#ht(P.code);
               oe.provisional = 0;
             } else {
               for (const P of q) {
-                this.#gt(P, oe);
+                this.#Et(P, oe);
               }
-              this.#ct(oe);
+              this.#ut(oe);
             }
-            this.#wt(oe.slice(0, oe.provisional));
+            this.#Bt(oe.slice(0, oe.provisional));
             return;
           });
         }
-        #Bt;
+        #Qt;
         async readdir() {
           if (!this.canReaddir()) {
             return [];
@@ -62673,21 +62804,21 @@
             return P.slice(0, P.provisional);
           }
           const q = this.fullpath();
-          if (this.#Bt) {
-            await this.#Bt;
+          if (this.#Qt) {
+            await this.#Qt;
           } else {
             let resolve = () => {};
-            this.#Bt = new Promise((P) => (resolve = P));
+            this.#Qt = new Promise((P) => (resolve = P));
             try {
-              for (const oe of await this.#Oe.promises.readdir(q, { withFileTypes: true })) {
-                this.#gt(oe, P);
+              for (const oe of await this.#Pe.promises.readdir(q, { withFileTypes: true })) {
+                this.#Et(oe, P);
               }
-              this.#ct(P);
+              this.#ut(P);
             } catch (q) {
-              this.#mt(q.code);
+              this.#ht(q.code);
               P.provisional = 0;
             }
-            this.#Bt = undefined;
+            this.#Qt = undefined;
             resolve();
           }
           return P.slice(0, P.provisional);
@@ -62702,45 +62833,45 @@
           }
           const q = this.fullpath();
           try {
-            for (const oe of this.#Oe.readdirSync(q, { withFileTypes: true })) {
-              this.#gt(oe, P);
+            for (const oe of this.#Pe.readdirSync(q, { withFileTypes: true })) {
+              this.#Et(oe, P);
             }
-            this.#ct(P);
+            this.#ut(P);
           } catch (q) {
-            this.#mt(q.code);
+            this.#ht(q.code);
             P.provisional = 0;
           }
           return P.slice(0, P.provisional);
         }
         canReaddir() {
-          if (this.#nt & es) return false;
-          const P = Yr & this.#nt;
+          if (this.#ot & es) return false;
+          const P = Yr & this.#ot;
           if (!(P === Mr || P === xr || P === Vr)) {
             return false;
           }
           return true;
         }
         shouldWalk(P, q) {
-          return (this.#nt & xr) === xr && !(this.#nt & es) && !P.has(this) && (!q || q(this));
+          return (this.#ot & xr) === xr && !(this.#ot & es) && !P.has(this) && (!q || q(this));
         }
         async realpath() {
-          if (this.#at) return this.#at;
-          if ((Xr | Zr | zr) & this.#nt) return undefined;
+          if (this.#At) return this.#At;
+          if ((Xr | Zr | zr) & this.#ot) return undefined;
           try {
-            const P = await this.#Oe.promises.realpath(this.fullpath());
-            return (this.#at = this.resolve(P));
+            const P = await this.#Pe.promises.realpath(this.fullpath());
+            return (this.#At = this.resolve(P));
           } catch (P) {
-            this.#pt();
+            this.#ft();
           }
         }
         realpathSync() {
-          if (this.#at) return this.#at;
-          if ((Xr | Zr | zr) & this.#nt) return undefined;
+          if (this.#At) return this.#At;
+          if ((Xr | Zr | zr) & this.#ot) return undefined;
           try {
-            const P = this.#Oe.realpathSync(this.fullpath());
-            return (this.#at = this.resolve(P));
+            const P = this.#Pe.realpathSync(this.fullpath());
+            return (this.#At = this.resolve(P));
           } catch (P) {
-            this.#pt();
+            this.#ft();
           }
         }
         [ns](P) {
@@ -62752,15 +62883,15 @@
           let ie = this;
           while (ie && ie.parent) {
             q.add(ie);
-            ie.#rt = oe.join(this.sep);
-            ie.#st = oe.join("/");
+            ie.#st = oe.join(this.sep);
+            ie.#nt = oe.join("/");
             ie = ie.parent;
             oe.push("..");
           }
           ie = P;
           while (ie && ie.parent && !q.has(ie)) {
-            ie.#rt = undefined;
             ie.#st = undefined;
+            ie.#nt = undefined;
             ie = ie.parent;
           }
         }
@@ -62818,22 +62949,22 @@
         rootPath;
         roots;
         cwd;
-        #Qt;
         #vt;
-        #ot;
+        #Tt;
+        #it;
         nocase;
-        #Oe;
+        #Pe;
         constructor(P = process.cwd(), q, oe, { nocase: ie, childrenCacheSize: Ge = 16 * 1024, fs: st = Dr } = {}) {
-          this.#Oe = fsFromOption(st);
+          this.#Pe = fsFromOption(st);
           if (P instanceof URL || P.startsWith("file://")) {
             P = (0, Ar.fileURLToPath)(P);
           }
           const Ot = q.resolve(P);
           this.roots = Object.create(null);
           this.rootPath = this.parseRootPath(Ot);
-          this.#Qt = new ResolveCache();
           this.#vt = new ResolveCache();
-          this.#ot = new ChildrenCache(Ge);
+          this.#Tt = new ResolveCache();
+          this.#it = new ChildrenCache(Ge);
           const Wt = Ot.substring(this.rootPath.length).split(oe);
           if (Wt.length === 1 && !Wt[0]) {
             Wt.pop();
@@ -62842,7 +62973,7 @@
             throw new TypeError("must provide nocase setting to PathScurryBase ctor");
           }
           this.nocase = ie;
-          this.root = this.newRoot(this.#Oe);
+          this.root = this.newRoot(this.#Pe);
           this.roots[this.rootPath] = this.root;
           let Er = this.root;
           let Ir = Wt.length - 1;
@@ -62867,27 +62998,9 @@
           return P.depth();
         }
         childrenCache() {
-          return this.#ot;
+          return this.#it;
         }
         resolve(...P) {
-          let q = "";
-          for (let oe = P.length - 1; oe >= 0; oe--) {
-            const ie = P[oe];
-            if (!ie || ie === ".") continue;
-            q = q ? `${ie}/${q}` : ie;
-            if (this.isAbsolute(ie)) {
-              break;
-            }
-          }
-          const oe = this.#Qt.get(q);
-          if (oe !== undefined) {
-            return oe;
-          }
-          const ie = this.cwd.resolve(q).fullpath();
-          this.#Qt.set(q, ie);
-          return ie;
-        }
-        resolvePosix(...P) {
           let q = "";
           for (let oe = P.length - 1; oe >= 0; oe--) {
             const ie = P[oe];
@@ -62901,8 +63014,26 @@
           if (oe !== undefined) {
             return oe;
           }
-          const ie = this.cwd.resolve(q).fullpathPosix();
+          const ie = this.cwd.resolve(q).fullpath();
           this.#vt.set(q, ie);
+          return ie;
+        }
+        resolvePosix(...P) {
+          let q = "";
+          for (let oe = P.length - 1; oe >= 0; oe--) {
+            const ie = P[oe];
+            if (!ie || ie === ".") continue;
+            q = q ? `${ie}/${q}` : ie;
+            if (this.isAbsolute(ie)) {
+              break;
+            }
+          }
+          const oe = this.#Tt.get(q);
+          if (oe !== undefined) {
+            return oe;
+          }
+          const ie = this.cwd.resolve(q).fullpathPosix();
+          this.#Tt.set(q, ie);
           return ie;
         }
         relative(P = this.cwd) {
@@ -63312,614 +63443,6 @@
       q.Path = process.platform === "win32" ? PathWin32 : PathPosix;
       q.PathScurry = process.platform === "win32" ? PathScurryWin32 : process.platform === "darwin" ? PathScurryDarwin : PathScurryPosix;
     },
-    32047: function (P, q, oe) {
-      "use strict";
-      var ie =
-        (this && this.__importDefault) ||
-        function (P) {
-          return P && P.__esModule ? P : { default: P };
-        };
-      Object.defineProperty(q, "__esModule", { value: true });
-      q.Minipass = q.isWritable = q.isReadable = q.isStream = void 0;
-      const Ge = typeof process === "object" && process ? process : { stdout: null, stderr: null };
-      const st = oe(78474);
-      const Ot = ie(oe(57075));
-      const Wt = oe(46193);
-      const isStream = (P) =>
-        !!P && typeof P === "object" && (P instanceof Minipass || P instanceof Ot.default || (0, q.isReadable)(P) || (0, q.isWritable)(P));
-      q.isStream = isStream;
-      const isReadable = (P) =>
-        !!P && typeof P === "object" && P instanceof st.EventEmitter && typeof P.pipe === "function" && P.pipe !== Ot.default.Writable.prototype.pipe;
-      q.isReadable = isReadable;
-      const isWritable = (P) => !!P && typeof P === "object" && P instanceof st.EventEmitter && typeof P.write === "function" && typeof P.end === "function";
-      q.isWritable = isWritable;
-      const Ar = Symbol("EOF");
-      const Er = Symbol("maybeEmitEnd");
-      const Ir = Symbol("emittedEnd");
-      const Br = Symbol("emittingEnd");
-      const Qr = Symbol("emittedError");
-      const Fr = Symbol("closed");
-      const Dr = Symbol("read");
-      const kr = Symbol("flush");
-      const Nr = Symbol("flushChunk");
-      const Mr = Symbol("encoding");
-      const Ur = Symbol("decoder");
-      const Lr = Symbol("flowing");
-      const xr = Symbol("paused");
-      const Gr = Symbol("resume");
-      const jr = Symbol("buffer");
-      const Vr = Symbol("pipes");
-      const Hr = Symbol("bufferLength");
-      const Yr = Symbol("bufferPush");
-      const Wr = Symbol("bufferShift");
-      const Jr = Symbol("objectMode");
-      const $r = Symbol("destroyed");
-      const Kr = Symbol("error");
-      const zr = Symbol("emitData");
-      const Zr = Symbol("emitEnd");
-      const Xr = Symbol("emitEnd2");
-      const es = Symbol("async");
-      const ts = Symbol("abort");
-      const rs = Symbol("aborted");
-      const ss = Symbol("signal");
-      const ns = Symbol("dataListeners");
-      const os = Symbol("discarded");
-      const defer = (P) => Promise.resolve().then(P);
-      const nodefer = (P) => P();
-      const isEndish = (P) => P === "end" || P === "finish" || P === "prefinish";
-      const isArrayBufferLike = (P) =>
-        P instanceof ArrayBuffer || (!!P && typeof P === "object" && P.constructor && P.constructor.name === "ArrayBuffer" && P.byteLength >= 0);
-      const isArrayBufferView = (P) => !Buffer.isBuffer(P) && ArrayBuffer.isView(P);
-      class Pipe {
-        src;
-        dest;
-        opts;
-        ondrain;
-        constructor(P, q, oe) {
-          this.src = P;
-          this.dest = q;
-          this.opts = oe;
-          this.ondrain = () => P[Gr]();
-          this.dest.on("drain", this.ondrain);
-        }
-        unpipe() {
-          this.dest.removeListener("drain", this.ondrain);
-        }
-        proxyErrors(P) {}
-        end() {
-          this.unpipe();
-          if (this.opts.end) this.dest.end();
-        }
-      }
-      class PipeProxyErrors extends Pipe {
-        unpipe() {
-          this.src.removeListener("error", this.proxyErrors);
-          super.unpipe();
-        }
-        constructor(P, q, oe) {
-          super(P, q, oe);
-          this.proxyErrors = (P) => q.emit("error", P);
-          P.on("error", this.proxyErrors);
-        }
-      }
-      const isObjectModeOptions = (P) => !!P.objectMode;
-      const isEncodingOptions = (P) => !P.objectMode && !!P.encoding && P.encoding !== "buffer";
-      class Minipass extends st.EventEmitter {
-        [Lr] = false;
-        [xr] = false;
-        [Vr] = [];
-        [jr] = [];
-        [Jr];
-        [Mr];
-        [es];
-        [Ur];
-        [Ar] = false;
-        [Ir] = false;
-        [Br] = false;
-        [Fr] = false;
-        [Qr] = null;
-        [Hr] = 0;
-        [$r] = false;
-        [ss];
-        [rs] = false;
-        [ns] = 0;
-        [os] = false;
-        writable = true;
-        readable = true;
-        constructor(...P) {
-          const q = P[0] || {};
-          super();
-          if (q.objectMode && typeof q.encoding === "string") {
-            throw new TypeError("Encoding and objectMode may not be used together");
-          }
-          if (isObjectModeOptions(q)) {
-            this[Jr] = true;
-            this[Mr] = null;
-          } else if (isEncodingOptions(q)) {
-            this[Mr] = q.encoding;
-            this[Jr] = false;
-          } else {
-            this[Jr] = false;
-            this[Mr] = null;
-          }
-          this[es] = !!q.async;
-          this[Ur] = this[Mr] ? new Wt.StringDecoder(this[Mr]) : null;
-          if (q && q.debugExposeBuffer === true) {
-            Object.defineProperty(this, "buffer", { get: () => this[jr] });
-          }
-          if (q && q.debugExposePipes === true) {
-            Object.defineProperty(this, "pipes", { get: () => this[Vr] });
-          }
-          const { signal: oe } = q;
-          if (oe) {
-            this[ss] = oe;
-            if (oe.aborted) {
-              this[ts]();
-            } else {
-              oe.addEventListener("abort", () => this[ts]());
-            }
-          }
-        }
-        get bufferLength() {
-          return this[Hr];
-        }
-        get encoding() {
-          return this[Mr];
-        }
-        set encoding(P) {
-          throw new Error("Encoding must be set at instantiation time");
-        }
-        setEncoding(P) {
-          throw new Error("Encoding must be set at instantiation time");
-        }
-        get objectMode() {
-          return this[Jr];
-        }
-        set objectMode(P) {
-          throw new Error("objectMode must be set at instantiation time");
-        }
-        get ["async"]() {
-          return this[es];
-        }
-        set ["async"](P) {
-          this[es] = this[es] || !!P;
-        }
-        [ts]() {
-          this[rs] = true;
-          this.emit("abort", this[ss]?.reason);
-          this.destroy(this[ss]?.reason);
-        }
-        get aborted() {
-          return this[rs];
-        }
-        set aborted(P) {}
-        write(P, q, oe) {
-          if (this[rs]) return false;
-          if (this[Ar]) throw new Error("write after end");
-          if (this[$r]) {
-            this.emit("error", Object.assign(new Error("Cannot call write after a stream was destroyed"), { code: "ERR_STREAM_DESTROYED" }));
-            return true;
-          }
-          if (typeof q === "function") {
-            oe = q;
-            q = "utf8";
-          }
-          if (!q) q = "utf8";
-          const ie = this[es] ? defer : nodefer;
-          if (!this[Jr] && !Buffer.isBuffer(P)) {
-            if (isArrayBufferView(P)) {
-              P = Buffer.from(P.buffer, P.byteOffset, P.byteLength);
-            } else if (isArrayBufferLike(P)) {
-              P = Buffer.from(P);
-            } else if (typeof P !== "string") {
-              throw new Error("Non-contiguous data written to non-objectMode stream");
-            }
-          }
-          if (this[Jr]) {
-            if (this[Lr] && this[Hr] !== 0) this[kr](true);
-            if (this[Lr]) this.emit("data", P);
-            else this[Yr](P);
-            if (this[Hr] !== 0) this.emit("readable");
-            if (oe) ie(oe);
-            return this[Lr];
-          }
-          if (!P.length) {
-            if (this[Hr] !== 0) this.emit("readable");
-            if (oe) ie(oe);
-            return this[Lr];
-          }
-          if (typeof P === "string" && !(q === this[Mr] && !this[Ur]?.lastNeed)) {
-            P = Buffer.from(P, q);
-          }
-          if (Buffer.isBuffer(P) && this[Mr]) {
-            P = this[Ur].write(P);
-          }
-          if (this[Lr] && this[Hr] !== 0) this[kr](true);
-          if (this[Lr]) this.emit("data", P);
-          else this[Yr](P);
-          if (this[Hr] !== 0) this.emit("readable");
-          if (oe) ie(oe);
-          return this[Lr];
-        }
-        read(P) {
-          if (this[$r]) return null;
-          this[os] = false;
-          if (this[Hr] === 0 || P === 0 || (P && P > this[Hr])) {
-            this[Er]();
-            return null;
-          }
-          if (this[Jr]) P = null;
-          if (this[jr].length > 1 && !this[Jr]) {
-            this[jr] = [this[Mr] ? this[jr].join("") : Buffer.concat(this[jr], this[Hr])];
-          }
-          const q = this[Dr](P || null, this[jr][0]);
-          this[Er]();
-          return q;
-        }
-        [Dr](P, q) {
-          if (this[Jr]) this[Wr]();
-          else {
-            const oe = q;
-            if (P === oe.length || P === null) this[Wr]();
-            else if (typeof oe === "string") {
-              this[jr][0] = oe.slice(P);
-              q = oe.slice(0, P);
-              this[Hr] -= P;
-            } else {
-              this[jr][0] = oe.subarray(P);
-              q = oe.subarray(0, P);
-              this[Hr] -= P;
-            }
-          }
-          this.emit("data", q);
-          if (!this[jr].length && !this[Ar]) this.emit("drain");
-          return q;
-        }
-        end(P, q, oe) {
-          if (typeof P === "function") {
-            oe = P;
-            P = undefined;
-          }
-          if (typeof q === "function") {
-            oe = q;
-            q = "utf8";
-          }
-          if (P !== undefined) this.write(P, q);
-          if (oe) this.once("end", oe);
-          this[Ar] = true;
-          this.writable = false;
-          if (this[Lr] || !this[xr]) this[Er]();
-          return this;
-        }
-        [Gr]() {
-          if (this[$r]) return;
-          if (!this[ns] && !this[Vr].length) {
-            this[os] = true;
-          }
-          this[xr] = false;
-          this[Lr] = true;
-          this.emit("resume");
-          if (this[jr].length) this[kr]();
-          else if (this[Ar]) this[Er]();
-          else this.emit("drain");
-        }
-        resume() {
-          return this[Gr]();
-        }
-        pause() {
-          this[Lr] = false;
-          this[xr] = true;
-          this[os] = false;
-        }
-        get destroyed() {
-          return this[$r];
-        }
-        get flowing() {
-          return this[Lr];
-        }
-        get paused() {
-          return this[xr];
-        }
-        [Yr](P) {
-          if (this[Jr]) this[Hr] += 1;
-          else this[Hr] += P.length;
-          this[jr].push(P);
-        }
-        [Wr]() {
-          if (this[Jr]) this[Hr] -= 1;
-          else this[Hr] -= this[jr][0].length;
-          return this[jr].shift();
-        }
-        [kr](P = false) {
-          do {} while (this[Nr](this[Wr]()) && this[jr].length);
-          if (!P && !this[jr].length && !this[Ar]) this.emit("drain");
-        }
-        [Nr](P) {
-          this.emit("data", P);
-          return this[Lr];
-        }
-        pipe(P, q) {
-          if (this[$r]) return P;
-          this[os] = false;
-          const oe = this[Ir];
-          q = q || {};
-          if (P === Ge.stdout || P === Ge.stderr) q.end = false;
-          else q.end = q.end !== false;
-          q.proxyErrors = !!q.proxyErrors;
-          if (oe) {
-            if (q.end) P.end();
-          } else {
-            this[Vr].push(!q.proxyErrors ? new Pipe(this, P, q) : new PipeProxyErrors(this, P, q));
-            if (this[es]) defer(() => this[Gr]());
-            else this[Gr]();
-          }
-          return P;
-        }
-        unpipe(P) {
-          const q = this[Vr].find((q) => q.dest === P);
-          if (q) {
-            if (this[Vr].length === 1) {
-              if (this[Lr] && this[ns] === 0) {
-                this[Lr] = false;
-              }
-              this[Vr] = [];
-            } else this[Vr].splice(this[Vr].indexOf(q), 1);
-            q.unpipe();
-          }
-        }
-        addListener(P, q) {
-          return this.on(P, q);
-        }
-        on(P, q) {
-          const oe = super.on(P, q);
-          if (P === "data") {
-            this[os] = false;
-            this[ns]++;
-            if (!this[Vr].length && !this[Lr]) {
-              this[Gr]();
-            }
-          } else if (P === "readable" && this[Hr] !== 0) {
-            super.emit("readable");
-          } else if (isEndish(P) && this[Ir]) {
-            super.emit(P);
-            this.removeAllListeners(P);
-          } else if (P === "error" && this[Qr]) {
-            const P = q;
-            if (this[es]) defer(() => P.call(this, this[Qr]));
-            else P.call(this, this[Qr]);
-          }
-          return oe;
-        }
-        removeListener(P, q) {
-          return this.off(P, q);
-        }
-        off(P, q) {
-          const oe = super.off(P, q);
-          if (P === "data") {
-            this[ns] = this.listeners("data").length;
-            if (this[ns] === 0 && !this[os] && !this[Vr].length) {
-              this[Lr] = false;
-            }
-          }
-          return oe;
-        }
-        removeAllListeners(P) {
-          const q = super.removeAllListeners(P);
-          if (P === "data" || P === undefined) {
-            this[ns] = 0;
-            if (!this[os] && !this[Vr].length) {
-              this[Lr] = false;
-            }
-          }
-          return q;
-        }
-        get emittedEnd() {
-          return this[Ir];
-        }
-        [Er]() {
-          if (!this[Br] && !this[Ir] && !this[$r] && this[jr].length === 0 && this[Ar]) {
-            this[Br] = true;
-            this.emit("end");
-            this.emit("prefinish");
-            this.emit("finish");
-            if (this[Fr]) this.emit("close");
-            this[Br] = false;
-          }
-        }
-        emit(P, ...q) {
-          const oe = q[0];
-          if (P !== "error" && P !== "close" && P !== $r && this[$r]) {
-            return false;
-          } else if (P === "data") {
-            return !this[Jr] && !oe ? false : this[es] ? (defer(() => this[zr](oe)), true) : this[zr](oe);
-          } else if (P === "end") {
-            return this[Zr]();
-          } else if (P === "close") {
-            this[Fr] = true;
-            if (!this[Ir] && !this[$r]) return false;
-            const P = super.emit("close");
-            this.removeAllListeners("close");
-            return P;
-          } else if (P === "error") {
-            this[Qr] = oe;
-            super.emit(Kr, oe);
-            const P = !this[ss] || this.listeners("error").length ? super.emit("error", oe) : false;
-            this[Er]();
-            return P;
-          } else if (P === "resume") {
-            const P = super.emit("resume");
-            this[Er]();
-            return P;
-          } else if (P === "finish" || P === "prefinish") {
-            const q = super.emit(P);
-            this.removeAllListeners(P);
-            return q;
-          }
-          const ie = super.emit(P, ...q);
-          this[Er]();
-          return ie;
-        }
-        [zr](P) {
-          for (const q of this[Vr]) {
-            if (q.dest.write(P) === false) this.pause();
-          }
-          const q = this[os] ? false : super.emit("data", P);
-          this[Er]();
-          return q;
-        }
-        [Zr]() {
-          if (this[Ir]) return false;
-          this[Ir] = true;
-          this.readable = false;
-          return this[es] ? (defer(() => this[Xr]()), true) : this[Xr]();
-        }
-        [Xr]() {
-          if (this[Ur]) {
-            const P = this[Ur].end();
-            if (P) {
-              for (const q of this[Vr]) {
-                q.dest.write(P);
-              }
-              if (!this[os]) super.emit("data", P);
-            }
-          }
-          for (const P of this[Vr]) {
-            P.end();
-          }
-          const P = super.emit("end");
-          this.removeAllListeners("end");
-          return P;
-        }
-        async collect() {
-          const P = Object.assign([], { dataLength: 0 });
-          if (!this[Jr]) P.dataLength = 0;
-          const q = this.promise();
-          this.on("data", (q) => {
-            P.push(q);
-            if (!this[Jr]) P.dataLength += q.length;
-          });
-          await q;
-          return P;
-        }
-        async concat() {
-          if (this[Jr]) {
-            throw new Error("cannot concat in objectMode");
-          }
-          const P = await this.collect();
-          return this[Mr] ? P.join("") : Buffer.concat(P, P.dataLength);
-        }
-        async promise() {
-          return new Promise((P, q) => {
-            this.on($r, () => q(new Error("stream destroyed")));
-            this.on("error", (P) => q(P));
-            this.on("end", () => P());
-          });
-        }
-        [Symbol.asyncIterator]() {
-          this[os] = false;
-          let P = false;
-          const stop = async () => {
-            this.pause();
-            P = true;
-            return { value: undefined, done: true };
-          };
-          const next = () => {
-            if (P) return stop();
-            const q = this.read();
-            if (q !== null) return Promise.resolve({ done: false, value: q });
-            if (this[Ar]) return stop();
-            let oe;
-            let ie;
-            const onerr = (P) => {
-              this.off("data", ondata);
-              this.off("end", onend);
-              this.off($r, ondestroy);
-              stop();
-              ie(P);
-            };
-            const ondata = (P) => {
-              this.off("error", onerr);
-              this.off("end", onend);
-              this.off($r, ondestroy);
-              this.pause();
-              oe({ value: P, done: !!this[Ar] });
-            };
-            const onend = () => {
-              this.off("error", onerr);
-              this.off("data", ondata);
-              this.off($r, ondestroy);
-              stop();
-              oe({ done: true, value: undefined });
-            };
-            const ondestroy = () => onerr(new Error("stream destroyed"));
-            return new Promise((P, q) => {
-              ie = q;
-              oe = P;
-              this.once($r, ondestroy);
-              this.once("error", onerr);
-              this.once("end", onend);
-              this.once("data", ondata);
-            });
-          };
-          return {
-            next: next,
-            throw: stop,
-            return: stop,
-            [Symbol.asyncIterator]() {
-              return this;
-            },
-          };
-        }
-        [Symbol.iterator]() {
-          this[os] = false;
-          let P = false;
-          const stop = () => {
-            this.pause();
-            this.off(Kr, stop);
-            this.off($r, stop);
-            this.off("end", stop);
-            P = true;
-            return { done: true, value: undefined };
-          };
-          const next = () => {
-            if (P) return stop();
-            const q = this.read();
-            return q === null ? stop() : { done: false, value: q };
-          };
-          this.once("end", stop);
-          this.once(Kr, stop);
-          this.once($r, stop);
-          return {
-            next: next,
-            throw: stop,
-            return: stop,
-            [Symbol.iterator]() {
-              return this;
-            },
-          };
-        }
-        destroy(P) {
-          if (this[$r]) {
-            if (P) this.emit("error", P);
-            else this.emit($r);
-            return this;
-          }
-          this[$r] = true;
-          this[os] = true;
-          this[jr].length = 0;
-          this[Hr] = 0;
-          const q = this;
-          if (typeof q.close === "function" && !this[Fr]) q.close();
-          if (P) this.emit("error", P);
-          else this.emit($r);
-          return this;
-        }
-        static get isStream() {
-          return q.isStream;
-        }
-      }
-      q.Minipass = Minipass;
-    },
     42629: (P) => {
       "use strict";
       var q = Object.defineProperty;
@@ -64266,23 +63789,23 @@
         return Math.max(...oe);
       };
       class MergedStream extends Wt.PassThrough {
-        #Tt = new Set([]);
         #St = new Set([]);
         #Rt = new Set([]);
-        #Ft;
+        #Ft = new Set([]);
+        #Dt;
         add(P) {
           validateStream(P);
-          if (this.#Tt.has(P)) {
+          if (this.#St.has(P)) {
             return;
           }
-          this.#Tt.add(P);
-          this.#Ft ??= onMergedStreamFinished(this, this.#Tt);
-          endWhenStreamsDone({ passThroughStream: this, stream: P, streams: this.#Tt, ended: this.#St, aborted: this.#Rt, onFinished: this.#Ft });
+          this.#St.add(P);
+          this.#Dt ??= onMergedStreamFinished(this, this.#St);
+          endWhenStreamsDone({ passThroughStream: this, stream: P, streams: this.#St, ended: this.#Rt, aborted: this.#Ft, onFinished: this.#Dt });
           P.pipe(this, { end: false });
         }
         remove(P) {
           validateStream(P);
-          if (!this.#Tt.has(P)) {
+          if (!this.#St.has(P)) {
             return false;
           }
           P.unpipe(this);
