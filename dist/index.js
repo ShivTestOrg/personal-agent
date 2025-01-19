@@ -47339,7 +47339,12 @@
       function installDependencies(P) {
         return ie(this, void 0, void 0, function* () {
           const q = yield detectPackageManager(P);
-          const oe = { npm: "npm install", yarn: "bun install --frozen-lockfile", bun: "bun install", pnpm: "pnpm install" };
+          const oe = {
+            npm: "npm install",
+            yarn: "yarn install --immutable --immutable-cache --check-cache",
+            bun: "bun install --frozen-lockfile",
+            pnpm: "pnpm install",
+          };
           return oe[q];
         });
       }
