@@ -24,7 +24,7 @@ export async function detectTestConfiguration(projectPath: string): Promise<Test
     if (allDeps.jest || testScript.includes("jest")) {
       return {
         runner: "jest",
-        command: testScript || "jest",
+        command: "bun run test",
         testPattern: "**/*.test.{ts,js}",
         configFile: await findConfigFile(projectPath, ["jest.config.js", "jest.config.ts"]),
       };
