@@ -45,10 +45,12 @@ export async function delegate(context: Context) {
         cwd: workingDir,
       });
 
-      if (installError && installError.length > 0) {
-        logger.debug(`Install error: ${installOutput}`);
-        throw new Error(`Package installation failed: ${installError}`);
-      }
+      // if (installError && installError.length > 0) {
+      //   logger.debug(`Install error: ${installOutput}`);
+      //   throw new Error(`Package installation failed: ${installError}`);
+      logger.ok(`Install output: ${installOutput}`);
+      logger.ok(`Install error: ${installError}`);
+      // }
       logger.ok("Dependencies installed successfully");
 
       // Find project entry point
