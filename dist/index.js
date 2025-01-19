@@ -13721,8 +13721,8 @@
       const os = oe(26609);
       const is = oe(67575);
       const as = oe(7521);
-      const As = oe(69100);
-      const ls = oe(51897);
+      const ls = oe(69100);
+      const As = oe(51897);
       const cs = oe(23339);
       class JsonTypeBuilder {
         Strict(P) {
@@ -13846,10 +13846,10 @@
           return (0, Nr.Uncapitalize)(P, q);
         }
         Union(P, q = {}) {
-          return (0, As.Union)(P, q);
+          return (0, ls.Union)(P, q);
         }
         Unknown(P = {}) {
-          return (0, ls.Unknown)(P);
+          return (0, As.Unknown)(P);
         }
         Unsafe(P = {}) {
           return (0, cs.Unsafe)(P);
@@ -14199,18 +14199,18 @@
           return as.Readonly;
         },
       });
-      var As = oe(78946);
+      var ls = oe(78946);
       Object.defineProperty(q, "ReadonlyOptional", {
         enumerable: true,
         get: function () {
-          return As.ReadonlyOptional;
+          return ls.ReadonlyOptional;
         },
       });
-      var ls = oe(30420);
+      var As = oe(30420);
       Object.defineProperty(q, "Record", {
         enumerable: true,
         get: function () {
-          return ls.Record;
+          return As.Record;
         },
       });
       var cs = oe(33107);
@@ -23204,7 +23204,7 @@
         let os = 0;
         let is;
         let as;
-        let As = { value: "", depth: 0, isGlob: false };
+        let ls = { value: "", depth: 0, isGlob: false };
         const eos = () => Yr >= Lr;
         const peek = () => Hr.charCodeAt(Yr + 1);
         const advance = () => {
@@ -23215,7 +23215,7 @@
           as = advance();
           let P;
           if (as === Ot) {
-            ts = As.backslashes = true;
+            ts = ls.backslashes = true;
             as = advance();
             if (as === Br) {
               es = true;
@@ -23226,7 +23226,7 @@
             os++;
             while (eos() !== true && (as = advance())) {
               if (as === Ot) {
-                ts = As.backslashes = true;
+                ts = ls.backslashes = true;
                 advance();
                 continue;
               }
@@ -23235,8 +23235,8 @@
                 continue;
               }
               if (es !== true && as === Ar && (as = advance()) === Ar) {
-                $r = As.isBrace = true;
-                zr = As.isGlob = true;
+                $r = ls.isBrace = true;
+                zr = ls.isGlob = true;
                 ns = true;
                 if (xr === true) {
                   continue;
@@ -23244,8 +23244,8 @@
                 break;
               }
               if (es !== true && as === Wt) {
-                $r = As.isBrace = true;
-                zr = As.isGlob = true;
+                $r = ls.isBrace = true;
+                zr = ls.isGlob = true;
                 ns = true;
                 if (xr === true) {
                   continue;
@@ -23256,7 +23256,7 @@
                 os--;
                 if (os === 0) {
                   es = false;
-                  $r = As.isBrace = true;
+                  $r = ls.isBrace = true;
                   ns = true;
                   break;
                 }
@@ -23269,8 +23269,8 @@
           }
           if (as === Ir) {
             Gr.push(Yr);
-            jr.push(As);
-            As = { value: "", depth: 0, isGlob: false };
+            jr.push(ls);
+            ls = { value: "", depth: 0, isGlob: false };
             if (ns === true) continue;
             if (is === Ar && Yr === Wr + 1) {
               Wr += 2;
@@ -23282,8 +23282,8 @@
           if (oe.noext !== true) {
             const P = as === Dr || as === st || as === Ge || as === kr || as === Er;
             if (P === true && peek() === Qr) {
-              zr = As.isGlob = true;
-              Zr = As.isExtglob = true;
+              zr = ls.isGlob = true;
+              Zr = ls.isExtglob = true;
               ns = true;
               if (as === Er && Yr === Wr) {
                 ss = true;
@@ -23291,12 +23291,12 @@
               if (xr === true) {
                 while (eos() !== true && (as = advance())) {
                   if (as === Ot) {
-                    ts = As.backslashes = true;
+                    ts = ls.backslashes = true;
                     as = advance();
                     continue;
                   }
                   if (as === Mr) {
-                    zr = As.isGlob = true;
+                    zr = ls.isGlob = true;
                     ns = true;
                     break;
                   }
@@ -23307,8 +23307,8 @@
             }
           }
           if (as === Ge) {
-            if (is === Ge) Xr = As.isGlobstar = true;
-            zr = As.isGlob = true;
+            if (is === Ge) Xr = ls.isGlobstar = true;
+            zr = ls.isGlob = true;
             ns = true;
             if (xr === true) {
               continue;
@@ -23316,7 +23316,7 @@
             break;
           }
           if (as === kr) {
-            zr = As.isGlob = true;
+            zr = ls.isGlob = true;
             ns = true;
             if (xr === true) {
               continue;
@@ -23326,13 +23326,13 @@
           if (as === Fr) {
             while (eos() !== true && (P = advance())) {
               if (P === Ot) {
-                ts = As.backslashes = true;
+                ts = ls.backslashes = true;
                 advance();
                 continue;
               }
               if (P === Ur) {
-                Kr = As.isBracket = true;
-                zr = As.isGlob = true;
+                Kr = ls.isBracket = true;
+                zr = ls.isGlob = true;
                 ns = true;
                 break;
               }
@@ -23343,16 +23343,16 @@
             break;
           }
           if (oe.nonegate !== true && as === Er && Yr === Wr) {
-            rs = As.negated = true;
+            rs = ls.negated = true;
             Wr++;
             continue;
           }
           if (oe.noparen !== true && as === Qr) {
-            zr = As.isGlob = true;
+            zr = ls.isGlob = true;
             if (xr === true) {
               while (eos() !== true && (as = advance())) {
                 if (as === Qr) {
-                  ts = As.backslashes = true;
+                  ts = ls.backslashes = true;
                   as = advance();
                   continue;
                 }
@@ -23377,7 +23377,7 @@
           Zr = false;
           zr = false;
         }
-        let ls = Hr;
+        let As = Hr;
         let cs = "";
         let us = "";
         if (Wr > 0) {
@@ -23385,31 +23385,31 @@
           Hr = Hr.slice(Wr);
           Jr -= Wr;
         }
-        if (ls && zr === true && Jr > 0) {
-          ls = Hr.slice(0, Jr);
+        if (As && zr === true && Jr > 0) {
+          As = Hr.slice(0, Jr);
           us = Hr.slice(Jr);
         } else if (zr === true) {
-          ls = "";
+          As = "";
           us = Hr;
         } else {
-          ls = Hr;
+          As = Hr;
         }
-        if (ls && ls !== "" && ls !== "/" && ls !== Hr) {
-          if (isPathSeparator(ls.charCodeAt(ls.length - 1))) {
-            ls = ls.slice(0, -1);
+        if (As && As !== "" && As !== "/" && As !== Hr) {
+          if (isPathSeparator(As.charCodeAt(As.length - 1))) {
+            As = As.slice(0, -1);
           }
         }
         if (oe.unescape === true) {
           if (us) us = ie.removeBackslashes(us);
-          if (ls && ts === true) {
-            ls = ie.removeBackslashes(ls);
+          if (As && ts === true) {
+            As = ie.removeBackslashes(As);
           }
         }
         const ds = {
           prefix: cs,
           input: P,
           start: Wr,
-          base: ls,
+          base: As,
           glob: us,
           isBrace: $r,
           isBracket: Kr,
@@ -23422,7 +23422,7 @@
         if (oe.tokens === true) {
           ds.maxDepth = 0;
           if (!isPathSeparator(as)) {
-            jr.push(As);
+            jr.push(ls);
           }
           ds.tokens = jr;
         }
@@ -28128,8 +28128,8 @@
         kConnected: os,
         kConnecting: is,
         kNeedDrain: as,
-        kNoRef: As,
-        kKeepAliveDefaultTimeout: ls,
+        kNoRef: ls,
+        kKeepAliveDefaultTimeout: As,
         kHostHeader: cs,
         kPendingIdx: us,
         kRunningIdx: ds,
@@ -28308,10 +28308,10 @@
           this[hs] = null;
           this[ms] = Lr != null ? Lr : 1;
           this[Es] = oe || st.maxHeaderSize;
-          this[ls] = Dr == null ? 4e3 : Dr;
+          this[As] = Dr == null ? 4e3 : Dr;
           this[ys] = Nr == null ? 6e5 : Nr;
           this[Is] = Mr == null ? 1e3 : Mr;
-          this[gs] = this[ls];
+          this[gs] = this[As];
           this[Wr] = null;
           this[Ds] = Kr != null ? Kr : null;
           this[Xr] = 0;
@@ -28466,7 +28466,7 @@
             wasm_on_url: (P, q, oe) => 0,
             wasm_on_status: (P, q, oe) => {
               ie.strictEqual(nn.ptr, P);
-              const Ge = q - An + on.byteOffset;
+              const Ge = q - ln + on.byteOffset;
               return nn.onStatus(new Ks(on.buffer, Ge, oe)) || 0;
             },
             wasm_on_message_begin: (P) => {
@@ -28475,12 +28475,12 @@
             },
             wasm_on_header_field: (P, q, oe) => {
               ie.strictEqual(nn.ptr, P);
-              const Ge = q - An + on.byteOffset;
+              const Ge = q - ln + on.byteOffset;
               return nn.onHeaderField(new Ks(on.buffer, Ge, oe)) || 0;
             },
             wasm_on_header_value: (P, q, oe) => {
               ie.strictEqual(nn.ptr, P);
-              const Ge = q - An + on.byteOffset;
+              const Ge = q - ln + on.byteOffset;
               return nn.onHeaderValue(new Ks(on.buffer, Ge, oe)) || 0;
             },
             wasm_on_headers_complete: (P, q, oe, Ge) => {
@@ -28489,7 +28489,7 @@
             },
             wasm_on_body: (P, q, oe) => {
               ie.strictEqual(nn.ptr, P);
-              const Ge = q - An + on.byteOffset;
+              const Ge = q - ln + on.byteOffset;
               return nn.onBody(new Ks(on.buffer, Ge, oe)) || 0;
             },
             wasm_on_message_complete: (P) => {
@@ -28505,8 +28505,8 @@
       let nn = null;
       let on = null;
       let an = 0;
-      let An = null;
-      const ln = 1;
+      let ln = null;
+      const An = 1;
       const cn = 2;
       const un = 3;
       class Parser {
@@ -28585,26 +28585,26 @@
           ie(!this.paused);
           const { socket: q, llhttp: oe } = this;
           if (P.length > an) {
-            if (An) {
-              oe.free(An);
+            if (ln) {
+              oe.free(ln);
             }
             an = Math.ceil(P.length / 4096) * 4096;
-            An = oe.malloc(an);
+            ln = oe.malloc(an);
           }
-          new Uint8Array(oe.memory.buffer, An, an).set(P);
+          new Uint8Array(oe.memory.buffer, ln, an).set(P);
           try {
             let ie;
             try {
               on = P;
               nn = this;
-              ie = oe.llhttp_execute(this.ptr, An, P.length);
+              ie = oe.llhttp_execute(this.ptr, ln, P.length);
             } catch (P) {
               throw P;
             } finally {
               nn = null;
               on = null;
             }
-            const Ge = oe.llhttp_get_error_pos(this.ptr) - An;
+            const Ge = oe.llhttp_get_error_pos(this.ptr) - ln;
             if (ie === Xs.ERROR.PAUSED_UPGRADE) {
               this.onUpgrade(P.slice(Ge));
             } else if (ie === Xs.ERROR.PAUSED) {
@@ -28733,7 +28733,7 @@
             Wt.destroy(st, new Mr("bad upgrade", Wt.getSocketInfo(st)));
             return -1;
           }
-          ie.strictEqual(this.timeoutType, ln);
+          ie.strictEqual(this.timeoutType, An);
           this.statusCode = P;
           this.shouldKeepAlive = oe || (Er.method === "HEAD" && !st[Yr] && this.connection.toLowerCase() === "keep-alive");
           if (this.statusCode >= 200) {
@@ -28767,7 +28767,7 @@
                 Ge[gs] = q;
               }
             } else {
-              Ge[gs] = Ge[ls];
+              Ge[gs] = Ge[As];
             }
           } else {
             st[Yr] = true;
@@ -28859,7 +28859,7 @@
       }
       function onParserTimeout(P) {
         const { socket: q, timeoutType: oe, client: Ge } = P;
-        if (oe === ln) {
+        if (oe === An) {
           if (!q[ss] || q.writableNeedDrain || Ge[es] > 1) {
             ie(!P.paused, "cannot be paused while waiting for headers");
             Wt.destroy(q, new kr());
@@ -29000,7 +29000,7 @@
               rn = await sn;
               sn = null;
             }
-            Ge[As] = false;
+            Ge[ls] = false;
             Ge[ss] = false;
             Ge[Yr] = false;
             Ge[Zr] = false;
@@ -29076,23 +29076,23 @@
           const oe = P[hs];
           if (oe && !oe.destroyed && oe.alpnProtocol !== "h2") {
             if (P[rs] === 0) {
-              if (!oe[As] && oe.unref) {
+              if (!oe[ls] && oe.unref) {
                 oe.unref();
-                oe[As] = true;
+                oe[ls] = true;
               }
-            } else if (oe[As] && oe.ref) {
+            } else if (oe[ls] && oe.ref) {
               oe.ref();
-              oe[As] = false;
+              oe[ls] = false;
             }
             if (P[rs] === 0) {
               if (oe[Kr].timeoutType !== un) {
                 oe[Kr].setTimeout(P[gs], un);
               }
             } else if (P[es] > 0 && oe[Kr].statusCode < 200) {
-              if (oe[Kr].timeoutType !== ln) {
+              if (oe[Kr].timeoutType !== An) {
                 const q = P[ns][P[ds]];
                 const ie = q.headersTimeout != null ? q.headersTimeout : P[Cs];
-                oe[Kr].setTimeout(ie, ln);
+                oe[Kr].setTimeout(ie, An);
               }
             }
           }
@@ -29614,7 +29614,7 @@
           q.uncork();
           oe.onBodySent(P);
           if (!Er) {
-            if (q[Kr].timeout && q[Kr].timeoutType === ln) {
+            if (q[Kr].timeout && q[Kr].timeoutType === An) {
               if (q[Kr].timeout.refresh) {
                 q[Kr].timeout.refresh();
               }
@@ -29648,7 +29648,7 @@
               process.emitWarning(new Br());
             }
           }
-          if (P[Kr].timeout && P[Kr].timeoutType === ln) {
+          if (P[Kr].timeout && P[Kr].timeoutType === An) {
             if (P[Kr].timeout.refresh) {
               P[Kr].timeout.refresh();
             }
@@ -32883,7 +32883,7 @@
         urlIsHttpHttpsScheme: os,
         urlHasHttpsScheme: is,
       } = oe(15523);
-      const { kState: as, kHeaders: As, kGuard: ls, kRealm: cs } = oe(89710);
+      const { kState: as, kHeaders: ls, kGuard: As, kRealm: cs } = oe(89710);
       const us = oe(42613);
       const { safelyExtractBody: ds } = oe(8923);
       const { redirectStatusSet: ps, nullBodyStatus: ms, safeMethodsSet: hs, requestBodyHeader: gs, subresourceSet: Es, DOMException: ys } = oe(87326);
@@ -32974,9 +32974,9 @@
           Wt = new ie();
           Wt[as] = P;
           Wt[cs] = Ar;
-          Wt[As][Is] = P.headersList;
-          Wt[As][ls] = "immutable";
-          Wt[As][cs] = Ar;
+          Wt[ls][Is] = P.headersList;
+          Wt[ls][As] = "immutable";
+          Wt[ls][cs] = Ar;
           oe.resolve(Wt);
         };
         Br = fetching({ request: st, processResponseEndOfBody: handleFetchDone, processResponse: processResponse, dispatcher: q.dispatcher ?? Ds() });
@@ -33814,8 +33814,8 @@
       const rs = oe(42613);
       const { getMaxListeners: ss, setMaxListeners: ns, getEventListeners: os, defaultMaxListeners: is } = oe(24434);
       let as = globalThis.TransformStream;
-      const As = Symbol("abortController");
-      const ls = new Er(({ signal: P, abort: q }) => {
+      const ls = Symbol("abortController");
+      const As = new Er(({ signal: P, abort: q }) => {
         P.removeEventListener("abort", q);
       });
       class Request {
@@ -33976,7 +33976,7 @@
             if (Ur.aborted) {
               Vr.abort(Ur.reason);
             } else {
-              this[As] = Vr;
+              this[ls] = Vr;
               const P = new WeakRef(Vr);
               const abort = function () {
                 const q = P.deref();
@@ -33992,7 +33992,7 @@
                 }
               } catch {}
               Ir.addAbortListener(Ur, abort);
-              ls.register(Vr, { signal: Ur, abort: abort });
+              As.register(Vr, { signal: Ur, abort: abort });
             }
           }
           this[Yr] = new Ot(ts);
@@ -38410,8 +38410,8 @@
       class ByteParser extends ie {
         #i = [];
         #a = 0;
-        #A = st.INFO;
-        #l = {};
+        #l = st.INFO;
+        #A = {};
         #c = [];
         constructor(P) {
           super();
@@ -38424,44 +38424,44 @@
         }
         run(P) {
           while (true) {
-            if (this.#A === st.INFO) {
+            if (this.#l === st.INFO) {
               if (this.#a < 2) {
                 return P();
               }
               const q = this.consume(2);
-              this.#l.fin = (q[0] & 128) !== 0;
-              this.#l.opcode = q[0] & 15;
-              this.#l.originalOpcode ??= this.#l.opcode;
-              this.#l.fragmented = !this.#l.fin && this.#l.opcode !== Ot.CONTINUATION;
-              if (this.#l.fragmented && this.#l.opcode !== Ot.BINARY && this.#l.opcode !== Ot.TEXT) {
+              this.#A.fin = (q[0] & 128) !== 0;
+              this.#A.opcode = q[0] & 15;
+              this.#A.originalOpcode ??= this.#A.opcode;
+              this.#A.fragmented = !this.#A.fin && this.#A.opcode !== Ot.CONTINUATION;
+              if (this.#A.fragmented && this.#A.opcode !== Ot.BINARY && this.#A.opcode !== Ot.TEXT) {
                 Dr(this.ws, "Invalid frame type was fragmented.");
                 return;
               }
               const oe = q[1] & 127;
               if (oe <= 125) {
-                this.#l.payloadLength = oe;
-                this.#A = st.READ_DATA;
+                this.#A.payloadLength = oe;
+                this.#l = st.READ_DATA;
               } else if (oe === 126) {
-                this.#A = st.PAYLOADLENGTH_16;
+                this.#l = st.PAYLOADLENGTH_16;
               } else if (oe === 127) {
-                this.#A = st.PAYLOADLENGTH_64;
+                this.#l = st.PAYLOADLENGTH_64;
               }
-              if (this.#l.fragmented && oe > 125) {
+              if (this.#A.fragmented && oe > 125) {
                 Dr(this.ws, "Fragmented frame exceeded 125 bytes.");
                 return;
-              } else if ((this.#l.opcode === Ot.PING || this.#l.opcode === Ot.PONG || this.#l.opcode === Ot.CLOSE) && oe > 125) {
+              } else if ((this.#A.opcode === Ot.PING || this.#A.opcode === Ot.PONG || this.#A.opcode === Ot.CLOSE) && oe > 125) {
                 Dr(this.ws, "Payload length for control frame exceeded 125 bytes.");
                 return;
-              } else if (this.#l.opcode === Ot.CLOSE) {
+              } else if (this.#A.opcode === Ot.CLOSE) {
                 if (oe === 1) {
                   Dr(this.ws, "Received close frame with a 1-byte body.");
                   return;
                 }
                 const P = this.consume(oe);
-                this.#l.closeInfo = this.parseCloseBody(false, P);
+                this.#A.closeInfo = this.parseCloseBody(false, P);
                 if (!this.ws[Ir]) {
                   const P = Buffer.allocUnsafe(2);
-                  P.writeUInt16BE(this.#l.closeInfo.code, 0);
+                  P.writeUInt16BE(this.#A.closeInfo.code, 0);
                   const q = new Nr(P);
                   this.ws[Br].socket.write(q.createFrame(Ot.CLOSE), (P) => {
                     if (!P) {
@@ -38473,7 +38473,7 @@
                 this.ws[Qr] = true;
                 this.end();
                 return;
-              } else if (this.#l.opcode === Ot.PING) {
+              } else if (this.#A.opcode === Ot.PING) {
                 const q = this.consume(oe);
                 if (!this.ws[Qr]) {
                   const P = new Nr(q);
@@ -38482,14 +38482,14 @@
                     Mr.ping.publish({ payload: q });
                   }
                 }
-                this.#A = st.INFO;
+                this.#l = st.INFO;
                 if (this.#a > 0) {
                   continue;
                 } else {
                   P();
                   return;
                 }
-              } else if (this.#l.opcode === Ot.PONG) {
+              } else if (this.#A.opcode === Ot.PONG) {
                 const q = this.consume(oe);
                 if (Mr.pong.hasSubscribers) {
                   Mr.pong.publish({ payload: q });
@@ -38501,14 +38501,14 @@
                   return;
                 }
               }
-            } else if (this.#A === st.PAYLOADLENGTH_16) {
+            } else if (this.#l === st.PAYLOADLENGTH_16) {
               if (this.#a < 2) {
                 return P();
               }
               const q = this.consume(2);
-              this.#l.payloadLength = q.readUInt16BE(0);
-              this.#A = st.READ_DATA;
-            } else if (this.#A === st.PAYLOADLENGTH_64) {
+              this.#A.payloadLength = q.readUInt16BE(0);
+              this.#l = st.READ_DATA;
+            } else if (this.#l === st.PAYLOADLENGTH_64) {
               if (this.#a < 8) {
                 return P();
               }
@@ -38519,21 +38519,21 @@
                 return;
               }
               const ie = q.readUInt32BE(4);
-              this.#l.payloadLength = (oe << 8) + ie;
-              this.#A = st.READ_DATA;
-            } else if (this.#A === st.READ_DATA) {
-              if (this.#a < this.#l.payloadLength) {
+              this.#A.payloadLength = (oe << 8) + ie;
+              this.#l = st.READ_DATA;
+            } else if (this.#l === st.READ_DATA) {
+              if (this.#a < this.#A.payloadLength) {
                 return P();
-              } else if (this.#a >= this.#l.payloadLength) {
-                const P = this.consume(this.#l.payloadLength);
+              } else if (this.#a >= this.#A.payloadLength) {
+                const P = this.consume(this.#A.payloadLength);
                 this.#c.push(P);
-                if (!this.#l.fragmented || (this.#l.fin && this.#l.opcode === Ot.CONTINUATION)) {
+                if (!this.#A.fragmented || (this.#A.fin && this.#A.opcode === Ot.CONTINUATION)) {
                   const P = Buffer.concat(this.#c);
-                  kr(this.ws, this.#l.originalOpcode, P);
-                  this.#l = {};
+                  kr(this.ws, this.#A.originalOpcode, P);
+                  this.#A = {};
                   this.#c.length = 0;
                 }
-                this.#A = st.INFO;
+                this.#l = st.INFO;
               }
             }
             if (this.#a > 0) {
@@ -38600,7 +38600,7 @@
           return { code: oe, reason: ie };
         }
         get closingInfo() {
-          return this.#l.closeInfo;
+          return this.#A.closeInfo;
         }
       }
       P.exports = { ByteParser: ByteParser };
@@ -46990,7 +46990,8 @@
               const kr = yield (0, st.installDependencies)(Fr);
               oe.info(`Installing dependencies using ${Dr}...`);
               const { stdout: Nr, stderr: Mr } = yield Ir(kr, { cwd: Fr });
-              if (Mr) {
+              if (Mr && Mr.length > 0) {
+                oe.debug(`Install error: ${Nr}`);
                 throw new Error(`Package installation failed: ${Mr}`);
               }
               oe.ok("Dependencies installed successfully");
@@ -54275,8 +54276,8 @@
         #oe;
         #ie;
         #ae;
-        #Ae;
         #le;
+        #Ae;
         #ce;
         #ue;
         #de;
@@ -54299,7 +54300,7 @@
             get tail() {
               return P.#ae;
             },
-            free: P.#Ae,
+            free: P.#le,
             isBackgroundFetch: (q) => P.#he(q),
             backgroundFetch: (q, oe, ie, Ge) => P.#ge(q, oe, ie, Ge),
             moveToTail: (q) => P.#Ee(q),
@@ -54391,7 +54392,7 @@
           this.#oe = new Vr(q);
           this.#ie = 0;
           this.#ae = 0;
-          this.#Ae = Stack.create(q);
+          this.#le = Stack.create(q);
           this.#X = 0;
           this.#ee = 0;
           if (typeof Er === "function") {
@@ -54399,10 +54400,10 @@
           }
           if (typeof Ir === "function") {
             this.#K = Ir;
-            this.#le = [];
+            this.#Ae = [];
           } else {
             this.#K = undefined;
-            this.#le = undefined;
+            this.#Ae = undefined;
           }
           this.#pe = !!this.#$;
           this.#me = !!this.#K;
@@ -54764,7 +54765,7 @@
           }
           let Ir = this.#X === 0 ? undefined : this.#te.get(P);
           if (Ir === undefined) {
-            Ir = this.#X === 0 ? this.#ae : this.#Ae.length !== 0 ? this.#Ae.pop() : this.#X === this.#W ? this.#Fe(false) : this.#X;
+            Ir = this.#X === 0 ? this.#ae : this.#le.length !== 0 ? this.#le.pop() : this.#X === this.#W ? this.#Fe(false) : this.#X;
             this.#re[Ir] = P;
             this.#se[Ir] = q;
             this.#te.set(P, Ir);
@@ -54787,7 +54788,7 @@
                     this.#$?.(q, P, "set");
                   }
                   if (this.#me) {
-                    this.#le?.push([q, P, "set"]);
+                    this.#Ae?.push([q, P, "set"]);
                   }
                 }
               } else if (!st) {
@@ -54795,7 +54796,7 @@
                   this.#$?.(oe, P, "set");
                 }
                 if (this.#me) {
-                  this.#le?.push([oe, P, "set"]);
+                  this.#Ae?.push([oe, P, "set"]);
                 }
               }
               this.#Te(Ir);
@@ -54819,8 +54820,8 @@
             }
             if (Wt) this.#ve(Wt, Ir);
           }
-          if (!st && this.#me && this.#le) {
-            const P = this.#le;
+          if (!st && this.#me && this.#Ae) {
+            const P = this.#Ae;
             let q;
             while ((q = P?.shift())) {
               this.#K?.(...q);
@@ -54842,8 +54843,8 @@
               }
             }
           } finally {
-            if (this.#me && this.#le) {
-              const P = this.#le;
+            if (this.#me && this.#Ae) {
+              const P = this.#Ae;
               let q;
               while ((q = P?.shift())) {
                 this.#K?.(...q);
@@ -54862,18 +54863,18 @@
               this.#$?.(ie, oe, "evict");
             }
             if (this.#me) {
-              this.#le?.push([ie, oe, "evict"]);
+              this.#Ae?.push([ie, oe, "evict"]);
             }
           }
           this.#Te(q);
           if (P) {
             this.#re[q] = undefined;
             this.#se[q] = undefined;
-            this.#Ae.push(q);
+            this.#le.push(q);
           }
           if (this.#X === 1) {
             this.#ie = this.#ae = 0;
-            this.#Ae.length = 0;
+            this.#le.length = 0;
           } else {
             this.#ie = this.#ne[q];
           }
@@ -55183,7 +55184,7 @@
                     this.#$?.(oe, P, q);
                   }
                   if (this.#me) {
-                    this.#le?.push([oe, P, q]);
+                    this.#Ae?.push([oe, P, q]);
                   }
                 }
                 this.#te.delete(P);
@@ -55200,12 +55201,12 @@
                   this.#oe[q] = this.#oe[ie];
                 }
                 this.#X--;
-                this.#Ae.push(ie);
+                this.#le.push(ie);
               }
             }
           }
-          if (this.#me && this.#le?.length) {
-            const P = this.#le;
+          if (this.#me && this.#Ae?.length) {
+            const P = this.#Ae;
             let q;
             while ((q = P?.shift())) {
               this.#K?.(...q);
@@ -55227,7 +55228,7 @@
                 this.#$?.(oe, ie, P);
               }
               if (this.#me) {
-                this.#le?.push([oe, ie, P]);
+                this.#Ae?.push([oe, ie, P]);
               }
             }
           }
@@ -55243,11 +55244,11 @@
           }
           this.#ie = 0;
           this.#ae = 0;
-          this.#Ae.length = 0;
+          this.#le.length = 0;
           this.#ee = 0;
           this.#X = 0;
-          if (this.#me && this.#le) {
-            const P = this.#le;
+          if (this.#me && this.#Ae) {
+            const P = this.#Ae;
             let q;
             while ((q = P?.shift())) {
               this.#K?.(...q);
@@ -62343,7 +62344,7 @@
         #ot;
         #it;
         #at;
-        #At;
+        #lt;
         get parentPath() {
           return (this.parent || this).fullpath();
         }
@@ -62383,10 +62384,10 @@
           const q = this.getRootString(P);
           const oe = P.substring(q.length);
           const ie = oe.split(this.splitSep);
-          const Ge = q ? this.getRoot(q).#lt(ie) : this.#lt(ie);
+          const Ge = q ? this.getRoot(q).#At(ie) : this.#At(ie);
           return Ge;
         }
-        #lt(P) {
+        #At(P) {
           let q = this;
           for (const oe of P) {
             q = q.child(oe);
@@ -62533,7 +62534,7 @@
           return this.#at;
         }
         realpathCached() {
-          return this.#At;
+          return this.#lt;
         }
         readdirCached() {
           const P = this.children();
@@ -62860,21 +62861,21 @@
           return (this.#ot & xr) === xr && !(this.#ot & es) && !P.has(this) && (!q || q(this));
         }
         async realpath() {
-          if (this.#At) return this.#At;
+          if (this.#lt) return this.#lt;
           if ((Xr | Zr | zr) & this.#ot) return undefined;
           try {
             const P = await this.#Pe.promises.realpath(this.fullpath());
-            return (this.#At = this.resolve(P));
+            return (this.#lt = this.resolve(P));
           } catch (P) {
             this.#ft();
           }
         }
         realpathSync() {
-          if (this.#At) return this.#At;
+          if (this.#lt) return this.#lt;
           if ((Xr | Zr | zr) & this.#ot) return undefined;
           try {
             const P = this.#Pe.realpathSync(this.fullpath());
-            return (this.#At = this.resolve(P));
+            return (this.#lt = this.resolve(P));
           } catch (P) {
             this.#ft();
           }
