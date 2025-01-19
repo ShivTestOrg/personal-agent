@@ -47404,7 +47404,7 @@
             if (Wt.jest || Ot.includes("jest")) {
               return {
                 runner: "jest",
-                command: Ot || "jest",
+                command: "bun run test",
                 testPattern: "**/*.test.{ts,js}",
                 configFile: yield findConfigFile(P, ["jest.config.js", "jest.config.ts"]),
               };
