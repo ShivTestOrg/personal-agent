@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { Tool, ToolResult, FileWriteResult, FunctionParameters } from "../../types/tool";
+import { Tool, ToolResult, FileWriteResult, JSONSchemaDefinition } from "../../types/tool";
 
 interface DiffBlock {
   search: string;
@@ -10,7 +10,7 @@ interface DiffBlock {
 export class WriteFile implements Tool<FileWriteResult> {
   readonly name = "writeFile";
   readonly description = "Write content to a file or apply diff blocks to update existing content. Creates directories if needed.";
-  readonly parameters: FunctionParameters = {
+  readonly parameters: JSONSchemaDefinition = {
     type: "object",
     properties: {
       filename: {

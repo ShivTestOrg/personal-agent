@@ -1,4 +1,4 @@
-import { Tool, ToolResult, FunctionParameters } from "../../types/tool";
+import { Tool, ToolResult, JSONSchemaDefinition } from "../../types/tool";
 import { Context } from "../../types/context";
 import { Terminal } from "../terminal";
 
@@ -11,7 +11,7 @@ export interface PullRequestResult {
 export class CreatePr implements Tool<PullRequestResult> {
   readonly name = "createPr";
   readonly description = "Creates a pull request with the changes";
-  readonly parameters: FunctionParameters = {
+  readonly parameters: JSONSchemaDefinition = {
     type: "object",
     properties: {
       title: {

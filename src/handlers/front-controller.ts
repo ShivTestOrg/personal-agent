@@ -91,10 +91,11 @@ File Structure:
 ${fileTree}
 
 Follow TDD Process:
-1. First write failing tests for the required functionality
-2. Implement the minimum code to make tests pass
-3. Refactor while keeping tests passing
-4. Repeat until the issue is resolved
+1. First, read all files you require from the directory using the tree structure.
+2. Write a failing test for the issue, and run the test to verify it fails.
+3. Write a solution to make the test pass.
+4. Run the test again to verify it passes.
+5. Modify the solution until all tests pass.
 
 Use the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
 

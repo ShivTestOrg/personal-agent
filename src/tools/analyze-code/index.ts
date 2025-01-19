@@ -1,4 +1,4 @@
-import { Tool, ToolResult, FunctionParameters } from "../../types/tool";
+import { Tool, ToolResult, JSONSchemaDefinition } from "../../types/tool";
 import { parseSourceCodeForDefinitionsTopLevel } from "../../helpers/tree-sitter";
 import * as path from "path";
 
@@ -10,7 +10,7 @@ export interface CodeAnalysisResult {
 export class AnalyzeCode implements Tool<CodeAnalysisResult> {
   readonly name = "analyzeCode";
   readonly description = "Analyze source code to extract definitions using tree-sitter";
-  readonly parameters: FunctionParameters = {
+  readonly parameters: JSONSchemaDefinition = {
     type: "object",
     properties: {
       path: {

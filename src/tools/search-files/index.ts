@@ -1,6 +1,6 @@
 import { glob } from "glob";
 import { readFileSync } from "fs";
-import { Tool, ToolResult, FunctionParameters } from "../../types/tool";
+import { Tool, ToolResult, JSONSchemaDefinition } from "../../types/tool";
 
 export interface SearchResult {
   matches: Array<{
@@ -16,7 +16,7 @@ export interface SearchResult {
 export class SearchFiles implements Tool<SearchResult> {
   readonly name = "searchFiles";
   readonly description = "Searches for files and content using glob patterns and regex";
-  readonly parameters: FunctionParameters = {
+  readonly parameters: JSONSchemaDefinition = {
     type: "object",
     properties: {
       pattern: {

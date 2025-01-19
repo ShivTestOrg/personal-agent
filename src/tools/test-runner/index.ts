@@ -1,4 +1,4 @@
-import { Tool, ToolResult, FunctionParameters } from "../../types/tool";
+import { Tool, ToolResult, JSONSchemaDefinition } from "../../types/tool";
 import { detectTestConfiguration } from "../../helpers/test-config";
 import { Context } from "../../types/context";
 import { exec } from "child_process";
@@ -19,7 +19,7 @@ export interface TestRunnerResult {
 export class TestRunner implements Tool<TestRunnerResult> {
   readonly name = "testRunner";
   readonly description = "Generate and run tests using TDD principles";
-  readonly parameters: FunctionParameters = {
+  readonly parameters: JSONSchemaDefinition = {
     type: "object",
     properties: {
       mode: {

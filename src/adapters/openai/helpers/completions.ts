@@ -9,6 +9,7 @@ import { SearchFiles } from "../../../tools/search-files";
 import { CreatePr } from "../../../tools/create-pr";
 import { AnalyzeCode } from "../../../tools/analyze-code";
 import { TestRunner } from "../../../tools/test-runner";
+import { Terminal } from "../../../tools/terminal";
 
 const MAX_TRIES = 10;
 const MAX_RETRY_MALFORMED = 1;
@@ -24,45 +25,48 @@ Workflow:
 4. If not complete, you will continue with additional attempts up to ${MAX_TRIES} tries
 5. Each attempt should build upon previous attempts, learning from any failures
 
-To use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:
+To use tools, you can include one or more tool calls in your response. Each tool call should be formatted like this:
 \`\`\`tool
 {
-  "tool": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",
-  "args": {
-    // For readFile:
-    "filename": "/absolute/path/to/file"
-    
-    // For writeFile:
-    "filename": "/absolute/path/to/file",
-    "content": "diff blocks in format:
-    <<<<<<< SEARCH
-    [existing content to find]
-    =======
-    [new content to replace with]
-    >>>>>>> REPLACE"
-        
-    // For exploreDir:
-    "command": "tree"
+  "type": "function",
+  "function": {
+    "name": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",
+    "arguments": {
+      // For readFile:
+      "filename": "/absolute/path/to/file"
+      
+      // For writeFile:
+      "filename": "/absolute/path/to/file",
+      "content": "diff blocks in format:
+      <<<<<<< SEARCH
+      [existing content to find]
+      =======
+      [new content to replace with]
+      >>>>>>> REPLACE"
+          
+      // For exploreDir:
+      "command": "tree"
 
-    // For searchFiles:
-    "pattern": "regex pattern",
-    "filePattern": "glob pattern (optional)",
-    "caseSensitive": boolean (optional),
-    "contextLines": number (optional)
+      // For searchFiles:
+      "pattern": "regex pattern",
+      "filePattern": "glob pattern (optional)",
+      "caseSensitive": boolean (optional),
+      "contextLines": number (optional)
 
-    // For analyzeCode:
-    "path": "/absolute/path/to/file/or/directory"
+      // For analyzeCode:
+      "path": "/absolute/path/to/file/or/directory"
 
-    // For testRunner:
-    "mode": "run" | "generate",
-    "functionCode": "code to test (for generate mode)",
-    "testDescription": "what to test (for generate mode)",
-    "projectPath": "path to project root (optional)"
+      // For testRunner:
+      "mode": "run" | "generate",
+      "functionCode": "code to test (for generate mode)",
+      "testDescription": "what to test (for generate mode)",
+      "projectPath": "path to project root (optional)"
+    }
   }
 }
 \`\`\`
 
-Multiple tool requests will be processed sequentially in the order they appear in your response. Each tool request will be replaced with its corresponding result.
+Multiple tool calls will be processed sequentially in the order they appear in your response. Each tool call will be replaced with its corresponding result.
 
 The tool will execute and return a result in this format:
 \`\`\`result
@@ -178,9 +182,24 @@ interface ToolSet {
 
 type ToolName = keyof ToolResultMap;
 
-interface ToolRequest {
+interface InternalToolRequest {
   tool: ToolName;
   args: Record<string, unknown>;
+}
+
+interface ToolRequest {
+  type: "function";
+  function: {
+    name: ToolName;
+    arguments: Record<string, unknown>;
+  };
+}
+
+function convertToInternalRequest(toolCall: ToolRequest): InternalToolRequest {
+  return {
+    tool: toolCall.function.name,
+    args: toolCall.function.arguments,
+  };
 }
 
 type ChatMessage = {
@@ -193,12 +212,16 @@ export class Completions extends SuperOpenAi {
   protected tools: ToolSet;
   protected llmAttempts: number;
   private _toolAttempts: Map<string, number>;
+  private _terminal: Terminal;
+  private workingDir: string;
 
-  constructor(client: OpenAI, context: Context) {
+  constructor(client: OpenAI, context: Context, workingDir: string = process.cwd()) {
     super(client, context);
     this.maxTokens = 100000;
     this.llmAttempts = 0;
     this._toolAttempts = new Map();
+    this.workingDir = workingDir;
+    this._terminal = new Terminal(workingDir);
     this.tools = {
       readFile: new ReadFile(),
       writeFile: new WriteFile(),
@@ -210,7 +233,7 @@ export class Completions extends SuperOpenAi {
     };
   }
 
-  private async _executeToolRequest(request: ToolRequest, workingDir: string): Promise<ToolResult<ToolResultMap[ToolName]>> {
+  private async _executeToolRequest(request: InternalToolRequest, workingDir: string): Promise<ToolResult<ToolResultMap[ToolName]>> {
     this.context.logger.info(`Executing tool request: ${request.tool} with args:`, request.args);
     try {
       switch (request.tool) {
@@ -321,13 +344,13 @@ Return only the fixed JSON without any explanation.`;
 
         this.context.logger.info("LLM suggested fix:", { fixedJson });
 
-        const toolRequest = JSON.parse(fixedJson);
-        if (!toolRequest.tool || !toolRequest.args || !toolRequest.args.filename || !toolRequest.args.content) {
+        const toolCall = JSON.parse(fixedJson);
+        if (!toolCall.type || toolCall.type !== "function" || !toolCall.function?.name || !toolCall.function?.arguments) {
           throw new Error("Fixed JSON is missing required fields");
         }
 
         return {
-          tool: toolRequest,
+          tool: toolCall,
           totalInputToken,
           totalOutputToken,
         };
@@ -383,12 +406,12 @@ Return only the fixed JSON without any explanation.`;
         }
 
         this.context.logger.info(`Processing tool request:`, { toolJson: trimmedJson });
-        let toolRequest: ToolRequest;
+        let toolCall: ToolRequest;
         try {
-          toolRequest = JSON.parse(trimmedJson);
-          this.context.logger.info(`Parsed tool request:`, { toolRequest });
+          toolCall = JSON.parse(trimmedJson);
+          this.context.logger.info(`Parsed tool call:`, { toolCall });
         } catch (error: unknown) {
-          if (trimmedJson.includes('"tool": "writeFile"')) {
+          if (trimmedJson.includes('"name": "writeFile"')) {
             try {
               const output = await this._fixMalformedWriteFile(
                 trimmedJson,
@@ -399,7 +422,7 @@ Return only the fixed JSON without any explanation.`;
                 totalInputToken,
                 totalOutputToken
               );
-              toolRequest = output.tool;
+              toolCall = output.tool;
               totalInputToken += output.totalInputToken;
               totalOutputToken += output.totalOutputToken;
               this.context.logger.info("Successfully fixed and parsed JSON");
@@ -420,23 +443,27 @@ Return only the fixed JSON without any explanation.`;
         }
 
         // Validate required fields
-        if (!toolRequest.tool) {
-          this.context.logger.error('Tool request missing required "tool" field', { toolRequest });
-          throw new Error('Tool request missing required "tool" field');
+        if (!toolCall.type || toolCall.type !== "function") {
+          this.context.logger.error('Tool call missing required "type" field or not a function', { toolCall });
+          throw new Error('Tool call must have type "function"');
         }
-        if (!toolRequest.args) {
-          this.context.logger.error('Tool request missing required "args" field', { toolRequest });
-          throw new Error('Tool request missing required "args" field');
+        if (!toolCall.function?.name) {
+          this.context.logger.error('Tool call missing required "name" field', { toolCall });
+          throw new Error('Tool call missing required "name" field');
+        }
+        if (!toolCall.function?.arguments) {
+          this.context.logger.error('Tool call missing required "arguments" field', { toolCall });
+          throw new Error('Tool call missing required "arguments" field');
         }
 
-        this.context.logger.info(`Tool request validation passed`, { tool: toolRequest.tool, args: toolRequest.args });
+        this.context.logger.info(`Tool call validation passed`, { name: toolCall.function.name, arguments: toolCall.function.arguments });
 
         // For writeFile, ensure content is stringified if it's an object
-        if (toolRequest.tool === "writeFile" && toolRequest.args.content && typeof toolRequest.args.content === "object") {
-          toolRequest.args.content = JSON.stringify(toolRequest.args.content, null, 2);
+        if (toolCall.function.name === "writeFile" && toolCall.function.arguments.content && typeof toolCall.function.arguments.content === "object") {
+          toolCall.function.arguments.content = JSON.stringify(toolCall.function.arguments.content, null, 2);
         }
 
-        const result = await this._executeToolRequest(toolRequest, workingDir);
+        const result = await this._executeToolRequest(convertToInternalRequest(toolCall), workingDir);
 
         // Replace this specific tool block with its result
         processedResponse = processedResponse.replace(fullMatch, "```result\n" + JSON.stringify(result, null, 2) + "\n```");
@@ -470,56 +497,62 @@ Return only the fixed JSON without any explanation.`;
 
   private async _checkSolution(
     prompt: string,
-    model: string,
-    conversationHistory: ChatMessage[] = [],
-    totalInputToken: number = 0,
-    totalOutputToknen: number = 0
+    conversationHistory: ChatMessage[] = []
   ): Promise<{
     isSolved: boolean;
-    totalInputToken: number;
-    totalOutputToknen: number;
     conversationHistory: ChatMessage[];
+    error?: string;
   }> {
-    const res = await this.client.chat.completions.create({
-      model,
-      messages: [
-        ...conversationHistory,
-        {
-          role: "system",
-          content:
-            "You are a solution validator. Respond with 'SOLVED' if the issue is completely resolved, or 'CONTINUE' if more work is needed. Provide a brief explanation after your decision.",
-          //@ts-expect-error
-          cache_control: { type: "ephemeral" },
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-      temperature: 0.2,
-      max_tokens: 50,
-    });
+    try {
+      // Stage all changes
+      await this._terminal.runCommand("git add .");
 
-    //Add the reason why more work is needed
-    if (res && res.choices[0]?.message?.content?.trim().toLowerCase() === "continue") {
+      try {
+        // Try to commit - this will run pre-commit hooks
+        await this._terminal.runCommand('git commit -m "test: checking solution"');
+
+        // If commit succeeds, solution passes checks
+        // Reset the commit since this was just for testing
+        await this._terminal.runCommand("git reset HEAD~1");
+
+        return {
+          isSolved: true,
+          conversationHistory,
+        };
+      } catch (commitError) {
+        // If commit fails, extract error messages
+        const error = commitError instanceof Error ? commitError.message : String(commitError);
+
+        // Reset any staged changes
+        await this._terminal.runCommand("git reset");
+
+        // Add error to conversation history
+        conversationHistory.push({
+          role: "assistant",
+          content: `Solution validation failed: ${error}`,
+        });
+
+        return {
+          isSolved: false,
+          conversationHistory,
+          error,
+        };
+      }
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      this.context.logger.error("Failed to check solution:" + { error: errorMsg });
+
       conversationHistory.push({
         role: "assistant",
-        content: `The issue is not completely resolved. More work is needed. ${res.choices[0]?.message?.content}`,
+        content: `Failed to validate solution: ${errorMsg}`,
       });
-    }
 
-    if (res.usage) {
-      totalInputToken += res.usage.prompt_tokens;
-      totalOutputToknen += res.usage.completion_tokens;
+      return {
+        isSolved: false,
+        conversationHistory,
+        error: errorMsg,
+      };
     }
-
-    const response = res.choices[0]?.message?.content || "";
-    return {
-      isSolved: response.trim().toLowerCase() === "solved",
-      totalInputToken,
-      totalOutputToknen,
-      conversationHistory,
-    };
   }
 
   private async _executeWithRetry<T extends ToolName>(
@@ -677,11 +710,13 @@ Return only the fixed JSON without any explanation.`;
       totalOutputTokens += processedResponse.totalOutputToken;
 
       // Check if the solution is complete
-      const solOutput = await this._checkSolution(currentSolution, model, conversationHistory, totalInputTokens, totalOutputTokens);
+      const solOutput = await this._checkSolution(currentSolution, conversationHistory);
       isSolved = solOutput.isSolved;
-      totalInputTokens += solOutput.totalInputToken;
-      totalOutputTokens += solOutput.totalOutputToknen;
       conversationHistory = solOutput.conversationHistory;
+
+      if (solOutput.error) {
+        this.context.logger.error("Solution validation failed:" + { error: solOutput.error });
+      }
 
       if (!isSolved) {
         this.llmAttempts++;

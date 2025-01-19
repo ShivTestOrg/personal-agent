@@ -1,10 +1,10 @@
 import { readFileSync } from "fs";
-import { Tool, ToolResult, FileReadResult, FunctionParameters } from "../../types/tool";
+import { Tool, ToolResult, FileReadResult, JSONSchemaDefinition } from "../../types/tool";
 
 export class ReadFile implements Tool<FileReadResult> {
   readonly name = "readFile";
   readonly description = "Reads content from a file at the specified path";
-  readonly parameters: FunctionParameters = {
+  readonly parameters: JSONSchemaDefinition = {
     type: "object",
     properties: {
       filename: {

@@ -9,28 +9,54 @@ export interface ToolResult<T> {
   };
 }
 
-export interface FunctionParameters {
-  type: "object";
-  properties: Record<
-    string,
-    {
-      type: string;
-      description?: string;
-      enum?: string[];
-      items?: {
-        type: string;
-        properties?: Record<string, unknown>;
-      };
-    }
-  >;
+export interface JSONSchemaDefinition {
+  type: string;
+  description?: string;
+  enum?: string[];
+  items?: {
+    type: string;
+    properties?: Record<string, JSONSchemaDefinition>;
+  };
+  properties?: Record<string, JSONSchemaDefinition>;
   required?: string[];
+}
+
+export interface ToolFunction {
+  type: "function";
+  function: {
+    name: string;
+    description: string;
+    parameters: JSONSchemaDefinition;
+  };
 }
 
 export interface Tool<T = unknown> {
   name: string;
   description: string;
-  parameters: FunctionParameters;
+  parameters: JSONSchemaDefinition;
   execute(args: Record<string, unknown>): Promise<ToolResult<T>>;
+}
+
+export interface OpenAITool<T = unknown> {
+  type: "function";
+  function: {
+    name: string;
+    description: string;
+    parameters: JSONSchemaDefinition;
+    execute?(args: Record<string, unknown>): Promise<ToolResult<T>>;
+  };
+}
+
+export function convertToOpenAITool<T>(tool: Tool<T>): OpenAITool<T> {
+  return {
+    type: "function",
+    function: {
+      name: tool.name,
+      description: tool.description,
+      parameters: tool.parameters,
+      execute: tool.execute,
+    },
+  };
 }
 
 // Tool Results
@@ -75,119 +101,137 @@ export interface PullRequestResult {
 }
 
 // Tool Function Definitions
-export const toolFunctions = {
+export const toolFunctions: Record<string, ToolFunction> = {
   readFile: {
-    name: "readFile",
-    description: "Read content from a file at the specified path",
-    parameters: {
-      type: "object",
-      properties: {
-        filename: {
-          type: "string",
-          description: "Absolute path to the file",
+    type: "function",
+    function: {
+      name: "readFile",
+      description: "Read content from a file at the specified path",
+      parameters: {
+        type: "object",
+        properties: {
+          filename: {
+            type: "string",
+            description: "Absolute path to the file",
+          },
         },
+        required: ["filename"],
       },
-      required: ["filename"],
     },
   },
   writeFile: {
-    name: "writeFile",
-    description: "Write content to a file at the specified path",
-    parameters: {
-      type: "object",
-      properties: {
-        filename: {
-          type: "string",
-          description: "Absolute path to the file",
+    type: "function",
+    function: {
+      name: "writeFile",
+      description: "Write content to a file at the specified path",
+      parameters: {
+        type: "object",
+        properties: {
+          filename: {
+            type: "string",
+            description: "Absolute path to the file",
+          },
+          content: {
+            type: "string",
+            description: "Content to write to the file",
+          },
         },
-        content: {
-          type: "string",
-          description: "Content to write to the file",
-        },
+        required: ["filename", "content"],
       },
-      required: ["filename", "content"],
     },
   },
   exploreDir: {
-    name: "exploreDir",
-    description: "Explore directory contents",
-    parameters: {
-      type: "object",
-      properties: {
-        command: {
-          type: "string",
-          enum: ["tree"],
-          description: "Command to execute",
+    type: "function",
+    function: {
+      name: "exploreDir",
+      description: "Explore directory contents",
+      parameters: {
+        type: "object",
+        properties: {
+          command: {
+            type: "string",
+            enum: ["tree"],
+            description: "Command to execute",
+          },
         },
+        required: ["command"],
       },
-      required: ["command"],
     },
   },
   searchFiles: {
-    name: "searchFiles",
-    description: "Search files using regex patterns",
-    parameters: {
-      type: "object",
-      properties: {
-        pattern: {
-          type: "string",
-          description: "Regex pattern to search for",
+    type: "function",
+    function: {
+      name: "searchFiles",
+      description: "Search files using regex patterns",
+      parameters: {
+        type: "object",
+        properties: {
+          pattern: {
+            type: "string",
+            description: "Regex pattern to search for",
+          },
+          filePattern: {
+            type: "string",
+            description: "Optional glob pattern to filter files",
+          },
+          caseSensitive: {
+            type: "boolean",
+            description: "Whether to perform case-sensitive search",
+          },
+          contextLines: {
+            type: "number",
+            description: "Number of context lines to include",
+          },
         },
-        filePattern: {
-          type: "string",
-          description: "Optional glob pattern to filter files",
-        },
-        caseSensitive: {
-          type: "boolean",
-          description: "Whether to perform case-sensitive search",
-        },
-        contextLines: {
-          type: "number",
-          description: "Number of context lines to include",
-        },
+        required: ["pattern"],
       },
-      required: ["pattern"],
     },
   },
   analyzeCode: {
-    name: "analyzeCode",
-    description: "Analyze source code to extract definitions using tree-sitter",
-    parameters: {
-      type: "object",
-      properties: {
-        path: {
-          type: "string",
-          description: "Path to the file or directory to analyze",
+    type: "function",
+    function: {
+      name: "analyzeCode",
+      description: "Analyze source code to extract definitions using tree-sitter",
+      parameters: {
+        type: "object",
+        properties: {
+          path: {
+            type: "string",
+            description: "Path to the file or directory to analyze",
+          },
         },
+        required: ["path"],
       },
-      required: ["path"],
     },
   },
   testRunner: {
-    name: "testRunner",
-    description: "Generate and run tests using TDD principles",
-    parameters: {
-      type: "object",
-      properties: {
-        mode: {
-          type: "string",
-          enum: ["run", "generate"],
-          description: "Whether to run existing tests or generate new ones",
+    type: "function",
+    function: {
+      name: "testRunner",
+      description: "Generate and run tests using TDD principles",
+      parameters: {
+        type: "object",
+        properties: {
+          mode: {
+            type: "string",
+            enum: ["run", "generate"],
+            description: "Whether to run existing tests or generate new ones",
+          },
+          functionCode: {
+            type: "string",
+            description: "The function code to generate tests for",
+          },
+          testDescription: {
+            type: "string",
+            description: "Description of what the test should verify",
+          },
+          projectPath: {
+            type: "string",
+            description: "Path to the project root",
+          },
         },
-        functionCode: {
-          type: "string",
-          description: "The function code to generate tests for",
-        },
-        testDescription: {
-          type: "string",
-          description: "Description of what the test should verify",
-        },
-        projectPath: {
-          type: "string",
-          description: "Path to the project root",
-        },
+        required: ["mode"],
       },
-      required: ["mode"],
     },
   },
 };

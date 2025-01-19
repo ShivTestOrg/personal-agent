@@ -2,14 +2,14 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { resolve } from "node:path";
 import { existsSync, statSync } from "node:fs";
-import { Tool, ToolResult, TerminalCommandResult, FunctionParameters } from "../../types/tool";
+import { Tool, ToolResult, TerminalCommandResult, JSONSchemaDefinition } from "../../types/tool";
 
 const execFilePromise = promisify(execFile);
 
 export class Terminal implements Tool<TerminalCommandResult> {
   readonly name = "terminal";
   readonly description = "Executes shell commands in a terminal environment";
-  readonly parameters: FunctionParameters = {
+  readonly parameters: JSONSchemaDefinition = {
     type: "object",
     properties: {
       command: {

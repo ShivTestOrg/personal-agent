@@ -1,11 +1,11 @@
 import { Terminal } from "../terminal";
-import { Tool, ToolResult, DirectoryExploreResult, FunctionParameters } from "../../types/tool";
+import { Tool, ToolResult, DirectoryExploreResult, JSONSchemaDefinition } from "../../types/tool";
 import { Context } from "../../types/context";
 
 export class ExploreDir implements Tool<DirectoryExploreResult> {
   readonly name = "exploreDir";
   readonly description = "Explores and manipulates directories, including git operations";
-  readonly parameters: FunctionParameters = {
+  readonly parameters: JSONSchemaDefinition = {
     type: "object",
     properties: {
       command: {
