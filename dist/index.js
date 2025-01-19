@@ -46993,7 +46993,7 @@
               oe.ok(`Install output: ${Nr}`);
               oe.ok(`Install error: ${Mr}`);
               oe.ok("Dependencies installed successfully");
-              const Ur = yield (0, Ot.findEntryPoint)(Fr);
+              const Ur = yield (0, Ot.findEntryPoint)(Fr, oe);
               if (!Ur) {
                 throw new Error("Could not find project entry point");
               }
@@ -47081,33 +47081,39 @@
         javascript: ["src/index.js", "src/main.js", "index.js", "main.js"],
         python: ["src/main.py", "main.py", "app.py", "__main__.py"],
       };
-      function detectLanguage(P) {
+      function detectLanguage(P, q) {
         return ie(this, void 0, void 0, function* () {
           try {
-            const q = yield (0, Ge.readdir)(P, { recursive: true });
-            if (q.some((P) => P.endsWith("tsconfig.json"))) {
+            const oe = yield (0, Ge.readdir)(P, { recursive: true });
+            q === null || q === void 0 ? void 0 : q.info("Detecting language for project:" + P);
+            if (oe.some((P) => P.endsWith("tsconfig.json"))) {
               return "typescript";
             }
-            const oe = q.map((P) => (0, st.extname)(P));
-            if (oe.includes(".ts")) return "typescript";
-            if (oe.includes(".py")) return "python";
+            q === null || q === void 0 ? void 0 : q.info("No TypeScript configuration found");
+            const ie = oe.map((P) => (0, st.extname)(P));
+            if (ie.includes(".ts")) return "typescript";
+            if (ie.includes(".py")) return "python";
+            q === null || q === void 0 ? void 0 : q.info("No TypeScript or Python files found");
             return "javascript";
           } catch (P) {
             console.error("Error detecting language:", P);
+            q === null || q === void 0 ? void 0 : q.error("Error detecting language:" + P);
             return "javascript";
           }
         });
       }
-      function findEntryPoint(P) {
+      function findEntryPoint(P, q) {
         return ie(this, void 0, void 0, function* () {
-          const q = yield detectLanguage(P);
-          const oe = Ot[q];
-          for (const q of oe) {
+          const oe = yield detectLanguage(P, q);
+          const ie = Ot[oe];
+          for (const oe of ie) {
             try {
-              const oe = (0, st.join)(P, q);
-              yield (0, Ge.readdir)(oe);
-              return oe;
+              const ie = (0, st.join)(P, oe);
+              q === null || q === void 0 ? void 0 : q.info("Checking entry point:" + ie);
+              yield (0, Ge.readdir)(ie);
+              return ie;
             } catch (P) {
+              q === null || q === void 0 ? void 0 : q.info("Entry point not found at:" + oe);
               continue;
             }
           }
