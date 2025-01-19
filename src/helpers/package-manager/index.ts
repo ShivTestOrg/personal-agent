@@ -26,8 +26,8 @@ export async function detectPackageManager(projectPath: string): Promise<Package
     if (files[2]) return "npm";
     if (files[3]) return "pnpm";
 
-    // Default to npm if no lock file found
-    return "yarn";
+    // Default to bun if no lock file found
+    return "bun";
   } catch (error) {
     console.error("Error detecting package manager:", error);
     return "yarn";
@@ -39,7 +39,7 @@ export async function installDependencies(projectPath: string): Promise<string> 
 
   const commands = {
     npm: "npm install",
-    yarn: "yarn install --immutable --immutable-cache --check-cache",
+    yarn: "bun install --frozen-lockfile",
     bun: "bun install",
     pnpm: "pnpm install",
   };
