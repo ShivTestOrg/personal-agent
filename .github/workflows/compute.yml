@@ -37,6 +37,9 @@ jobs:
         
       - name: Setup github username and email
         run: git config --global user.name ${{github.actor}} && git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+      
+      - name: Install cross-env
+        run: bun add cross-env
 
       - name: execute directive
         run: node ./dist/index.js

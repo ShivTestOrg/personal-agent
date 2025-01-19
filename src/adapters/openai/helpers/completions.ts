@@ -24,6 +24,7 @@ Workflow:
 3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.
 4. If not complete, you will continue with additional attempts up to ${MAX_TRIES} tries
 5. Each attempt should build upon previous attempts, learning from any failures
+6. For write tool, you must use the diff format to make changes to the file.
 
 To use tools, you can include one or more tool calls in your response. Each tool call should be formatted like this:
 \`\`\`tool
