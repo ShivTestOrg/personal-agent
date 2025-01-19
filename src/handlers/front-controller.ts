@@ -53,16 +53,18 @@ export async function delegate(context: Context) {
       // }
       logger.ok("Dependencies installed successfully");
 
+      // Get the directory tree for context
+      const treeResult = await explore.execute({ command: "tree" });
+      const fileTree = treeResult.success && treeResult.data?.tree ? treeResult.data.tree : "";
+
+      logger.ok(`Tree result: ${fileTree}`);
+
       // Find project entry point
       const entryPoint = await findEntryPoint(workingDir, logger);
       if (!entryPoint) {
         throw new Error("Could not find project entry point");
       }
       logger.ok(`Found project entry point: ${entryPoint}`);
-
-      // Get the directory tree for context
-      const treeResult = await explore.execute({ command: "tree" });
-      const fileTree = treeResult.success && treeResult.data?.tree ? treeResult.data.tree : "";
 
       // Detect test configuration
       const testConfig = await detectTestConfiguration(workingDir);
