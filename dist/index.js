@@ -47111,7 +47111,7 @@
             try {
               const ie = (0, st.join)(P, oe);
               q === null || q === void 0 ? void 0 : q.info("Checking entry point:" + ie);
-              yield (0, Ge.readdir)(ie);
+              yield (0, Ge.stat)(ie);
               return ie;
             } catch (P) {
               q === null || q === void 0 ? void 0 : q.info("Entry point not found at:" + oe);
