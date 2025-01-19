@@ -46993,17 +46993,18 @@
               oe.ok(`Install output: ${Nr}`);
               oe.ok(`Install error: ${Mr}`);
               oe.ok("Dependencies installed successfully");
-              const Ur = yield (0, Ot.findEntryPoint)(Fr, oe);
-              if (!Ur) {
+              const Ur = yield Ar.execute({ command: "tree" });
+              const Lr = Ur.success && ((q = Ur.data) === null || q === void 0 ? void 0 : q.tree) ? Ur.data.tree : "";
+              oe.ok(`Tree result: ${Lr}`);
+              const xr = yield (0, Ot.findEntryPoint)(Fr, oe);
+              if (!xr) {
                 throw new Error("Could not find project entry point");
               }
-              oe.ok(`Found project entry point: ${Ur}`);
-              const Lr = yield Ar.execute({ command: "tree" });
-              const xr = Lr.success && ((q = Lr.data) === null || q === void 0 ? void 0 : q.tree) ? Lr.data.tree : "";
+              oe.ok(`Found project entry point: ${xr}`);
               const Gr = yield (0, Wt.detectTestConfiguration)(Fr);
               oe.ok(`Found test configuration: ${Gr.runner}`);
               const jr = ie.issue.body;
-              const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${Ur}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${xr}\n\nFollow TDD Process:\n1. First write failing tests for the required functionality\n2. Implement the minimum code to make tests pass\n3. Refactor while keeping tests passing\n4. Repeat until the issue is resolved\n\nUse the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
+              const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First write failing tests for the required functionality\n2. Implement the minimum code to make tests pass\n3. Refactor while keeping tests passing\n4. Repeat until the issue is resolved\n\nUse the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
               const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "anthropic/claude-3.5-sonnet", Fr);
               if (!Hr) {
                 oe.error("No solution was generated");
