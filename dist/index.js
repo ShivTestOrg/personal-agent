@@ -46576,15 +46576,21 @@
       const Er = oe(40893);
       const Ir = oe(22498);
       const Br = oe(42381);
-      const Qr = 10;
-      const Fr = 1;
-      const Dr = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Qr} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n\nTo use tools, you can include one or more tool requests in your response. Each tool request should be formatted like this:\n\`\`\`tool\n{\n  "tool": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",\n  "args": {\n    // For readFile:\n    "filename": "/absolute/path/to/file"\n    \n    // For writeFile:\n    "filename": "/absolute/path/to/file",\n    "content": "diff blocks in format:\n    <<<<<<< SEARCH\n    [existing content to find]\n    =======\n    [new content to replace with]\n    >>>>>>> REPLACE"\n        \n    // For exploreDir:\n    "command": "tree"\n\n    // For searchFiles:\n    "pattern": "regex pattern",\n    "filePattern": "glob pattern (optional)",\n    "caseSensitive": boolean (optional),\n    "contextLines": number (optional)\n\n    // For analyzeCode:\n    "path": "/absolute/path/to/file/or/directory"\n\n    // For testRunner:\n    "mode": "run" | "generate",\n    "functionCode": "code to test (for generate mode)",\n    "testDescription": "what to test (for generate mode)",\n    "projectPath": "path to project root (optional)"\n  }\n}\n\`\`\`\n\nMultiple tool requests will be processed sequentially in the order they appear in your response. Each tool request will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(args: { filename: string })\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(args: { filename: string, content: string })\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\n### AnalyzeCode Tool ###\n- Purpose: Analyze source code to extract definitions using tree-sitter\n- Method: execute(args: { path: string })\n- Returns: ToolResult<CodeAnalysisResult> containing:\n  - success: boolean\n  - data: { definitions: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### TestRunner Tool ###\n- Purpose: Generate and run tests using TDD principles\n- Method: execute(args: { mode: "run" | "generate", functionCode?: string, testDescription?: string, projectPath?: string })\n- Returns: ToolResult<TestRunnerResult> containing:\n  - success: boolean\n  - data: {\n    success: boolean,\n    testOutput?: string,\n    failedTests?: string[],\n    passedTests?: string[],\n    suggestions?: string[]\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Qr} attempts to complete each task`;
+      const Qr = oe(9992);
+      const Fr = 10;
+      const Dr = 1;
+      const kr = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Fr} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n\nTo use tools, you can include one or more tool calls in your response. Each tool call should be formatted like this:\n\`\`\`tool\n{\n  "type": "function",\n  "function": {\n    "name": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",\n    "arguments": {\n      // For readFile:\n      "filename": "/absolute/path/to/file"\n      \n      // For writeFile:\n      "filename": "/absolute/path/to/file",\n      "content": "diff blocks in format:\n      <<<<<<< SEARCH\n      [existing content to find]\n      =======\n      [new content to replace with]\n      >>>>>>> REPLACE"\n          \n      // For exploreDir:\n      "command": "tree"\n\n      // For searchFiles:\n      "pattern": "regex pattern",\n      "filePattern": "glob pattern (optional)",\n      "caseSensitive": boolean (optional),\n      "contextLines": number (optional)\n\n      // For analyzeCode:\n      "path": "/absolute/path/to/file/or/directory"\n\n      // For testRunner:\n      "mode": "run" | "generate",\n      "functionCode": "code to test (for generate mode)",\n      "testDescription": "what to test (for generate mode)",\n      "projectPath": "path to project root (optional)"\n    }\n  }\n}\n\`\`\`\n\nMultiple tool calls will be processed sequentially in the order they appear in your response. Each tool call will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(args: { filename: string })\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(args: { filename: string, content: string })\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\n### AnalyzeCode Tool ###\n- Purpose: Analyze source code to extract definitions using tree-sitter\n- Method: execute(args: { path: string })\n- Returns: ToolResult<CodeAnalysisResult> containing:\n  - success: boolean\n  - data: { definitions: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### TestRunner Tool ###\n- Purpose: Generate and run tests using TDD principles\n- Method: execute(args: { mode: "run" | "generate", functionCode?: string, testDescription?: string, projectPath?: string })\n- Returns: ToolResult<TestRunnerResult> containing:\n  - success: boolean\n  - data: {\n    success: boolean,\n    testOutput?: string,\n    failedTests?: string[],\n    passedTests?: string[],\n    suggestions?: string[]\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Fr} attempts to complete each task`;
+      function convertToInternalRequest(P) {
+        return { tool: P.function.name, args: P.function.arguments };
+      }
       class Completions extends Ge.SuperOpenAi {
-        constructor(P, q) {
+        constructor(P, q, oe = process.cwd()) {
           super(P, q);
           this.maxTokens = 1e5;
           this.llmAttempts = 0;
           this._toolAttempts = new Map();
+          this.workingDir = oe;
+          this._terminal = new Qr.Terminal(oe);
           this.tools = {
             readFile: new st.ReadFile(),
             writeFile: new Ot.WriteFile(),
@@ -46634,16 +46640,16 @@
         }
         _fixMalformedWriteFile(P, q, oe, Ge, st) {
           return ie(this, arguments, void 0, function* (P, q, oe, ie, Ge, st = 0, Ot = 0) {
-            var Wt, Ar, Er;
-            let Ir = 0;
-            let Br = null;
-            while (Ir < Fr) {
+            var Wt, Ar, Er, Ir, Br;
+            let Qr = 0;
+            let Fr = null;
+            while (Qr < Dr) {
               try {
-                this.context.logger.info(`Attempt ${Ir + 1} to fix malformed writeFile request`);
-                const Br = yield this._getDirectoryTree(q);
-                const Qr = Br.success && Br.data ? Br.data.tree : "";
-                const Fr = `You are currently helping fix a GitHub issue. Here's the context:\n\nWorking Directory: ${q}\nDirectory Structure:\n${Qr}\n\nPrevious Solution State:\n${ie}\n\nPrevious Conversation:\n${Ge.map((P) => `${P.role}: ${P.content}`).join("\n")}\n\nThe following writeFile tool request is malformed. Fix it to be valid JSON with properly escaped content:\n${P}\n\nReturn only the fixed JSON without any explanation.`;
-                const Dr = yield this.client.chat.completions.create({
+                this.context.logger.info(`Attempt ${Qr + 1} to fix malformed writeFile request`);
+                const Fr = yield this._getDirectoryTree(q);
+                const Dr = Fr.success && Fr.data ? Fr.data.tree : "";
+                const kr = `You are currently helping fix a GitHub issue. Here's the context:\n\nWorking Directory: ${q}\nDirectory Structure:\n${Dr}\n\nPrevious Solution State:\n${ie}\n\nPrevious Conversation:\n${Ge.map((P) => `${P.role}: ${P.content}`).join("\n")}\n\nThe following writeFile tool request is malformed. Fix it to be valid JSON with properly escaped content:\n${P}\n\nReturn only the fixed JSON without any explanation.`;
+                const Nr = yield this.client.chat.completions.create({
                   model: oe,
                   messages: [
                     {
@@ -46652,58 +46658,64 @@
                         "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
                       cache_control: { type: "ephemeral" },
                     },
-                    { role: "user", content: Fr },
+                    { role: "user", content: kr },
                   ],
                   temperature: 0,
                 });
-                const kr =
-                  ((Er = (Ar = (Wt = Dr.choices[0]) === null || Wt === void 0 ? void 0 : Wt.message) === null || Ar === void 0 ? void 0 : Ar.content) ===
+                const Mr =
+                  ((Er = (Ar = (Wt = Nr.choices[0]) === null || Wt === void 0 ? void 0 : Wt.message) === null || Ar === void 0 ? void 0 : Ar.content) ===
                     null || Er === void 0
                     ? void 0
                     : Er.trim()) || "";
-                if (Dr.usage) {
-                  st += Dr.usage.prompt_tokens;
-                  Ot += Dr.usage.completion_tokens;
+                if (Nr.usage) {
+                  st += Nr.usage.prompt_tokens;
+                  Ot += Nr.usage.completion_tokens;
                 }
-                this.context.logger.info("LLM suggested fix:", { fixedJson: kr });
-                const Nr = JSON.parse(kr);
-                if (!Nr.tool || !Nr.args || !Nr.args.filename || !Nr.args.content) {
+                this.context.logger.info("LLM suggested fix:", { fixedJson: Mr });
+                const Ur = JSON.parse(Mr);
+                if (
+                  !Ur.type ||
+                  Ur.type !== "function" ||
+                  !((Ir = Ur.function) === null || Ir === void 0 ? void 0 : Ir.name) ||
+                  !((Br = Ur.function) === null || Br === void 0 ? void 0 : Br.arguments)
+                ) {
                   throw new Error("Fixed JSON is missing required fields");
                 }
-                return { tool: Nr, totalInputToken: st, totalOutputToken: Ot };
+                return { tool: Ur, totalInputToken: st, totalOutputToken: Ot };
               } catch (P) {
-                Br = P instanceof Error ? P : new Error(String(P));
-                Ge.push({ role: "assistant", content: `Failed to fix malformed JSON (attempt ${Ir + 1}): ${Br.message}` });
-                this.context.logger.error(`Failed to fix JSON (attempt ${Ir + 1}):`, { error: Br });
-                Ir++;
+                Fr = P instanceof Error ? P : new Error(String(P));
+                Ge.push({ role: "assistant", content: `Failed to fix malformed JSON (attempt ${Qr + 1}): ${Fr.message}` });
+                this.context.logger.error(`Failed to fix JSON (attempt ${Qr + 1}):`, { error: Fr });
+                Qr++;
               }
             }
-            throw new Error(`Failed to fix malformed JSON after ${Fr} attempts: ${Br === null || Br === void 0 ? void 0 : Br.message}`);
+            throw new Error(`Failed to fix malformed JSON after ${Dr} attempts: ${Fr === null || Fr === void 0 ? void 0 : Fr.message}`);
           });
         }
         _processResponse(P, q, oe, Ge, st) {
           return ie(this, arguments, void 0, function* (P, q, oe, ie, Ge, st = 0, Ot = 0) {
-            const Wt = [...P.matchAll(/```tool\n([\s\S]*?)```/g)];
-            if (Wt.length === 0) return { output: P, totalInputToken: st, totalOutputToken: Ot };
-            let Ar = P;
-            for (const P of Wt) {
-              const Wt = P[0];
-              const Er = P[1];
+            var Wt, Ar;
+            const Er = [...P.matchAll(/```tool\n([\s\S]*?)```/g)];
+            if (Er.length === 0) return { output: P, totalInputToken: st, totalOutputToken: Ot };
+            let Ir = P;
+            for (const P of Er) {
+              const Er = P[0];
+              const Br = P[1];
               try {
-                const P = Er.trim();
+                const P = Br.trim();
                 if (!P.endsWith("}")) {
                   throw new Error("Malformed JSON: Missing closing brace");
                 }
                 this.context.logger.info(`Processing tool request:`, { toolJson: P });
-                let Ir;
+                let Qr;
                 try {
-                  Ir = JSON.parse(P);
-                  this.context.logger.info(`Parsed tool request:`, { toolRequest: Ir });
+                  Qr = JSON.parse(P);
+                  this.context.logger.info(`Parsed tool call:`, { toolCall: Qr });
                 } catch (Wt) {
-                  if (P.includes('"tool": "writeFile"')) {
+                  if (P.includes('"name": "writeFile"')) {
                     try {
                       const Wt = yield this._fixMalformedWriteFile(P, q, oe, ie, Ge, st, Ot);
-                      Ir = Wt.tool;
+                      Qr = Wt.tool;
                       st += Wt.totalInputToken;
                       Ot += Wt.totalOutputToken;
                       this.context.logger.info("Successfully fixed and parsed JSON");
@@ -46718,79 +46730,67 @@
                     throw q;
                   }
                 }
-                if (!Ir.tool) {
-                  this.context.logger.error('Tool request missing required "tool" field', { toolRequest: Ir });
-                  throw new Error('Tool request missing required "tool" field');
+                if (!Qr.type || Qr.type !== "function") {
+                  this.context.logger.error('Tool call missing required "type" field or not a function', { toolCall: Qr });
+                  throw new Error('Tool call must have type "function"');
                 }
-                if (!Ir.args) {
-                  this.context.logger.error('Tool request missing required "args" field', { toolRequest: Ir });
-                  throw new Error('Tool request missing required "args" field');
+                if (!((Wt = Qr.function) === null || Wt === void 0 ? void 0 : Wt.name)) {
+                  this.context.logger.error('Tool call missing required "name" field', { toolCall: Qr });
+                  throw new Error('Tool call missing required "name" field');
                 }
-                this.context.logger.info(`Tool request validation passed`, { tool: Ir.tool, args: Ir.args });
-                if (Ir.tool === "writeFile" && Ir.args.content && typeof Ir.args.content === "object") {
-                  Ir.args.content = JSON.stringify(Ir.args.content, null, 2);
+                if (!((Ar = Qr.function) === null || Ar === void 0 ? void 0 : Ar.arguments)) {
+                  this.context.logger.error('Tool call missing required "arguments" field', { toolCall: Qr });
+                  throw new Error('Tool call missing required "arguments" field');
                 }
-                const Br = yield this._executeToolRequest(Ir, q);
-                Ar = Ar.replace(Wt, "```result\n" + JSON.stringify(Br, null, 2) + "\n```");
+                this.context.logger.info(`Tool call validation passed`, { name: Qr.function.name, arguments: Qr.function.arguments });
+                if (Qr.function.name === "writeFile" && Qr.function.arguments.content && typeof Qr.function.arguments.content === "object") {
+                  Qr.function.arguments.content = JSON.stringify(Qr.function.arguments.content, null, 2);
+                }
+                const Fr = yield this._executeToolRequest(convertToInternalRequest(Qr), q);
+                Ir = Ir.replace(Er, "```result\n" + JSON.stringify(Fr, null, 2) + "\n```");
               } catch (P) {
                 const q = P instanceof Error ? P : new Error(String(P));
                 this.context.logger.error(`Failed to process tool request:`, { error: q });
-                Ar = Ar.replace(Wt, "```result\n" + JSON.stringify({ success: false, error: q.message }, null, 2) + "\n```");
+                Ir = Ir.replace(Er, "```result\n" + JSON.stringify({ success: false, error: q.message }, null, 2) + "\n```");
               }
             }
-            return { output: Ar, totalInputToken: st, totalOutputToken: Ot };
+            return { output: Ir, totalInputToken: st, totalOutputToken: Ot };
           });
         }
-        _checkSolution(P, q) {
-          return ie(this, arguments, void 0, function* (P, q, oe = [], ie = 0, Ge = 0) {
-            var st, Ot, Wt, Ar, Er, Ir, Br;
-            const Qr = yield this.client.chat.completions.create({
-              model: q,
-              messages: [
-                ...oe,
-                {
-                  role: "system",
-                  content:
-                    "You are a solution validator. Respond with 'SOLVED' if the issue is completely resolved, or 'CONTINUE' if more work is needed. Provide a brief explanation after your decision.",
-                  cache_control: { type: "ephemeral" },
-                },
-                { role: "user", content: P },
-              ],
-              temperature: 0.2,
-              max_tokens: 50,
-            });
-            if (
-              Qr &&
-              ((Wt = (Ot = (st = Qr.choices[0]) === null || st === void 0 ? void 0 : st.message) === null || Ot === void 0 ? void 0 : Ot.content) === null ||
-              Wt === void 0
-                ? void 0
-                : Wt.trim().toLowerCase()) === "continue"
-            ) {
-              oe.push({
-                role: "assistant",
-                content: `The issue is not completely resolved. More work is needed. ${(Er = (Ar = Qr.choices[0]) === null || Ar === void 0 ? void 0 : Ar.message) === null || Er === void 0 ? void 0 : Er.content}`,
-              });
+        _checkSolution(P) {
+          return ie(this, arguments, void 0, function* (P, q = []) {
+            try {
+              yield this._terminal.runCommand("git add .");
+              try {
+                yield this._terminal.runCommand('git commit -m "test: checking solution"');
+                yield this._terminal.runCommand("git reset HEAD~1");
+                return { isSolved: true, conversationHistory: q };
+              } catch (P) {
+                const oe = P instanceof Error ? P.message : String(P);
+                yield this._terminal.runCommand("git reset");
+                q.push({ role: "assistant", content: `Solution validation failed: ${oe}` });
+                return { isSolved: false, conversationHistory: q, error: oe };
+              }
+            } catch (P) {
+              const oe = P instanceof Error ? P.message : String(P);
+              this.context.logger.error("Failed to check solution:" + { error: oe });
+              q.push({ role: "assistant", content: `Failed to validate solution: ${oe}` });
+              return { isSolved: false, conversationHistory: q, error: oe };
             }
-            if (Qr.usage) {
-              ie += Qr.usage.prompt_tokens;
-              Ge += Qr.usage.completion_tokens;
-            }
-            const Fr = ((Br = (Ir = Qr.choices[0]) === null || Ir === void 0 ? void 0 : Ir.message) === null || Br === void 0 ? void 0 : Br.content) || "";
-            return { isSolved: Fr.trim().toLowerCase() === "solved", totalInputToken: ie, totalOutputToknen: Ge, conversationHistory: oe };
           });
         }
         _executeWithRetry(P, q, oe, Ge) {
           return ie(this, void 0, void 0, function* () {
             const ie = (this._toolAttempts.get(P.name) || 0) + 1;
             this._toolAttempts.set(P.name, ie);
-            if (ie > Qr) {
-              const q = new Error(`Maximum attempts (${Qr}) exceeded for tool ${P.name}`);
+            if (ie > Fr) {
+              const q = new Error(`Maximum attempts (${Fr}) exceeded for tool ${P.name}`);
               this.context.logger.error(`Tool retry limit exceeded:`, { error: q, tool: P.name });
               return { success: false, error: q.message, metadata: { timestamp: Date.now(), toolName: P.name, toolAttempts: ie, workingDir: oe } };
             }
             try {
               const st = yield P.execute(Ge);
-              if (!st.success && ie < Qr) {
+              if (!st.success && ie < Fr) {
                 const Ot = new Error(st.error || "Unknown error");
                 this.context.logger.error(`Tool attempt ${ie} failed:`, { error: Ot, tool: P.name });
                 return this._executeWithRetry(P, q, oe, Ge);
@@ -46803,7 +46803,7 @@
             } catch (st) {
               const Ot = st instanceof Error ? st : new Error(String(st));
               this.context.logger.error(`Tool attempt ${ie} error:`, { error: Ot, tool: P.name });
-              if (ie < Qr) {
+              if (ie < Fr) {
                 return this._executeWithRetry(P, q, oe, Ge);
               }
               return { success: false, error: Ot.message, metadata: { timestamp: Date.now(), toolName: P.name, toolAttempts: ie, workingDir: oe } };
@@ -46812,7 +46812,7 @@
         }
         createCompletion(P, q, oe) {
           return ie(this, arguments, void 0, function* (P, q, oe, ie = "") {
-            var Ge, st, Ot, Fr;
+            var Ge, st, Ot, Qr;
             this.llmAttempts = 0;
             this._toolAttempts.clear();
             this.tools.exploreDir = new Wt.ExploreDir(this.context, oe);
@@ -46820,19 +46820,19 @@
             this.tools.searchFiles = new Ar.SearchFiles(oe);
             this.tools.analyzeCode = new Ir.AnalyzeCode(oe);
             this.tools.testRunner = new Br.TestRunner(this.client, this.context, oe);
-            let kr = false;
+            let Dr = false;
             let Nr = null;
             let Mr = 0;
             let Ur = 0;
             let Lr = null;
-            let xr = [{ role: "system", content: Dr, cache_control: { type: "ephemeral" } }];
-            while (this.llmAttempts < Qr && !kr) {
+            let xr = [{ role: "system", content: kr, cache_control: { type: "ephemeral" } }];
+            while (this.llmAttempts < Fr && !Dr) {
               const Wt = yield this._getDirectoryTree(oe);
               const Ar = Wt.success && ((Ge = Wt.data) === null || Ge === void 0 ? void 0 : Ge.tree) ? Wt.data.tree : "Unable to get directory tree";
               this.context.logger.info("Directory tree:", { tree: Ar });
               xr.push({
                 role: "user",
-                content: `Current LLM attempt: ${this.llmAttempts + 1}/${Qr}\nWorking directory: ${oe}\n\nDirectory structure:\n${Ar}\n\nPrevious solution state: ${ie}\n\nOriginal request: ${P}`,
+                content: `Current LLM attempt: ${this.llmAttempts + 1}/${Fr}\nWorking directory: ${oe}\n\nDirectory structure:\n${Ar}\n\nPrevious solution state: ${ie}\n\nOriginal request: ${P}`,
               });
               const Er = yield this.client.chat.completions.create({
                 model: q,
@@ -46855,17 +46855,18 @@
               ie = Br.output;
               Mr += Br.totalInputToken;
               Ur += Br.totalOutputToken;
-              const Fr = yield this._checkSolution(ie, q, xr, Mr, Ur);
-              kr = Fr.isSolved;
-              Mr += Fr.totalInputToken;
-              Ur += Fr.totalOutputToknen;
-              xr = Fr.conversationHistory;
-              if (!kr) {
+              const Qr = yield this._checkSolution(ie, xr);
+              Dr = Qr.isSolved;
+              xr = Qr.conversationHistory;
+              if (Qr.error) {
+                this.context.logger.error("Solution validation failed:" + { error: Qr.error });
+              }
+              if (!Dr) {
                 this.llmAttempts++;
-                this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${Qr}`);
+                this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${Fr}`);
               }
             }
-            if (kr || this.llmAttempts >= Qr) {
+            if (Dr || this.llmAttempts >= Fr) {
               const q = `Fix: ${P.split("\n")[0]}`;
               const Ge = `This PR addresses the following:\n\n${P}\n\nChanges made:\n${ie}\n\nToken Usage:\n- Total Input Tokens: ${Mr}\n- Total Output Tokens: ${Ur}\n- Total Tokens: ${Mr + Ur}`;
               Lr = yield this._createPullRequest(q, Ge, oe);
@@ -46877,7 +46878,7 @@
             }
             return {
               completion: Nr,
-              prUrl: (Lr === null || Lr === void 0 ? void 0 : Lr.success) ? ((Fr = Lr.data) === null || Fr === void 0 ? void 0 : Fr.url) || null : null,
+              prUrl: (Lr === null || Lr === void 0 ? void 0 : Lr.success) ? ((Qr = Lr.data) === null || Qr === void 0 ? void 0 : Qr.url) || null : null,
               tokenUsage: { inputTokens: Mr, outputTokens: Ur, totalTokens: Mr + Ur },
             };
           });
@@ -47004,7 +47005,7 @@
               const Gr = yield (0, Wt.detectTestConfiguration)(Fr);
               oe.ok(`Found test configuration: ${Gr.runner}`);
               const jr = ie.issue.body;
-              const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First write failing tests for the required functionality\n2. Implement the minimum code to make tests pass\n3. Refactor while keeping tests passing\n4. Repeat until the issue is resolved\n\nUse the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
+              const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First, read all files you require from the directory using the tree structure.\n2. Write a failing test for the issue, and run the test to verify it fails.\n3. Write a solution to make the test pass.\n4. Run the test again to verify it passes.\n5. Modify the solution until all tests pass.\n\nUse the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
               const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "anthropic/claude-3.5-sonnet", Fr);
               if (!Hr) {
                 oe.error("No solution was generated");
