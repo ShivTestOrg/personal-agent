@@ -34,7 +34,7 @@ export async function delegate(context: Context) {
       }
 
       // Get the current working directory after clone
-      const workingDir = cloneResult.data.currentPath;
+      const workingDir = explore.getCurrentWorkingDir();
 
       // Setup project: detect and install package manager
       const packageManager = await detectPackageManager(workingDir);
