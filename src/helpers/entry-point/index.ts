@@ -1,5 +1,5 @@
 import { Logs } from "@ubiquity-dao/ubiquibot-logger";
-import { readdir } from "fs/promises";
+import { readdir, stat } from "fs/promises"; // stat instead of readdir
 import { join, extname } from "path";
 
 export type Language = "typescript" | "javascript" | "python";
@@ -45,7 +45,7 @@ export async function findEntryPoint(projectPath: string, logger?: Logs): Promis
     try {
       const fullPath = join(projectPath, entry);
       logger?.info("Checking entry point:" + fullPath);
-      await readdir(fullPath);
+      await stat(fullPath); // Check if it's a file or directory
       return fullPath;
     } catch {
       logger?.info("Entry point not found at:" + entry);
