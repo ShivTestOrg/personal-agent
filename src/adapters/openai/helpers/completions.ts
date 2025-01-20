@@ -703,7 +703,7 @@ Return only the fixed JSON without any explanation.`;
         presence_penalty: 0,
       });
 
-      this.context.logger.info("LLM response:" + { response: JSON.stringify(res, null, 2) });
+      this.context.logger.info("LLM response: " + JSON.stringify(res, null, 2));
 
       // Track token usage
       if (res.usage) {

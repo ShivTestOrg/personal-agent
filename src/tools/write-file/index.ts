@@ -62,7 +62,7 @@ export class WriteFile implements Tool<FileWriteResult> {
     // First validate the overall structure
     const validation = this._validateDiffBlock(diff);
     if (!validation.isValid) {
-      this.context.logger.error("Diff block validation failed:" + { error: validation.error });
+      this.context.logger.error("Diff block validation failed:", { error: validation.error ? { stack: validation.error } : undefined });
       throw new Error(`Invalid diff block format: ${validation.error}`);
     }
 
@@ -163,8 +163,12 @@ export class WriteFile implements Tool<FileWriteResult> {
           diffBlocksApplied = blocks.length;
           this.context.logger.info(`Successfully applied ${diffBlocksApplied} diff blocks to file`);
         } catch (error) {
-          this.context.logger.error("Error applying diff blocks:", { error: error instanceof Error ? error : new Error(String(error)) });
-          throw error;
+          this.context.logger.error("Error applying diff blocks:", {
+            error: error instanceof Error ? error : { stack: String(error) },
+            stack: error instanceof Error ? error.stack : undefined,
+          });
+          const typedError = error instanceof Error ? error : new Error(String(error || "Unknown error"));
+          throw typedError;
         }
       } else {
         // Direct content write - will create new file if doesn't exist
@@ -202,12 +206,15 @@ export class WriteFile implements Tool<FileWriteResult> {
         },
       };
     } catch (error) {
-      const errorObj = error instanceof Error ? error : new Error(String(error));
-      this.context.logger.error(`File write failed:`, { error: errorObj });
+      const errorObj = error instanceof Error ? error : new Error(String(error || "Unknown error"));
+      this.context.logger.error(`File write failed:`, {
+        error: { stack: errorObj.message },
+        stack: errorObj.stack,
+      });
 
       return {
         success: false,
-        error: errorObj.message,
+        error: errorObj.message || "Unknown error occurred",
         metadata: {
           timestamp: Date.now(),
           toolName: this.name,
