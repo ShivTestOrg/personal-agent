@@ -46753,9 +46753,14 @@
                 }
                 this.context.logger.info(`Tool call validation passed`, { name: Qr.function.name, arguments: Qr.function.arguments });
                 if (Qr.function.name === "writeFile" && Qr.function.arguments.content && typeof Qr.function.arguments.content === "object") {
+                  const P = Qr.function.arguments.content;
+                  if (!P["<<<<< SEARCH"] || !P["======"] || !P[">>>>>> REPLACE"]) {
+                    throw new Error("Invalid diff format for writeFile content");
+                  }
                   Qr.function.arguments.content = JSON.stringify(Qr.function.arguments.content, null, 2);
                 }
                 const Fr = yield this._executeToolRequest(convertToInternalRequest(Qr), q);
+                this.context.logger.info(`Tool execution result:` + { result: Fr });
                 Ir = Ir.replace(Er, "```result\n" + JSON.stringify(Fr, null, 2) + "\n```");
               } catch (P) {
                 const q = P instanceof Error ? P : new Error(String(P));
@@ -47018,7 +47023,7 @@
               const Gr = yield (0, Wt.detectTestConfiguration)(Fr);
               oe.ok(`Found test configuration: ${Gr.runner}`);
               const jr = ie.issue.body;
-              const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First, read all files you require from the directory using the tree structure.\n2. Generate a test that verifies the fix for the issue, following Jest patterns.\n3. Use the writeFile tool to write the test file to the appropriate location.\n4. Use testRunner to run the test and verify it fails (as expected).\n5. Write the solution using the writeFile tool.\n6. Run the test again using testRunner to verify it passes.\n7. Refactor if needed while keeping tests passing.\n\nRemember:\n- Generate test code that follows Jest patterns and best practices\n- Use writeFile tool to write both test and implementation files\n- Use testRunner to verify test results\n- Follow existing project conventions for test file naming and location`;
+              const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First, read all files you require from the directory using the tree structure.\n2. Generate a test that verifies the fix for the issue, following patterns.\n3. Use the writeFile tool to write the test file to the appropriate location.\n4. Use testRunner to run the test and verify it fails (as expected).\n5. Write the solution using the writeFile tool.\n6. Run the test again using testRunner to verify it passes.\n7. Refactor if needed while keeping tests passing.`;
               const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "deepseek/deepseek-r1", Fr);
               if (!Hr) {
                 oe.error("No solution was generated");
