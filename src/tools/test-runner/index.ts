@@ -155,6 +155,7 @@ Format response as JSON with properties: failedTests (array), passedTests (array
         },
       };
     } catch (error) {
+      this.context.logger.error("Error running test" + error);
       return {
         success: false,
         error: error instanceof Error ? error.message : String(error),
