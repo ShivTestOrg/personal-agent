@@ -47006,7 +47006,7 @@
               oe.ok(`Found test configuration: ${Gr.runner}`);
               const jr = ie.issue.body;
               const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First, read all files you require from the directory using the tree structure.\n2. Write a failing test for the issue, and run the test to verify it fails.\n3. Write a solution to make the test pass.\n4. Run the test again to verify it passes.\n5. Modify the solution until all tests pass.\n\nUse the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
-              const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "anthropic/claude-3.5-sonnet", Fr);
+              const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "deepseek/deepseek-r1", Fr);
               if (!Hr) {
                 oe.error("No solution was generated");
                 return;
