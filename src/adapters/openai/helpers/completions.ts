@@ -1,6 +1,25 @@
 import OpenAI from "openai";
 import { Context } from "../../../types/context";
 import { SuperOpenAi } from "./openai";
+
+const MAX_PROMPT_SIZE = 65536; // 64KB limit
+
+function middleOutTransform(prompt: string, maxSize: number): string {
+  if (prompt.length <= maxSize) return prompt;
+
+  // Calculate how much we need to remove
+  const excess = prompt.length - maxSize;
+
+  // Keep start and end portions intact
+  const portionSize = Math.floor((maxSize - excess) / 2);
+
+  // Extract start and end portions
+  const start = prompt.slice(0, portionSize);
+  const end = prompt.slice(-portionSize);
+
+  // Add ellipsis in the middle
+  return `${start}\n...[Content truncated for size]...\n${end}`;
+}
 import { Tool, ToolResult, ToolResultMap, DirectoryExploreResult } from "../../../types/tool";
 import { ReadFile } from "../../../tools/read-file";
 import { WriteFile } from "../../../tools/write-file";
@@ -622,6 +641,13 @@ Return only the fixed JSON without any explanation.`;
   }
 
   async createCompletion(prompt: string, model: string, workingDir: string, currentSolution: string = "") {
+    // Validate and transform prompt if needed
+    let processedPrompt = prompt;
+    if (prompt.length > MAX_PROMPT_SIZE) {
+      this.context.logger.info(`Prompt exceeds 64KB limit (${prompt.length} bytes), applying middle-out transform`);
+      processedPrompt = middleOutTransform(prompt, MAX_PROMPT_SIZE);
+    }
+
     // Reset attempts counter for new completion
     this.llmAttempts = 0;
     this._toolAttempts.clear();
@@ -657,10 +683,10 @@ Return only the fixed JSON without any explanation.`;
 
       this.context.logger.info("Directory tree:", { tree: treeOutput });
 
-      // Add the current state to conversation
+      // Add the current state to conversation using processed prompt
       conversationHistory.push({
         role: "user",
-        content: `Current LLM attempt: ${this.llmAttempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${prompt}`,
+        content: `Current LLM attempt: ${this.llmAttempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${processedPrompt}`,
       });
 
       const res = await this.client.chat.completions.create({
