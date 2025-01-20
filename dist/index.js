@@ -46569,17 +46569,26 @@
       Object.defineProperty(q, "__esModule", { value: true });
       q.Completions = void 0;
       const Ge = oe(77447);
-      const st = oe(71917);
-      const Ot = oe(14164);
-      const Wt = oe(94049);
-      const Ar = oe(56310);
-      const Er = oe(40893);
-      const Ir = oe(22498);
-      const Br = oe(42381);
-      const Qr = oe(9992);
-      const Fr = 10;
-      const Dr = 1;
-      const kr = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Fr} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n6. For write tool, you must use the diff format to make changes to the file.\n\nTo use tools, you can include one or more tool calls in your response. Each tool call should be formatted like this:\n\`\`\`tool\n{\n  "type": "function",\n  "function": {\n    "name": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",\n    "arguments": {\n      // For readFile:\n      "filename": "/absolute/path/to/file"\n      \n      // For writeFile:\n      "filename": "/absolute/path/to/file",\n      "content": "diff blocks in format:\n      <<<<<<< SEARCH\n      [existing content to find]\n      =======\n      [new content to replace with]\n      >>>>>>> REPLACE"\n          \n      // For exploreDir:\n      "command": "tree"\n\n      // For searchFiles:\n      "pattern": "regex pattern",\n      "filePattern": "glob pattern (optional)",\n      "caseSensitive": boolean (optional),\n      "contextLines": number (optional)\n\n      // For analyzeCode:\n      "path": "/absolute/path/to/file/or/directory"\n\n      // For testRunner:\n      "mode": "run" | "generate",\n      "functionCode": "code to test (for generate mode)",\n      "testDescription": "what to test (for generate mode)",\n      "projectPath": "path to project root (optional)"\n    }\n  }\n}\n\`\`\`\n\nMultiple tool calls will be processed sequentially in the order they appear in your response. Each tool call will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(args: { filename: string })\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(args: { filename: string, content: string })\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\n### AnalyzeCode Tool ###\n- Purpose: Analyze source code to extract definitions using tree-sitter\n- Method: execute(args: { path: string })\n- Returns: ToolResult<CodeAnalysisResult> containing:\n  - success: boolean\n  - data: { definitions: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### TestRunner Tool ###\n- Purpose: Generate and run tests using TDD principles\n- Method: execute(args: { mode: "run" | "generate", functionCode?: string, testDescription?: string, projectPath?: string })\n- Returns: ToolResult<TestRunnerResult> containing:\n  - success: boolean\n  - data: {\n    success: boolean,\n    testOutput?: string,\n    failedTests?: string[],\n    passedTests?: string[],\n    suggestions?: string[]\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Fr} attempts to complete each task`;
+      const st = 65536;
+      function middleOutTransform(P, q) {
+        if (P.length <= q) return P;
+        const oe = P.length - q;
+        const ie = Math.floor((q - oe) / 2);
+        const Ge = P.slice(0, ie);
+        const st = P.slice(-ie);
+        return `${Ge}\n...[Content truncated for size]...\n${st}`;
+      }
+      const Ot = oe(71917);
+      const Wt = oe(14164);
+      const Ar = oe(94049);
+      const Er = oe(56310);
+      const Ir = oe(40893);
+      const Br = oe(22498);
+      const Qr = oe(42381);
+      const Fr = oe(9992);
+      const Dr = 10;
+      const kr = 1;
+      const Nr = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Dr} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n6. For write tool, you must use the diff format to make changes to the file.\n\nTo use tools, you can include one or more tool calls in your response. Each tool call should be formatted like this:\n\`\`\`tool\n{\n  "type": "function",\n  "function": {\n    "name": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",\n    "arguments": {\n      // For readFile:\n      "filename": "/absolute/path/to/file"\n      \n      // For writeFile:\n      "filename": "/absolute/path/to/file",\n      "content": "diff blocks in format:\n      <<<<<<< SEARCH\n      [existing content to find]\n      =======\n      [new content to replace with]\n      >>>>>>> REPLACE"\n          \n      // For exploreDir:\n      "command": "tree"\n\n      // For searchFiles:\n      "pattern": "regex pattern",\n      "filePattern": "glob pattern (optional)",\n      "caseSensitive": boolean (optional),\n      "contextLines": number (optional)\n\n      // For analyzeCode:\n      "path": "/absolute/path/to/file/or/directory"\n\n      // For testRunner:\n      "mode": "run" | "generate",\n      "functionCode": "code to test (for generate mode)",\n      "testDescription": "what to test (for generate mode)",\n      "projectPath": "path to project root (optional)"\n    }\n  }\n}\n\`\`\`\n\nMultiple tool calls will be processed sequentially in the order they appear in your response. Each tool call will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(args: { filename: string })\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(args: { filename: string, content: string })\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\n### AnalyzeCode Tool ###\n- Purpose: Analyze source code to extract definitions using tree-sitter\n- Method: execute(args: { path: string })\n- Returns: ToolResult<CodeAnalysisResult> containing:\n  - success: boolean\n  - data: { definitions: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### TestRunner Tool ###\n- Purpose: Generate and run tests using TDD principles\n- Method: execute(args: { mode: "run" | "generate", functionCode?: string, testDescription?: string, projectPath?: string })\n- Returns: ToolResult<TestRunnerResult> containing:\n  - success: boolean\n  - data: {\n    success: boolean,\n    testOutput?: string,\n    failedTests?: string[],\n    passedTests?: string[],\n    suggestions?: string[]\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Dr} attempts to complete each task`;
       function convertToInternalRequest(P) {
         return { tool: P.function.name, args: P.function.arguments };
       }
@@ -46590,15 +46599,15 @@
           this.llmAttempts = 0;
           this._toolAttempts = new Map();
           this.workingDir = oe;
-          this._terminal = new Qr.Terminal(oe);
+          this._terminal = new Fr.Terminal(oe);
           this.tools = {
-            readFile: new st.ReadFile(),
-            writeFile: new Ot.WriteFile(),
-            exploreDir: new Wt.ExploreDir(q),
-            searchFiles: new Ar.SearchFiles(),
-            createPr: new Er.CreatePr(q),
-            analyzeCode: new Ir.AnalyzeCode(),
-            testRunner: new Br.TestRunner(this.client, q),
+            readFile: new Ot.ReadFile(),
+            writeFile: new Wt.WriteFile(),
+            exploreDir: new Ar.ExploreDir(q),
+            searchFiles: new Er.SearchFiles(),
+            createPr: new Ir.CreatePr(q),
+            analyzeCode: new Br.AnalyzeCode(),
+            testRunner: new Qr.TestRunner(this.client, q),
           };
         }
         _executeToolRequest(P, q) {
@@ -46643,7 +46652,7 @@
             var Wt, Ar, Er, Ir, Br;
             let Qr = 0;
             let Fr = null;
-            while (Qr < Dr) {
+            while (Qr < kr) {
               try {
                 this.context.logger.info(`Attempt ${Qr + 1} to fix malformed writeFile request`);
                 const Fr = yield this._getDirectoryTree(q);
@@ -46689,7 +46698,7 @@
                 Qr++;
               }
             }
-            throw new Error(`Failed to fix malformed JSON after ${Dr} attempts: ${Fr === null || Fr === void 0 ? void 0 : Fr.message}`);
+            throw new Error(`Failed to fix malformed JSON after ${kr} attempts: ${Fr === null || Fr === void 0 ? void 0 : Fr.message}`);
           });
         }
         _processResponse(P, q, oe, Ge, st) {
@@ -46783,14 +46792,14 @@
           return ie(this, void 0, void 0, function* () {
             const ie = (this._toolAttempts.get(P.name) || 0) + 1;
             this._toolAttempts.set(P.name, ie);
-            if (ie > Fr) {
-              const q = new Error(`Maximum attempts (${Fr}) exceeded for tool ${P.name}`);
+            if (ie > Dr) {
+              const q = new Error(`Maximum attempts (${Dr}) exceeded for tool ${P.name}`);
               this.context.logger.error(`Tool retry limit exceeded:`, { error: q, tool: P.name });
               return { success: false, error: q.message, metadata: { timestamp: Date.now(), toolName: P.name, toolAttempts: ie, workingDir: oe } };
             }
             try {
               const st = yield P.execute(Ge);
-              if (!st.success && ie < Fr) {
+              if (!st.success && ie < Dr) {
                 const Ot = new Error(st.error || "Unknown error");
                 this.context.logger.error(`Tool attempt ${ie} failed:`, { error: Ot, tool: P.name });
                 return this._executeWithRetry(P, q, oe, Ge);
@@ -46803,7 +46812,7 @@
             } catch (st) {
               const Ot = st instanceof Error ? st : new Error(String(st));
               this.context.logger.error(`Tool attempt ${ie} error:`, { error: Ot, tool: P.name });
-              if (ie < Fr) {
+              if (ie < Dr) {
                 return this._executeWithRetry(P, q, oe, Ge);
               }
               return { success: false, error: Ot.message, metadata: { timestamp: Date.now(), toolName: P.name, toolAttempts: ie, workingDir: oe } };
@@ -46812,74 +46821,79 @@
         }
         createCompletion(P, q, oe) {
           return ie(this, arguments, void 0, function* (P, q, oe, ie = "") {
-            var Ge, st, Ot, Qr;
+            var Ge, Ot, Wt, Fr;
+            let kr = P;
+            if (P.length > st) {
+              this.context.logger.info(`Prompt exceeds 64KB limit (${P.length} bytes), applying middle-out transform`);
+              kr = middleOutTransform(P, st);
+            }
             this.llmAttempts = 0;
             this._toolAttempts.clear();
-            this.tools.exploreDir = new Wt.ExploreDir(this.context, oe);
-            this.tools.createPr = new Er.CreatePr(this.context, oe);
-            this.tools.searchFiles = new Ar.SearchFiles(oe);
-            this.tools.analyzeCode = new Ir.AnalyzeCode(oe);
-            this.tools.testRunner = new Br.TestRunner(this.client, this.context, oe);
-            let Dr = false;
-            let Nr = null;
-            let Mr = 0;
-            let Ur = 0;
-            let Lr = null;
-            let xr = [{ role: "system", content: kr, cache_control: { type: "ephemeral" } }];
-            while (this.llmAttempts < Fr && !Dr) {
-              const Wt = yield this._getDirectoryTree(oe);
-              const Ar = Wt.success && ((Ge = Wt.data) === null || Ge === void 0 ? void 0 : Ge.tree) ? Wt.data.tree : "Unable to get directory tree";
-              this.context.logger.info("Directory tree:", { tree: Ar });
-              xr.push({
+            this.tools.exploreDir = new Ar.ExploreDir(this.context, oe);
+            this.tools.createPr = new Ir.CreatePr(this.context, oe);
+            this.tools.searchFiles = new Er.SearchFiles(oe);
+            this.tools.analyzeCode = new Br.AnalyzeCode(oe);
+            this.tools.testRunner = new Qr.TestRunner(this.client, this.context, oe);
+            let Mr = false;
+            let Ur = null;
+            let Lr = 0;
+            let xr = 0;
+            let Gr = null;
+            let jr = [{ role: "system", content: Nr, cache_control: { type: "ephemeral" } }];
+            while (this.llmAttempts < Dr && !Mr) {
+              const P = yield this._getDirectoryTree(oe);
+              const st = P.success && ((Ge = P.data) === null || Ge === void 0 ? void 0 : Ge.tree) ? P.data.tree : "Unable to get directory tree";
+              this.context.logger.info("Directory tree:", { tree: st });
+              jr.push({
                 role: "user",
-                content: `Current LLM attempt: ${this.llmAttempts + 1}/${Fr}\nWorking directory: ${oe}\n\nDirectory structure:\n${Ar}\n\nPrevious solution state: ${ie}\n\nOriginal request: ${P}`,
+                content: `Current LLM attempt: ${this.llmAttempts + 1}/${Dr}\nWorking directory: ${oe}\n\nDirectory structure:\n${st}\n\nPrevious solution state: ${ie}\n\nOriginal request: ${kr}`,
               });
-              const Er = yield this.client.chat.completions.create({
+              const Ar = yield this.client.chat.completions.create({
                 model: q,
-                messages: xr,
+                messages: jr,
                 temperature: 0.2,
                 max_tokens: this.maxTokens,
                 top_p: 0.5,
                 frequency_penalty: 0,
                 presence_penalty: 0,
               });
-              this.context.logger.info("LLM response:", { response: Er });
-              if (Er.usage) {
-                Mr += Er.usage.prompt_tokens;
-                Ur += Er.usage.completion_tokens;
+              this.context.logger.info("LLM response:", { response: Ar });
+              if (Ar.usage) {
+                Lr += Ar.usage.prompt_tokens;
+                xr += Ar.usage.completion_tokens;
               }
-              Nr = Er;
-              const Ir = ((Ot = (st = Er.choices[0]) === null || st === void 0 ? void 0 : st.message) === null || Ot === void 0 ? void 0 : Ot.content) || "";
-              const Br = yield this._processResponse(Ir, oe, q, ie, xr, Mr, Ur);
-              xr.push({ role: "assistant", content: Br.output });
-              ie = Br.output;
-              Mr += Br.totalInputToken;
-              Ur += Br.totalOutputToken;
-              const Qr = yield this._checkSolution(ie, xr);
-              Dr = Qr.isSolved;
-              xr = Qr.conversationHistory;
-              if (Qr.error) {
-                this.context.logger.error("Solution validation failed:" + { error: Qr.error });
+              Ur = Ar;
+              const Er = ((Wt = (Ot = Ar.choices[0]) === null || Ot === void 0 ? void 0 : Ot.message) === null || Wt === void 0 ? void 0 : Wt.content) || "";
+              const Ir = yield this._processResponse(Er, oe, q, ie, jr, Lr, xr);
+              jr.push({ role: "assistant", content: Ir.output });
+              ie = Ir.output;
+              Lr += Ir.totalInputToken;
+              xr += Ir.totalOutputToken;
+              const Br = yield this._checkSolution(ie, jr);
+              Mr = Br.isSolved;
+              jr = Br.conversationHistory;
+              if (Br.error) {
+                this.context.logger.error("Solution validation failed:" + { error: Br.error });
               }
-              if (!Dr) {
+              if (!Mr) {
                 this.llmAttempts++;
-                this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${Fr}`);
+                this.context.logger.info(`Solution incomplete, attempt ${this.llmAttempts}/${Dr}`);
               }
             }
-            if (Dr || this.llmAttempts >= Fr) {
+            if (Mr || this.llmAttempts >= Dr) {
               const q = `Fix: ${P.split("\n")[0]}`;
-              const Ge = `This PR addresses the following:\n\n${P}\n\nChanges made:\n${ie}\n\nToken Usage:\n- Total Input Tokens: ${Mr}\n- Total Output Tokens: ${Ur}\n- Total Tokens: ${Mr + Ur}`;
-              Lr = yield this._createPullRequest(q, Ge, oe);
-              if (Lr.success) {
-                this.context.logger.info("Created pull request:", { data: Lr.data, metadata: Lr.metadata });
+              const Ge = `This PR addresses the following:\n\n${P}\n\nChanges made:\n${ie}\n\nToken Usage:\n- Total Input Tokens: ${Lr}\n- Total Output Tokens: ${xr}\n- Total Tokens: ${Lr + xr}`;
+              Gr = yield this._createPullRequest(q, Ge, oe);
+              if (Gr.success) {
+                this.context.logger.info("Created pull request:", { data: Gr.data, metadata: Gr.metadata });
               } else {
-                this.context.logger.error("Failed to create pull request:", { error: new Error(Lr.error || "Unknown error"), metadata: Lr.metadata });
+                this.context.logger.error("Failed to create pull request:", { error: new Error(Gr.error || "Unknown error"), metadata: Gr.metadata });
               }
             }
             return {
-              completion: Nr,
-              prUrl: (Lr === null || Lr === void 0 ? void 0 : Lr.success) ? ((Qr = Lr.data) === null || Qr === void 0 ? void 0 : Qr.url) || null : null,
-              tokenUsage: { inputTokens: Mr, outputTokens: Ur, totalTokens: Mr + Ur },
+              completion: Ur,
+              prUrl: (Gr === null || Gr === void 0 ? void 0 : Gr.success) ? ((Fr = Gr.data) === null || Fr === void 0 ? void 0 : Fr.url) || null : null,
+              tokenUsage: { inputTokens: Lr, outputTokens: xr, totalTokens: Lr + xr },
             };
           });
         }
