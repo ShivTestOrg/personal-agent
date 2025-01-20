@@ -100,7 +100,7 @@ Follow TDD Process:
 Use the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
 
       // Get the solution with retries and verification
-      const solution = await context.adapters.openai.completions.createCompletion(prompt, "anthropic/claude-3.5-sonnet", workingDir);
+      const solution = await context.adapters.openai.completions.createCompletion(prompt, "deepseek/deepseek-r1", workingDir);
 
       if (!solution) {
         logger.error("No solution was generated");

@@ -37,24 +37,36 @@ export interface Tool<T = unknown> {
   execute(args: Record<string, unknown>): Promise<ToolResult<T>>;
 }
 
-export interface OpenAITool<T = unknown> {
+export interface OpenAIToolDefinition {
   type: "function";
   function: {
     name: string;
     description: string;
     parameters: JSONSchemaDefinition;
-    execute?(args: Record<string, unknown>): Promise<ToolResult<T>>;
   };
 }
 
-export function convertToOpenAITool<T>(tool: Tool<T>): OpenAITool<T> {
+export interface OpenAIToolCall {
+  type: "function";
+  function: {
+    name: string;
+    arguments: string;
+  };
+  id: string;
+}
+
+export interface OpenAIToolResult {
+  tool_call_id: string;
+  output: string;
+}
+
+export function convertToOpenAITool<T>(tool: Tool<T>): OpenAIToolDefinition {
   return {
     type: "function",
     function: {
       name: tool.name,
       description: tool.description,
       parameters: tool.parameters,
-      execute: tool.execute,
     },
   };
 }
