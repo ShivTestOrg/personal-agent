@@ -46588,7 +46588,7 @@
         const st = P.slice(-ie);
         return `${Ge}\n...[Content truncated for size]...\n${st}`;
       }
-      const Nr = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Fr} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n6. For write tool, you must use the diff format to make changes to the file.\n\nTo use tools, you can include one or more tool calls in your response. Each tool call should be formatted like this:\n\`\`\`tool\n{\n  "type": "function",\n  "function": {\n    "name": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",\n    "arguments": {\n      // For readFile:\n      "filename": "/absolute/path/to/file"\n      \n      // For writeFile:\n      "filename": "/absolute/path/to/file",\n      "content": "diff blocks in format:\n      <<<<<<< SEARCH\n      [existing content to find]\n      =======\n      [new content to replace with]\n      >>>>>>> REPLACE"\n          \n      // For exploreDir:\n      "command": "tree"\n\n      // For searchFiles:\n      "pattern": "regex pattern",\n      "filePattern": "glob pattern (optional)",\n      "caseSensitive": boolean (optional),\n      "contextLines": number (optional)\n\n      // For analyzeCode:\n      "path": "/absolute/path/to/file/or/directory"\n\n      // For testRunner:\n      "projectPath": "path to project root (optional)"\n    }\n  }\n}\n\`\`\`\n\nMultiple tool calls will be processed sequentially in the order they appear in your response. Each tool call will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(args: { filename: string })\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(args: { filename: string, content: string })\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\n### AnalyzeCode Tool ###\n- Purpose: Analyze source code to extract definitions using tree-sitter\n- Method: execute(args: { path: string })\n- Returns: ToolResult<CodeAnalysisResult> containing:\n  - success: boolean\n  - data: { definitions: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### TestRunner Tool ###\n- Purpose: Run tests and analyze results\n- Method: execute(args: { projectPath?: string })\n- Returns: ToolResult<TestRunnerResult> containing:\n  - success: boolean\n  - data: {\n    success: boolean,\n    testOutput?: string,\n    failedTests?: string[],\n    passedTests?: string[]\n  }\n  - error?: string\n  - metadata: execution details\n\nTest-Driven Development (TDD) Process:\n1. Generate test code using the completion model following Jest patterns\n2. Use writeFile tool to write the test file to the appropriate location\n3. Use testRunner tool to run the tests and verify they fail initially\n4. Implement the solution\n5. Use testRunner tool again to verify tests pass\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Fr} attempts to complete each task`;
+      const Nr = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Fr} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n6. For write tool, you must use the diff format to make changes to the file.\n\nTo use tools, you can include one or more tool calls in your response. Each tool call should be formatted like this:\n\`\`\`tool\n{\n  "type": "function",\n  "function": {\n    "name": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",\n    "arguments": {\n      // For readFile:\n      "filename": "/absolute/path/to/file"\n      \n      // For writeFile:\n      "filename": "/absolute/path/to/file",\n      "content": "diff blocks in format:\n      <<<<<<< SEARCH\n      [existing content to find]\n      =======\n      [new content to replace with]\n      >>>>>>> REPLACE"\n          \n      // For exploreDir:\n      "command": "tree"\n\n      // For searchFiles:\n      "pattern": "regex pattern",\n      "filePattern": "glob pattern (optional)",\n      "caseSensitive": boolean (optional),\n      "contextLines": number (optional)\n\n      // For analyzeCode:\n      "path": "/absolute/path/to/file/or/directory"\n\n      // For testRunner:\n      "projectPath": "path to project root (optional)"\n    }\n  }\n}\n\`\`\`\n\nMultiple tool calls will be processed sequentially in the order they appear in your response. Each tool call will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(args: { filename: string })\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(args: { filename: string, content: string })\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\n### AnalyzeCode Tool ###\n- Purpose: Analyze source code to extract definitions using tree-sitter\n- Method: execute(args: { path: string })\n- Returns: ToolResult<CodeAnalysisResult> containing:\n  - success: boolean\n  - data: { definitions: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### TestRunner Tool ###\n- Purpose: Run tests and analyze results\n- Method: execute(args: { projectPath?: string })\n- Returns: ToolResult<TestRunnerResult> containing:\n  - success: boolean\n  - data: {\n    success: boolean,\n    testOutput?: string,\n    failedTests?: string[],\n    passedTests?: string[]\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Fr} attempts to complete each task`;
       function convertToInternalRequest(P) {
         return { tool: P.function.name, args: P.function.arguments };
       }
@@ -46770,25 +46770,42 @@
             return { output: Ir, totalInputToken: st, totalOutputToken: Ot };
           });
         }
-        _checkSolution(P) {
-          return ie(this, arguments, void 0, function* (P, q = []) {
+        _checkSolution(P, q) {
+          return ie(this, arguments, void 0, function* (P, q, oe = []) {
+            var ie, Ge;
             try {
-              yield this._terminal.runCommand("git add .");
+              const st = yield this._terminal.runCommand("git diff");
+              const Ot = yield this._terminal.runCommand("git diff --staged");
+              const Wt = st + Ot;
+              let Ar = null;
               try {
-                yield this._terminal.runCommand('git commit -m "test: checking solution"');
-                yield this._terminal.runCommand("git reset HEAD~1");
-                return { isSolved: true, conversationHistory: q };
+                Ar = yield this.tools.testRunner.execute({});
               } catch (P) {
-                const oe = P instanceof Error ? P.message : String(P);
-                yield this._terminal.runCommand("git reset");
-                q.push({ role: "assistant", content: `Solution validation failed: ${oe}` });
-                return { isSolved: false, conversationHistory: q, error: oe };
+                this.context.logger.debug("Failed to run tests:" + P);
               }
+              const Er = `You are evaluating if a solution properly addresses an issue. \n      \nOriginal Issue:\n${P}\n\nChanges Made:\n${Wt}\n\n${Ar ? `Test Results:\n${JSON.stringify(Ar.data, null, 2)}` : ""}\n\nPrevious Attempts Context:\n${oe.map((P) => `${P.role}: ${P.content}`).join("\n")}\n\nEvaluate if the changes properly solve the original issue. Consider:\n1. Do the changes directly address the problem described?\n2. Are there any potential side effects or regressions?\n4. Is the implementation complete and robust?\n\nRespond with:\n1. A boolean "solved: true/false"\n2. A detailed explanation of why the solution works or what's missing`;
+              const Ir = yield this.client.chat.completions.create({
+                model: q,
+                messages: [
+                  { role: "system", content: "You are a code review expert who evaluates if changes properly solve issues." },
+                  { role: "user", content: Er },
+                ],
+                temperature: 0,
+              });
+              const Br = ((Ge = (ie = Ir.choices[0]) === null || ie === void 0 ? void 0 : ie.message) === null || Ge === void 0 ? void 0 : Ge.content) || "";
+              const Qr = Br.toLowerCase().includes("solved: true");
+              oe.push({ role: "assistant", content: `Solution evaluation: ${Br}` });
+              if (!Qr) {
+                const P = Br.match(/(?:what's missing|problems?|issues?|errors?):?\s*([^\n]+)/i);
+                const q = P ? P[1].trim() : "Solution does not fully address the issue";
+                return { isSolved: false, conversationHistory: oe, error: q };
+              }
+              return { isSolved: true, conversationHistory: oe };
             } catch (P) {
-              const oe = P instanceof Error ? P.message : String(P);
-              this.context.logger.error("Failed to check solution:" + { error: oe });
-              q.push({ role: "assistant", content: `Failed to validate solution: ${oe}` });
-              return { isSolved: false, conversationHistory: q, error: oe };
+              const q = P instanceof Error ? P.message : String(P);
+              this.context.logger.error("Failed to check solution:" + q);
+              oe.push({ role: "assistant", content: `Failed to validate solution: ${q}` });
+              return { isSolved: false, conversationHistory: oe, error: q };
             }
           });
         }
@@ -46865,7 +46882,7 @@
               ie = Ir.output;
               Lr += Ir.totalInputToken;
               xr += Ir.totalOutputToken;
-              const Br = yield this._checkSolution(ie, jr);
+              const Br = yield this._checkSolution(ie, q, jr);
               Mr = Br.isSolved;
               jr = Br.conversationHistory;
               if (Br.error) {
@@ -46974,162 +46991,62 @@
       Object.defineProperty(q, "__esModule", { value: true });
       q.delegate = delegate;
       const Ge = oe(94049);
-      const st = oe(17776);
-      const Ot = oe(15761);
-      const Wt = oe(94335);
-      const Ar = oe(35317);
-      const Er = oe(39023);
-      const Ir = (0, Er.promisify)(Ar.exec);
+      const st = oe(35317);
+      const Ot = oe(39023);
+      const Wt = (0, Ot.promisify)(st.exec);
       function delegate(P) {
         return ie(this, void 0, void 0, function* () {
           var q;
           const { logger: oe, payload: ie } = P;
-          const Ar = ie.comment.body;
-          const Er = ie.repository.name;
-          const Br = ie.repository.owner.login;
-          const Qr = ie.issue.number;
-          if (Ar.toLowerCase().includes("solve this issue")) {
-            const Ar = new Ge.ExploreDir(P);
+          const st = ie.comment.body;
+          const Ot = ie.repository.name;
+          const Wt = ie.repository.owner.login;
+          const Ar = ie.issue.number;
+          if (st.toLowerCase().includes("solve this issue")) {
+            const st = new Ge.ExploreDir(P);
             try {
-              const Ge = yield Ar.execute({ command: "clone", repo: Er, owner: Br, issueNumber: Qr });
+              const Ge = yield st.execute({ command: "clone", repo: Ot, owner: Wt, issueNumber: Ar });
               if (!Ge.success || !Ge.data) {
                 oe.error(`Failed to clone repository: ${Ge.error}`);
                 return;
               }
-              const Fr = Ar.getCurrentWorkingDir();
-              const Dr = yield (0, st.detectPackageManager)(Fr);
-              const kr = yield (0, st.installDependencies)(Fr);
-              oe.info(`Installing dependencies using ${Dr}...`);
-              const { stdout: Nr, stderr: Mr } = yield Ir(kr, { cwd: Fr });
-              oe.ok(`Install output: ${Nr}`);
-              oe.ok(`Install error: ${Mr}`);
-              oe.ok("Dependencies installed successfully");
-              const Ur = yield Ar.execute({ command: "tree" });
-              const Lr = Ur.success && ((q = Ur.data) === null || q === void 0 ? void 0 : q.tree) ? Ur.data.tree : "";
-              oe.ok(`Tree result: ${Lr}`);
-              const xr = yield (0, Ot.findEntryPoint)(Fr, oe);
-              if (!xr) {
-                throw new Error("Could not find project entry point");
-              }
-              oe.ok(`Found project entry point: ${xr}`);
-              const Gr = yield (0, Wt.detectTestConfiguration)(Fr);
-              oe.ok(`Found test configuration: ${Gr.runner}`);
-              const jr = ie.issue.body;
-              const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First, read all files you require from the directory using the tree structure.\n2. Generate a test that verifies the fix for the issue, following patterns.\n3. Use the writeFile tool to write the test file to the appropriate location.\n4. Use testRunner to run the test and verify it fails (as expected).\n5. Write the solution using the writeFile tool.\n6. Run the test again using testRunner to verify it passes.\n7. Refactor if needed while keeping tests passing.`;
-              const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "deepseek/deepseek-r1", Fr);
-              if (!Hr) {
+              const Er = st.getCurrentWorkingDir();
+              const Ir = yield st.execute({ command: "tree" });
+              const Br = Ir.success && ((q = Ir.data) === null || q === void 0 ? void 0 : q.tree) ? Ir.data.tree : "";
+              oe.ok(`Tree result: ${Br}`);
+              const Qr = ie.issue.body;
+              const Fr = `Please help resolve this issue:\n\nIssue Description:\n${Qr}\n\nProject Information:\n- Repository: ${Wt}/${Ot}\n- Issue #${Ar}\n\nFile Structure:\n${Br}`;
+              const Dr = yield P.adapters.openai.completions.createCompletion(Fr, "deepseek/deepseek-r1", Er);
+              if (!Dr) {
                 oe.error("No solution was generated");
                 return;
               }
-              const Yr = Hr;
-              if (!Yr) {
+              const kr = Dr;
+              if (!kr) {
                 oe.error("Empty response from completion");
                 return;
               }
               oe.ok("Solution generated successfully");
-              oe.verbose(`Final solution: ${Yr}`);
+              oe.verbose(`Final solution: ${kr}`);
               yield P.octokit.issues.createComment({
-                owner: Br,
-                repo: Er,
-                issue_number: Qr,
+                owner: Wt,
+                repo: Ot,
+                issue_number: Ar,
                 body: `I have generated and implemented a solution for this issue. Please review the pull request.`,
               });
-              yield Ar.execute({ command: "kill" });
+              yield st.execute({ command: "kill" });
             } catch (q) {
               oe.error(`Error during completion: ${q instanceof Error ? q.message : "Unknown error"}`);
               yield P.octokit.issues.createComment({
-                owner: Br,
-                repo: Er,
-                issue_number: Qr,
+                owner: Wt,
+                repo: Ot,
+                issue_number: Ar,
                 body: `I encountered an error while trying to solve this issue. Please check the logs for more details.\n        \`\`\`plaintext\n        Error: Failed to generate a solution for this issue.\n        More Info: ${q instanceof Error ? q.message : "Unknown error"}\n        \`\`\``,
               });
             }
           }
-          oe.ok(`Comment processed: ${Ar}`);
+          oe.ok(`Comment processed: ${st}`);
           oe.verbose(`Exiting delegate`);
-        });
-      }
-    },
-    15761: function (P, q, oe) {
-      "use strict";
-      var ie =
-        (this && this.__awaiter) ||
-        function (P, q, oe, ie) {
-          function adopt(P) {
-            return P instanceof oe
-              ? P
-              : new oe(function (q) {
-                  q(P);
-                });
-          }
-          return new (oe || (oe = Promise))(function (oe, Ge) {
-            function fulfilled(P) {
-              try {
-                step(ie.next(P));
-              } catch (P) {
-                Ge(P);
-              }
-            }
-            function rejected(P) {
-              try {
-                step(ie["throw"](P));
-              } catch (P) {
-                Ge(P);
-              }
-            }
-            function step(P) {
-              P.done ? oe(P.value) : adopt(P.value).then(fulfilled, rejected);
-            }
-            step((ie = ie.apply(P, q || [])).next());
-          });
-        };
-      Object.defineProperty(q, "__esModule", { value: true });
-      q.detectLanguage = detectLanguage;
-      q.findEntryPoint = findEntryPoint;
-      const Ge = oe(91943);
-      const st = oe(16928);
-      const Ot = {
-        typescript: ["src/index.ts", "src/main.ts", "index.ts", "main.ts"],
-        javascript: ["src/index.js", "src/main.js", "index.js", "main.js"],
-        python: ["src/main.py", "main.py", "app.py", "__main__.py"],
-      };
-      function detectLanguage(P, q) {
-        return ie(this, void 0, void 0, function* () {
-          try {
-            const oe = yield (0, Ge.readdir)(P, { recursive: true });
-            q === null || q === void 0 ? void 0 : q.info("Detecting language for project:" + P);
-            if (oe.some((P) => P.endsWith("tsconfig.json"))) {
-              return "typescript";
-            }
-            q === null || q === void 0 ? void 0 : q.info("No TypeScript configuration found");
-            const ie = oe.map((P) => (0, st.extname)(P));
-            if (ie.includes(".ts")) return "typescript";
-            if (ie.includes(".py")) return "python";
-            q === null || q === void 0 ? void 0 : q.info("No TypeScript or Python files found");
-            return "javascript";
-          } catch (P) {
-            console.error("Error detecting language:", P);
-            q === null || q === void 0 ? void 0 : q.error("Error detecting language:" + P);
-            return "javascript";
-          }
-        });
-      }
-      function findEntryPoint(P, q) {
-        return ie(this, void 0, void 0, function* () {
-          const oe = yield detectLanguage(P, q);
-          const ie = Ot[oe];
-          for (const oe of ie) {
-            try {
-              const ie = (0, st.join)(P, oe);
-              q === null || q === void 0 ? void 0 : q.info("Checking entry point:" + ie);
-              yield (0, Ge.stat)(ie);
-              return ie;
-            } catch (P) {
-              q === null || q === void 0 ? void 0 : q.info("Entry point not found at:" + oe);
-              continue;
-            }
-          }
-          return null;
         });
       }
     },
@@ -47284,85 +47201,6 @@
             console.warn("Globbing timed out, returning partial results");
             return Array.from(oe);
           }
-        });
-      }
-    },
-    17776: function (P, q, oe) {
-      "use strict";
-      var ie =
-        (this && this.__awaiter) ||
-        function (P, q, oe, ie) {
-          function adopt(P) {
-            return P instanceof oe
-              ? P
-              : new oe(function (q) {
-                  q(P);
-                });
-          }
-          return new (oe || (oe = Promise))(function (oe, Ge) {
-            function fulfilled(P) {
-              try {
-                step(ie.next(P));
-              } catch (P) {
-                Ge(P);
-              }
-            }
-            function rejected(P) {
-              try {
-                step(ie["throw"](P));
-              } catch (P) {
-                Ge(P);
-              }
-            }
-            function step(P) {
-              P.done ? oe(P.value) : adopt(P.value).then(fulfilled, rejected);
-            }
-            step((ie = ie.apply(P, q || [])).next());
-          });
-        };
-      Object.defineProperty(q, "__esModule", { value: true });
-      q.detectPackageManager = detectPackageManager;
-      q.installDependencies = installDependencies;
-      const Ge = oe(91943);
-      const st = oe(16928);
-      function detectPackageManager(P) {
-        return ie(this, void 0, void 0, function* () {
-          try {
-            const q = yield Promise.all([
-              (0, Ge.readFile)((0, st.join)(P, "yarn.lock"))
-                .then(() => true)
-                .catch(() => false),
-              (0, Ge.readFile)((0, st.join)(P, "bun.lockdb"))
-                .then(() => true)
-                .catch(() => false),
-              (0, Ge.readFile)((0, st.join)(P, "package-lock.json"))
-                .then(() => true)
-                .catch(() => false),
-              (0, Ge.readFile)((0, st.join)(P, "pnpm-lock.yaml"))
-                .then(() => true)
-                .catch(() => false),
-            ]);
-            if (q[0]) return "yarn";
-            if (q[1]) return "bun";
-            if (q[2]) return "npm";
-            if (q[3]) return "pnpm";
-            return "bun";
-          } catch (P) {
-            console.error("Error detecting package manager:", P);
-            return "yarn";
-          }
-        });
-      }
-      function installDependencies(P) {
-        return ie(this, void 0, void 0, function* () {
-          const q = yield detectPackageManager(P);
-          const oe = {
-            npm: "npm install",
-            yarn: "yarn install --immutable --immutable-cache --check-cache",
-            bun: "bun install --frozen-lockfile",
-            pnpm: "pnpm install",
-          };
-          return oe[q];
         });
       }
     },
@@ -49086,7 +48924,7 @@
             } catch (P) {
               const q = P instanceof Error ? P : new Error(String(P || "Unknown error"));
               this.context.logger.error(`File write failed:`, { error: { stack: q.message }, stack: q.stack });
-              return { success: false, error: q.message || "Unknown error occurred", metadata: { timestamp: Date.now(), toolName: this.name } };
+              return { success: false, error: q.stack || "Unknown error occurred", metadata: { timestamp: Date.now(), toolName: this.name } };
             }
           });
         }
