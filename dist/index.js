@@ -46852,15 +46852,8 @@
                 role: "user",
                 content: `Current LLM attempt: ${this.llmAttempts + 1}/${Fr}\nWorking directory: ${oe}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${ie}\n\nOriginal request: ${Dr}`,
               });
-              const Ar = yield this.client.chat.completions.create({
-                model: q,
-                messages: jr,
-                temperature: 0.2,
-                top_p: 0.5,
-                frequency_penalty: 0,
-                presence_penalty: 0,
-              });
-              this.context.logger.info("LLM response:", { response: Ar });
+              const Ar = yield this.client.chat.completions.create({ model: q, messages: jr, temperature: 0.2, frequency_penalty: 0, presence_penalty: 0 });
+              this.context.logger.info("LLM response:" + { response: JSON.stringify(Ar, null, 2) });
               if (Ar.usage) {
                 Lr += Ar.usage.prompt_tokens;
                 xr += Ar.usage.completion_tokens;
@@ -47023,7 +47016,7 @@
               oe.ok(`Found test configuration: ${Gr.runner}`);
               const jr = ie.issue.body;
               const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First, read all files you require from the directory using the tree structure.\n2. Generate a test that verifies the fix for the issue, following patterns.\n3. Use the writeFile tool to write the test file to the appropriate location.\n4. Use testRunner to run the test and verify it fails (as expected).\n5. Write the solution using the writeFile tool.\n6. Run the test again using testRunner to verify it passes.\n7. Refactor if needed while keeping tests passing.`;
-              const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "openai/o1-preview", Fr);
+              const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "deepseek/deepseek-r1", Fr);
               if (!Hr) {
                 oe.error("No solution was generated");
                 return;
