@@ -46602,7 +46602,7 @@
           this._terminal = new Qr.Terminal(oe);
           this.tools = {
             readFile: new st.ReadFile(),
-            writeFile: new Ot.WriteFile(),
+            writeFile: new Ot.WriteFile(this.context),
             exploreDir: new Wt.ExploreDir(q),
             searchFiles: new Ar.SearchFiles(),
             createPr: new Er.CreatePr(q),
@@ -48958,7 +48958,7 @@
       const Ge = oe(73024);
       const st = oe(76760);
       class WriteFile {
-        constructor() {
+        constructor(P) {
           this.name = "writeFile";
           this.description = "Write content to a file or apply diff blocks to update existing content. Creates directories if needed.";
           this.parameters = {
@@ -48972,21 +48972,64 @@
             },
             required: ["filename", "content"],
           };
+          this.context = P;
+        }
+        _validateDiffBlock(P) {
+          if (!P.includes("<<<<<<< SEARCH")) {
+            return { isValid: false, error: "Missing SEARCH marker" };
+          }
+          if (!P.includes("=======")) {
+            return { isValid: false, error: "Missing separator marker" };
+          }
+          if (!P.includes(">>>>>>> REPLACE")) {
+            return { isValid: false, error: "Missing REPLACE marker" };
+          }
+          const q = P.indexOf("<<<<<<< SEARCH");
+          const oe = P.indexOf("=======");
+          const ie = P.indexOf(">>>>>>> REPLACE");
+          if (!(q < oe && oe < ie)) {
+            return { isValid: false, error: "Invalid diff block structure - markers are in wrong order" };
+          }
+          return { isValid: true };
         }
         _parseDiffBlocks(P) {
           const q = [];
           const oe = /<<<<<<< SEARCH\n([\s\S]*?)\n=======\n([\s\S]*?)\n>>>>>>> REPLACE/g;
-          let ie;
-          while ((ie = oe.exec(P)) !== null) {
-            q.push({ search: ie[1], replace: ie[2] });
+          const ie = this._validateDiffBlock(P);
+          if (!ie.isValid) {
+            this.context.logger.error("Diff block validation failed:" + { error: ie.error });
+            throw new Error(`Invalid diff block format: ${ie.error}`);
           }
+          let Ge;
+          while ((Ge = oe.exec(P)) !== null) {
+            const P = Ge[1];
+            const oe = Ge[2];
+            if (!P.trim()) {
+              this.context.logger.error("Empty SEARCH block found");
+              throw new Error("SEARCH block cannot be empty");
+            }
+            q.push({ search: P, replace: oe });
+          }
+          if (q.length === 0) {
+            this.context.logger.error("No valid diff blocks found in content");
+            throw new Error("No valid diff blocks found in content");
+          }
+          this.context.logger.info(`Successfully parsed ${q.length} diff blocks`);
           return q;
         }
         _applyDiff(P, q) {
           let oe = P;
+          let ie = 0;
           for (const P of q) {
+            const q = oe;
             oe = oe.replace(P.search, P.replace);
+            if (oe === q) {
+              this.context.logger.error("Search block not found in content:", { search: P.search });
+              throw new Error("Failed to apply diff: search content not found in file");
+            }
+            ie++;
           }
+          this.context.logger.info(`Successfully applied ${ie} diff blocks`);
           return oe;
         }
         execute(P) {
@@ -49001,6 +49044,7 @@
               if (!ie) {
                 throw new Error(`Failed to resolve path: ${q}`);
               }
+              this.context.logger.info(`Writing to file:`, { path: ie });
               const Ot = (0, st.dirname)(ie);
               (0, Ge.mkdirSync)(Ot, { recursive: true });
               let Wt;
@@ -49008,16 +49052,25 @@
               const Er = oe.includes("<<<<<<< SEARCH");
               const Ir = (0, Ge.existsSync)(ie);
               if (Er) {
-                if (Ir) {
+                this.context.logger.info("Detected diff blocks in content");
+                if (!Ir) {
+                  this.context.logger.error(`Cannot apply diff blocks to non-existent file:`, { path: ie });
+                  throw new Error("Cannot apply diff blocks to non-existent file");
+                }
+                try {
                   const P = (0, Ge.readFileSync)(ie, "utf-8");
+                  this.context.logger.info(`Read existing file content from:`, { path: ie });
                   const q = this._parseDiffBlocks(oe);
                   if (q.length === 0) {
+                    this.context.logger.error("No valid diff blocks found in content");
                     throw new Error("No valid diff blocks found in content");
                   }
                   Wt = this._applyDiff(P, q);
                   Ar = q.length;
-                } else {
-                  throw new Error("Cannot apply diff blocks to non-existent file");
+                  this.context.logger.info(`Successfully applied ${Ar} diff blocks to file`);
+                } catch (P) {
+                  this.context.logger.error("Error applying diff blocks:", { error: P instanceof Error ? P : new Error(String(P)) });
+                  throw P;
                 }
               } else {
                 Wt = oe;
@@ -49028,17 +49081,16 @@
                 throw new Error(`File write verification failed: ${Br.error || "Unknown error"}`);
               }
               const Qr = Br.bytesWritten;
+              this.context.logger.info(`Successfully wrote file:`, { path: ie, bytesWritten: Qr, diffBlocksApplied: Ar });
               return {
                 success: true,
                 data: { path: ie, bytesWritten: Qr, diffBlocksApplied: Ar },
                 metadata: { timestamp: Date.now(), toolName: this.name, diffBlocksApplied: Ar },
               };
             } catch (P) {
-              return {
-                success: false,
-                error: P instanceof Error ? P.message : "Unknown error occurred",
-                metadata: { timestamp: Date.now(), toolName: this.name },
-              };
+              const q = P instanceof Error ? P : new Error(String(P));
+              this.context.logger.error(`File write failed:`, { error: q });
+              return { success: false, error: q.message, metadata: { timestamp: Date.now(), toolName: this.name } };
             }
           });
         }
@@ -49048,7 +49100,7 @@
               return { success: false, error: "File does not exist after write operation" };
             }
             const oe = (0, Ge.readFileSync)(P, "utf-8");
-            console.log("Written content:", oe);
+            this.context.logger.debug("Written content:", { content: oe });
             const ie = Buffer.from(q).length;
             const st = Buffer.from(oe).length;
             if (st !== ie) {
