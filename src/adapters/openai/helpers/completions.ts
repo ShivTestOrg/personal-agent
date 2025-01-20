@@ -346,8 +346,6 @@ Return only the fixed JSON without any explanation.`;
               role: "system",
               content:
                 "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
-              //@ts-expect-error
-              cache_control: { type: "ephemeral" },
             },
             {
               role: "user",
@@ -678,8 +676,6 @@ Return only the fixed JSON without any explanation.`;
       {
         role: "system",
         content: sysMsg,
-        //@ts-expect-error
-        cache_control: { type: "ephemeral" },
       },
     ];
 
