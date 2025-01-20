@@ -92,12 +92,18 @@ ${fileTree}
 
 Follow TDD Process:
 1. First, read all files you require from the directory using the tree structure.
-2. Write a failing test for the issue, and run the test to verify it fails.
-3. Write a solution to make the test pass.
-4. Run the test again to verify it passes.
-5. Modify the solution until all tests pass.
+2. Generate a test that verifies the fix for the issue, following Jest patterns.
+3. Use the writeFile tool to write the test file to the appropriate location.
+4. Use testRunner to run the test and verify it fails (as expected).
+5. Write the solution using the writeFile tool.
+6. Run the test again using testRunner to verify it passes.
+7. Refactor if needed while keeping tests passing.
 
-Use the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
+Remember:
+- Generate test code that follows Jest patterns and best practices
+- Use writeFile tool to write both test and implementation files
+- Use testRunner to verify test results
+- Follow existing project conventions for test file naming and location`;
 
       // Get the solution with retries and verification
       const solution = await context.adapters.openai.completions.createCompletion(prompt, "deepseek/deepseek-r1", workingDir);

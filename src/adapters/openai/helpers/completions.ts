@@ -77,9 +77,6 @@ To use tools, you can include one or more tool calls in your response. Each tool
       "path": "/absolute/path/to/file/or/directory"
 
       // For testRunner:
-      "mode": "run" | "generate",
-      "functionCode": "code to test (for generate mode)",
-      "testDescription": "what to test (for generate mode)",
       "projectPath": "path to project root (optional)"
     }
   }
@@ -164,19 +161,25 @@ Available Tools:
   - metadata: execution details
 
 ### TestRunner Tool ###
-- Purpose: Generate and run tests using TDD principles
-- Method: execute(args: { mode: "run" | "generate", functionCode?: string, testDescription?: string, projectPath?: string })
+- Purpose: Run tests and analyze results
+- Method: execute(args: { projectPath?: string })
 - Returns: ToolResult<TestRunnerResult> containing:
   - success: boolean
   - data: {
     success: boolean,
     testOutput?: string,
     failedTests?: string[],
-    passedTests?: string[],
-    suggestions?: string[]
+    passedTests?: string[]
   }
   - error?: string
   - metadata: execution details
+
+Test-Driven Development (TDD) Process:
+1. Generate test code using the completion model following Jest patterns
+2. Use writeFile tool to write the test file to the appropriate location
+3. Use testRunner tool to run the tests and verify they fail initially
+4. Implement the solution
+5. Use testRunner tool again to verify tests pass
 
 Note: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.
 
@@ -249,7 +252,7 @@ export class Completions extends SuperOpenAi {
       searchFiles: new SearchFiles(),
       createPr: new CreatePr(context),
       analyzeCode: new AnalyzeCode(),
-      testRunner: new TestRunner(this.client, context),
+      testRunner: new TestRunner(context),
     };
   }
 
@@ -657,7 +660,7 @@ Return only the fixed JSON without any explanation.`;
     this.tools.createPr = new CreatePr(this.context, workingDir);
     this.tools.searchFiles = new SearchFiles(workingDir);
     this.tools.analyzeCode = new AnalyzeCode(workingDir);
-    this.tools.testRunner = new TestRunner(this.client, this.context, workingDir);
+    this.tools.testRunner = new TestRunner(this.context, workingDir);
 
     let isSolved = false;
     let finalResponse: OpenAI.Chat.Completions.ChatCompletion | null = null;

@@ -220,29 +220,16 @@ export const toolFunctions: Record<string, ToolFunction> = {
     type: "function",
     function: {
       name: "testRunner",
-      description: "Generate and run tests using TDD principles",
+      description: "Run tests and analyze results",
       parameters: {
         type: "object",
         properties: {
-          mode: {
-            type: "string",
-            enum: ["run", "generate"],
-            description: "Whether to run existing tests or generate new ones",
-          },
-          functionCode: {
-            type: "string",
-            description: "The function code to generate tests for",
-          },
-          testDescription: {
-            type: "string",
-            description: "Description of what the test should verify",
-          },
           projectPath: {
             type: "string",
             description: "Path to the project root",
           },
         },
-        required: ["mode"],
+        required: [],
       },
     },
   },
