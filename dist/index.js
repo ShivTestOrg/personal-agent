@@ -46588,7 +46588,7 @@
         const st = P.slice(-ie);
         return `${Ge}\n...[Content truncated for size]...\n${st}`;
       }
-      const Nr = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Fr} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n6. For write tool, you must use the diff format to make changes to the file.\n\nTo use tools, you can include one or more tool calls in your response. Each tool call should be formatted like this:\n\`\`\`tool\n{\n  "type": "function",\n  "function": {\n    "name": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",\n    "arguments": {\n      // For readFile:\n      "filename": "/absolute/path/to/file"\n      \n      // For writeFile:\n      "filename": "/absolute/path/to/file",\n      "content": "diff blocks in format:\n      <<<<<<< SEARCH\n      [existing content to find]\n      =======\n      [new content to replace with]\n      >>>>>>> REPLACE"\n          \n      // For exploreDir:\n      "command": "tree"\n\n      // For searchFiles:\n      "pattern": "regex pattern",\n      "filePattern": "glob pattern (optional)",\n      "caseSensitive": boolean (optional),\n      "contextLines": number (optional)\n\n      // For analyzeCode:\n      "path": "/absolute/path/to/file/or/directory"\n\n      // For testRunner:\n      "mode": "run" | "generate",\n      "functionCode": "code to test (for generate mode)",\n      "testDescription": "what to test (for generate mode)",\n      "projectPath": "path to project root (optional)"\n    }\n  }\n}\n\`\`\`\n\nMultiple tool calls will be processed sequentially in the order they appear in your response. Each tool call will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(args: { filename: string })\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(args: { filename: string, content: string })\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\n### AnalyzeCode Tool ###\n- Purpose: Analyze source code to extract definitions using tree-sitter\n- Method: execute(args: { path: string })\n- Returns: ToolResult<CodeAnalysisResult> containing:\n  - success: boolean\n  - data: { definitions: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### TestRunner Tool ###\n- Purpose: Generate and run tests using TDD principles\n- Method: execute(args: { mode: "run" | "generate", functionCode?: string, testDescription?: string, projectPath?: string })\n- Returns: ToolResult<TestRunnerResult> containing:\n  - success: boolean\n  - data: {\n    success: boolean,\n    testOutput?: string,\n    failedTests?: string[],\n    passedTests?: string[],\n    suggestions?: string[]\n  }\n  - error?: string\n  - metadata: execution details\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Fr} attempts to complete each task`;
+      const Nr = `You are a capable AI assistant currently running on a GitHub bot. \nYou are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.\nEach tool implements a common interface that provides consistent error handling and result reporting.\n\nWorkflow:\n1. The repository has already been cloned and you are in the correct working directory\n2. The end goal is solve the issue by making the changes, once the issue is resolved, this would be converted into a pull request.\n3. After each attempt to solve the issue by using an appropriate tool, you will receive feedback, if the attempt was successful or not for example if you want to make change to file you would use the writeFile tool to make the change, this is just an example.\n4. If not complete, you will continue with additional attempts up to ${Fr} tries\n5. Each attempt should build upon previous attempts, learning from any failures\n6. For write tool, you must use the diff format to make changes to the file.\n\nTo use tools, you can include one or more tool calls in your response. Each tool call should be formatted like this:\n\`\`\`tool\n{\n  "type": "function",\n  "function": {\n    "name": "readFile|writeFile|exploreDir|searchFiles|analyzeCode|testRunner",\n    "arguments": {\n      // For readFile:\n      "filename": "/absolute/path/to/file"\n      \n      // For writeFile:\n      "filename": "/absolute/path/to/file",\n      "content": "diff blocks in format:\n      <<<<<<< SEARCH\n      [existing content to find]\n      =======\n      [new content to replace with]\n      >>>>>>> REPLACE"\n          \n      // For exploreDir:\n      "command": "tree"\n\n      // For searchFiles:\n      "pattern": "regex pattern",\n      "filePattern": "glob pattern (optional)",\n      "caseSensitive": boolean (optional),\n      "contextLines": number (optional)\n\n      // For analyzeCode:\n      "path": "/absolute/path/to/file/or/directory"\n\n      // For testRunner:\n      "projectPath": "path to project root (optional)"\n    }\n  }\n}\n\`\`\`\n\nMultiple tool calls will be processed sequentially in the order they appear in your response. Each tool call will be replaced with its corresponding result.\n\nThe tool will execute and return a result in this format:\n\`\`\`result\n{\n  "success": true|false,\n  "data": {\n    // Tool-specific result data\n  },\n  "error": "error message if failed",\n  "metadata": {\n    "timestamp": number,\n    "toolName": string\n  }\n}\n\`\`\`\n\nAvailable Tools:\n\n### ReadFile Tool ###\n- Purpose: Read file contents\n- Method: execute(args: { filename: string })\n- Returns: ToolResult<FileReadResult> containing:\n  - success: boolean\n  - data: { content: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### WriteFile Tool ###\n- Purpose: Update file contents using diff blocks\n- Method: execute(args: { filename: string, content: string })\n- Requires absolute file paths (must start with '/')\n- Diff format:\n\n  <<<<<<< SEARCH\n  [existing content to find]\n  =======\n  [new content to replace with]\n  >>>>>>> REPLACE\n\n- Returns: ToolResult<FileWriteResult> containing:\n  - success: boolean\n  - data: { path: string, bytesWritten: number, diffBlocksApplied: number }\n  - error?: string\n  - metadata: execution details\n\n### ExploreDir Tool ###\n- Purpose: Directory operations\n- Method: execute(args: { command: 'tree' | 'change-dir' | 'clone' | 'kill', dir?: string, repo?: string, owner?: string, issueNumber?: number })\n- Returns: ToolResult<DirectoryExploreResult> containing:\n  - success: boolean\n  - data: { currentPath: string, tree?: string }\n  - error?: string\n  - metadata: execution details\n\n### SearchFiles Tool ###\n- Purpose: Search files using regex patterns\n- Method: execute(args: { pattern: string, filePattern?: string, caseSensitive?: boolean, contextLines?: number })\n- Returns: ToolResult<SearchResult> containing:\n  - success: boolean\n  - data: { \n    matches: Array<{ file: string, line: number, content: string, context: string[] }>,\n    totalFiles: number,\n    searchPattern: string\n  }\n  - error?: string\n  - metadata: execution details\n\n### AnalyzeCode Tool ###\n- Purpose: Analyze source code to extract definitions using tree-sitter\n- Method: execute(args: { path: string })\n- Returns: ToolResult<CodeAnalysisResult> containing:\n  - success: boolean\n  - data: { definitions: string, path: string }\n  - error?: string\n  - metadata: execution details\n\n### TestRunner Tool ###\n- Purpose: Run tests and analyze results\n- Method: execute(args: { projectPath?: string })\n- Returns: ToolResult<TestRunnerResult> containing:\n  - success: boolean\n  - data: {\n    success: boolean,\n    testOutput?: string,\n    failedTests?: string[],\n    passedTests?: string[]\n  }\n  - error?: string\n  - metadata: execution details\n\nTest-Driven Development (TDD) Process:\n1. Generate test code using the completion model following Jest patterns\n2. Use writeFile tool to write the test file to the appropriate location\n3. Use testRunner tool to run the tests and verify they fail initially\n4. Implement the solution\n5. Use testRunner tool again to verify tests pass\n\nNote: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.\n\nRules and Best Practices:\n1. Always check ToolResult.success before using the data\n2. Handle errors gracefully using the provided error information\n3. Use metadata for logging and debugging purposes\n4. Follow existing code style and conventions\n5. Document significant changes\n6. Consider edge cases and error handling\n7. After each attempt, evaluate if the solution is complete\n8. You have up to ${Fr} attempts to complete each task`;
       function convertToInternalRequest(P) {
         return { tool: P.function.name, args: P.function.arguments };
       }
@@ -46607,7 +46607,7 @@
             searchFiles: new Ar.SearchFiles(),
             createPr: new Er.CreatePr(q),
             analyzeCode: new Ir.AnalyzeCode(),
-            testRunner: new Br.TestRunner(this.client, q),
+            testRunner: new Br.TestRunner(q),
           };
         }
         _executeToolRequest(P, q) {
@@ -46833,7 +46833,7 @@
             this.tools.createPr = new Er.CreatePr(this.context, oe);
             this.tools.searchFiles = new Ar.SearchFiles(oe);
             this.tools.analyzeCode = new Ir.AnalyzeCode(oe);
-            this.tools.testRunner = new Br.TestRunner(this.client, this.context, oe);
+            this.tools.testRunner = new Br.TestRunner(this.context, oe);
             let Mr = false;
             let Ur = null;
             let Lr = 0;
@@ -47018,7 +47018,7 @@
               const Gr = yield (0, Wt.detectTestConfiguration)(Fr);
               oe.ok(`Found test configuration: ${Gr.runner}`);
               const jr = ie.issue.body;
-              const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First, read all files you require from the directory using the tree structure.\n2. Write a failing test for the issue, and run the test to verify it fails.\n3. Write a solution to make the test pass.\n4. Run the test again to verify it passes.\n5. Modify the solution until all tests pass.\n\nUse the testRunner tool with mode: "generate" to create tests, and mode: "run" to execute them.`;
+              const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First, read all files you require from the directory using the tree structure.\n2. Generate a test that verifies the fix for the issue, following Jest patterns.\n3. Use the writeFile tool to write the test file to the appropriate location.\n4. Use testRunner to run the test and verify it fails (as expected).\n5. Write the solution using the writeFile tool.\n6. Run the test again using testRunner to verify it passes.\n7. Refactor if needed while keeping tests passing.\n\nRemember:\n- Generate test code that follows Jest patterns and best practices\n- Use writeFile tool to write both test and implementation files\n- Use testRunner to verify test results\n- Follow existing project conventions for test file naming and location`;
               const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "deepseek/deepseek-r1", Fr);
               if (!Hr) {
                 oe.error("No solution was generated");
@@ -48883,61 +48883,27 @@
       const Ot = oe(39023);
       const Wt = (0, Ot.promisify)(st.exec);
       class TestRunner {
-        constructor(P, q, oe = process.cwd()) {
+        constructor(P, q = process.cwd()) {
           this.name = "testRunner";
-          this.description = "Generate and run tests using TDD principles";
-          this.parameters = {
-            type: "object",
-            properties: {
-              mode: { type: "string", enum: ["run", "generate"], description: "Whether to run existing tests or generate new ones" },
-              functionCode: { type: "string", description: "The function code to generate tests for" },
-              testDescription: { type: "string", description: "Description of what the test should verify" },
-              projectPath: { type: "string", description: "Path to the project root" },
-            },
-            required: ["mode"],
-          };
-          this.workingDir = oe;
-          this.client = P;
-          this.context = q;
-        }
-        generateTestCase(P, q) {
-          return ie(this, void 0, void 0, function* () {
-            var oe, ie;
-            const Ge = `Given this TypeScript function:\n\n${P}\n\nGenerate a test case that ${q}. The test should:\n1. Follow Jest testing patterns\n2. Include proper assertions\n3. Handle async operations if present\n4. Follow TDD principles by testing expected behavior\n\nReturn only the test code without any explanation.`;
-            const st = yield this.client.chat.completions.create({ model: "gpt-4", messages: [{ role: "user", content: Ge }] });
-            return ((ie = (oe = st.choices[0]) === null || oe === void 0 ? void 0 : oe.message) === null || ie === void 0 ? void 0 : ie.content) || "";
-          });
-        }
-        analyzeTestOutput(P) {
-          return ie(this, void 0, void 0, function* () {
-            var q, oe;
-            const ie = `Analyze this test output and provide:\n1. List of failed tests\n2. List of passed tests\n3. Suggestions for fixing failed tests\n\n${P}\n\nFormat response as JSON with properties: failedTests (array), passedTests (array), suggestions (array)`;
-            const Ge = yield this.client.chat.completions.create({ model: "gpt-4", messages: [{ role: "user", content: ie }] });
-            const st = ((oe = (q = Ge.choices[0]) === null || q === void 0 ? void 0 : q.message) === null || oe === void 0 ? void 0 : oe.content) || "{}";
-            return JSON.parse(st);
-          });
+          this.description = "Run tests and analyze results";
+          this.parameters = { type: "object", properties: { projectPath: { type: "string", description: "Path to the project root" } }, required: [] };
+          this.workingDir = q;
+          this.context = P;
         }
         execute(P) {
           return ie(this, void 0, void 0, function* () {
             try {
               const q = P.projectPath || this.workingDir;
-              if (P.mode === "generate" && P.functionCode && P.testDescription) {
-                const q = yield this.generateTestCase(P.functionCode, P.testDescription);
-                return { success: true, data: { success: true, testOutput: q }, metadata: { timestamp: Date.now(), toolName: this.name } };
-              }
               const oe = yield (0, Ge.detectTestConfiguration)(q);
               const { stdout: ie, stderr: st } = yield Wt(oe.command, { cwd: q });
               const Ot = ie + st;
-              const Ar = yield this.analyzeTestOutput(Ot);
+              const Ar = Ot.match(/Tests:\s+(\d+)\s+failed/i);
+              const Er = Ot.match(/Tests:\s+(\d+)\s+passed/i);
+              const Ir = Ar ? Array(parseInt(Ar[1])).fill("Test failed") : [];
+              const Br = Er ? Array(parseInt(Er[1])).fill("Test passed") : [];
               return {
                 success: true,
-                data: {
-                  success: Ar.failedTests.length === 0,
-                  testOutput: Ot,
-                  failedTests: Ar.failedTests,
-                  passedTests: Ar.passedTests,
-                  suggestions: Ar.suggestions,
-                },
+                data: { success: Ir.length === 0, testOutput: Ot, failedTests: Ir, passedTests: Br },
                 metadata: { timestamp: Date.now(), toolName: this.name },
               };
             } catch (P) {
