@@ -48928,6 +48928,7 @@
                 metadata: { timestamp: Date.now(), toolName: this.name },
               };
             } catch (P) {
+              this.context.logger.error("Error running test" + P);
               return { success: false, error: P instanceof Error ? P.message : String(P), metadata: { timestamp: Date.now(), toolName: this.name } };
             }
           });
