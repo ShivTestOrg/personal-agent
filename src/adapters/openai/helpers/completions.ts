@@ -2,6 +2,18 @@ import OpenAI from "openai";
 import { Context } from "../../../types/context";
 import { SuperOpenAi } from "./openai";
 
+import { Tool, ToolResult, ToolResultMap, DirectoryExploreResult } from "../../../types/tool";
+import { ReadFile } from "../../../tools/read-file";
+import { WriteFile } from "../../../tools/write-file";
+import { ExploreDir } from "../../../tools/explore-dir";
+import { SearchFiles } from "../../../tools/search-files";
+import { CreatePr } from "../../../tools/create-pr";
+import { AnalyzeCode } from "../../../tools/analyze-code";
+import { TestRunner } from "../../../tools/test-runner";
+import { Terminal } from "../../../tools/terminal";
+
+const MAX_TRIES = 10;
+const MAX_RETRY_MALFORMED = 1;
 const MAX_PROMPT_SIZE = 65536; // 64KB limit
 
 function middleOutTransform(prompt: string, maxSize: number): string {
@@ -20,18 +32,6 @@ function middleOutTransform(prompt: string, maxSize: number): string {
   // Add ellipsis in the middle
   return `${start}\n...[Content truncated for size]...\n${end}`;
 }
-import { Tool, ToolResult, ToolResultMap, DirectoryExploreResult } from "../../../types/tool";
-import { ReadFile } from "../../../tools/read-file";
-import { WriteFile } from "../../../tools/write-file";
-import { ExploreDir } from "../../../tools/explore-dir";
-import { SearchFiles } from "../../../tools/search-files";
-import { CreatePr } from "../../../tools/create-pr";
-import { AnalyzeCode } from "../../../tools/analyze-code";
-import { TestRunner } from "../../../tools/test-runner";
-import { Terminal } from "../../../tools/terminal";
-
-const MAX_TRIES = 10;
-const MAX_RETRY_MALFORMED = 1;
 
 const sysMsg = `You are a capable AI assistant currently running on a GitHub bot. 
 You are designed to assist with resolving issues by making incremental fixes using a standardized tool interface.
@@ -693,7 +693,6 @@ Return only the fixed JSON without any explanation.`;
         model,
         messages: conversationHistory,
         temperature: 0.2,
-        max_tokens: this.maxTokens,
         top_p: 0.5,
         frequency_penalty: 0,
         presence_penalty: 0,
