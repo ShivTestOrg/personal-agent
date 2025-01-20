@@ -483,11 +483,18 @@ Return only the fixed JSON without any explanation.`;
 
         // For writeFile, ensure content is stringified if it's an object
         if (toolCall.function.name === "writeFile" && toolCall.function.arguments.content && typeof toolCall.function.arguments.content === "object") {
+          //Check if the Diff format is used
+          const content = toolCall.function.arguments.content as Record<string, unknown>;
+          if (!content["<<<<< SEARCH"] || !content["======"] || !content[">>>>>> REPLACE"]) {
+            throw new Error("Invalid diff format for writeFile content");
+          }
+
           toolCall.function.arguments.content = JSON.stringify(toolCall.function.arguments.content, null, 2);
         }
 
         const result = await this._executeToolRequest(convertToInternalRequest(toolCall), workingDir);
 
+        this.context.logger.info(`Tool execution result:` + { result });
         // Replace this specific tool block with its result
         processedResponse = processedResponse.replace(fullMatch, "```result\n" + JSON.stringify(result, null, 2) + "\n```");
       } catch (error) {
