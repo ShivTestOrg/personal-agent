@@ -100,7 +100,7 @@ Follow TDD Process:
 7. Refactor if needed while keeping tests passing.`;
 
       // Get the solution with retries and verification
-      const solution = await context.adapters.openai.completions.createCompletion(prompt, "mistralai/codestral-2501", workingDir);
+      const solution = await context.adapters.openai.completions.createCompletion(prompt, "openai/o1-preview", workingDir);
 
       if (!solution) {
         logger.error("No solution was generated");
