@@ -36,22 +36,22 @@ export async function delegate(context: Context) {
       // Get the current working directory after clone
       const workingDir = explore.getCurrentWorkingDir();
 
-      // Setup project: detect and install package manager
-      const packageManager = await detectPackageManager(workingDir);
-      const installCommand = await installDependencies(workingDir);
+      // // Setup project: detect and install package manager
+      // const packageManager = await detectPackageManager(workingDir);
+      // const installCommand = await installDependencies(workingDir);
 
-      logger.info(`Installing dependencies using ${packageManager}...`);
-      const { stdout: installOutput, stderr: installError } = await execAsync(installCommand, {
-        cwd: workingDir,
-      });
+      // logger.info(`Installing dependencies using ${packageManager}...`);
+      // const { stdout: installOutput, stderr: installError } = await execAsync(installCommand, {
+      //   cwd: workingDir,
+      // });
 
-      // if (installError && installError.length > 0) {
-      //   logger.debug(`Install error: ${installOutput}`);
-      //   throw new Error(`Package installation failed: ${installError}`);
-      logger.ok(`Install output: ${installOutput}`);
-      logger.ok(`Install error: ${installError}`);
-      // }
-      logger.ok("Dependencies installed successfully");
+      // // if (installError && installError.length > 0) {
+      // //   logger.debug(`Install error: ${installOutput}`);
+      // //   throw new Error(`Package installation failed: ${installError}`);
+      // logger.ok(`Install output: ${installOutput}`);
+      // logger.ok(`Install error: ${installError}`);
+      // // }
+      // logger.ok("Dependencies installed successfully");
 
       // Get the directory tree for context
       const treeResult = await explore.execute({ command: "tree" });
@@ -60,19 +60,19 @@ export async function delegate(context: Context) {
       logger.ok(`Tree result: ${fileTree}`);
 
       // Find project entry point
-      const entryPoint = await findEntryPoint(workingDir, logger);
-      if (!entryPoint) {
-        throw new Error("Could not find project entry point");
-      }
-      logger.ok(`Found project entry point: ${entryPoint}`);
+      // const entryPoint = await findEntryPoint(workingDir, logger);
+      // if (!entryPoint) {
+      //   throw new Error("Could not find project entry point");
+      // }
+      // logger.ok(`Found project entry point: ${entryPoint}`);
 
-      // Detect test configuration
-      const testConfig = await detectTestConfiguration(workingDir);
-      logger.ok(`Found test configuration: ${testConfig.runner}`);
+      // // Detect test configuration
+      // const testConfig = await detectTestConfiguration(workingDir);
+      // logger.ok(`Found test configuration: ${testConfig.runner}`);
 
       // Start the completion process with project info and issue description
       const issueDescription = payload.issue.body;
-      const prompt = `Please help resolve this issue using Test-Driven Development (TDD):
+      const prompt = `Please help resolve this issue:
 
 Issue Description:
 ${issueDescription}
@@ -80,24 +80,9 @@ ${issueDescription}
 Project Information:
 - Repository: ${owner}/${repo}
 - Issue #${issueNumber}
-- Package Manager: ${packageManager}
-- Entry Point: ${entryPoint}
-- Test Runner: ${testConfig.runner}
-- Test Command: ${testConfig.command}
-- Test Pattern: ${testConfig.testPattern}
-${testConfig.configFile ? `- Test Config: ${testConfig.configFile}` : ""}
 
 File Structure:
-${fileTree}
-
-Follow TDD Process:
-1. First, read all files you require from the directory using the tree structure.
-2. Generate a test that verifies the fix for the issue, following patterns.
-3. Use the writeFile tool to write the test file to the appropriate location.
-4. Use testRunner to run the test and verify it fails (as expected).
-5. Write the solution using the writeFile tool.
-6. Run the test again using testRunner to verify it passes.
-7. Refactor if needed while keeping tests passing.`;
+${fileTree}`;
 
       // Get the solution with retries and verification
       const solution = await context.adapters.openai.completions.createCompletion(prompt, "deepseek/deepseek-r1", workingDir);

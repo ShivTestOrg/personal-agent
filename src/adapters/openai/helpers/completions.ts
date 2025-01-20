@@ -174,13 +174,6 @@ Available Tools:
   - error?: string
   - metadata: execution details
 
-Test-Driven Development (TDD) Process:
-1. Generate test code using the completion model following Jest patterns
-2. Use writeFile tool to write the test file to the appropriate location
-3. Use testRunner tool to run the tests and verify they fail initially
-4. Implement the solution
-5. Use testRunner tool again to verify tests pass
-
 Note: All file paths must be absolute paths. For example, if you want to write to "src/file.ts", you must specify the full path starting with "/". Relative paths are not supported.
 
 Rules and Best Practices:
@@ -525,6 +518,7 @@ Return only the fixed JSON without any explanation.`;
 
   private async _checkSolution(
     prompt: string,
+    model: string,
     conversationHistory: ChatMessage[] = []
   ): Promise<{
     isSolved: boolean;
@@ -532,33 +526,75 @@ Return only the fixed JSON without any explanation.`;
     error?: string;
   }> {
     try {
-      // Stage all changes
-      await this._terminal.runCommand("git add .");
+      // Get the latest changes
+      const diffResult = await this._terminal.runCommand("git diff");
+      const stagedResult = await this._terminal.runCommand("git diff --staged");
+      const changes = diffResult + stagedResult;
 
+      // Run tests if available
+      let testResults: ToolResult<ToolResultMap["testRunner"]> | null = null;
       try {
-        // Try to commit - this will run pre-commit hooks
-        await this._terminal.runCommand('git commit -m "test: checking solution"');
+        testResults = await this.tools.testRunner.execute({});
+      } catch (error) {
+        this.context.logger.debug("Failed to run tests:" + error);
+      }
 
-        // If commit succeeds, solution passes checks
-        // Reset the commit since this was just for testing
-        await this._terminal.runCommand("git reset HEAD~1");
+      // Prepare evaluation prompt
+      const evaluationPrompt = `You are evaluating if a solution properly addresses an issue. 
+      
+Original Issue:
+${prompt}
 
-        return {
-          isSolved: true,
-          conversationHistory,
-        };
-      } catch (commitError) {
-        // If commit fails, extract error messages
-        const error = commitError instanceof Error ? commitError.message : String(commitError);
+Changes Made:
+${changes}
 
-        // Reset any staged changes
-        await this._terminal.runCommand("git reset");
+${
+  testResults
+    ? `Test Results:
+${JSON.stringify(testResults.data, null, 2)}`
+    : ""
+}
 
-        // Add error to conversation history
-        conversationHistory.push({
-          role: "assistant",
-          content: `Solution validation failed: ${error}`,
-        });
+Previous Attempts Context:
+${conversationHistory.map((msg) => `${msg.role}: ${msg.content}`).join("\n")}
+
+Evaluate if the changes properly solve the original issue. Consider:
+1. Do the changes directly address the problem described?
+2. Are there any potential side effects or regressions?
+4. Is the implementation complete and robust?
+
+Respond with:
+1. A boolean "solved: true/false"
+2. A detailed explanation of why the solution works or what's missing`;
+
+      const evaluation = await this.client.chat.completions.create({
+        model,
+        messages: [
+          {
+            role: "system",
+            content: "You are a code review expert who evaluates if changes properly solve issues.",
+          },
+          {
+            role: "user",
+            content: evaluationPrompt,
+          },
+        ],
+        temperature: 0,
+      });
+
+      const response = evaluation.choices[0]?.message?.content || "";
+      const isSolved = response.toLowerCase().includes("solved: true");
+
+      // Add evaluation to conversation history
+      conversationHistory.push({
+        role: "assistant",
+        content: `Solution evaluation: ${response}`,
+      });
+
+      if (!isSolved) {
+        // Extract error message from evaluation
+        const errorMatch = response.match(/(?:what's missing|problems?|issues?|errors?):?\s*([^\n]+)/i);
+        const error = errorMatch ? errorMatch[1].trim() : "Solution does not fully address the issue";
 
         return {
           isSolved: false,
@@ -566,9 +602,14 @@ Return only the fixed JSON without any explanation.`;
           error,
         };
       }
+
+      return {
+        isSolved: true,
+        conversationHistory,
+      };
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
-      this.context.logger.error("Failed to check solution:" + { error: errorMsg });
+      this.context.logger.error("Failed to check solution:" + errorMsg);
 
       conversationHistory.push({
         role: "assistant",
@@ -741,7 +782,7 @@ Return only the fixed JSON without any explanation.`;
       totalOutputTokens += processedResponse.totalOutputToken;
 
       // Check if the solution is complete
-      const solOutput = await this._checkSolution(currentSolution, conversationHistory);
+      const solOutput = await this._checkSolution(currentSolution, model, conversationHistory);
       isSolved = solOutput.isSolved;
       conversationHistory = solOutput.conversationHistory;
 

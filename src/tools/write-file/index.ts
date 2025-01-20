@@ -214,7 +214,7 @@ export class WriteFile implements Tool<FileWriteResult> {
 
       return {
         success: false,
-        error: errorObj.message || "Unknown error occurred",
+        error: errorObj.stack || "Unknown error occurred",
         metadata: {
           timestamp: Date.now(),
           toolName: this.name,
