@@ -247,7 +247,7 @@ export class Completions extends SuperOpenAi {
     this._terminal = new Terminal(workingDir);
     this.tools = {
       readFile: new ReadFile(),
-      writeFile: new WriteFile(),
+      writeFile: new WriteFile(this.context),
       exploreDir: new ExploreDir(context),
       searchFiles: new SearchFiles(),
       createPr: new CreatePr(context),
