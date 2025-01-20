@@ -2,13 +2,19 @@ import { WriteFile } from "../src/tools/write-file";
 import { mkdirSync, writeFileSync, readFileSync, rmSync, existsSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
+import { Context } from "../src/types";
 
 describe("WriteFile", () => {
   let writeFile: WriteFile;
   let testDir: string;
+  let context: Context;
 
   beforeEach(() => {
-    writeFile = new WriteFile();
+    context = {
+      logger: console,
+    } as unknown as Context;
+
+    writeFile = new WriteFile(context);
     testDir = join(tmpdir(), `write-file-test-${Date.now()}`);
     mkdirSync(testDir, { recursive: true });
   });
