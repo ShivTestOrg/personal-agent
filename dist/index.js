@@ -47023,7 +47023,7 @@
               oe.ok(`Found test configuration: ${Gr.runner}`);
               const jr = ie.issue.body;
               const Vr = `Please help resolve this issue using Test-Driven Development (TDD):\n\nIssue Description:\n${jr}\n\nProject Information:\n- Repository: ${Br}/${Er}\n- Issue #${Qr}\n- Package Manager: ${Dr}\n- Entry Point: ${xr}\n- Test Runner: ${Gr.runner}\n- Test Command: ${Gr.command}\n- Test Pattern: ${Gr.testPattern}\n${Gr.configFile ? `- Test Config: ${Gr.configFile}` : ""}\n\nFile Structure:\n${Lr}\n\nFollow TDD Process:\n1. First, read all files you require from the directory using the tree structure.\n2. Generate a test that verifies the fix for the issue, following patterns.\n3. Use the writeFile tool to write the test file to the appropriate location.\n4. Use testRunner to run the test and verify it fails (as expected).\n5. Write the solution using the writeFile tool.\n6. Run the test again using testRunner to verify it passes.\n7. Refactor if needed while keeping tests passing.`;
-              const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "mistralai/codestral-2501", Fr);
+              const Hr = yield P.adapters.openai.completions.createCompletion(Vr, "openai/o1-preview", Fr);
               if (!Hr) {
                 oe.error("No solution was generated");
                 return;
