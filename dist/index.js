@@ -46665,7 +46665,6 @@
                       role: "system",
                       content:
                         "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
-                      cache_control: { type: "ephemeral" },
                     },
                     { role: "user", content: kr },
                   ],
@@ -46844,7 +46843,7 @@
             let Lr = 0;
             let xr = 0;
             let Gr = null;
-            let jr = [{ role: "system", content: Nr, cache_control: { type: "ephemeral" } }];
+            let jr = [{ role: "system", content: Nr }];
             while (this.llmAttempts < Fr && !Mr) {
               const P = yield this._getDirectoryTree(oe);
               const Wt = P.success && ((Ge = P.data) === null || Ge === void 0 ? void 0 : Ge.tree) ? P.data.tree : "Unable to get directory tree";
