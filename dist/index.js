@@ -46853,7 +46853,7 @@
                 content: `Current LLM attempt: ${this.llmAttempts + 1}/${Fr}\nWorking directory: ${oe}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${ie}\n\nOriginal request: ${Dr}`,
               });
               const Ar = yield this.client.chat.completions.create({ model: q, messages: jr, temperature: 0.2, frequency_penalty: 0, presence_penalty: 0 });
-              this.context.logger.info("LLM response:" + { response: JSON.stringify(Ar, null, 2) });
+              this.context.logger.info("LLM response: " + JSON.stringify(Ar, null, 2));
               if (Ar.usage) {
                 Lr += Ar.usage.prompt_tokens;
                 xr += Ar.usage.completion_tokens;
@@ -48989,7 +48989,7 @@
           const oe = /<<<<<<< SEARCH\n([\s\S]*?)\n=======\n([\s\S]*?)\n>>>>>>> REPLACE/g;
           const ie = this._validateDiffBlock(P);
           if (!ie.isValid) {
-            this.context.logger.error("Diff block validation failed:" + { error: ie.error });
+            this.context.logger.error("Diff block validation failed:", { error: ie.error ? { stack: ie.error } : undefined });
             throw new Error(`Invalid diff block format: ${ie.error}`);
           }
           let Ge;
@@ -49061,8 +49061,12 @@
                   Ar = q.length;
                   this.context.logger.info(`Successfully applied ${Ar} diff blocks to file`);
                 } catch (P) {
-                  this.context.logger.error("Error applying diff blocks:", { error: P instanceof Error ? P : new Error(String(P)) });
-                  throw P;
+                  this.context.logger.error("Error applying diff blocks:", {
+                    error: P instanceof Error ? P : { stack: String(P) },
+                    stack: P instanceof Error ? P.stack : undefined,
+                  });
+                  const q = P instanceof Error ? P : new Error(String(P || "Unknown error"));
+                  throw q;
                 }
               } else {
                 Wt = oe;
@@ -49080,9 +49084,9 @@
                 metadata: { timestamp: Date.now(), toolName: this.name, diffBlocksApplied: Ar },
               };
             } catch (P) {
-              const q = P instanceof Error ? P : new Error(String(P));
-              this.context.logger.error(`File write failed:`, { error: q });
-              return { success: false, error: q.message, metadata: { timestamp: Date.now(), toolName: this.name } };
+              const q = P instanceof Error ? P : new Error(String(P || "Unknown error"));
+              this.context.logger.error(`File write failed:`, { error: { stack: q.message }, stack: q.stack });
+              return { success: false, error: q.message || "Unknown error occurred", metadata: { timestamp: Date.now(), toolName: this.name } };
             }
           });
         }
