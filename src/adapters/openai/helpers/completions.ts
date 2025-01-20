@@ -699,12 +699,11 @@ Return only the fixed JSON without any explanation.`;
         model,
         messages: conversationHistory,
         temperature: 0.2,
-        top_p: 0.5,
         frequency_penalty: 0,
         presence_penalty: 0,
       });
 
-      this.context.logger.info("LLM response:", { response: res });
+      this.context.logger.info("LLM response:" + { response: JSON.stringify(res, null, 2) });
 
       // Track token usage
       if (res.usage) {
