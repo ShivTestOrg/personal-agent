@@ -46869,7 +46869,7 @@
               this.context.logger.info("Directory tree:", { tree: Wt });
               const Ar = jr[jr.length - 1];
               const Er = `Current LLM attempt: ${this.llmAttempts + 1}/${Fr}\nWorking directory: ${oe}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${ie}\n\nOriginal request: ${Dr}`;
-              if (Ar.role === "assistant") {
+              if (Ar.role === "assistant" || Ar.role === "system") {
                 jr.push({ role: "user", content: Er });
               } else {
                 jr[jr.length - 1].content += "\n\n" + Er;
