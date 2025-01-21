@@ -750,7 +750,7 @@ Respond with:
       const lastMessage = conversationHistory[conversationHistory.length - 1];
       const stateInfo = `Current LLM attempt: ${this.llmAttempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${processedPrompt}`;
 
-      if (lastMessage.role === "assistant") {
+      if (lastMessage.role === "assistant" || lastMessage.role === "system") {
         // If last message was from assistant, add new user message
         conversationHistory.push({
           role: "user",
