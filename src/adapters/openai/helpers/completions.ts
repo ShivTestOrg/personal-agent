@@ -332,19 +332,22 @@ ${malformedJson}
 
 Return only the fixed JSON without any explanation.`;
 
+        // Create messages array ensuring proper interleaving
+        const fixMessages = [
+          {
+            role: "system" as const,
+            content:
+              "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
+          },
+          {
+            role: "user" as const,
+            content: fixPrompt,
+          },
+        ];
+
         const fixResponse = await this.client.chat.completions.create({
           model,
-          messages: [
-            {
-              role: "system",
-              content:
-                "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
-            },
-            {
-              role: "user",
-              content: fixPrompt,
-            },
-          ],
+          messages: fixMessages,
           temperature: 0,
         });
 
@@ -370,11 +373,16 @@ Return only the fixed JSON without any explanation.`;
         };
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
-        //Add this to the conversation history
-        conversationHistory.push({
-          role: "assistant",
-          content: `Failed to fix malformed JSON (attempt ${attempts + 1}): ${lastError.message}`,
-        });
+        // Add error to conversation history only if last message wasn't from assistant
+        if (conversationHistory[conversationHistory.length - 1].role !== "assistant") {
+          conversationHistory.push({
+            role: "assistant",
+            content: `Failed to fix malformed JSON (attempt ${attempts + 1}): ${lastError.message}`,
+          });
+        } else {
+          // Update the last assistant message instead
+          conversationHistory[conversationHistory.length - 1].content += `\n\nFailed to fix malformed JSON (attempt ${attempts + 1}): ${lastError.message}`;
+        }
         this.context.logger.error(`Failed to fix JSON (attempt ${attempts + 1}):`, { error: lastError });
         attempts++;
       }
@@ -567,29 +575,37 @@ Respond with:
 1. A boolean "solved: true/false"
 2. A detailed explanation of why the solution works or what's missing`;
 
+      // Create evaluation messages ensuring proper interleaving
+      const evaluationMessages = [
+        {
+          role: "system" as const,
+          content: "You are a code review expert who evaluates if changes properly solve issues.",
+        },
+        {
+          role: "user" as const,
+          content: evaluationPrompt,
+        },
+      ];
+
       const evaluation = await this.client.chat.completions.create({
         model,
-        messages: [
-          {
-            role: "system",
-            content: "You are a code review expert who evaluates if changes properly solve issues.",
-          },
-          {
-            role: "user",
-            content: evaluationPrompt,
-          },
-        ],
+        messages: evaluationMessages,
         temperature: 0,
       });
 
       const response = evaluation.choices[0]?.message?.content || "";
       const isSolved = response.toLowerCase().includes("solved: true");
 
-      // Add evaluation to conversation history
-      conversationHistory.push({
-        role: "assistant",
-        content: `Solution evaluation: ${response}`,
-      });
+      // Add evaluation to conversation history only if last message wasn't from assistant
+      if (conversationHistory[conversationHistory.length - 1].role !== "assistant") {
+        conversationHistory.push({
+          role: "assistant",
+          content: `Solution evaluation: ${response}`,
+        });
+      } else {
+        // Update the last assistant message instead
+        conversationHistory[conversationHistory.length - 1].content += `\n\nSolution evaluation: ${response}`;
+      }
 
       if (!isSolved) {
         // Extract error message from evaluation
@@ -730,11 +746,20 @@ Respond with:
 
       this.context.logger.info("Directory tree:", { tree: treeOutput });
 
-      // Add the current state to conversation using processed prompt
-      conversationHistory.push({
-        role: "user",
-        content: `Current LLM attempt: ${this.llmAttempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${processedPrompt}`,
-      });
+      // Ensure messages are properly interleaved by combining state info with last assistant message if it exists
+      const lastMessage = conversationHistory[conversationHistory.length - 1];
+      const stateInfo = `Current LLM attempt: ${this.llmAttempts + 1}/${MAX_TRIES}\nWorking directory: ${workingDir}\n\nDirectory structure:\n${treeOutput}\n\nPrevious solution state: ${currentSolution}\n\nOriginal request: ${processedPrompt}`;
+
+      if (lastMessage.role === "assistant") {
+        // If last message was from assistant, add new user message
+        conversationHistory.push({
+          role: "user",
+          content: stateInfo,
+        });
+      } else {
+        // If last message was from user/system, update it to include state info
+        conversationHistory[conversationHistory.length - 1].content += "\n\n" + stateInfo;
+      }
 
       const res = await this.client.chat.completions.create({
         model,
@@ -768,11 +793,16 @@ Respond with:
         totalOutputTokens
       );
 
-      // Add the processed response to conversation history
-      conversationHistory.push({
-        role: "assistant",
-        content: processedResponse.output,
-      });
+      // Only add assistant response if last message was from user/system
+      if (conversationHistory[conversationHistory.length - 1].role !== "assistant") {
+        conversationHistory.push({
+          role: "assistant",
+          content: processedResponse.output,
+        });
+      } else {
+        // Update the last assistant message instead of adding a new one
+        conversationHistory[conversationHistory.length - 1].content += "\n\n" + processedResponse.output;
+      }
 
       // Update current solution state
       currentSolution = processedResponse.output;
