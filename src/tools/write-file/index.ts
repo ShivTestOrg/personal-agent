@@ -92,7 +92,7 @@ export class WriteFile implements Tool<FileWriteResult> {
     return blocks;
   }
 
-  private _applyDiff(content: string, blocks: DiffBlock[]): string {
+  private _applyDiff(content: string, blocks: DiffBlock[]): { success: boolean; content?: string; error?: string } {
     let result = content;
     let appliedBlocks = 0;
 
@@ -103,13 +103,19 @@ export class WriteFile implements Tool<FileWriteResult> {
       // Verify if replacement occurred
       if (result === beforeReplace) {
         this.context.logger.error("Search block not found in content:", { search: block.search });
-        throw new Error("Failed to apply diff: search content not found in file");
+        return {
+          success: false,
+          error: "Failed to apply diff: search content not found in file",
+        };
       }
       appliedBlocks++;
     }
 
     this.context.logger.info(`Successfully applied ${appliedBlocks} diff blocks`);
-    return result;
+    return {
+      success: true,
+      content: result,
+    };
   }
 
   async execute(args: Record<string, unknown>): Promise<ToolResult<FileWriteResult>> {
@@ -159,7 +165,18 @@ export class WriteFile implements Tool<FileWriteResult> {
             throw new Error("No valid diff blocks found in content");
           }
 
-          newContent = this._applyDiff(existingContent, blocks);
+          const diffResult = this._applyDiff(existingContent, blocks);
+          if (!diffResult.success) {
+            return {
+              success: false,
+              error: diffResult.error,
+              metadata: {
+                timestamp: Date.now(),
+                toolName: this.name,
+              },
+            };
+          }
+          newContent = diffResult.content!;
           diffBlocksApplied = blocks.length;
           this.context.logger.info(`Successfully applied ${diffBlocksApplied} diff blocks to file`);
         } catch (error) {

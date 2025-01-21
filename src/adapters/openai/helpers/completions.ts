@@ -541,11 +541,11 @@ Return only the fixed JSON without any explanation.`;
 
       // Run tests if available
       let testResults: ToolResult<ToolResultMap["testRunner"]> | null = null;
-      try {
-        testResults = await this.tools.testRunner.execute({});
-      } catch (error) {
-        this.context.logger.debug("Failed to run tests:" + error);
-      }
+      // try {
+      //   testResults = await this.tools.testRunner.execute({});
+      // } catch (error) {
+      //   this.context.logger.debug("Failed to run tests:" + error);
+      // }
 
       // Prepare evaluation prompt
       const evaluationPrompt = `You are evaluating if a solution properly addresses an issue. 
@@ -555,13 +555,6 @@ ${prompt}
 
 Changes Made:
 ${changes}
-
-${
-  testResults
-    ? `Test Results:
-${JSON.stringify(testResults.data, null, 2)}`
-    : ""
-}
 
 Previous Attempts Context:
 ${conversationHistory.map((msg) => `${msg.role}: ${msg.content}`).join("\n")}
