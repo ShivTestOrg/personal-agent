@@ -46817,6 +46817,11 @@
             }
             try {
               const st = yield P.execute(Ge);
+              if (!st.success && P.name === "writeFile" && st.error === "No valid diff blocks found in content") {
+                const q = new Error(st.error || "No valid diff blocks found in content");
+                this.context.logger.error(`Tool attempt ${ie} failed:`, { error: q, tool: P.name });
+                return { success: false, error: st.error, metadata: { timestamp: Date.now(), toolName: P.name, toolAttempts: ie, workingDir: oe } };
+              }
               if (!st.success && ie < Fr) {
                 const Ot = new Error(st.error || "Unknown error");
                 this.context.logger.error(`Tool attempt ${ie} failed:`, { error: Ot, tool: P.name });
