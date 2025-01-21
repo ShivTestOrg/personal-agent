@@ -46874,6 +46874,7 @@
               } else {
                 jr[jr.length - 1].content += "\n\n" + Er;
               }
+              this.context.logger.info("Conversation history:" + JSON.stringify(jr, null, 2));
               const Ir = yield this.client.chat.completions.create({ model: q, messages: jr, temperature: 0.2, frequency_penalty: 0, presence_penalty: 0 });
               this.context.logger.info("LLM response: " + JSON.stringify(Ir, null, 2));
               if (Ir.usage) {
