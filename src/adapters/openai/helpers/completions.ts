@@ -761,6 +761,8 @@ Respond with:
         conversationHistory[conversationHistory.length - 1].content += "\n\n" + stateInfo;
       }
 
+      this.context.logger.info("Conversation history:" + JSON.stringify(conversationHistory, null, 2));
+
       const res = await this.client.chat.completions.create({
         model,
         messages: conversationHistory,
