@@ -46912,6 +46912,15 @@
                 this.context.logger.error("Failed to create pull request:", { error: new Error(Gr.error || "Unknown error"), metadata: Gr.metadata });
               }
             }
+            if (q.includes("deepseek") && jr[jr.length - 1].role === "assistant") {
+              jr.push({ role: "user", content: "Understood. Please proceed with any remaining tasks or confirm completion." });
+              const P = yield this.client.chat.completions.create({ model: q, messages: jr, temperature: 0.2, frequency_penalty: 0, presence_penalty: 0 });
+              if (P.usage) {
+                Lr += P.usage.prompt_tokens;
+                xr += P.usage.completion_tokens;
+              }
+              Ur = P;
+            }
             return {
               completion: Ur,
               prUrl: (Gr === null || Gr === void 0 ? void 0 : Gr.success) ? ((Qr = Gr.data) === null || Qr === void 0 ? void 0 : Qr.url) || null : null,
