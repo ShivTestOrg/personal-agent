@@ -46779,12 +46779,7 @@
               const Ot = yield this._terminal.runCommand("git diff --staged");
               const Wt = st + Ot;
               let Ar = null;
-              try {
-                Ar = yield this.tools.testRunner.execute({});
-              } catch (P) {
-                this.context.logger.debug("Failed to run tests:" + P);
-              }
-              const Er = `You are evaluating if a solution properly addresses an issue. \n      \nOriginal Issue:\n${P}\n\nChanges Made:\n${Wt}\n\n${Ar ? `Test Results:\n${JSON.stringify(Ar.data, null, 2)}` : ""}\n\nPrevious Attempts Context:\n${oe.map((P) => `${P.role}: ${P.content}`).join("\n")}\n\nEvaluate if the changes properly solve the original issue. Consider:\n1. Do the changes directly address the problem described?\n2. Are there any potential side effects or regressions?\n4. Is the implementation complete and robust?\n\nRespond with:\n1. A boolean "solved: true/false"\n2. A detailed explanation of why the solution works or what's missing`;
+              const Er = `You are evaluating if a solution properly addresses an issue. \n      \nOriginal Issue:\n${P}\n\nChanges Made:\n${Wt}\n\nPrevious Attempts Context:\n${oe.map((P) => `${P.role}: ${P.content}`).join("\n")}\n\nEvaluate if the changes properly solve the original issue. Consider:\n1. Do the changes directly address the problem described?\n2. Are there any potential side effects or regressions?\n4. Is the implementation complete and robust?\n\nRespond with:\n1. A boolean "solved: true/false"\n2. A detailed explanation of why the solution works or what's missing`;
               const Ir = [
                 { role: "system", content: "You are a code review expert who evaluates if changes properly solve issues." },
                 { role: "user", content: Er },
@@ -48874,12 +48869,12 @@
             oe = oe.replace(P.search, P.replace);
             if (oe === q) {
               this.context.logger.error("Search block not found in content:", { search: P.search });
-              throw new Error("Failed to apply diff: search content not found in file");
+              return { success: false, error: "Failed to apply diff: search content not found in file" };
             }
             ie++;
           }
           this.context.logger.info(`Successfully applied ${ie} diff blocks`);
-          return oe;
+          return { success: true, content: oe };
         }
         execute(P) {
           return ie(this, void 0, void 0, function* () {
@@ -48914,7 +48909,11 @@
                     this.context.logger.error("No valid diff blocks found in content");
                     throw new Error("No valid diff blocks found in content");
                   }
-                  Wt = this._applyDiff(P, q);
+                  const st = this._applyDiff(P, q);
+                  if (!st.success) {
+                    return { success: false, error: st.error, metadata: { timestamp: Date.now(), toolName: this.name } };
+                  }
+                  Wt = st.content;
                   Ar = q.length;
                   this.context.logger.info(`Successfully applied ${Ar} diff blocks to file`);
                 } catch (P) {
