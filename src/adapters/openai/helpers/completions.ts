@@ -660,6 +660,21 @@ Respond with:
     try {
       const result = await tool.execute(args);
 
+      if (!result.success && tool.name === "writeFile" && result.error === "No valid diff blocks found in content") {
+        const error = new Error(result.error || "No valid diff blocks found in content");
+        this.context.logger.error(`Tool attempt ${currentAttempts} failed:`, { error, tool: tool.name });
+        return {
+          success: false,
+          error: result.error,
+          metadata: {
+            timestamp: Date.now(),
+            toolName: tool.name,
+            toolAttempts: currentAttempts,
+            workingDir,
+          },
+        };
+      }
+
       if (!result.success && currentAttempts < MAX_TRIES) {
         const error = new Error(result.error || "Unknown error");
         this.context.logger.error(`Tool attempt ${currentAttempts} failed:`, { error, tool: tool.name });
