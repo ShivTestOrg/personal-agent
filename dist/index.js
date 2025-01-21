@@ -46658,41 +46658,42 @@
                 const Fr = yield this._getDirectoryTree(q);
                 const Dr = Fr.success && Fr.data ? Fr.data.tree : "";
                 const kr = `You are currently helping fix a GitHub issue. Here's the context:\n\nWorking Directory: ${q}\nDirectory Structure:\n${Dr}\n\nPrevious Solution State:\n${ie}\n\nPrevious Conversation:\n${Ge.map((P) => `${P.role}: ${P.content}`).join("\n")}\n\nThe following writeFile tool request is malformed. Fix it to be valid JSON with properly escaped content:\n${P}\n\nReturn only the fixed JSON without any explanation.`;
-                const Nr = yield this.client.chat.completions.create({
-                  model: oe,
-                  messages: [
-                    {
-                      role: "system",
-                      content:
-                        "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
-                    },
-                    { role: "user", content: kr },
-                  ],
-                  temperature: 0,
-                });
-                const Mr =
-                  ((Er = (Ar = (Wt = Nr.choices[0]) === null || Wt === void 0 ? void 0 : Wt.message) === null || Ar === void 0 ? void 0 : Ar.content) ===
+                const Nr = [
+                  {
+                    role: "system",
+                    content:
+                      "You are a JSON fixer specializing in fixing malformed writeFile tool requests. You understand the context of the changes being made and ensure the content is properly escaped while maintaining the intended changes.",
+                  },
+                  { role: "user", content: kr },
+                ];
+                const Mr = yield this.client.chat.completions.create({ model: oe, messages: Nr, temperature: 0 });
+                const Ur =
+                  ((Er = (Ar = (Wt = Mr.choices[0]) === null || Wt === void 0 ? void 0 : Wt.message) === null || Ar === void 0 ? void 0 : Ar.content) ===
                     null || Er === void 0
                     ? void 0
                     : Er.trim()) || "";
-                if (Nr.usage) {
-                  st += Nr.usage.prompt_tokens;
-                  Ot += Nr.usage.completion_tokens;
+                if (Mr.usage) {
+                  st += Mr.usage.prompt_tokens;
+                  Ot += Mr.usage.completion_tokens;
                 }
-                this.context.logger.info("LLM suggested fix:", { fixedJson: Mr });
-                const Ur = JSON.parse(Mr);
+                this.context.logger.info("LLM suggested fix:", { fixedJson: Ur });
+                const Lr = JSON.parse(Ur);
                 if (
-                  !Ur.type ||
-                  Ur.type !== "function" ||
-                  !((Ir = Ur.function) === null || Ir === void 0 ? void 0 : Ir.name) ||
-                  !((Br = Ur.function) === null || Br === void 0 ? void 0 : Br.arguments)
+                  !Lr.type ||
+                  Lr.type !== "function" ||
+                  !((Ir = Lr.function) === null || Ir === void 0 ? void 0 : Ir.name) ||
+                  !((Br = Lr.function) === null || Br === void 0 ? void 0 : Br.arguments)
                 ) {
                   throw new Error("Fixed JSON is missing required fields");
                 }
-                return { tool: Ur, totalInputToken: st, totalOutputToken: Ot };
+                return { tool: Lr, totalInputToken: st, totalOutputToken: Ot };
               } catch (P) {
                 Fr = P instanceof Error ? P : new Error(String(P));
-                Ge.push({ role: "assistant", content: `Failed to fix malformed JSON (attempt ${Qr + 1}): ${Fr.message}` });
+                if (Ge[Ge.length - 1].role !== "assistant") {
+                  Ge.push({ role: "assistant", content: `Failed to fix malformed JSON (attempt ${Qr + 1}): ${Fr.message}` });
+                } else {
+                  Ge[Ge.length - 1].content += `\n\nFailed to fix malformed JSON (attempt ${Qr + 1}): ${Fr.message}`;
+                }
                 this.context.logger.error(`Failed to fix JSON (attempt ${Qr + 1}):`, { error: Fr });
                 Qr++;
               }
@@ -46784,19 +46785,20 @@
                 this.context.logger.debug("Failed to run tests:" + P);
               }
               const Er = `You are evaluating if a solution properly addresses an issue. \n      \nOriginal Issue:\n${P}\n\nChanges Made:\n${Wt}\n\n${Ar ? `Test Results:\n${JSON.stringify(Ar.data, null, 2)}` : ""}\n\nPrevious Attempts Context:\n${oe.map((P) => `${P.role}: ${P.content}`).join("\n")}\n\nEvaluate if the changes properly solve the original issue. Consider:\n1. Do the changes directly address the problem described?\n2. Are there any potential side effects or regressions?\n4. Is the implementation complete and robust?\n\nRespond with:\n1. A boolean "solved: true/false"\n2. A detailed explanation of why the solution works or what's missing`;
-              const Ir = yield this.client.chat.completions.create({
-                model: q,
-                messages: [
-                  { role: "system", content: "You are a code review expert who evaluates if changes properly solve issues." },
-                  { role: "user", content: Er },
-                ],
-                temperature: 0,
-              });
-              const Br = ((Ge = (ie = Ir.choices[0]) === null || ie === void 0 ? void 0 : ie.message) === null || Ge === void 0 ? void 0 : Ge.content) || "";
-              const Qr = Br.toLowerCase().includes("solved: true");
-              oe.push({ role: "assistant", content: `Solution evaluation: ${Br}` });
-              if (!Qr) {
-                const P = Br.match(/(?:what's missing|problems?|issues?|errors?):?\s*([^\n]+)/i);
+              const Ir = [
+                { role: "system", content: "You are a code review expert who evaluates if changes properly solve issues." },
+                { role: "user", content: Er },
+              ];
+              const Br = yield this.client.chat.completions.create({ model: q, messages: Ir, temperature: 0 });
+              const Qr = ((Ge = (ie = Br.choices[0]) === null || ie === void 0 ? void 0 : ie.message) === null || Ge === void 0 ? void 0 : Ge.content) || "";
+              const Fr = Qr.toLowerCase().includes("solved: true");
+              if (oe[oe.length - 1].role !== "assistant") {
+                oe.push({ role: "assistant", content: `Solution evaluation: ${Qr}` });
+              } else {
+                oe[oe.length - 1].content += `\n\nSolution evaluation: ${Qr}`;
+              }
+              if (!Fr) {
+                const P = Qr.match(/(?:what's missing|problems?|issues?|errors?):?\s*([^\n]+)/i);
                 const q = P ? P[1].trim() : "Solution does not fully address the issue";
                 return { isSolved: false, conversationHistory: oe, error: q };
               }
@@ -46865,28 +46867,35 @@
               const P = yield this._getDirectoryTree(oe);
               const Wt = P.success && ((Ge = P.data) === null || Ge === void 0 ? void 0 : Ge.tree) ? P.data.tree : "Unable to get directory tree";
               this.context.logger.info("Directory tree:", { tree: Wt });
-              jr.push({
-                role: "user",
-                content: `Current LLM attempt: ${this.llmAttempts + 1}/${Fr}\nWorking directory: ${oe}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${ie}\n\nOriginal request: ${Dr}`,
-              });
-              const Ar = yield this.client.chat.completions.create({ model: q, messages: jr, temperature: 0.2, frequency_penalty: 0, presence_penalty: 0 });
-              this.context.logger.info("LLM response: " + JSON.stringify(Ar, null, 2));
-              if (Ar.usage) {
-                Lr += Ar.usage.prompt_tokens;
-                xr += Ar.usage.completion_tokens;
+              const Ar = jr[jr.length - 1];
+              const Er = `Current LLM attempt: ${this.llmAttempts + 1}/${Fr}\nWorking directory: ${oe}\n\nDirectory structure:\n${Wt}\n\nPrevious solution state: ${ie}\n\nOriginal request: ${Dr}`;
+              if (Ar.role === "assistant") {
+                jr.push({ role: "user", content: Er });
+              } else {
+                jr[jr.length - 1].content += "\n\n" + Er;
               }
-              Ur = Ar;
-              const Er = ((Ot = (st = Ar.choices[0]) === null || st === void 0 ? void 0 : st.message) === null || Ot === void 0 ? void 0 : Ot.content) || "";
-              const Ir = yield this._processResponse(Er, oe, q, ie, jr, Lr, xr);
-              jr.push({ role: "assistant", content: Ir.output });
-              ie = Ir.output;
-              Lr += Ir.totalInputToken;
-              xr += Ir.totalOutputToken;
-              const Br = yield this._checkSolution(ie, q, jr);
-              Mr = Br.isSolved;
-              jr = Br.conversationHistory;
-              if (Br.error) {
-                this.context.logger.error("Solution validation failed:" + { error: Br.error });
+              const Ir = yield this.client.chat.completions.create({ model: q, messages: jr, temperature: 0.2, frequency_penalty: 0, presence_penalty: 0 });
+              this.context.logger.info("LLM response: " + JSON.stringify(Ir, null, 2));
+              if (Ir.usage) {
+                Lr += Ir.usage.prompt_tokens;
+                xr += Ir.usage.completion_tokens;
+              }
+              Ur = Ir;
+              const Br = ((Ot = (st = Ir.choices[0]) === null || st === void 0 ? void 0 : st.message) === null || Ot === void 0 ? void 0 : Ot.content) || "";
+              const Qr = yield this._processResponse(Br, oe, q, ie, jr, Lr, xr);
+              if (jr[jr.length - 1].role !== "assistant") {
+                jr.push({ role: "assistant", content: Qr.output });
+              } else {
+                jr[jr.length - 1].content += "\n\n" + Qr.output;
+              }
+              ie = Qr.output;
+              Lr += Qr.totalInputToken;
+              xr += Qr.totalOutputToken;
+              const kr = yield this._checkSolution(ie, q, jr);
+              Mr = kr.isSolved;
+              jr = kr.conversationHistory;
+              if (kr.error) {
+                this.context.logger.error("Solution validation failed:" + { error: kr.error });
               }
               if (!Mr) {
                 this.llmAttempts++;
