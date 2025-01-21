@@ -857,6 +857,30 @@ Token Usage:
       }
     }
 
+    // If using deepseek-reasoner and last message is not from user, add a final user message
+    if (model.includes("deepseek") && conversationHistory[conversationHistory.length - 1].role === "assistant") {
+      conversationHistory.push({
+        role: "user",
+        content: "Understood. Please proceed with any remaining tasks or confirm completion.",
+      });
+
+      // Make one final API call to get the model's response
+      const finalCall = await this.client.chat.completions.create({
+        model,
+        messages: conversationHistory,
+        temperature: 0.2,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+
+      if (finalCall.usage) {
+        totalInputTokens += finalCall.usage.prompt_tokens;
+        totalOutputTokens += finalCall.usage.completion_tokens;
+      }
+
+      finalResponse = finalCall;
+    }
+
     // Return enhanced response with token counts and PR link
     return {
       completion: finalResponse,
